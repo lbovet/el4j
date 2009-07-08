@@ -18,13 +18,11 @@ package ch.elca.el4j.maven.plugins.beans;
 
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -58,7 +56,7 @@ import freemarker.template.TemplateException;
  *    "$Author$"
  * );</script>
  *
- * @author David Bernhard (DBD)
+ * @author David Bernhard (DBD) & Daniel Thomas (DTH)
  *
  * @goal beans
  * @requiresDependencyResolution runtime
@@ -122,57 +120,60 @@ public class BeansMojo extends AbstractMojo {
 
 		URL[] classpath = constructClasspath();
 
-		File source = new File("");
+		File source = null;
+
+		/* for a web project just take the web.xml file */
 		if (m_project.getPackaging().equals("war")) {
-			sourceFile = m_project.getBasedir() + "\\src\\main\\webapp\\WEB-INF\\web.xml";
+			sourceFile = m_project.getBasedir() + File.separator + "src" + File.separator + "main" + File.separator
+				+ "webapp" + File.separator + "WEB-INF" + File.separator + "web.xml";
 			source = new File(sourceFile);
 
+			/* check if we really have the right file */
+			if (!(source.exists())) {
+				getLog().info("Could't find web.xml");
+			}
+
+			/* for a jar project without specified sourcefile, find a adequate sourceFile. */
 		} else if ((sourceFile == null) && (m_project.getPackaging().equals("jar"))) {
 
-			/* in case there was no explicit source file string was given, but we have a jar, search for one */
-			SourceResolver mySourceResolver = new SourceResolver();
-			try {
-				source = mySourceResolver.getSourceFile(m_project.getBasedir());
-			} catch (FileNotFoundException e) {
-				getLog().info("Problem reading files.");
-				getLog().info(e.toString());
+			source = SourceResolver.getSourceFile(m_project.getBasedir());
+
+			/* if we didn't find a source File, inform user */
+			if (source == null) {
+				getLog().info("No definition of Module Application Context found");
+				getLog().info("Insert // $$ BEANS INCLUDE before definition of Module Application Context");
 			}
+
 			/*
-			 * in this case a source file with the definition of the Module Application Context
-			 * was given, and we have the packaging of a jar
+			 * in this case a source file with the definition of the Module Application Context was given, and we have
+			 * the packaging of a jar
 			 */
 
-		} else if ((sourceFile != null) && (m_project.getPackaging().equals("jar"))) { 
+		} else if ((sourceFile != null) && (m_project.getPackaging().equals("jar"))) {
 
 			/*
 			 * make a path to the .java file out of the Fully Qualified Class Name, we get something like
 			 * ch/elca/el4j/demos/gui/myClass.java ps. have to copy it into a new String
 			 */
 
-			sourceFile = sourceFile.replace(".", "\\");
+			sourceFile = sourceFile.replace(".", File.separator);
 			sourceFile = sourceFile.concat(".java");
 
 			/*
 			 * now get the full path by getting the compileSource Roots and appending the sourceFile to them
 			 */
-
-			String fullSourcePath = new String();
-
-			List<String> compileSourceRoots = new ArrayList<String>();
-			try {
-				compileSourceRoots = m_project.getCompileSourceRoots();
-			} catch (Exception e) {
-				getLog().debug("Could't access Compile Source Roots");
-			}
-
-			// go through the list and take the first one that contains the basedir
-			for (String sourceRoots : compileSourceRoots) {
-				if (sourceRoots.contains(m_project.getBasedir().toString())) {
-					fullSourcePath = sourceRoots + "\\" + sourceFile;
+			List<String> sourceRoots = m_project.getCompileSourceRoots();
+			for (String root : sourceRoots) {
+				File temp = new File(root + File.separator + sourceFile);
+				if (temp.exists()) {
+					source = temp;
 				}
 			}
-
-			source = new File(fullSourcePath);
+			/* if we just didn't find the file through the fully qualified class name */
+			if (!(source.exists())) {
+				getLog().info("Could't find sourceFile denoted by Fully Quallified Class Name:");
+				getLog().info(sourceFile);
+			}
 
 		} else {
 			// in this case the packaging is wrong..., and we don't do anything
@@ -198,6 +199,12 @@ public class BeansMojo extends AbstractMojo {
 					getLog().info(str);
 				}
 			});
+			/* small test to make sure that we really have found includes */
+			if (ex.getInclusive() == null) {
+				getLog().error("Couldn't find any included configuration files");
+				getLog().error("Make sure that comments needed for execution of this plugin exist and are at the right place");
+				return;
+			}
 
 			// reads out all inclusive configuration files and all exclusive configuration files
 			String[] files = resolver.resolve(ex.getInclusive(), ex.getExclusive(), classpath, m_project.getBasedir()
@@ -208,7 +215,7 @@ public class BeansMojo extends AbstractMojo {
 			 */
 			for (int j = 0; j < files.length; j++) {
 
-				files[j] = files[j].substring(files[j].indexOf("file:/") + 6);
+				files[j] = files[j].substring(files[j].indexOf("file:/") + "file:/".length());
 
 				// cut away classpath where necessary
 				if (files[j].startsWith(m_project.getBasedir().getAbsolutePath().replace("\\", "/"))) {
@@ -229,8 +236,7 @@ public class BeansMojo extends AbstractMojo {
 
 			/* if we have found config files then force spring nature... and write .springBeans file */
 			if (files.length > 0) {
-				SpringNatureForcer forcer = new SpringNatureForcer(m_project.getBasedir());
-				forcer.setLogger(new LogCallback() {
+				SpringNatureForcer.setLogger(new LogCallback() {
 
 					/** {@inheritDoc} */
 					public boolean isActive() {
@@ -242,7 +248,7 @@ public class BeansMojo extends AbstractMojo {
 						getLog().info(str);
 					}
 				});
-				forcer.forceSpringNature();
+				SpringNatureForcer.forceSpringNature(m_project.getBasedir());
 
 				writespringBeansFile(files);
 			}
@@ -297,7 +303,6 @@ public class BeansMojo extends AbstractMojo {
 			Writer configWriter = new FileWriter(out);
 			Template tpl = cfg.getTemplate(template);
 			tpl.process(context, configWriter);
-			configWriter.flush();
 			configWriter.close();
 			getLog().info("Write SpringIDE configuration to: " + out.getAbsolutePath());
 		} catch (IOException ioe) {
