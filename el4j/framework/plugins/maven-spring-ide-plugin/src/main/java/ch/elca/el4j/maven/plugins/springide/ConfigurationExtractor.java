@@ -14,7 +14,7 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.maven.plugins.beans;
+package ch.elca.el4j.maven.plugins.springide;
 
 import java.io.BufferedReader;
 import java.io.File;

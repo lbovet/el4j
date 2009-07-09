@@ -14,7 +14,7 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.maven.plugins.beans;
+package ch.elca.el4j.maven.plugins.springide;
 
 
 import java.io.File;
@@ -56,12 +56,13 @@ import freemarker.template.TemplateException;
  *    "$Author$"
  * );</script>
  *
- * @author David Bernhard (DBD) & Daniel Thomas (DTH)
+ * @author David Bernhard (DBD) 
+ * @author Daniel Thomas (DTH)
  *
- * @goal beans
+ * @goal spring-ide
  * @requiresDependencyResolution runtime
  */
-public class BeansMojo extends AbstractMojo {
+public class SpringIDEMojo extends AbstractMojo {
 
 	/**
 	 * The maven project - used for runtime classpath resolution.
@@ -123,10 +124,20 @@ public class BeansMojo extends AbstractMojo {
 		File source = null;
 
 		/* for a web project just take the web.xml file */
+		
+		
 		if (m_project.getPackaging().equals("war")) {
+			/* sourceFile should be null, if it's not, tell user that we are ignoring configuration */
+			if (sourceFile != null) {
+				getLog().info("Ignoring configuration, trying to use web.xml");
+			}
 			sourceFile = m_project.getBasedir() + File.separator + "src" + File.separator + "main" + File.separator
 				+ "webapp" + File.separator + "WEB-INF" + File.separator + "web.xml";
 			source = new File(sourceFile);
+			
+			
+		
+			
 
 			/* check if we really have the right file */
 			if (!(source.exists())) {

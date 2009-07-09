@@ -14,7 +14,7 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.maven.plugins.beans;
+package ch.elca.el4j.maven.plugins.springide;
 
 import java.io.File;
 import java.io.FileReader;
@@ -25,7 +25,7 @@ import org.codehaus.plexus.util.xml.Xpp3Dom;
 import org.codehaus.plexus.util.xml.Xpp3DomBuilder;
 import org.codehaus.plexus.util.xml.Xpp3DomWriter;
 
-import ch.elca.el4j.maven.plugins.beans.SpringIDEMojo.LogCallback;
+import ch.elca.el4j.maven.plugins.springide.SpringIDEMojo.LogCallback;
 
 /**
  * 
