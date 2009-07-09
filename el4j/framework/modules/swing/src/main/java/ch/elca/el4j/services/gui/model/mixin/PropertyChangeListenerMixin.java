@@ -29,8 +29,8 @@ import java.util.Map;
 import java.util.Set;
 
 import org.aopalliance.intercept.MethodInvocation;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.hibernate.validator.ClassValidator;
 import org.hibernate.validator.InvalidValue;
 import org.jdesktop.observablecollections.ObservableCollections;
@@ -73,7 +73,7 @@ public class PropertyChangeListenerMixin extends
 	/**
 	 * The logger.
 	 */
-	private static final Log s_logger = LogFactory.getLog(PropertyChangeListenerMixin.class);
+	private static final Logger s_logger = LoggerFactory.getLogger(PropertyChangeListenerMixin.class);
 	
 	/**
 	 * A (incomplete) list of immutable classes.

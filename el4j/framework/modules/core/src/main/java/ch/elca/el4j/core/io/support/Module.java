@@ -24,8 +24,8 @@ import java.util.Enumeration;
 import java.util.List;
 import java.util.StringTokenizer;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.util.ClassUtils;
@@ -52,7 +52,7 @@ public class Module {
 	public static final String DELIMITER = ",";
 	
 	/** Private logger. */
-	private static Log s_logger = LogFactory.getLog(Module.class);
+	private static Logger s_logger = LoggerFactory.getLogger(Module.class);
 	
 	/**
 	 * Is the used class loader.

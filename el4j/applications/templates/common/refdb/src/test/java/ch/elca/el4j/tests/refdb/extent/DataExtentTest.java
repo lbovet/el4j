@@ -18,8 +18,8 @@ package ch.elca.el4j.tests.refdb.extent;
 
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotSame;
@@ -57,8 +57,8 @@ public class DataExtentTest extends AbstractTestCaseBase {
 	/**
 	 * Private logger.
 	 */
-	private static Log s_logger
-		= LogFactory.getLog(GenericHibernateDaoTest.class);
+	private static Logger s_logger
+		= LoggerFactory.getLogger(GenericHibernateDaoTest.class);
 	
 	/**
 	 * {@inheritDoc}

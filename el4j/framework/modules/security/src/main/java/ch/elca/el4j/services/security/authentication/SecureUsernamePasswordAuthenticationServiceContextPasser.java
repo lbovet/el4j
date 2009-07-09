@@ -19,8 +19,8 @@ package ch.elca.el4j.services.security.authentication;
 import org.acegisecurity.Authentication;
 import org.acegisecurity.context.SecurityContextHolder;
 import org.acegisecurity.providers.UsernamePasswordAuthenticationToken;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import ch.elca.el4j.services.security.encryption.AESCipher;
 
@@ -43,7 +43,7 @@ public class SecureUsernamePasswordAuthenticationServiceContextPasser extends
 	/**
 	 * Private logger of this class.
 	 */
-	private static Log s_logger = LogFactory.getLog(SecureUsernamePasswordAuthenticationServiceContextPasser.class);
+	private static Logger s_logger = LoggerFactory.getLogger(SecureUsernamePasswordAuthenticationServiceContextPasser.class);
 	
 	/**
 	 * The AES cipher.

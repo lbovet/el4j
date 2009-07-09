@@ -35,8 +35,8 @@ import java.util.Set;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * A tool for looking up duplicate class definitions in the classpath.
@@ -61,7 +61,7 @@ public class DuplicateClassFinder {
 	 */
 	
 	/** The logger. */
-	private static final Log s_log = LogFactory.getLog("DuplicateClassFinder");
+	private static final Logger s_log = LoggerFactory.getLogger("DuplicateClassFinder");
 	
 	/** Holds all class names seen so far. */
 	private Map<String, List<String>> m_classes;

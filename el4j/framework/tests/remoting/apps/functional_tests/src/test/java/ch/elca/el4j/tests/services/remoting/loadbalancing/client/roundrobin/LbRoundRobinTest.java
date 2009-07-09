@@ -19,8 +19,8 @@ package ch.elca.el4j.tests.services.remoting.loadbalancing.client.roundrobin;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.junit.Test;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.context.ApplicationContext;
@@ -109,7 +109,7 @@ public class LbRoundRobinTest {
 			"classpath:remoting/loadbalancing/policy/roundrobin-policy-config.xml"};
 	} // getInclusiveConfigLocations()
 
-	protected Log getLog() {
+	protected Logger getLog() {
 		return s_logger;
 	} // getLog()
 
@@ -126,8 +126,8 @@ public class LbRoundRobinTest {
 	/**
 	 * Private logger.
 	 */
-	private static Log s_logger = LogFactory
-		.getLog(LbRoundRobinTest.class);
+	private static Logger s_logger = LoggerFactory
+		.getLogger(LbRoundRobinTest.class);
 
 	private ApplicationContext m_applicationContext ;
 	

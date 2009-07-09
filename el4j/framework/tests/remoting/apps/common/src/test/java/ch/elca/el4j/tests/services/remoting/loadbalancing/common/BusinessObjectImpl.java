@@ -16,8 +16,8 @@
  */
 package ch.elca.el4j.tests.services.remoting.loadbalancing.common;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -64,8 +64,8 @@ public class BusinessObjectImpl implements BusinessObject, ApplicationContextAwa
 	/**
 	 * Private logger.
 	 */
-	private static Log s_logger = LogFactory
-		.getLog(BusinessObjectImpl.class);
+	private static Logger s_logger = LoggerFactory
+		.getLogger(BusinessObjectImpl.class);
 
 	
 }

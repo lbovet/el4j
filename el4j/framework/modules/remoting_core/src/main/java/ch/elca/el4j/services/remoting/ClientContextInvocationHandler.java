@@ -22,8 +22,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Map;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import ch.elca.el4j.core.contextpassing.ImplicitContextPassingRegistry;
 import ch.elca.el4j.util.interfaceenrichment.MethodDescriptor;
@@ -44,8 +44,8 @@ public class ClientContextInvocationHandler implements InvocationHandler {
 	/**
 	 * Private logger.
 	 */
-	private static Log s_logger = LogFactory
-			.getLog(ClientContextInvocationHandler.class);
+	private static Logger s_logger = LoggerFactory
+			.getLogger(ClientContextInvocationHandler.class);
 
 	/**
 	 * Is the remote object where the invocations has to be delegated.

@@ -33,8 +33,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.NoSuchMessageException;
 import org.springframework.util.StringUtils;
 
@@ -118,8 +118,8 @@ import ch.elca.el4j.util.codingsupport.Reject;
  */
 public class MessageRewriter {
 	/** Hm ... now what could this be ...? ;) */
-	private static final Log s_logger
-		= LogFactory.getLog(MessageRewriter.class);
+	private static final Logger s_logger
+		= LoggerFactory.getLogger(MessageRewriter.class);
 
 	/** An empty Object[]. */
 	static final Object[] EMPTY = new Object[0];

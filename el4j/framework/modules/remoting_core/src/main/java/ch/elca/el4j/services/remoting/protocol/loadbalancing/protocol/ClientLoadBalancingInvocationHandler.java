@@ -21,8 +21,8 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.BeanCreationException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -59,8 +59,8 @@ public class ClientLoadBalancingInvocationHandler implements InvocationHandler,
 	/**
 	 * Private logger.
 	 */
-	private static Log s_logger = LogFactory
-		.getLog(ClientLoadBalancingInvocationHandler.class);
+	private static Logger s_logger = LoggerFactory
+		.getLogger(ClientLoadBalancingInvocationHandler.class);
 
 	private Object m_currentProtocolProxy;
 

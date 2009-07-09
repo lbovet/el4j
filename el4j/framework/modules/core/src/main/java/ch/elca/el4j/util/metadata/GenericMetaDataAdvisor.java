@@ -22,8 +22,8 @@ import java.util.List;
 
 import org.aopalliance.aop.Advice;
 import org.aopalliance.intercept.MethodInterceptor;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.aop.support.StaticMethodMatcherPointcutAdvisor;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.metadata.commons.CommonsAttributes;
@@ -86,8 +86,8 @@ public class GenericMetaDataAdvisor extends StaticMethodMatcherPointcutAdvisor
 	/**
 	 * Private logger.
 	 */
-	private static Log s_logger
-		= LogFactory.getLog(GenericMetaDataAdvisor.class);
+	private static Logger s_logger
+		= LoggerFactory.getLogger(GenericMetaDataAdvisor.class);
 
 	/**
 	 * The metadata source to lookup metadata.

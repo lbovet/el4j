@@ -25,8 +25,8 @@ import java.util.Enumeration;
 import java.util.List;
 import java.util.Properties;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.beans.MutablePropertyValues;
 import org.springframework.beans.PropertyValue;
@@ -75,8 +75,8 @@ public class ListPropertyMergeConfigurer extends PropertyOverrideConfigurer {
 	/**
 	 * Private logger.
 	 */
-	private static Log s_logger
-		= LogFactory.getLog(ListPropertyMergeConfigurer.class);
+	private static Logger s_logger
+		= LoggerFactory.getLogger(ListPropertyMergeConfigurer.class);
 
 	/**
 	 * Properties.

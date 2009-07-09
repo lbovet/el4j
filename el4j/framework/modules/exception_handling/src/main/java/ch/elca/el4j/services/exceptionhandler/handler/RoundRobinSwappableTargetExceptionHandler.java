@@ -20,7 +20,7 @@ package ch.elca.el4j.services.exceptionhandler.handler;
 import java.util.List;
 
 import org.aopalliance.intercept.MethodInvocation;
-import org.apache.commons.logging.Log;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.InitializingBean;
 
 import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
@@ -69,7 +69,7 @@ public class RoundRobinSwappableTargetExceptionHandler
 	 * {@inheritDoc}
 	 */
 	protected Object getNewTarget(Object current, Throwable t,
-			MethodInvocation invocation, Log logger) throws Throwable {
+			MethodInvocation invocation, Logger logger) throws Throwable {
 
 		// even works if 'current' isn't contained in the 'targets'-list
 		int i = (m_targets.indexOf(current) + 1) % m_targets.size();

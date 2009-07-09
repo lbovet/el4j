@@ -18,8 +18,8 @@ package ch.elca.el4j.util.env;
 
 import java.util.Properties;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.io.support.ResourcePatternResolver;
 
 import ch.elca.el4j.env.beans.EnvPropertyOverrideConfigurer;
@@ -45,8 +45,8 @@ public class EnvPropertiesUtils {
 	/**
 	 * Private logger of this class.
 	 */
-	private static Log s_logger
-		= LogFactory.getLog(CollectionUtils.class);
+	private static Logger s_logger
+		= LoggerFactory.getLogger(CollectionUtils.class);
 	
 	/**
 	 * Hide default constructor.

@@ -18,7 +18,7 @@
 package ch.elca.el4j.services.exceptionhandler.handler;
 
 import org.aopalliance.intercept.MethodInvocation;
-import org.apache.commons.logging.Log;
+import org.slf4j.Logger;
 import org.springframework.aop.target.HotSwappableTargetSource;
 
 import ch.elca.el4j.services.exceptionhandler.AbstractExceptionHandlerInterceptor;
@@ -62,7 +62,7 @@ public abstract class AbstractSwappableTargetExceptionHandler extends
 	 */
 	protected Object retry(Throwable t,
 		AbstractExceptionHandlerInterceptor exceptionInvoker,
-		MethodInvocation invocation, Log logger)
+		MethodInvocation invocation, Logger logger)
 		throws InappropriateHandlerException, RetryException {
 		
 		try {
@@ -105,6 +105,6 @@ public abstract class AbstractSwappableTargetExceptionHandler extends
 	 *      Whenever something goes wrong.
 	 */
 	protected abstract Object getNewTarget(Object current, Throwable t,
-		MethodInvocation invocation, Log logger)
+		MethodInvocation invocation, Logger logger)
 		throws RetryException, Throwable;
 }

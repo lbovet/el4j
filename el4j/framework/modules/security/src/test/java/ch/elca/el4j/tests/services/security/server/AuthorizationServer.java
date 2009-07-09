@@ -16,8 +16,8 @@
  */
 package ch.elca.el4j.tests.services.security.server;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.ConfigurableApplicationContext;
 
 import ch.elca.el4j.core.context.ModuleApplicationContext;
@@ -41,7 +41,7 @@ public class AuthorizationServer {
 	/**
 	 * Logger.
 	 */
-	private static Log s_logger = LogFactory.getLog(AuthorizationServer.class);
+	private static Logger s_logger = LoggerFactory.getLogger(AuthorizationServer.class);
 
 	/** The application context. */
 	private static ConfigurableApplicationContext s_appContext;

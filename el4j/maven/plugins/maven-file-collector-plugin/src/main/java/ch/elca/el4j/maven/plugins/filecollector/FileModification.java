@@ -34,8 +34,8 @@ import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 import java.nio.charset.Charset;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -56,8 +56,8 @@ public class FileModification {
 	/**
 	 * Private logger.
 	 */
-	private static Log s_logger
-		= LogFactory.getLog(FileModification.class);
+	private static Logger s_logger
+		= LoggerFactory.getLogger(FileModification.class);
 	
 	/**
 	 *  Default charset to use for both reading and writing files.

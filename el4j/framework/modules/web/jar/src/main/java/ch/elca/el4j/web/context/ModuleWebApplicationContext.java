@@ -25,8 +25,8 @@ import java.util.Collection;
 import javax.servlet.ServletContext;
 
 import org.apache.commons.lang.ArrayUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
@@ -74,8 +74,8 @@ public class ModuleWebApplicationContext extends XmlWebApplicationContext
 	 * This logger is used to print out some global debugging info. Consult it
 	 * for info what is going on.
 	 */
-	protected static final Log s_el4jLogger
-		= LogFactory.getLog(ModuleApplicationContext.EL4J_DEBUGGING_LOGGER);
+	protected static final Logger s_el4jLogger
+		= LoggerFactory.getLogger(ModuleApplicationContext.EL4J_DEBUGGING_LOGGER);
 
 	/**
 	 * Inclusive config locations.

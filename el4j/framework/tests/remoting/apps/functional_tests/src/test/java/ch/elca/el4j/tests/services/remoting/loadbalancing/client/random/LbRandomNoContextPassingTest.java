@@ -19,8 +19,8 @@ package ch.elca.el4j.tests.services.remoting.loadbalancing.client.random;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.junit.Test;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.context.ApplicationContext;
@@ -105,7 +105,7 @@ public class LbRandomNoContextPassingTest {
 			"classpath*:remoting/loadbalancing/policy/random-policy-config.xml"};
 	} // getInclusiveConfigLocations()
 
-	protected Log getLog() {
+	protected Logger getLog() {
 		return s_logger;
 	} // getLog()
 
@@ -122,8 +122,8 @@ public class LbRandomNoContextPassingTest {
 	/**
 	 * Private logger.
 	 */
-	private static Log s_logger = LogFactory
-		.getLog(LbRandomNoContextPassingTest.class);
+	private static Logger s_logger = LoggerFactory
+		.getLogger(LbRandomNoContextPassingTest.class);
 
 	private ApplicationContext m_applicationContext ;
 	

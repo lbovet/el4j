@@ -21,11 +21,11 @@ import java.net.MalformedURLException;
 import java.util.List;
 
 import org.apache.maven.artifact.DependencyResolutionRequiredException;
-import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.project.MavenProject;
 
+import ch.elca.el4j.maven.plugins.AbstractSlf4jEnabledMojo;
 import ch.elca.el4j.util.classpath.DuplicateClassFinder;
 
 /**
@@ -41,7 +41,7 @@ import ch.elca.el4j.util.classpath.DuplicateClassFinder;
  * @author David Bernhard (DBD)
  * @phase test
  */
-public abstract class AbstractDuplicateFinderMojo extends AbstractMojo {
+public abstract class AbstractDuplicateFinderMojo extends AbstractSlf4jEnabledMojo {
 
 	/**
 	 * The project we are dealing with.

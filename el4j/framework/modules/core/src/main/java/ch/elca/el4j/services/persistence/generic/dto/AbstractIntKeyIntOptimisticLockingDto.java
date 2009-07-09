@@ -24,8 +24,8 @@ import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import ch.elca.el4j.util.codingsupport.Reject;
 
@@ -51,7 +51,7 @@ public abstract class AbstractIntKeyIntOptimisticLockingDto
 	/**
 	 * The logger.
 	 */
-	private static Log s_logger = LogFactory.getLog(AbstractIntKeyIntOptimisticLockingDto.class);
+	private static Logger s_logger = LoggerFactory.getLogger(AbstractIntKeyIntOptimisticLockingDto.class);
 
 	/**
 	 * Primary key.

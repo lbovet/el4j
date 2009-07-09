@@ -16,7 +16,6 @@
  */
 package ch.elca.el4j.maven.plugins.envsupport.handlers;
 
-import org.apache.maven.plugin.logging.Log;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
@@ -39,10 +38,9 @@ public class ExplainBeanOverridesHandler extends AbstractExplainHandler {
 	
 	/**
 	 * @param mojo      the current mojo
-	 * @param logger    the maven logger
 	 */
-	public ExplainBeanOverridesHandler(AbstractEnvSupportMojo mojo, Log logger) {
-		super(mojo, logger);
+	public ExplainBeanOverridesHandler(AbstractEnvSupportMojo mojo) {
+		super(mojo);
 	}
 	
 	/** {@inheritDoc} */

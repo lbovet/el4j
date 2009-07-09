@@ -18,8 +18,8 @@
 package ch.elca.el4j.services.exceptionhandler.handler;
 
 import org.aopalliance.intercept.MethodInvocation;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import ch.elca.el4j.services.exceptionhandler.AbstractExceptionHandlerInterceptor;
 
@@ -39,7 +39,7 @@ import ch.elca.el4j.services.exceptionhandler.AbstractExceptionHandlerIntercepto
 public abstract class AbstractExceptionHandler implements ExceptionHandler {
 
 	/** The logger. */
-	private Log m_logger = LogFactory.getLog(getClass());
+	private Logger m_logger = LoggerFactory.getLogger(getClass());
 	
 	/**
 	 * Sets whether the dynamic logger which is the one of the target class.
@@ -49,7 +49,7 @@ public abstract class AbstractExceptionHandler implements ExceptionHandler {
 	 *      the one of the concrete exception handler otherwise.
 	 */
 	public void setUseDynamicLogger(boolean useDyanmicLog) {
-		m_logger = useDyanmicLog ? null : LogFactory.getLog(getClass());
+		m_logger = useDyanmicLog ? null : LoggerFactory.getLogger(getClass());
 	}
 	
 	/**
@@ -82,7 +82,7 @@ public abstract class AbstractExceptionHandler implements ExceptionHandler {
 	 */
 	protected abstract Object handleException(Throwable t,
 		AbstractExceptionHandlerInterceptor exceptionInvoker,
-		MethodInvocation invocation, Log logger) throws Throwable;
+		MethodInvocation invocation, Logger logger) throws Throwable;
 
 	/**
 	 * Pretty-prints the invocation. This method is intended to be used for
@@ -115,8 +115,8 @@ public abstract class AbstractExceptionHandler implements ExceptionHandler {
 	 * @return Returns this class' logger, if dynamic logging is disabled and
 	 *      otherwise the method invocation target's one.
 	 */
-	private Log getLoggerForInvocation(MethodInvocation invocation) {
+	private Logger getLoggerForInvocation(MethodInvocation invocation) {
 		return (m_logger != null)
-			? m_logger : LogFactory.getLog(invocation.getThis().getClass());
+			? m_logger : LoggerFactory.getLogger(invocation.getThis().getClass());
 	}
 }

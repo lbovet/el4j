@@ -26,8 +26,8 @@ import java.util.List;
 import java.util.jar.Attributes;
 import java.util.jar.Manifest;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;
 import org.springframework.util.ClassUtils;
 import org.springframework.util.StringUtils;
@@ -66,8 +66,8 @@ public class ManifestOrderedConfigLocationProvider
 	public static final String CONFIG_DEPENDENCIES = "Dependencies";
 	
 	/** Private logger. */
-	private static Log s_logger
-		= LogFactory.getLog(ManifestOrderedConfigLocationProvider.class);
+	private static Logger s_logger
+		= LoggerFactory.getLogger(ManifestOrderedConfigLocationProvider.class);
 	
 	/**
 	 * The sorted list of configuration locations.

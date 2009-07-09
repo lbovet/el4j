@@ -27,8 +27,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.ArrayUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.core.io.support.ResourcePatternResolver;
@@ -58,7 +58,7 @@ public class ListResourcePatternResolverDecorator
 	implements ResourcePatternResolver {
 
 	/** The static logger. */
-	private static Log s_logger = LogFactory.getLog(
+	private static Logger s_logger = LoggerFactory.getLogger(
 			ListResourcePatternResolverDecorator.class);
 	
 	/** The (ordered) list of configuration locations. */

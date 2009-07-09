@@ -15,8 +15,8 @@ import java.util.Map;
 import javax.persistence.Entity;
 
 import org.apache.commons.lang.ArrayUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -54,8 +54,8 @@ import org.springframework.util.StringUtils;
 public class EntityDetectorAnnotationSessionFactoryBean extends AnnotationSessionFactoryBean
 	implements InitializingBean {
 
-	private static final Log s_logger =
-		LogFactory.getLog(EntityDetectorAnnotationSessionFactoryBean.class);
+	private static final Logger s_logger =
+		LoggerFactory.getLogger(EntityDetectorAnnotationSessionFactoryBean.class);
 
 	/**
 	 * Package name for given set of entities.
@@ -183,7 +183,7 @@ public class EntityDetectorAnnotationSessionFactoryBean extends AnnotationSessio
 				super.setAnnotatedClasses(localAnnotatedClasses);
 
 			} catch (Exception e) {
-				s_logger.fatal(e);
+				s_logger.error(e.toString());
 				throw new RuntimeException(e);
 			}
 

@@ -28,8 +28,8 @@ import org.acegisecurity.context.SecurityContext;
 import org.acegisecurity.context.SecurityContextHolder;
 import org.acegisecurity.context.SecurityContextImpl;
 import org.acegisecurity.providers.TestingAuthenticationToken;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 
@@ -56,8 +56,8 @@ import ch.elca.el4j.tests.services.security.sample.SampleService;
 public class AuthorizationLocalTest {
 	
 	/** The static logger. */
-	private static Log s_logger = LogFactory
-		.getLog(AuthorizationLocalTest.class);
+	private static Logger s_logger = LoggerFactory
+		.getLogger(AuthorizationLocalTest.class);
 
 	/**
 	 * Method access role.

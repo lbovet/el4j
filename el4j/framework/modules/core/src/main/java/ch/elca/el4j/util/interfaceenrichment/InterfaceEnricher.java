@@ -31,8 +31,8 @@ import org.apache.bcel.generic.ConstantPoolGen;
 import org.apache.bcel.generic.MethodGen;
 import org.apache.bcel.generic.ObjectType;
 import org.apache.bcel.generic.Type;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import net.sf.cglib.core.ReflectUtils;
 
@@ -74,7 +74,7 @@ public class InterfaceEnricher {
 	/**
 	 * Private logger of this class.
 	 */
-	private static Log s_logger = LogFactory.getLog(InterfaceEnricher.class);
+	private static Logger s_logger = LoggerFactory.getLogger(InterfaceEnricher.class);
 
 	/**
 	 * Creates a shadow interface and returns it as a byte array.

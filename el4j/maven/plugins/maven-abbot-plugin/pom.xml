@@ -54,12 +54,6 @@
 			<groupId>org.apache.maven</groupId>
 			<artifactId>maven-project</artifactId>
 		</dependency>
-		<!--
-		<dependency>
-			<groupId>commons-logging</groupId>
-			<artifactId>commons-logging</artifactId>
-		</dependency>
-		-->
 		<dependency>
 			<groupId>net.sf.abbot</groupId>
 			<artifactId>abbot</artifactId>

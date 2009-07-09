@@ -30,6 +30,9 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import ch.elca.el4j.util.env.EnvPropertiesUtils;
 
 /**
@@ -76,8 +79,8 @@ public class IPAddressFilter implements Filter {
 	public static final String WILDCARD = "*";
 
 	/**     */
-	private static org.apache.commons.logging.Log s_log
-		= org.apache.commons.logging.LogFactory.getLog(IPAddressFilter.class);
+	private static Logger s_log
+		= LoggerFactory.getLogger(IPAddressFilter.class);
 
 	/**     */
 	private List<Pattern> m_ipList;

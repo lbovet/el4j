@@ -20,8 +20,8 @@ import static org.junit.Assert.fail;
 
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -94,7 +94,7 @@ public class TcpForwarderTest {
 	/**
 	 * Private logger.
 	 */
-	private static Log s_logger = LogFactory.getLog(TcpForwarderTest.class);
+	private static Logger s_logger = LoggerFactory.getLogger(TcpForwarderTest.class);
 	
 	/**
 	 * Application context to load beans.

@@ -18,7 +18,7 @@
 package ch.elca.el4j.services.exceptionhandler.handler;
 
 import org.aopalliance.intercept.MethodInvocation;
-import org.apache.commons.logging.Log;
+import org.slf4j.Logger;
 
 import ch.elca.el4j.services.exceptionhandler.AbstractExceptionHandlerInterceptor;
 import ch.elca.el4j.services.exceptionhandler.RetryException;
@@ -47,7 +47,7 @@ public abstract class AbstractReconfigureExceptionHandler extends
 	 */
 	protected Object retry(Throwable t,
 			AbstractExceptionHandlerInterceptor exceptionInvoker,
-			MethodInvocation invocation, Log logger) throws Throwable {
+			MethodInvocation invocation, Logger logger) throws Throwable {
 
 		reconfigure(t, invocation, logger);
 		throw new RetryException(getRetries());
@@ -67,5 +67,5 @@ public abstract class AbstractReconfigureExceptionHandler extends
 	 *      The logger.
 	 */
 	protected abstract void reconfigure(Throwable t,
-			MethodInvocation invocation, Log logger);
+			MethodInvocation invocation, Logger logger);
 }

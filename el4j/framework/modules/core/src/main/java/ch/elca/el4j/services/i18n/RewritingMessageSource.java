@@ -25,8 +25,8 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.MessageSource;
 import org.springframework.context.MessageSourceResolvable;
 import org.springframework.context.NoSuchMessageException;
@@ -60,8 +60,8 @@ public class RewritingMessageSource implements MessageSource {
 		= new HashMap<Locale, MessageRewriter>();
 	
 	/** The logger. (duh!) */
-	protected static final Log s_logger
-		= LogFactory.getLog(RewritingMessageSource.class);
+	protected static final Logger s_logger
+		= LoggerFactory.getLogger(RewritingMessageSource.class);
 	
 	/**
 	 * Like {@link
@@ -163,7 +163,7 @@ public class RewritingMessageSource implements MessageSource {
 			try {
 				return getMessage(key, resolvable.getArguments(), locale);
 			} catch (NoSuchMessageException e) {
-				s_logger.info(e);
+				s_logger.info(e.toString());
 				if (ex == null) {
 					ex = e;
 				}

@@ -16,8 +16,8 @@
  */
 package ch.elca.el4j.services.debug;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.ApplicationContext;
@@ -69,8 +69,8 @@ public class BshCommandLineLauncher implements ApplicationContextAware, Initiali
 	public static final String BSH_LAUNCH_STRING = "el4j.bsh.launchstr";
 	public static final String BSH_SCRIPLET_CLASSPATH = "/bsh_scriptlets";
 	
-	private static Log s_logger
-		= LogFactory.getLog(BshCommandLineLauncher.class);
+	private static Logger s_logger
+		= LoggerFactory.getLogger(BshCommandLineLauncher.class);
 	
 	protected ShellExecutorImpl shell;
 	

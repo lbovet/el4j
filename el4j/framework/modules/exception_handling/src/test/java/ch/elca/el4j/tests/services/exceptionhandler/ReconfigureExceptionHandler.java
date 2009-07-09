@@ -18,7 +18,7 @@
 package ch.elca.el4j.tests.services.exceptionhandler;
 
 import org.aopalliance.intercept.MethodInvocation;
-import org.apache.commons.logging.Log;
+import org.slf4j.Logger;
 
 import ch.elca.el4j.services.exceptionhandler.InappropriateHandlerException;
 import ch.elca.el4j.services.exceptionhandler.handler.AbstractReconfigureExceptionHandler;
@@ -56,7 +56,7 @@ public class ReconfigureExceptionHandler extends
 	 * {@inheritDoc}
 	 */
 	protected void reconfigure(Throwable t, MethodInvocation invocation,
-			Log logger) {
+		 Logger logger) {
 		
 		if (!"add".equals(invocation.getMethod().getName())) {
 			throw new InappropriateHandlerException();

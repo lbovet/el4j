@@ -31,8 +31,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Properties;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.jdom.Element;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
@@ -71,8 +71,8 @@ import ch.elca.el4j.services.xmlmerge.merge.DefaultXmlMerge;
  */
 public class DefaultMergeTest {
 
-	private static Log logger
-		= LogFactory.getLog(DefaultMergeTest.class);
+	private static Logger logger
+		= LoggerFactory.getLogger(DefaultMergeTest.class);
 	
 	/**
 	 * New line.

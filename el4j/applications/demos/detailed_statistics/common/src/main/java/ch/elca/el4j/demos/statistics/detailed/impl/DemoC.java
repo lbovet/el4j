@@ -16,8 +16,8 @@
  */
 package ch.elca.el4j.demos.statistics.detailed.impl;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *  This class is a dummy class for presentation purposes for the
@@ -37,8 +37,8 @@ public class DemoC {
 	/**
 	 * Logger.
 	 */
-	private static Log s_logger
-		= LogFactory.getLog(DemoC.class);
+	private static Logger s_logger
+		= LoggerFactory.getLogger(DemoC.class);
 	
 	/**
 	 * Print "Hi" on console.

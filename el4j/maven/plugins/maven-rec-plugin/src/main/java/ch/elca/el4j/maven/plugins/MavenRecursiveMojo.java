@@ -29,7 +29,6 @@ import java.util.Properties;
 import org.apache.maven.artifact.metadata.ArtifactMetadataSource;
 import org.apache.maven.artifact.repository.ArtifactRepository;
 import org.apache.maven.model.Dependency;
-import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.profiles.DefaultProfileManager;
@@ -57,7 +56,7 @@ import org.jdom.JDOMException;
  * @author chd
  * @goal execute
  */
-public class MavenRecursiveMojo extends AbstractMojo {
+public class MavenRecursiveMojo extends AbstractSlf4jEnabledMojo {
 
 	/**
 	 * Name of bootstrap-xml-file.
@@ -400,8 +399,7 @@ public class MavenRecursiveMojo extends AbstractMojo {
 				cl.setExecutable("mvn");
 				cl.createArg().setLine(command);
 
-				BufferedLogConsumer blg = new BufferedLogConsumer(
-					getLog());
+				BufferedLogConsumer blg = new BufferedLogConsumer();
 				int result = -1;
 
 				getLog().info(

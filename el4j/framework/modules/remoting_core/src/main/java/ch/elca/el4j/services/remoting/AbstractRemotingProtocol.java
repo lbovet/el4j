@@ -20,8 +20,8 @@ package ch.elca.el4j.services.remoting;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.ApplicationContext;
@@ -47,8 +47,8 @@ public abstract class AbstractRemotingProtocol implements
 	/**
 	 * Private logger.
 	 */
-	private static Log s_logger
-		= LogFactory.getLog(AbstractRemotingProtocol.class);
+	private static Logger s_logger
+		= LoggerFactory.getLogger(AbstractRemotingProtocol.class);
 
 	/**
 	 * With this ApplicationContext the current bean has been created.

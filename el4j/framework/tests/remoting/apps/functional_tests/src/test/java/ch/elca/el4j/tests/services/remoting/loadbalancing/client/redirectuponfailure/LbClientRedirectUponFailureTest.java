@@ -20,8 +20,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.junit.Test;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.context.ApplicationContext;
@@ -142,7 +142,7 @@ public class LbClientRedirectUponFailureTest {
 			"classpath:remoting/loadbalancing/policy/redirectuponfailure-policy-config.xml"};
 	} // getInclusiveConfigLocations()
 
-	protected Log getLog() {
+	protected Logger getLog() {
 		return s_logger;
 	} // getLog()
 
@@ -159,8 +159,8 @@ public class LbClientRedirectUponFailureTest {
 	/**
 	 * Private logger.
 	 */
-	private static Log s_logger = LogFactory
-		.getLog(LbClientRedirectUponFailureTest.class);
+	private static Logger s_logger = LoggerFactory
+		.getLogger(LbClientRedirectUponFailureTest.class);
 
 	private ApplicationContext m_applicationContext;
 

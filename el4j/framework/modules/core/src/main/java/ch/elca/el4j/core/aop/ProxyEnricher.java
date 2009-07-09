@@ -21,8 +21,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.aop.Advisor;
 import org.springframework.aop.TargetSource;
 import org.springframework.aop.framework.Advised;
@@ -48,8 +48,8 @@ public class ProxyEnricher {
 	/**
 	 * Private logger.
 	 */
-	private static Log s_logger
-		= LogFactory.getLog(ProxyEnricher.class);
+	private static Logger s_logger
+		= LoggerFactory.getLogger(ProxyEnricher.class);
 	
 	/**
 	 * Hide default constructor.

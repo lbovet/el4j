@@ -20,9 +20,9 @@ import java.lang.reflect.Method;
 
 import javax.xml.ws.Service;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.jvnet.jax_ws_commons.spring.SpringService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.sun.xml.ws.client.sei.SEIStub;
 import com.sun.xml.ws.transport.http.servlet.SpringBinding;
@@ -50,7 +50,7 @@ public class Jaxws extends AbstractInetSocketAddressWebProtocol {
 	/**
 	 * The logger.
 	 */
-	protected static final Log s_logger = LogFactory.getLog(Jaxws.class);
+	protected static final Logger s_logger = LoggerFactory.getLogger(Jaxws.class);
 
 	
 	/** {@inheritDoc} */

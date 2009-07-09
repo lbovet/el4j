@@ -22,8 +22,8 @@ import java.lang.reflect.Method;
 
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.aop.framework.ReflectiveMethodInvocation;
 import org.springframework.aop.target.HotSwappableTargetSource;
 
@@ -47,7 +47,7 @@ public abstract class AbstractExceptionHandlerInterceptor
 	protected static final ThreadLocal s_retries = new ThreadLocal();
 	
 	/** The static logger. */
-	private static Log s_logger = LogFactory.getLog(
+	private static Logger s_logger = LoggerFactory.getLogger(
 			AbstractExceptionHandlerInterceptor.class);
 
 	/**

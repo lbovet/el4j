@@ -26,8 +26,8 @@ import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * A TcpForwarder represents a service intended to forward TCP traffic
@@ -54,8 +54,8 @@ public class TcpForwarder implements Runnable {
 	/**
 	 * Private logger.
 	 */
-	private static Log s_logger
-		= LogFactory.getLog(TcpForwarder.class);
+	private static Logger s_logger
+		= LoggerFactory.getLogger(TcpForwarder.class);
 	
 	/**
 	 * The listen port.

@@ -235,7 +235,7 @@ public class ClassInspector {
 		 * <code>null</code> for packages.
 		 */
 		List <String> m_locations;
- 
+		
 		/**
 		 * Whether this is a "warning" node -
 		 * either a duplicated class or a parent of one.

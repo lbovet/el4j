@@ -21,8 +21,8 @@ import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import org.apache.commons.codec.binary.Base64;
 
@@ -48,7 +48,7 @@ public class AESCipher {
 	/**
 	 * The logger.
 	 */
-	private static Log s_logger = LogFactory.getLog(AESCipher.class);
+	private static Logger s_logger = LoggerFactory.getLogger(AESCipher.class);
 	
 	/**
 	 * Cipher used for encryption.

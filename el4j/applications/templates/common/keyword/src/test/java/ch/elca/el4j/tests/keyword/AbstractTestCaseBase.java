@@ -22,8 +22,8 @@ import java.sql.Statement;
 
 import javax.sql.DataSource;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.junit.Before;
 
 import ch.elca.el4j.tests.core.AbstractTest;
@@ -44,7 +44,7 @@ public abstract class AbstractTestCaseBase extends AbstractTest {
 	/**
 	 * Private logger.
 	 */
-	private static Log s_logger = LogFactory.getLog(AbstractTestCaseBase.class);
+	private static Logger s_logger = LoggerFactory.getLogger(AbstractTestCaseBase.class);
 
 	/**
 	 * Data source. Created by application context.

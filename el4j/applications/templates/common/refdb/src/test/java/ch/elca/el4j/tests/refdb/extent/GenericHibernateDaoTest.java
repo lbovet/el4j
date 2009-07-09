@@ -23,8 +23,8 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.hibernate.LazyInitializationException;
 import org.junit.Test;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -71,8 +71,8 @@ public class GenericHibernateDaoTest extends AbstractTestCaseBase {
 	/**
 	 * Private logger.
 	 */
-	protected static Log s_logger
-		= LogFactory.getLog(GenericHibernateDaoTest.class);
+	protected static Logger s_logger
+		= LoggerFactory.getLogger(GenericHibernateDaoTest.class);
 	
 	/**
 	 * Person DAO. Created by application context.

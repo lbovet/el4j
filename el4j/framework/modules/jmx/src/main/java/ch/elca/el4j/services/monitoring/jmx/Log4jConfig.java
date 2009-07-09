@@ -33,8 +33,8 @@ import javax.management.MalformedObjectNameException;
 import javax.management.NotCompliantMBeanException;
 import javax.management.ObjectName;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.log4j.Appender;
 import org.apache.log4j.Level;
 import org.apache.log4j.LogManager;
@@ -80,7 +80,7 @@ public class Log4jConfig implements Log4jConfigMBean {
 	/**
 	 * Private logger of this class.
 	 */
-	private static Log s_logger = LogFactory.getLog(SpringBeanMB.class);
+	private static Logger s_logger = LoggerFactory.getLogger(SpringBeanMB.class);
 
 	/**
 	 * The Application Context where this Spring Bean is registered at.

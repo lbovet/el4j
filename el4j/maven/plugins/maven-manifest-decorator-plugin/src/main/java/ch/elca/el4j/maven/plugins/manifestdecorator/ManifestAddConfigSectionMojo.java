@@ -24,13 +24,14 @@ import java.util.Properties;
 
 import org.apache.maven.model.Build;
 import org.apache.maven.model.Dependency;
-import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.project.MavenProject;
 import org.codehaus.plexus.util.FileUtils;
 import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
+
+import ch.elca.el4j.maven.plugins.AbstractSlf4jEnabledMojo;
 
 
 /**
@@ -49,7 +50,7 @@ import org.springframework.util.StringUtils;
  * @phase package
  * @requiresProject true
  */
-public class ManifestAddConfigSectionMojo extends AbstractMojo {
+public class ManifestAddConfigSectionMojo extends AbstractSlf4jEnabledMojo {
 	// Checkstyle: MemberName off
 	
 	/**

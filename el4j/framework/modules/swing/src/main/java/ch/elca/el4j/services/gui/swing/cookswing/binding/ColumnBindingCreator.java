@@ -16,8 +16,8 @@
  */
 package ch.elca.el4j.services.gui.swing.cookswing.binding;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import org.jdesktop.application.ApplicationContext;
 import org.jdesktop.beansbinding.Property;
@@ -49,7 +49,7 @@ public class ColumnBindingCreator extends AbstractBindingCreator {
 	/**
 	 * The logger.
 	 */
-	private static Log s_logger = LogFactory.getLog(ColumnBindingCreator.class);
+	private static Logger s_logger = LoggerFactory.getLogger(ColumnBindingCreator.class);
 	
 	// <column> specific attributes
 	protected static final String LABEL = "label";

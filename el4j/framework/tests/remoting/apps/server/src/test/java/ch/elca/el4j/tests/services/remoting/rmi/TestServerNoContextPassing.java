@@ -16,8 +16,8 @@
  */
 package ch.elca.el4j.tests.services.remoting.rmi;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 
 import ch.elca.el4j.tests.services.remoting.loadbalancing.common.BusinessObject;
@@ -36,7 +36,7 @@ public class TestServerNoContextPassing {
 	/**
 	 * Private logger.
 	 */
-	private static Log s_logger = LogFactory.getLog(TestServerNoContextPassing.class);
+	private static Logger s_logger = LoggerFactory.getLogger(TestServerNoContextPassing.class);
 
 	/** {@inheritDoc} */
 	public static void main(String args[]) {

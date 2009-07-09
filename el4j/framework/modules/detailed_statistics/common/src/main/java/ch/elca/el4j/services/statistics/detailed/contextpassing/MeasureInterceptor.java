@@ -24,8 +24,8 @@ import java.util.Map;
 
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import ch.elca.el4j.services.statistics.detailed.MeasureId;
 import ch.elca.el4j.services.statistics.detailed.MeasureItem;
@@ -78,7 +78,7 @@ public class MeasureInterceptor  implements MethodInterceptor {
 	/**
 	 * Private logger.
 	 */
-	private static Log s_logger = LogFactory.getLog(MeasureInterceptor.class);
+	private static Logger s_logger = LoggerFactory.getLogger(MeasureInterceptor.class);
 		
 	/**
 	 * ThreadLocal variables to store the measureId locally in the thread.
@@ -174,7 +174,7 @@ public class MeasureInterceptor  implements MethodInterceptor {
 			seqNumber = context.getSequenceNumber();
 			seqNumber++;
 	
-			s_logger.info(methodInvocation);
+			s_logger.info(methodInvocation.toString());
 			s_logger.info("depth:" + context.getDepth());
 				
 			/* ----------------------------------------------------------------

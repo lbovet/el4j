@@ -21,8 +21,8 @@ import com.silvermindsoftware.hitch.BinderManager;
 import com.silvermindsoftware.hitch.ReadOnly;
 import com.silvermindsoftware.hitch.meta.FormMeta;
 import com.silvermindsoftware.hitch.reflect.ClassManager;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -40,7 +40,7 @@ import java.util.Map;
  */
 public class BinderConfig {
 
-	private static final Log log = LogFactory.getLog(BinderConfig.class);
+	private static final Logger log = LoggerFactory.getLogger(BinderConfig.class);
 	private FormMeta formMeta;
 	private FormConfig formConfig;
 

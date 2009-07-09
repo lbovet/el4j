@@ -19,8 +19,8 @@ package ch.elca.el4j.services.remoting.protocol.loadbalancing.policy;
 import java.util.Calendar;
 import java.util.Random;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import ch.elca.el4j.services.remoting.AbstractRemotingProtocol;
 import ch.elca.el4j.services.remoting.protocol.loadbalancing.NoProtocolAvailableRTException;
@@ -44,8 +44,8 @@ public class RandomPolicy extends AbstractPolicy {
 	/**
 	 * Private logger.
 	 */
-	private static Log s_logger = LogFactory
-			.getLog(RandomPolicy.class);
+	private static Logger s_logger = LoggerFactory
+			.getLogger(RandomPolicy.class);
 
 	/**
 	 * Random number generator.

@@ -24,8 +24,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.codehaus.plexus.util.FileUtils;
 import org.codehaus.plexus.util.StringUtils;
@@ -94,8 +94,8 @@ public class GraphvizProjector implements DepGraphProjector {
 	/**
 	 * Logger.
 	 */
-	private static Log s_log = LogFactory
-		.getLog(GraphvizProjector.class);
+	private static Logger s_log = LoggerFactory
+		.getLogger(GraphvizProjector.class);
 
 	/**
 	 * Id counter.

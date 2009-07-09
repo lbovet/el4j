@@ -17,8 +17,8 @@
 
 package ch.elca.el4j.tests.util.metadata.annotations;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 //Checkstyle: MagicNumber off
 /**
@@ -43,7 +43,7 @@ public class FooImpl implements Foo {
 		/**
 		 * Private logger of this inner class.
 		 */
-		private static Log s_innerLogger = LogFactory.getLog(Bar.class);
+		private static Logger s_innerLogger = LoggerFactory.getLogger(Bar.class);
 
 		/**
 		 * This method does a log.
@@ -61,7 +61,7 @@ public class FooImpl implements Foo {
 	/**
 	 * Private logger of this class.
 	 */
-	private static Log s_logger = LogFactory.getLog(FooImpl.class);
+	private static Logger s_logger = LoggerFactory.getLogger(FooImpl.class);
 
 	/**
 	 * The base member variable.

@@ -29,8 +29,8 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.hibernate.Hibernate;
 import org.hibernate.lob.BlobImpl;
 import org.hibernate.validator.NotNull;
@@ -55,7 +55,7 @@ public class File extends AbstractFile {
 	/**
 	 * Private logger.
 	 */
-	private static Log s_logger = LogFactory.getLog(File.class);
+	private static Logger s_logger = LoggerFactory.getLogger(File.class);
 	
 	/** See corresponding setter method for more details. */
 	private byte[] m_content;

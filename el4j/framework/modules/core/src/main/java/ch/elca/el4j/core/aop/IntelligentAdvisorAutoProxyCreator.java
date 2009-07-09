@@ -19,8 +19,8 @@ package ch.elca.el4j.core.aop;
 import java.lang.reflect.Proxy;
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.aop.TargetSource;
 import org.springframework.aop.framework.adapter.AdvisorAdapterRegistry;
 import org.springframework.aop.framework.adapter.GlobalAdvisorAdapterRegistry;
@@ -51,8 +51,8 @@ import ch.elca.el4j.util.codingsupport.AopHelper;
 public class IntelligentAdvisorAutoProxyCreator
 	extends DefaultAdvisorAutoProxyCreator {
 	
-	protected static final Log s_logger = 
-		LogFactory.getLog(IntelligentAdvisorAutoProxyCreator.class);	
+	protected static final Logger s_logger = 
+		LoggerFactory.getLogger(IntelligentAdvisorAutoProxyCreator.class);
 	
 	/**
 	 * COPYIED FROM SUPERCLASS!

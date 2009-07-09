@@ -18,7 +18,8 @@ package ch.elca.el4j.maven.plugins.envsupport.handlers;
 
 import java.util.Properties;
 
-import org.apache.maven.plugin.logging.Log;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;
 import org.xml.sax.Attributes;
 
@@ -43,7 +44,7 @@ public abstract class AbstractExplainHandler extends AbstractInheritableProperty
 	/**
 	 * The maven logger.
 	 */
-	protected final Log m_logger;
+	protected final Logger m_logger = LoggerFactory.getLogger(AbstractExplainHandler.class);
 	
 	/**
 	 * Is the resource info header already printed to logger?
@@ -57,11 +58,9 @@ public abstract class AbstractExplainHandler extends AbstractInheritableProperty
 	
 	/**
 	 * @param mojo      the current mojo
-	 * @param logger    the maven logger
 	 */
-	public AbstractExplainHandler(AbstractEnvSupportMojo mojo, Log logger) {
+	public AbstractExplainHandler(AbstractEnvSupportMojo mojo) {
 		m_mojo = mojo;
-		m_logger = logger;
 	}
 	
 	/** {@inheritDoc} */

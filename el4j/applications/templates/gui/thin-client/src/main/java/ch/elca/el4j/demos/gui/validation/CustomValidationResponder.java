@@ -22,8 +22,8 @@ import java.util.Map;
 
 import javax.swing.JComponent;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.hibernate.validator.InvalidValue;
 
 import com.silvermindsoftware.hitch.validation.HibernateValidationCapability;
@@ -47,7 +47,7 @@ public class CustomValidationResponder extends DefaultValidationResponder {
 	/**
 	 * The logger.
 	 */
-	private static final Log s_logger = LogFactory.getLog(
+	private static final Logger s_logger = LoggerFactory.getLogger(
 		DefaultValidationResponder.class);
 	
 	/**

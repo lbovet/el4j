@@ -19,7 +19,7 @@ package ch.elca.el4j.services.exceptionhandler.handler;
 
 import java.lang.reflect.Constructor;
 
-import org.apache.commons.logging.Log;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.InitializingBean;
 
 import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
@@ -56,7 +56,7 @@ public class SimpleExceptionTransformerExceptionHandler
 	/**
 	 * {@inheritDoc}
 	 */
-	protected Exception transform(Throwable t, Log logger) {
+	protected Exception transform(Throwable t, Logger logger) {
 		Exception e = createExceptionWithMessageAndThrowable(t);
 		if (e == null) {
 			e = createExceptionWithMessage(t);
