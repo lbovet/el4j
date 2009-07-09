@@ -25,7 +25,7 @@ import org.codehaus.plexus.util.xml.Xpp3Dom;
 import org.codehaus.plexus.util.xml.Xpp3DomBuilder;
 import org.codehaus.plexus.util.xml.Xpp3DomWriter;
 
-import ch.elca.el4j.maven.plugins.beans.BeansMojo.LogCallback;
+import ch.elca.el4j.maven.plugins.beans.SpringIDEMojo.LogCallback;
 
 /**
  * 

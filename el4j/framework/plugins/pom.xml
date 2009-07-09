@@ -48,7 +48,7 @@
 	</build>
 	<modules>
 		<module>utils</module>
-		<module>maven-beans-plugin</module>
+		<module>maven-spring-ide-plugin</module>
 		<module>maven-database-plugin</module>
 		<module>maven-cobertura-runtime-plugin</module>
 		<module>maven-depgraph-plugin</module>

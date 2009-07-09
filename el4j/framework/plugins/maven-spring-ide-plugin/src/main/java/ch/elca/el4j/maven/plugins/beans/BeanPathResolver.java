@@ -24,7 +24,7 @@ import java.util.List;
 import ch.elca.el4j.core.context.ModuleApplicationContext;
 import ch.elca.el4j.core.context.ModuleApplicationContextConfiguration;
 import ch.elca.el4j.core.context.ModuleApplicationContextUtils;
-import ch.elca.el4j.maven.plugins.beans.BeansMojo.LogCallback;
+import ch.elca.el4j.maven.plugins.beans.SpringIDEMojo.LogCallback;
 import ch.elca.el4j.maven.plugins.beans.resolvers.Resolver;
 import ch.elca.el4j.maven.plugins.beans.resolvers.ResolverManager;
 
