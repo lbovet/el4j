@@ -26,8 +26,25 @@
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>exec-maven-plugin</artifactId>
 				<configuration>
-					<mainClass>ch.elca.el4j.demos.gui.MainFormDistributedMDI</mainClass>
+				<mainClass>ch.elca.el4j.demos.gui.MainFormDistributedMDI</mainClass>
 				</configuration>
+			</plugin>
+			<plugin>
+			<groupId>ch.elca.el4j.maven.plugins</groupId>
+			<artifactId>maven-spring-ide-plugin</artifactId>
+				<configuration>
+					<sourceFile>
+						ch.elca.el4j.demos.gui.MainFormDistributedMDI 
+					</sourceFile> 
+				</configuration> 
+				<executions>
+					<execution>
+						<phase>verify</phase>
+						<goals>
+							<goal>spring-ide</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
@@ -46,7 +63,6 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-
 		<!-- EL4J framework modules -->
 		<dependency>
 			<groupId>ch.elca.el4j.modules</groupId>
