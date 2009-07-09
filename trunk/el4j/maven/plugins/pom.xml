@@ -56,7 +56,6 @@
 		<module>maven-jaxws-plugin</module>
 		<module>maven-rec-plugin</module>
 		<module>maven-abbot-plugin</module>
-		<module>maven-duplicatefinder-plugin</module>
 	</modules>
 	<dependencies>
 		<dependency>

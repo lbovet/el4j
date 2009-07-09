@@ -48,10 +48,11 @@
 	</build>
 	<modules>
 		<module>utils</module>
-		<module>maven-spring-ide-plugin</module>
-		<module>maven-database-plugin</module>
 		<module>maven-cobertura-runtime-plugin</module>
+		<module>maven-database-plugin</module>
 		<module>maven-depgraph-plugin</module>
+		<module>maven-duplicatefinder-plugin</module>
 		<module>maven-env-support-plugin</module>
+		<module>maven-spring-ide-plugin</module>
 	</modules>
 </project>
