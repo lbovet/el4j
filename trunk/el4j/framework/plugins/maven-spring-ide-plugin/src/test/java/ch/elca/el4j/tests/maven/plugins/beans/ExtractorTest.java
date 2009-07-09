@@ -19,7 +19,7 @@ package ch.elca.el4j.tests.maven.plugins.beans;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 
-import ch.elca.el4j.maven.plugins.beans.ConfigurationExtractor;
+import ch.elca.el4j.maven.plugins.springide.ConfigurationExtractor;
 
 import junit.framework.TestCase;
 

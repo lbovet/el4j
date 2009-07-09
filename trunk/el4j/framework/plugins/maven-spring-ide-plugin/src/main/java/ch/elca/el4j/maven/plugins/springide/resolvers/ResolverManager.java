@@ -14,7 +14,7 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.maven.plugins.beans.resolvers;
+package ch.elca.el4j.maven.plugins.springide.resolvers;
 
 import java.io.File;
 import java.io.IOException;

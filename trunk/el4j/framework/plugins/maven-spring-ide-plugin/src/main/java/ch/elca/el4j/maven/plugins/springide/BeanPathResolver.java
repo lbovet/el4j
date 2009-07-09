@@ -14,7 +14,7 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.maven.plugins.beans;
+package ch.elca.el4j.maven.plugins.springide;
 
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -24,9 +24,9 @@ import java.util.List;
 import ch.elca.el4j.core.context.ModuleApplicationContext;
 import ch.elca.el4j.core.context.ModuleApplicationContextConfiguration;
 import ch.elca.el4j.core.context.ModuleApplicationContextUtils;
-import ch.elca.el4j.maven.plugins.beans.SpringIDEMojo.LogCallback;
-import ch.elca.el4j.maven.plugins.beans.resolvers.Resolver;
-import ch.elca.el4j.maven.plugins.beans.resolvers.ResolverManager;
+import ch.elca.el4j.maven.plugins.springide.SpringIDEMojo.LogCallback;
+import ch.elca.el4j.maven.plugins.springide.resolvers.Resolver;
+import ch.elca.el4j.maven.plugins.springide.resolvers.ResolverManager;
 
 /**
  * Creates a bean path (array of beans files) from a ModuleApplicationContext -
@@ -214,9 +214,9 @@ public class BeanPathResolver {
 	
 	/**
 	 * Inject the mojo logger from the mojo.
-	 * @param log The mojo logger.
+	 * @param logCallback The mojo logger.
 	 */
-	void setLogger(LogCallback log) {
-		m_logger = log;
+	void setLogger(LogCallback logCallback) {
+		m_logger = logCallback;
 	}
 }
