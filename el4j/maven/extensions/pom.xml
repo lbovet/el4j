@@ -10,21 +10,19 @@
 	<!-- Author: $Author$ -->
 	
 	<parent>
-		<groupId>ch.elca.el4j</groupId>
-		<artifactId>el4j</artifactId>
+		<groupId>ch.elca.el4j.maven</groupId>
+		<artifactId>el4j-maven</artifactId>
 		<version>1.7-SNAPSHOT</version>
 	</parent>
 	
-	<groupId>ch.elca.el4j.maven</groupId>
-	<artifactId>el4j-maven</artifactId>
+	<groupId>ch.elca.el4j.maven.extensions</groupId>
+	<artifactId>el4j-maven-extensions</artifactId>
 	<packaging>pom</packaging>
-	<name>EL4J maven</name>
+	<name>EL4J maven extensions</name>
 	<description>
-		EL4J artifacts related to Maven.
+		Maven 2 extensions of EL4J.
 	</description>
 	<modules>
-		<module>extensions</module>
-		<module>plugins</module>
-		<module>helpers</module>
+		<module>slf4j-maven</module>
 	</modules>
 </project>
