@@ -40,6 +40,12 @@
 			<groupId>jasperreports</groupId>
 			<artifactId>jasperreports</artifactId>
 			<version>3.0.1</version>
+			<exclusions>
+				<exclusion>
+					<groupId>commons-logging</groupId>
+					<artifactId>commons-logging</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<!-- use explicit version to prevent downloading some "brew" (=snapshot) version -->
 		<dependency>

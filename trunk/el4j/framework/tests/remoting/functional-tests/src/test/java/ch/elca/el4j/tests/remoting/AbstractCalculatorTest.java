@@ -16,8 +16,8 @@
  */
 package ch.elca.el4j.tests.remoting;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -45,7 +45,8 @@ public abstract class AbstractCalculatorTest extends AbstractTest {
 	/**
 	 * Private logger.
 	 */
-	private static Log s_logger = LogFactory.getLog(AbstractCalculatorTest.class);
+	private static Logger s_logger = LoggerFactory.getLogger(
+		AbstractCalculatorTest.class);
 
 	/**
 	 * Instance of the calculator proxy.

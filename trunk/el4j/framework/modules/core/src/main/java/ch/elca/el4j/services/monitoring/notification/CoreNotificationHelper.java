@@ -20,8 +20,8 @@ package ch.elca.el4j.services.monitoring.notification;
 import java.lang.reflect.Method;
 import java.text.MessageFormat;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.dao.OptimisticLockingFailureException;
@@ -48,8 +48,8 @@ public final class CoreNotificationHelper {
 	/**
 	 * Private logger of this class.
 	 */
-	private static Log s_logger
-		= LogFactory.getLog(CoreNotificationHelper.class);
+	private static Logger s_logger
+		= LoggerFactory.getLogger(CoreNotificationHelper.class);
 	
 	/**
 	 * Hide default constructor.

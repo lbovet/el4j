@@ -21,8 +21,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.aopalliance.intercept.MethodInvocation;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * This class allows to handle exceptions centrally. Realized as an interceptor,
@@ -88,8 +88,8 @@ public class ContextExceptionHandlerInterceptor
 	extends AbstractExceptionHandlerInterceptor {
 	
 	/** The static logger. */
-	private static Log s_logger
-		= LogFactory.getLog(ContextExceptionHandlerInterceptor.class);
+	private static Logger s_logger
+		= LoggerFactory.getLogger(ContextExceptionHandlerInterceptor.class);
 	
 	/** The thread specific context. */
 	private static ThreadLocal s_context = new ThreadLocal();

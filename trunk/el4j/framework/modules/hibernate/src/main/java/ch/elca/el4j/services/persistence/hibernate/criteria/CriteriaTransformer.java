@@ -20,8 +20,8 @@ package ch.elca.el4j.services.persistence.hibernate.criteria;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Junction;
@@ -54,7 +54,7 @@ import ch.elca.el4j.services.search.criterias.Order;
  */
 public class CriteriaTransformer {
 
-	private static Log s_logger = LogFactory.getLog(CriteriaTransformer.class);
+	private static Logger s_logger = LoggerFactory.getLogger(CriteriaTransformer.class);
 	
 	/**
 	 * Hide default constructor.

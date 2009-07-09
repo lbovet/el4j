@@ -21,10 +21,12 @@ import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import ch.elca.el4j.core.context.ModuleApplicationContext;
 import ch.elca.el4j.core.context.ModuleApplicationContextConfiguration;
 import ch.elca.el4j.core.context.ModuleApplicationContextUtils;
-import ch.elca.el4j.maven.plugins.springide.SpringIDEMojo.LogCallback;
 import ch.elca.el4j.maven.plugins.springide.resolvers.Resolver;
 import ch.elca.el4j.maven.plugins.springide.resolvers.ResolverManager;
 
@@ -46,9 +48,9 @@ import ch.elca.el4j.maven.plugins.springide.resolvers.ResolverManager;
 public class BeanPathResolver {
 
 	/**
-	 * Callback to get the mojo logger for debug output of the classpath.
+	 * The logger.
 	 */
-	private LogCallback m_logger;
+	private final Logger m_logger = LoggerFactory.getLogger(BeanPathResolver.class);
 	
 	/** 
 	 * The classpath, saved for logging.
@@ -167,31 +169,31 @@ public class BeanPathResolver {
 			URL[] urls = ((URLClassLoader) Thread.currentThread()
 					.getContextClassLoader()).getURLs();
 			
-			if (m_logger != null && m_logger.isActive()) {
-				m_logger.log("Running bean path resolution.");
-				m_logger.log("Classpath as passed: ");
+			if (m_logger.isDebugEnabled()) {
+				m_logger.debug("Running bean path resolution.");
+				m_logger.debug("Classpath as passed: ");
 				for (URL u : m_givenClasspath) {
-					m_logger.log(" > " + u);
+					m_logger.debug(" > " + u);
 				}
 			
-				m_logger.log("Current thread context classpath:");
+				m_logger.debug("Current thread context classpath:");
 				for (URL u : urls) {
-					m_logger.log(" > " + u);
+					m_logger.debug(" > " + u);
 				}
 			
 			
-				m_logger.log("Inclusive files:");
+				m_logger.debug("Inclusive files:");
 				if (m_inclusive != null) {
 					for (String s : m_inclusive) {
-							m_logger.log(" + " + s);
+							m_logger.debug(" + " + s);
 					}
 				}
 				
 			
-				m_logger.log("Exclusive files:");
+				m_logger.debug("Exclusive files:");
 				if (m_exclusive != null) {
 					for (String s : m_exclusive) {
-							m_logger.log(" - " + s);
+							m_logger.debug(" - " + s);
 					}
 				}
 				
@@ -201,22 +203,14 @@ public class BeanPathResolver {
 				m_inclusive, m_exclusive, false);
 			m_result = result;
 			
-			if (m_logger != null && m_logger.isActive()) {
-				m_logger.log("Resolved files:");
+			if (m_logger.isDebugEnabled()) {
+				m_logger.debug("Resolved files:");
 				for (String s : m_result) {
-					m_logger.log(" * " + s);
+					m_logger.debug(" * " + s);
 				}
 			}
 			
 			ctx.close();
 		}
-	}
-	
-	/**
-	 * Inject the mojo logger from the mojo.
-	 * @param logCallback The mojo logger.
-	 */
-	void setLogger(LogCallback logCallback) {
-		m_logger = logCallback;
 	}
 }

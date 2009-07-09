@@ -28,8 +28,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.jdom.Element;
 import org.xml.sax.EntityResolver;
 import org.xml.sax.InputSource;
@@ -74,8 +74,8 @@ public class DtdInsertAction implements Action {
 	/**
 	 * Private logger.
 	 */
-	private static Log s_logger
-		= LogFactory.getLog(DtdInsertAction.class);
+	private static Logger s_logger
+		= LoggerFactory.getLogger(DtdInsertAction.class);
 		
 	/**
 	 * {@inheritDoc}

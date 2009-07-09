@@ -25,8 +25,8 @@ import java.io.InputStreamReader;
 import java.util.HashSet;
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.junit.Test;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
@@ -69,8 +69,8 @@ public abstract class AbstractReferenceDaoTest extends AbstractTestCaseBase {
 	/**
 	 * Private logger.
 	 */
-	private static Log s_logger
-		= LogFactory.getLog(AbstractReferenceDaoTest.class);
+	private static Logger s_logger
+		= LoggerFactory.getLogger(AbstractReferenceDaoTest.class);
 
 	
 	/**

@@ -21,8 +21,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.util.Assert;
 
 /**
@@ -46,8 +46,8 @@ public class UnidirectionalForwarderThread extends Thread {
 	/**
 	 * Private logger.
 	 */
-	private static Log s_logger
-		= LogFactory.getLog(UnidirectionalForwarderThread.class);
+	private static Logger s_logger
+		= LoggerFactory.getLogger(UnidirectionalForwarderThread.class);
 	
 	/**
 	 * Is the link <code>this</code> belongs to.

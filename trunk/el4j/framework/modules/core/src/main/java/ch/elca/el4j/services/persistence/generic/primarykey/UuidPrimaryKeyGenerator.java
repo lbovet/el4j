@@ -20,8 +20,8 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.security.SecureRandom;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * This key generator generates UUIDs as described in "EJB Design Patterns", F.
@@ -44,8 +44,8 @@ public class UuidPrimaryKeyGenerator implements PrimaryKeyGenerator {
 	/**
 	 * Private logger of this class.
 	 */
-	private static Log s_logger
-		= LogFactory.getLog(UuidPrimaryKeyGenerator.class);
+	private static Logger s_logger
+		= LoggerFactory.getLogger(UuidPrimaryKeyGenerator.class);
 
 	/**
 	 * Middle value.

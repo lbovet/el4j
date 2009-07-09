@@ -22,8 +22,8 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Set;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.util.StringUtils;
@@ -47,7 +47,7 @@ public class OrderedPathMatchingResourcePatternResolver extends
 	/**
 	 * The logger.
 	 */
-	private static final Log s_logger = LogFactory.getLog(
+	private static final Logger s_logger = LoggerFactory.getLogger(
 		OrderedPathMatchingResourcePatternResolver.class);
 	
 	/**

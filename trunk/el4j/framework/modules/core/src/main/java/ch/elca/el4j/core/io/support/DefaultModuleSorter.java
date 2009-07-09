@@ -25,8 +25,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * This class sorts a list of unordered modules using their dependency
@@ -55,7 +55,7 @@ import org.apache.commons.logging.LogFactory;
 public class DefaultModuleSorter implements ModuleSorter {
 	
 	/** The static logger. */
-	private static Log s_logger = LogFactory.getLog(DefaultModuleSorter.class);
+	private static Logger s_logger = LoggerFactory.getLogger(DefaultModuleSorter.class);
 	
 	/** The list with root modules. */
 	private List<Module> m_rootModules;

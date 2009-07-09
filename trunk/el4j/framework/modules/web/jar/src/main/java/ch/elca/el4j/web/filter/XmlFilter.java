@@ -39,8 +39,8 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Class for filtering xml files. Depending on whether the browser is xslt
@@ -59,7 +59,7 @@ import org.apache.commons.logging.LogFactory;
 public final class XmlFilter implements Filter {
 
 	/** The static logger. */
-	private static final Log s_logger = LogFactory.getLog(XmlFilter.class);
+	private static final Logger s_logger = LoggerFactory.getLogger(XmlFilter.class);
 	
 	/**
 	 * List of browsers known to support XSLT. Currently, only IE 6.0 fully

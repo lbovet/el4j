@@ -25,8 +25,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.apache.maven.artifact.Artifact;
 import org.apache.maven.artifact.resolver.filter.ArtifactFilter;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -36,6 +34,8 @@ import org.apache.maven.shared.dependency.tree.DependencyTreeBuilderException;
 import org.apache.maven.shared.dependency.tree.filter.ArtifactDependencyNodeFilter;
 import org.apache.maven.shared.dependency.tree.traversal.BuildingDependencyNodeVisitor;
 import org.apache.maven.shared.dependency.tree.traversal.FilteringDependencyNodeVisitor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import ch.elca.el4j.maven.depgraph.DepGraphArtifact;
 import ch.elca.el4j.maven.depgraph.DepGraphProjector;
@@ -65,8 +65,8 @@ public abstract class AbstractDependencyGraphMojo extends AbstractDependencyAwar
 	/**
 	 * Logger.
 	 */
-	private static Log s_log = LogFactory
-		.getLog(AbstractDependencyGraphMojo.class);
+	private static Logger s_log = LoggerFactory
+		.getLogger(AbstractDependencyGraphMojo.class);
 
 	/**
 	 * The file to write to.

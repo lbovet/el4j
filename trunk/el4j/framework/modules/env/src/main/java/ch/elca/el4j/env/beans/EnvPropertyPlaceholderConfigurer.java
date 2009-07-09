@@ -19,8 +19,8 @@ package ch.elca.el4j.env.beans;
 import java.io.IOException;
 import java.util.Properties;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanDefinitionStoreException;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
@@ -70,8 +70,8 @@ public class EnvPropertyPlaceholderConfigurer
 	 * This logger is used to print out some global debugging info.
 	 * Consult it for info what is going on.
 	 */
-	protected static final Log s_logger
-		= LogFactory.getLog(ModuleApplicationContext.EL4J_DEBUGGING_LOGGER);
+	protected static final Logger s_logger
+		= LoggerFactory.getLogger(ModuleApplicationContext.EL4J_DEBUGGING_LOGGER);
 	
 	/**
 	 * Is the used application context.

@@ -18,6 +18,7 @@ package ch.elca.el4j.maven.plugins.envsupport;
 
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
+import org.slf4j.impl.MavenLoggerFactory;
 
 import ch.elca.el4j.env.InvalidEnvXmlContentException;
 import ch.elca.el4j.env.xml.EnvXml;
@@ -45,7 +46,7 @@ public abstract class AbstractEnvListMojo extends AbstractEnvSupportMojo {
 		EnvXml env = new EnvXml(getResourceLoader().getResolver(), true);
 		if (env.hasValidConfigurations()) {
 			env.setOverrideValues(m_filterProperties);
-			env.registerHandler(EnvXml.ENV_GROUP_PLACEHOLDERS, new ExplainPlaceholdersHandler(this, getLog()));
+			env.registerHandler(EnvXml.ENV_GROUP_PLACEHOLDERS, new ExplainPlaceholdersHandler(this));
 			env.registerHandler(EnvXml.ENV_GROUP_BEAN_OVERRIDES, null);
 			
 			try {
@@ -57,7 +58,7 @@ public abstract class AbstractEnvListMojo extends AbstractEnvSupportMojo {
 			getLog().info("------------------------------------------------------------------------");
 			
 			env.registerHandler(EnvXml.ENV_GROUP_PLACEHOLDERS, null);
-			env.registerHandler(EnvXml.ENV_GROUP_BEAN_OVERRIDES, new ExplainBeanOverridesHandler(this, getLog()));
+			env.registerHandler(EnvXml.ENV_GROUP_BEAN_OVERRIDES, new ExplainBeanOverridesHandler(this));
 			
 			try {
 				env.getGroupConfiguration(EnvXml.ENV_GROUP_BEAN_OVERRIDES);

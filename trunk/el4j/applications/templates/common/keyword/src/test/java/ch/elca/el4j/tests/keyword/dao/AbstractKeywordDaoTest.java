@@ -22,8 +22,8 @@ import static org.junit.Assert.fail;
 
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.junit.Test;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.DataRetrievalFailureException;
@@ -57,8 +57,8 @@ public abstract class AbstractKeywordDaoTest
 	/**
 	 * Private logger.
 	 */
-	private static Log s_logger
-		= LogFactory.getLog(AbstractKeywordDaoTest.class);
+	private static Logger s_logger
+		= LoggerFactory.getLogger(AbstractKeywordDaoTest.class);
 	
 	/**
 	 * Keyword DAO. Created by application context.

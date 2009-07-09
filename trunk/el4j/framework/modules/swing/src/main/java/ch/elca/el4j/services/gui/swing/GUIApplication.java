@@ -24,8 +24,8 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.UIManager;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.bushe.swing.event.EventServiceExistsException;
 import org.bushe.swing.event.EventServiceLocator;
 import org.jdesktop.application.Application;
@@ -80,7 +80,7 @@ public abstract class GUIApplication extends SingleFrameApplication implements A
 	/**
 	 * The logger.
 	 */
-	private static final Log s_logger = LogFactory.getLog(
+	private static final Logger s_logger = LoggerFactory.getLogger(
 		GUIApplication.class);
 
 	/**

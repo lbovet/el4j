@@ -20,8 +20,8 @@ package ch.elca.el4j.demos.remoting;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import ch.elca.el4j.core.contextpassing.ImplicitContextPasser;
 import ch.elca.el4j.core.contextpassing.ImplicitContextPassingRegistry;
@@ -43,8 +43,8 @@ public class TestImplicitContextPassingRegistry implements
 	/**
 	 * Private logger.
 	 */
-	private static Log s_logger = LogFactory
-			.getLog(TestImplicitContextPassingRegistry.class);
+	private static Logger s_logger = LoggerFactory.getLogger(
+		TestImplicitContextPassingRegistry.class);
 
 	/**
 	 * {@inheritDoc}

@@ -34,8 +34,12 @@
 			Else you will have dependencies to servlet-api and so on!!!!
 		-->
 		<dependency>
-			<groupId>commons-logging</groupId>
-			<artifactId>commons-logging</artifactId>
+			<groupId>org.slf4j</groupId>
+			<artifactId>jcl-over-slf4j</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>log4j</groupId>

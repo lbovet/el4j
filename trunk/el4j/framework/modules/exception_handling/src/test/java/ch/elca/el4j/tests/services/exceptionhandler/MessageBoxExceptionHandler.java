@@ -18,8 +18,8 @@
 package ch.elca.el4j.tests.services.exceptionhandler;
 
 import org.aopalliance.intercept.MethodInvocation;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import ch.elca.el4j.services.exceptionhandler.AbstractExceptionHandlerInterceptor;
 import ch.elca.el4j.services.exceptionhandler.handler.AbstractExceptionHandler;
@@ -42,8 +42,8 @@ public class MessageBoxExceptionHandler extends AbstractExceptionHandler {
 	/**
 	 * Logger.
 	 */
-	private static Log s_logger
-		= LogFactory.getLog(MessageBoxExceptionHandler.class);
+	private static Logger s_logger
+		= LoggerFactory.getLogger(MessageBoxExceptionHandler.class);
 	
 	/** Number of handle calls. */
 	public static int s_numberOfHandleCalls = 0;
@@ -53,7 +53,7 @@ public class MessageBoxExceptionHandler extends AbstractExceptionHandler {
 	 */
 	protected Object handleException(Throwable t,
 			AbstractExceptionHandlerInterceptor exceptionInvoker,
-			MethodInvocation invocation, Log logger) throws Throwable {
+			MethodInvocation invocation, Logger logger) throws Throwable {
 		
 		s_numberOfHandleCalls++;
 		

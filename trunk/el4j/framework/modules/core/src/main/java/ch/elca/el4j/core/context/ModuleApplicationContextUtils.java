@@ -24,8 +24,8 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.lang.ArrayUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.PropertyValue;
 import org.springframework.beans.PropertyValues;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
@@ -64,7 +64,7 @@ public class ModuleApplicationContextUtils {
 	private static final String MANDATORY = "mandatory/*.xml";
 	
 	/** The static logger. */
-	private static Log s_logger = LogFactory.getLog(
+	private static Logger s_logger = LoggerFactory.getLogger(
 			ModuleApplicationContextUtils.class);
 	
 	/** The application context that uses this instance. */

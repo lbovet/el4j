@@ -31,8 +31,8 @@ import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.ApplicationActionMap;
 import org.jdesktop.application.ResourceMap;
@@ -62,7 +62,7 @@ public class AboutDialog extends JDialog {
 	/**
 	 * The logger.
 	 */
-	private static Log s_logger = LogFactory.getLog(JDialog.class);
+	private static Logger s_logger = LoggerFactory.getLogger(AboutDialog.class);
 	
 	/**
 	 * The resource map.

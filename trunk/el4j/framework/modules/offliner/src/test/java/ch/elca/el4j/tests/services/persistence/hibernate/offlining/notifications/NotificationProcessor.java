@@ -142,7 +142,7 @@ public class NotificationProcessor {
 	}
 	
 	/**
-	 * Log if number does not match.
+	 * Logger if number does not match.
 	 */
 	private void dump() {
 		s_log.warn("Validation failed. Expected:");
@@ -156,7 +156,7 @@ public class NotificationProcessor {
 	}
 	
 	/**
-	 * Log if validation fails.
+	 * Logger if validation fails.
 	 * @param pos The position at which it failed.
 	 */
 	private void dump(int pos) {

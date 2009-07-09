@@ -16,8 +16,8 @@
  */
 package ch.elca.el4j.services.monitoring;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.jamonapi.Monitor;
 import com.jamonapi.MonitorFactory;
@@ -40,7 +40,7 @@ public final class DbLogger {
 	/**
 	 * Private logger of this class.
 	 */
-	private static Log s_logger = LogFactory.getLog(DbLogger.class);
+	private static Logger s_logger = LoggerFactory.getLogger(DbLogger.class);
 	
 	/**
 	 * The hidden constructor.

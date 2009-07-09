@@ -21,8 +21,8 @@ import java.lang.reflect.Proxy;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.aop.framework.AopProxyUtils;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
@@ -73,8 +73,8 @@ public class DefaultDaoRegistry implements DaoRegistry, ApplicationContextAware,
 	/**
 	 * Private logger of this class.
 	 */
-	private static Log s_logger
-		= LogFactory.getLog(DefaultDaoRegistry.class);
+	private static Logger s_logger
+		= LoggerFactory.getLogger(DefaultDaoRegistry.class);
 	
 	/**
 	 * Whether to collect DAOs automatically.

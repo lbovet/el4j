@@ -24,8 +24,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.maven.artifact.repository.ArtifactRepository;
 import org.apache.maven.project.MavenProject;
 import org.springframework.core.io.Resource;
@@ -53,8 +53,8 @@ public class ResourceLoader {
 	/**
 	 * Logger.
 	 */
-	private static Log s_logger
-		= LogFactory.getLog(ResourceLoader.class);
+	private static Logger s_logger
+		= LoggerFactory.getLogger(ResourceLoader.class);
 	
 	/**
 	 * The classloader.

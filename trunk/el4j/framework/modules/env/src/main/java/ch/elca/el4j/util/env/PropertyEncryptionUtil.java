@@ -18,8 +18,8 @@ package ch.elca.el4j.util.env;
 
 import java.util.Properties;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.io.Resource;
 
@@ -46,8 +46,7 @@ public class PropertyEncryptionUtil {
 	/**
 	 * The logger.
 	 */
-	private static Log s_logger = LogFactory
-		.getLog(ModuleApplicationContext.EL4J_DEBUGGING_LOGGER);
+	private static Logger s_logger = LoggerFactory.getLogger(ModuleApplicationContext.EL4J_DEBUGGING_LOGGER);
 	
 	/**
 	 * The default cryptor configuration file.
@@ -167,7 +166,7 @@ public class PropertyEncryptionUtil {
 		} catch (Exception e) {
 			throw new RuntimeException("Error initializing cryptor.");
 		}
-
+		
 		/*
 		 * We have a cryptor - set it up. Read password to use from
 		 * configuration file.

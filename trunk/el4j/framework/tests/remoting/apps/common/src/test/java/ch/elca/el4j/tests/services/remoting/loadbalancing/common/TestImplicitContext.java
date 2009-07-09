@@ -19,8 +19,8 @@ package ch.elca.el4j.tests.services.remoting.loadbalancing.common;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import ch.elca.el4j.core.contextpassing.ImplicitContextPasser;
 import ch.elca.el4j.core.contextpassing.ImplicitContextPassingRegistry;
@@ -80,8 +80,8 @@ public class TestImplicitContext implements ImplicitContextPassingRegistry {
 	/**
 	 * Private logger.
 	 */
-	private static Log s_logger
-		= LogFactory.getLog(TestImplicitContext.class);
+	private static Logger s_logger
+		= LoggerFactory.getLogger(TestImplicitContext.class);
  
 
 } // Class IdempotenceImplicitContext

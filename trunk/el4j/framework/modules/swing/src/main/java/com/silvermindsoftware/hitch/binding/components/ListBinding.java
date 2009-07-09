@@ -21,8 +21,8 @@ import java.util.List;
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.jdesktop.beansbinding.AutoBinding;
 import org.jdesktop.beansbinding.Property;
 import org.jdesktop.swingbinding.JListBinding;
@@ -50,7 +50,7 @@ public class ListBinding extends AbstractBindingCreator<JList> {
 	/**
 	 * The logger.
 	 */
-	private static Log s_logger = LogFactory.getLog(ListBinding.class);
+	private static Logger s_logger = LoggerFactory.getLogger(ListBinding.class);
 	
 	/**
 	 * Which property to show in the list.

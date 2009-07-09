@@ -14,7 +14,7 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.tests.maven.plugins.beans;
+package ch.elca.el4j.tests.maven.plugins.springide;
 
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;

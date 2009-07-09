@@ -23,8 +23,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Map;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import ch.elca.el4j.core.contextpassing.ImplicitContextPassingRegistry;
 
@@ -46,8 +46,8 @@ public class ServerContextInvocationHandler
 	/**
 	 * Private logger.
 	 */
-	private static Log s_logger = LogFactory
-			.getLog(ServerContextInvocationHandler.class);
+	private static Logger s_logger = LoggerFactory
+			.getLogger(ServerContextInvocationHandler.class);
 
 	/**
 	 * Is the implementation of the service which has to be called.

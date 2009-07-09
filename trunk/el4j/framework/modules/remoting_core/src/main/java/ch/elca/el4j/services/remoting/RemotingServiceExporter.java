@@ -19,8 +19,8 @@ package ch.elca.el4j.services.remoting;
 
 import java.lang.reflect.Proxy;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.BeanNameAware;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.context.ApplicationContext;
@@ -48,8 +48,8 @@ public class RemotingServiceExporter extends AbstractRemotingBase implements
 	/**
 	 * Private logger.
 	 */
-	private static Log s_logger = LogFactory
-		.getLog(RemotingServiceExporter.class);
+	private static Logger s_logger = LoggerFactory
+		.getLogger(RemotingServiceExporter.class);
 
 	/**
 	 * This is the application context, which was used to create this bean.

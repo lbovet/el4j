@@ -18,7 +18,7 @@
 package ch.elca.el4j.services.exceptionhandler.handler;
 
 import org.aopalliance.intercept.MethodInvocation;
-import org.apache.commons.logging.Log;
+import org.slf4j.Logger;
 
 import ch.elca.el4j.services.exceptionhandler.AbstractExceptionHandlerInterceptor;
 import ch.elca.el4j.services.exceptionhandler.SafetyFacadeInterceptor;
@@ -72,7 +72,7 @@ public abstract class AbstractRetryExceptionHandler
 	 */
 	public Object handleException(Throwable t,
 			AbstractExceptionHandlerInterceptor exceptionInvoker,
-			MethodInvocation invocation, Log logger) throws Throwable {
+			MethodInvocation invocation, Logger logger) throws Throwable {
 		
 		if (SafetyFacadeInterceptor.getRetries() == -1
 				|| SafetyFacadeInterceptor.getRetries() > 0) {
@@ -107,5 +107,5 @@ public abstract class AbstractRetryExceptionHandler
 	 */
 	protected abstract Object retry(Throwable t,
 			AbstractExceptionHandlerInterceptor exceptionInvoker,
-			MethodInvocation invocation, Log logger) throws Throwable;
+			MethodInvocation invocation, Logger logger) throws Throwable;
 }

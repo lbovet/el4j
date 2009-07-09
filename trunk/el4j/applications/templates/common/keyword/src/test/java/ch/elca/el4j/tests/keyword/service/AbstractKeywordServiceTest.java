@@ -24,8 +24,8 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.junit.Test;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.dao.OptimisticLockingFailureException;
@@ -53,8 +53,8 @@ public abstract class AbstractKeywordServiceTest extends AbstractTestCaseBase {
 	/**
 	 * Private logger.
 	 */
-	private static Log s_logger
-		= LogFactory.getLog(AbstractKeywordServiceTest.class);
+	private static Logger s_logger
+		= LoggerFactory.getLogger(AbstractKeywordServiceTest.class);
 
 	/**
 	 * Keyword service. Created by application context.

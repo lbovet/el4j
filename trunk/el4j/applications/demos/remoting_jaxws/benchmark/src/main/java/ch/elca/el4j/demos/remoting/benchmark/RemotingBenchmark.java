@@ -28,8 +28,8 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
@@ -120,8 +120,8 @@ public class RemotingBenchmark {
 	/**
 	 * Private logger.
 	 */
-	private static Log s_logger
-		= LogFactory.getLog(RemotingBenchmark.class);
+	private static Logger s_logger
+		= LoggerFactory.getLogger(RemotingBenchmark.class);
 	
 	/**
 	 * Contains StackTraceElements of exceptions, which occured during the

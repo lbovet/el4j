@@ -23,7 +23,6 @@ import org.apache.maven.artifact.repository.ArtifactRepository;
 import org.apache.maven.artifact.resolver.ArtifactCollector;
 import org.apache.maven.artifact.resolver.ArtifactResolver;
 import org.apache.maven.artifact.resolver.filter.ArtifactFilter;
-import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.project.MavenProject;
 import org.apache.maven.shared.dependency.tree.DependencyNode;
 import org.apache.maven.shared.dependency.tree.DependencyTreeBuilder;
@@ -31,6 +30,7 @@ import org.apache.maven.shared.dependency.tree.DependencyTreeBuilderException;
 
 import ch.elca.el4j.maven.DepGraphWalker;
 import ch.elca.el4j.maven.ResourceLoader;
+import ch.elca.el4j.maven.plugins.AbstractSlf4jEnabledMojo;
 
 /**
  * This class provides basic functionality to handle module dependency related operations.
@@ -49,7 +49,7 @@ import ch.elca.el4j.maven.ResourceLoader;
  *
  * @author Stefan Wismer (SWI)
  */
-public abstract class AbstractDependencyAwareMojo extends AbstractMojo {
+public abstract class AbstractDependencyAwareMojo extends AbstractSlf4jEnabledMojo {
 	// Checkstyle: MemberName off
 	/**
 	 * The maven project from where this plugin is called.

@@ -20,8 +20,8 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.jdom.Attribute;
 import org.jdom.Comment;
 import org.jdom.Content;
@@ -54,8 +54,8 @@ public class OrderedMergeAction extends AbstractMergeAction {
 	/**
 	 * Private logger.
 	 */
-	private static Log s_logger
-		= LogFactory.getLog(OrderedMergeAction.class);
+	private static Logger s_logger
+		= LoggerFactory.getLogger(OrderedMergeAction.class);
 	
 	/**
 	 * {@inheritDoc}

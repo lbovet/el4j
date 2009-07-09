@@ -19,8 +19,8 @@ package ch.elca.el4j.tests.core.context;
 
 import static org.junit.Assert.fail;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.junit.Test;
 import org.springframework.beans.factory.BeanDefinitionStoreException;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
@@ -43,8 +43,8 @@ import ch.elca.el4j.core.context.ModuleApplicationContext;
 public class ModuleApplicationContextTest {
 
 	/** The static logger. */
-	private static Log s_logger
-		= LogFactory.getLog(ModuleApplicationContextTest.class);
+	private static Logger s_logger
+		= LoggerFactory.getLogger(ModuleApplicationContextTest.class);
 	
 	/** Test configuration. */
 	String m_fileName1 = "classpath:scenarios/core/context/beans1.xml";

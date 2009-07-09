@@ -20,12 +20,13 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+
 import org.apache.commons.io.FileUtils;
 import org.codehaus.plexus.util.xml.Xpp3Dom;
 import org.codehaus.plexus.util.xml.Xpp3DomBuilder;
 import org.codehaus.plexus.util.xml.Xpp3DomWriter;
-
-import ch.elca.el4j.maven.plugins.springide.SpringIDEMojo.LogCallback;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * 
@@ -46,9 +47,9 @@ import ch.elca.el4j.maven.plugins.springide.SpringIDEMojo.LogCallback;
 public class SpringNatureForcer {
 	
 	/**
-	 * Lets the class use the logging functionality of the Mojo.
+	 * The logger.
 	 */
-	private static LogCallback m_logger;
+	private static final Logger s_logger = LoggerFactory.getLogger(SpringNatureForcer.class);
 	
 	
 	/**
@@ -60,7 +61,7 @@ public class SpringNatureForcer {
 			File dotProject = new File(baseDirectory, ".project");
 			String content = FileUtils.readFileToString(dotProject, null);
 			if (content.indexOf("<nature>org.springframework.ide.eclipse.core.springnature</nature>") < 0) {
-				m_logger.log("Add spring nature to the eclipse .project file");
+				s_logger.debug("Add spring nature to the eclipse .project file");
 				try {
 					Xpp3Dom dom = Xpp3DomBuilder.build(new FileReader(dotProject));
 					Xpp3Dom nature = new Xpp3Dom("nature");
@@ -70,22 +71,11 @@ public class SpringNatureForcer {
 					Xpp3DomWriter.write(writer, dom);
 					writer.close();
 				} catch (Exception e) {
-					m_logger.log("Failed to add missing tomcat nature to the eclipse .project file");
+					s_logger.debug("Failed to add missing tomcat nature to the eclipse .project file");
 				}
 			}
 		} catch (IOException e) {
-			m_logger.log("Failed to retrieve the Eclipse .project file");
+			s_logger.debug("Failed to retrieve the Eclipse .project file");
 		}
 	}
-	/**
-	 * 
-	 * Here one can set a logger for debug output.
-	 * 
-	 * @param log is a logger as one would get in the main class through getLog().
-	 */
-
-	static void setLogger(LogCallback log) {
-		m_logger = log;
-	}
-	
 }

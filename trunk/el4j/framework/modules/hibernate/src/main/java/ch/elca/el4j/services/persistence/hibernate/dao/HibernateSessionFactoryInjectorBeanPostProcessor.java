@@ -18,8 +18,8 @@ package ch.elca.el4j.services.persistence.hibernate.dao;
 
 import java.beans.PropertyDescriptor;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
@@ -49,7 +49,7 @@ import ch.elca.el4j.util.codingsupport.Reject;
 public class HibernateSessionFactoryInjectorBeanPostProcessor
 		implements BeanPostProcessor, PriorityOrdered, ApplicationContextAware {
 
-	private static final Log s_logger= LogFactory.getLog(HibernateSessionFactoryInjectorBeanPostProcessor.class);
+	private static final Logger s_logger= LoggerFactory.getLogger(HibernateSessionFactoryInjectorBeanPostProcessor.class);
 
 	/**
 	 * The default name for the property of the session factory.

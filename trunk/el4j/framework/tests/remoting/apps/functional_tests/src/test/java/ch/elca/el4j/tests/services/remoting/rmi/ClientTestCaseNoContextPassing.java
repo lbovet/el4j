@@ -19,8 +19,8 @@ package ch.elca.el4j.tests.services.remoting.rmi;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.junit.Test;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.context.ApplicationContext;
@@ -101,7 +101,7 @@ public class ClientTestCaseNoContextPassing {
 			"classpath:rmi/startup-client.xml"};
 	} // getInclusiveConfigLocations()
 
-	protected Log getLog() {
+	protected Logger getLog() {
 		return s_logger;
 	} // getLog()
 
@@ -118,8 +118,8 @@ public class ClientTestCaseNoContextPassing {
 	/**
 	 * Private logger.
 	 */
-	private static Log s_logger = LogFactory
-		.getLog(ClientTestCaseNoContextPassing.class);
+	private static Logger s_logger = LoggerFactory
+		.getLogger(ClientTestCaseNoContextPassing.class);
 
 	private ApplicationContext m_applicationContext ;
 	

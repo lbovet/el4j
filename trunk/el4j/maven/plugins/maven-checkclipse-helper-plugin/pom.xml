@@ -47,9 +47,5 @@
 			<artifactId>velocity</artifactId>
 			<version>1.6.2</version>
 		</dependency>
-		<dependency>
-			<groupId>commons-logging</groupId>
-			<artifactId>commons-logging</artifactId>
-		</dependency>
 	</dependencies>
 </project>

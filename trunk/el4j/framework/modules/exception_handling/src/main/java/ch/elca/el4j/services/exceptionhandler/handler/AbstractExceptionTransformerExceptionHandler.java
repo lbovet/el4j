@@ -18,7 +18,7 @@
 package ch.elca.el4j.services.exceptionhandler.handler;
 
 import org.aopalliance.intercept.MethodInvocation;
-import org.apache.commons.logging.Log;
+import org.slf4j.Logger;
 
 import ch.elca.el4j.services.exceptionhandler.AbstractExceptionHandlerInterceptor;
 
@@ -43,7 +43,7 @@ public abstract class AbstractExceptionTransformerExceptionHandler extends
 	 */
 	protected Object handleException(Throwable t,
 			AbstractExceptionHandlerInterceptor exceptionInvoker,
-			MethodInvocation invocation, Log logger) throws Throwable {
+			MethodInvocation invocation, Logger logger) throws Throwable {
 		
 		Exception transformed = transform(t, logger);
 		if (transformed == null) {
@@ -65,5 +65,5 @@ public abstract class AbstractExceptionTransformerExceptionHandler extends
 	 * @return Returns the transformed exception or <code>null</code> if no
 	 *      exceptions has to be thrown.
 	 */
-	protected abstract Exception transform(Throwable t, Log logger);
+	protected abstract Exception transform(Throwable t, Logger logger);
 }

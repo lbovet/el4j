@@ -18,7 +18,7 @@
 package ch.elca.el4j.services.exceptionhandler.handler;
 
 import org.aopalliance.intercept.MethodInvocation;
-import org.apache.commons.logging.Log;
+import org.slf4j.Logger;
 
 import ch.elca.el4j.services.exceptionhandler.AbstractExceptionHandlerInterceptor;
 
@@ -41,7 +41,7 @@ public class SimpleLogExceptionHandler extends AbstractExceptionHandler {
 	 */
 	protected Object handleException(Throwable t,
 			AbstractExceptionHandlerInterceptor exceptionInvoker,
-			MethodInvocation invocation, Log logger) throws Throwable {
+			MethodInvocation invocation, Logger logger) throws Throwable {
 		
 		logger.trace("Exception thrown in "
 				+ getInvocationDescription(invocation), t);

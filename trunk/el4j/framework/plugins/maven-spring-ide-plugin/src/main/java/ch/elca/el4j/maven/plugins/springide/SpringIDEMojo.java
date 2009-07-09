@@ -30,10 +30,11 @@ import java.util.Map;
 
 import org.apache.maven.artifact.DependencyResolutionRequiredException;
 import org.apache.maven.artifact.repository.ArtifactRepository;
-import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.project.MavenProject;
+
+import ch.elca.el4j.maven.plugins.AbstractSlf4jEnabledMojo;
 
 import freemarker.template.Configuration;
 import freemarker.template.Template;
@@ -62,7 +63,7 @@ import freemarker.template.TemplateException;
  * @goal spring-ide
  * @requiresDependencyResolution runtime
  */
-public class SpringIDEMojo extends AbstractMojo {
+public class SpringIDEMojo extends AbstractSlf4jEnabledMojo {
 
 	/**
 	 * The maven project - used for runtime classpath resolution.
@@ -198,18 +199,7 @@ public class SpringIDEMojo extends AbstractMojo {
 			ConfigurationExtractor ex = new ConfigurationExtractor(source);
 
 			BeanPathResolver resolver = new BeanPathResolver();
-			resolver.setLogger(new LogCallback() {
-
-				/** {@inheritDoc} */
-				public boolean isActive() {
-					return getLog().isDebugEnabled();
-				}
-
-				/** {@inheritDoc} */
-				public void log(String str) {
-					getLog().info(str);
-				}
-			});
+			
 			/* small test to make sure that we really have found includes */
 			if (ex.getInclusive() == null) {
 				getLog().error("Couldn't find any included configuration files");
@@ -247,18 +237,6 @@ public class SpringIDEMojo extends AbstractMojo {
 
 			/* if we have found config files then force spring nature... and write .springBeans file */
 			if (files.length > 0) {
-				SpringNatureForcer.setLogger(new LogCallback() {
-
-					/** {@inheritDoc} */
-					public boolean isActive() {
-						return getLog().isInfoEnabled();
-					}
-
-					/** {@inheritDoc} */
-					public void log(String str) {
-						getLog().info(str);
-					}
-				});
 				SpringNatureForcer.forceSpringNature(m_project.getBasedir());
 
 				writespringBeansFile(files);
@@ -350,26 +328,4 @@ public class SpringIDEMojo extends AbstractMojo {
 		}
 		return classpath.toArray(new URL[0]);
 	}
-
-	/**
-	 * Interface to allow other classes to use the mojo logger.
-	 */
-	interface LogCallback {
-		/**
-		 * Log a debug message.
-		 * 
-		 * @param str
-		 *            The mesasge to log.
-		 */
-		void log(String str);
-
-		/**
-		 * Whether to do logging (saves time if we skip the statements completely otherwise). Calls
-		 * Logger.isDebugEnabled().
-		 * 
-		 * @return Whether logging is active.
-		 */
-		boolean isActive();
-	}
-
 }

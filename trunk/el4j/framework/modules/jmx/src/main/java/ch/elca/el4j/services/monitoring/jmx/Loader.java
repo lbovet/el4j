@@ -32,8 +32,8 @@ import javax.management.NotCompliantMBeanException;
 import javax.management.ObjectInstance;
 import javax.management.ObjectName;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -74,7 +74,7 @@ public class Loader implements ApplicationContextAware, InitializingBean,
 	/**
 	 * Private logger of this class.
 	 */
-	private static Log s_logger = LogFactory.getLog(Loader.class);
+	private static Logger s_logger = LoggerFactory.getLogger(Loader.class);
 
 	/**
 	 * The Application Context proxy for the Application Context containing this

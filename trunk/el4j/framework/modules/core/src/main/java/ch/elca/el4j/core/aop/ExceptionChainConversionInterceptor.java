@@ -21,8 +21,8 @@ import java.lang.reflect.Field;
 
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Interceptor that converts the cause of an Exception thrown
@@ -54,9 +54,9 @@ public class ExceptionChainConversionInterceptor implements MethodInterceptor {
 	 * */
 	private static final String CAUSE_FIELD_NAME = "cause";
 
-	/** Log channel. */
-	private static Log s_logger
-		= LogFactory.getLog(ExceptionChainConversionInterceptor.class);
+	/** Logger channel. */
+	private static Logger s_logger
+		= LoggerFactory.getLogger(ExceptionChainConversionInterceptor.class);
 
 	/**
 	 * Default constructor.

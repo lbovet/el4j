@@ -16,8 +16,8 @@
  */
 package ch.elca.el4j.services.gui.swing.cookswing.binding;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.jdesktop.beansbinding.AutoBinding;
 import org.jdesktop.beansbinding.AutoBinding.UpdateStrategy;
 import org.jdesktop.beansbinding.Property;
@@ -52,8 +52,8 @@ public abstract class AbstractBindingCreator implements Creator {
 	/**
 	 * The logger.
 	 */
-	private static final Log s_logger = LogFactory
-		.getLog(AbstractBindingCreator.class);
+	private static final Logger s_logger = LoggerFactory
+		.getLogger(AbstractBindingCreator.class);
 	
 	/**
 	 * @param elm    the current XML element

@@ -20,8 +20,8 @@ import java.io.Serializable;
 
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.hibernate.FlushMode;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -53,8 +53,8 @@ public class OpenSessionInServiceInterceptor implements MethodInterceptor,
 	/**
 	 * The logger.
 	 */
-	private static Log s_logger
-		= LogFactory.getLog(OpenSessionInServiceInterceptor.class);
+	private static Logger s_logger
+		= LoggerFactory.getLogger(OpenSessionInServiceInterceptor.class);
 	
 	/**
 	 * Is single session mode used?
