@@ -179,11 +179,10 @@
 							</execution>
 						</executions>
 					</plugin>
-				</plugins>
+				</plugins>			
 			</build>
 		</profile>
 	</profiles>
-	
 	<dependencies>
 		<dependency>
 			<groupId>ch.elca.el4j.applications</groupId>
