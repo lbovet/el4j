@@ -6,6 +6,13 @@ import org.slf4j.spi.MDCAdapter;
 /**
  * This implementation is bound to {@link NOPMakerAdapter}.
  * 
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
+ * 
  * @author Ceki G&uuml;lc&uuml;
  */
 public class StaticMDCBinder {

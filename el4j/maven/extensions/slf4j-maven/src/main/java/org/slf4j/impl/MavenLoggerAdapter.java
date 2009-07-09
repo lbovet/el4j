@@ -32,7 +32,14 @@ import org.slf4j.helpers.MessageFormatter;
 /**
  * A wrapper over {@link org.apache.commons.logging.Log org.apache.commons.logging.Log} in conformance with the
  * {@link Logger} interface.
- * 
+ *
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
+ *
  * @author Ceki G&uuml;lc&uuml;
  * @author Stefan Wismer
  */
