@@ -55,8 +55,7 @@ public class ReconfigureExceptionHandler extends
 	/**
 	 * {@inheritDoc}
 	 */
-	protected void reconfigure(Throwable t, MethodInvocation invocation,
-		 Logger logger) {
+	protected void reconfigure(Throwable t, MethodInvocation invocation, Logger logger) {
 		
 		if (!"add".equals(invocation.getMethod().getName())) {
 			throw new InappropriateHandlerException();
