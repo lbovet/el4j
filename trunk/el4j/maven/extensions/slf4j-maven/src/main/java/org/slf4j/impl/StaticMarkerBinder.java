@@ -42,6 +42,13 @@ import org.slf4j.spi.MarkerFactoryBinder;
  * The binding of {@link MarkerFactory} class with an actual instance of {@link IMarkerFactory} is performed using
  * information returned by this class.
  * 
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
+ * 
  * @author Ceki G&uuml;lc&uuml;
  */
 public class StaticMarkerBinder implements MarkerFactoryBinder {
