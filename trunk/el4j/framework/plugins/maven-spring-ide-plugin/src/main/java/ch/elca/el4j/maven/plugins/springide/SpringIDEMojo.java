@@ -179,14 +179,12 @@ public class SpringIDEMojo extends AbstractSlf4jEnabledMojo {
 				File temp = new File(root + File.separator + sourceFile);
 				if (temp.exists()) {
 					source = temp;
+				} else {
+					getLog().error ("Could't find sourceFile denoted by Fully Quallified Class Name:" + sourceFile);
+					getLog().error ("Can't write configuration file");					
 				}
 			}
 			/* if we just didn't find the file through the fully qualified class name */
-			if (!(source.exists())) {
-				getLog().info("Could't find sourceFile denoted by Fully Quallified Class Name:");
-				getLog().info(sourceFile);
-			}
-
 		} else {
 			// in this case the packaging is wrong..., and we don't do anything
 			source = null;
