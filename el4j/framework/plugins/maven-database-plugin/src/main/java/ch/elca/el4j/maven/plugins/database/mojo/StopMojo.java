@@ -20,7 +20,6 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 
 import ch.elca.el4j.maven.plugins.database.AbstractDBMojo;
-import ch.elca.el4j.maven.plugins.database.util.derby.DerbyNetworkServerStarter;
 
 /**
  * This class is a database mojo for the 'stop' statement.
@@ -43,10 +42,7 @@ public class StopMojo extends AbstractDBMojo {
 	public void executeInternal() throws MojoExecutionException, MojoFailureException {
 		try {
 			getLog().info("Stopping database... ");
-			if (needStartup()) {
-				DerbyNetworkServerStarter.setHomeDir(getDerbyLocation());
-				DerbyNetworkServerStarter.stopNetworkServer();
-			}
+			getDbController().stop();
 		} catch (Exception e) {
 			throw new MojoFailureException(e.getMessage());
 		}

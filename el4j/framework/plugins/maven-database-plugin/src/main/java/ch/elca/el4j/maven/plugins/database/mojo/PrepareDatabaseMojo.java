@@ -20,7 +20,6 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 
 import ch.elca.el4j.maven.plugins.database.AbstractDBExecutionMojo;
-import ch.elca.el4j.maven.plugins.database.util.derby.DerbyNetworkServerStarter;
 
 
 /**
@@ -41,7 +40,7 @@ import ch.elca.el4j.maven.plugins.database.util.derby.DerbyNetworkServerStarter;
 public class PrepareDatabaseMojo extends AbstractDBExecutionMojo {
 
 	/**
-	 * Delay to wait for Derby Network Server.
+	 * Delay to wait for the DB server.
 	 */
 	private static final int DELAY = 500;
 	
@@ -50,13 +49,8 @@ public class PrepareDatabaseMojo extends AbstractDBExecutionMojo {
 	 */
 	public void executeInternal() throws MojoExecutionException, MojoFailureException {
 		try {
-			// Start Derby Network Server if necessary, but do not wait, because
-			// we know that execution will continue
-			if (needStartup()) {
-				getLog().info("Starting database (PrepareDatabaseMojo)...");
-				DerbyNetworkServerStarter.setHomeDir(getDerbyLocation());
-				DerbyNetworkServerStarter.startNetworkServer();
-			}
+			getLog().info("Starting database (PrepareDatabaseMojo)...");
+			getDbController().start();
 			
 			Thread.sleep(DELAY);
 			getLog().info("Executing silent drop");

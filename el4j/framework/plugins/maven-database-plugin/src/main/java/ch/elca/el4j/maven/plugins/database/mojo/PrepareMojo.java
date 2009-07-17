@@ -20,7 +20,6 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 
 import ch.elca.el4j.maven.plugins.database.AbstractDBExecutionMojo;
-import ch.elca.el4j.maven.plugins.database.util.derby.DerbyNetworkServerStarter;
 
 
 /**
@@ -40,26 +39,26 @@ import ch.elca.el4j.maven.plugins.database.util.derby.DerbyNetworkServerStarter;
 public class PrepareMojo extends AbstractDBExecutionMojo {
 	// Checkstyle: MemberName off
 	/**
-	 * Delay to wait for Derby Network Server.
+	 * Delay to wait for the DB Server.
 	 */
 	private static final int DELAY = 500;
 	
 	/**
-	 * The port to run derby.
+	 * The port to run the DB.
 	 *
 	 * @parameter expression="${db.internal.port}"  default-value="-1"
 	 */
 	private int dbPort;
 	
 	/**
-	 * The user name required to access derby.
+	 * The user name required to access the DB.
 	 *
 	 * @parameter expression="${db.username}"  default-value=""
 	 */
 	private String dbUsername;
 	
 	/**
-	 * The password required to access derby.
+	 * The password required to access the DB.
 	 *
 	 * @parameter expression="${db.password}"  default-value=""
 	 */
@@ -71,16 +70,11 @@ public class PrepareMojo extends AbstractDBExecutionMojo {
 	 */
 	public void executeInternal() throws MojoExecutionException, MojoFailureException {
 		try {
-			// Start Derby Network Server if necessary, but do not wait, because
-			// we know that execution will continue
-			if (needStartup()) {
-				getLog().info("Starting database (PrepareMojo)...");
-				DerbyNetworkServerStarter.setHomeDir(getDerbyLocation());
-				DerbyNetworkServerStarter.setPort(dbPort);
-				DerbyNetworkServerStarter.setUsername(dbUsername);
-				DerbyNetworkServerStarter.setPassword(dbPassword);
-				DerbyNetworkServerStarter.startNetworkServer();
-			}
+			getLog().info("Starting database (PrepareMojo)...");
+			getDbController().setPort(dbPort);
+			getDbController().setUsername(dbUsername);
+			getDbController().setPassword(dbPassword);
+			getDbController().start();
 			
 			long startTime = System.currentTimeMillis();
 			long remainingTime = DELAY;
