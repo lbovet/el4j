@@ -329,8 +329,8 @@
 				</plugin>
 				<plugin>
 					<groupId>ch.elca.el4j.maven.plugins</groupId>
-					<artifactId>maven-beans-plugin</artifactId>
-					<version>${version.maven-beans-plugin}</version>
+					<artifactId>maven-spring-ide-plugin</artifactId>
+					<version>${version.maven-spring-ide-plugin}</version>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
