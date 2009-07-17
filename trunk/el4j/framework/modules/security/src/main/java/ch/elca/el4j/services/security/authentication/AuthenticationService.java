@@ -17,6 +17,7 @@
 
 package ch.elca.el4j.services.security.authentication;
 
+import org.springframework.security.Authentication; 
 
 
 
@@ -36,7 +37,7 @@ package ch.elca.el4j.services.security.authentication;
  * @author Christoph Schwitter (CSC)
  */
 
-import org.springframework.security.Authentication; 
+
 
 public interface AuthenticationService {
 
