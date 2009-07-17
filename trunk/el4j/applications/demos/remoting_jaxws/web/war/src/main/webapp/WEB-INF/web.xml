@@ -11,6 +11,7 @@
 	<context-param>
 		<param-name>inclusiveLocations</param-name>
 		<param-value>
+		<!-- $$ BEANS INCLUDE $$ -->
 			classpath*:mandatory/*.xml,
 			classpath*:scenarios/server/web/benchmark-server-config.xml
 		</param-value>

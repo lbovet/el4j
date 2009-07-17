@@ -25,7 +25,7 @@ import java.util.Set;
 
 import javax.annotation.security.RolesAllowed;
 
-import org.acegisecurity.SecurityConfig;
+import org.springframework.security.SecurityConfig;
 import org.springframework.metadata.Attributes;
 
 /**

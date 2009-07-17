@@ -17,7 +17,8 @@
 
 package ch.elca.el4j.services.security.authentication;
 
-import org.acegisecurity.Authentication;
+
+
 
 /**
  * AuthenticationService interface. Provides methods to log in and out. If you
@@ -34,6 +35,9 @@ import org.acegisecurity.Authentication;
  * @author Andreas Pfenninger (APR)
  * @author Christoph Schwitter (CSC)
  */
+
+import org.springframework.security.Authentication; 
+
 public interface AuthenticationService {
 
 	/**

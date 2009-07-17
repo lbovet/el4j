@@ -17,8 +17,8 @@
 
 package ch.elca.el4j.services.security.authentication;
 
-import org.acegisecurity.Authentication;
-import org.acegisecurity.context.SecurityContextHolder;
+import org.springframework.security.Authentication; 
+import org.springframework.security.context.SecurityContextHolder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

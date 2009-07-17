@@ -17,9 +17,9 @@
 package ch.elca.el4j.services.security.authentication;
 
 
-import org.acegisecurity.Authentication;
-import org.acegisecurity.AuthenticationManager;
-import org.acegisecurity.context.SecurityContextHolder;
+import org.springframework.security.Authentication;
+import org.springframework.security.AuthenticationManager;
+import org.springframework.security.context.SecurityContextHolder;
 import org.springframework.beans.factory.InitializingBean;
 
 import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;

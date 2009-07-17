@@ -5,7 +5,17 @@
 -->
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+	http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-2.0.2.xsd">
+	
+
+
 
 	<!-- $Revision$ -->
 	<!-- $URL$ -->
@@ -20,47 +30,13 @@
 		class="ch.elca.el4j.core.aop.IntelligentAdvisorAutoProxyCreator">
 	</bean>
 	
-	<!--
-		AOP advisor that will automatically wire the MethodSecurityInterceptor (above)
-		into BankServiceImpl (above). The configuration attributes used are obtained
-		from the securityInterceptor.objectDefinitionSouce, which in the
-		above configuration is a Commons Attributes-based source.
-	-->
-	<bean id="methodSecurityAdvisor"
-		class="org.acegisecurity.intercept.method.aopalliance.MethodDefinitionSourceAdvisor">
-		<constructor-arg>
-			<ref local="securityInterceptor"/>
-		</constructor-arg>
-	</bean>
+	<!--  
+		This tag automatically makes sure that the security annotations are regarded
+	 -->
+	<security:global-method-security secured-annotations="enabled" jsr250-annotations="enabled"/>
+
 	
-		<!-- We don't validate config attributes, as it's unsupported by MethodDefinitionAttributes -->
-	<bean id="securityInterceptor"
-		class="org.acegisecurity.intercept.method.aopalliance.MethodSecurityInterceptor">
-		<property name="validateConfigAttributes">
-			<value>false</value>
-		</property>
-		<property name="authenticationManager">
-			<ref bean="authenticationManager"/>
-		</property>
-		<property name="accessDecisionManager">
-			<ref bean="accessDecisionManager"/>
-		</property>
-		<property name="runAsManager">
-			<ref bean="runAsManager"/>
-		</property>
-		<property name="objectDefinitionSource">
-			<ref local="objectDefinitionSource"/>
-		</property>
-	</bean>
 	
-	<bean id="objectDefinitionSource"
-		class="org.acegisecurity.intercept.method.MethodDefinitionAttributes">
-		<property name="attributes">
-			<ref local="attributes"/>
-		</property>
-	</bean>
 	
-	<bean id="attributes"
-		class="org.acegisecurity.annotation.SecurityAnnotationAttributes"/>
 		
 </beans>
