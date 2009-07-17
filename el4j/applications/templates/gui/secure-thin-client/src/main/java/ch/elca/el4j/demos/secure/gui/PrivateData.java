@@ -16,7 +16,11 @@
  */
 package ch.elca.el4j.demos.secure.gui;
 
-import org.acegisecurity.annotation.Secured;
+import javax.annotation.security.RolesAllowed;
+
+import org.springframework.security.annotation.Secured;
+
+
 
 /**
  * This class is used to test access restriction using
@@ -33,14 +37,15 @@ import org.acegisecurity.annotation.Secured;
  */
 public class PrivateData {
 	
-	// @RolesAllowed will work only in acegi 2.0
+
 	
 	
 	/**
 	 * @return    "Access granted" if successful
 	 */
-	//@RolesAllowed({ "ROLE_SUPERUSER" })
-	@Secured({ "ROLE_SUPERUSER" })
+	//
+
+	@RolesAllowed({ "ROLE_SUPERUSER" })
 	public String getSecret() {
 		return "<html><b>Access granted</b></html>";
 	}
@@ -48,6 +53,6 @@ public class PrivateData {
 	/**
 	 * Test if user is authenticated.
 	 */
-	@Secured({ "ROLE_NORMALUSER" })
+	@RolesAllowed({ "ROLE_NORMALUSER" })
 	public void testAccess() { }
 }

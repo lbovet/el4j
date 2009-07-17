@@ -16,7 +16,8 @@
  */
 package ch.elca.el4j.tests.services.security.sample;
 
-import org.acegisecurity.annotation.Secured;
+import javax.annotation.security.RolesAllowed;
+
 
 /**
  * Sample service for access tests.
@@ -30,14 +31,16 @@ import org.acegisecurity.annotation.Secured;
  *
  * @author Andreas Pfenninger (APR)
  */
-@Secured({"ROLE_TELLER"})
+
+
+@RolesAllowed({ "ROLE_TELLER" })
 public interface SampleService  {
 
 	/**
 	 * @param i a numer.
 	 * @return i + 1
 	 */
-	@Secured({"ROLE_PERMISSION_ADDONE"})
+	@RolesAllowed({ "ROLE_PERMISSION_ADDONE" })
 	public int addOne(int i);
 
 }

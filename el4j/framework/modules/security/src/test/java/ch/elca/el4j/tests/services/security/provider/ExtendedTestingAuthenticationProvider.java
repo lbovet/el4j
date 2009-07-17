@@ -17,10 +17,9 @@
 
 package ch.elca.el4j.tests.services.security.provider;
 
-import org.acegisecurity.Authentication;
-import org.acegisecurity.AuthenticationException;
-import org.acegisecurity.BadCredentialsException;
-import org.acegisecurity.providers.TestingAuthenticationProvider;
+import org.springframework.security.Authentication;
+import org.springframework.security.AuthenticationException;
+import org.springframework.security.BadCredentialsException;
 
 import ch.elca.el4j.services.security.encryption.RSACipher;
 

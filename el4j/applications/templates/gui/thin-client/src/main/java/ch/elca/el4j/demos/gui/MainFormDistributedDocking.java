@@ -62,7 +62,9 @@ public final class MainFormDistributedDocking {
 			Exceptions.getInstance().addHandler(new ExampleExceptionHandler());
 
 			PlasticLookAndFeel.setPlasticTheme(new ExperienceBlue());
-
+				
+		
+			// $$ BEANS INCLUDE $$
 			String[] applicationContextPaths = {
 				"classpath*:mandatory/*.xml",
 				"classpath*:scenarios/gui/swing/*.xml",
