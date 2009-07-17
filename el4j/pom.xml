@@ -1984,10 +1984,12 @@
 				<artifactId>slf4j-maven</artifactId>
 				<version>${version.slf4j}</version>
 			</dependency>
+			
+			<!-- get empty jar instead of commons-logging. Use SLF4J instead! -->
 			<dependency>
 				<groupId>commons-logging</groupId>
 				<artifactId>commons-logging</artifactId>
-				<version>99</version>
+				<version>99.0-does-not-exist</version>
 			</dependency>
 
 			<!-- Apache projects -->
