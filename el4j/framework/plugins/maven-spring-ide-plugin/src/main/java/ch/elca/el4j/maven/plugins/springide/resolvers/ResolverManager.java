@@ -22,8 +22,8 @@ import java.net.URL;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Manages resolving of files to classpath entries.
@@ -40,7 +40,7 @@ import org.apache.commons.logging.LogFactory;
 public class ResolverManager implements Resolver {
 
 	/** The logger. */
-	private static final Log s_log = LogFactory.getLog(ResolverManager.class);
+	private static final Logger s_log = LoggerFactory.getLogger(ResolverManager.class);
 	
 	/** Stores active resolvers. */
 	private List<Resolver> m_resolvers;
