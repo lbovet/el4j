@@ -26,6 +26,7 @@
 		<module>common</module>
 		
 		<module>db2</module>
+		<module>h2</module>
 		<module>mysql</module>
 		<module>oracle</module>
 		<module>jamon</module>
