@@ -78,6 +78,7 @@ for i in $(cat files.tmp) ; do
 done
 echo "done"
 
+echo "Checking for headers..."
 if [ $1 == "external" ] ; then
 	# search for ELCA internal header
 	for i in $(cat files.tmp) ; do
@@ -98,6 +99,15 @@ if [ $1 == "internal" ] ; then
 		fi
 	done
 fi
+echo "done"
+
+echo "Checking for commons-logging (use slf4j instead)..."
+	mvn dependency:tree | grep "commons-logging" > /dev/null
+	if [ $? -eq 0 ] ; then
+		echo "commons-logging found! Use 'mvn dependency:tree' to find out where."
+		result=1
+	fi
+echo "done"
 
 rm current.tmp
 rm files.tmp
