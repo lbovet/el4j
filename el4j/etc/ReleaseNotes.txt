@@ -1,4 +1,13 @@
 --------------------------------------------------------------------------------
+ Date :   ?
+                            EL4J version  1.7
+--------------------------------------------------------------------------------
+ * Security
+   = Upgrade to Sping Security 2.0.4 (formerly Acegi Security), introduced new namespace definitions of Spring Security, interchanged @Secured
+	 with @RolesAllowed (@RolesAllowed is not dependent on Spring Security)
+
+
+--------------------------------------------------------------------------------
  Date :   30.04.09
                             EL4J version  1.6
 --------------------------------------------------------------------------------
