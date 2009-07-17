@@ -1265,6 +1265,19 @@
 			</properties>
 		</profile>
 		<profile>
+			<id>h2</id>
+			<properties>
+				<db.name>h2</db.name>
+				<db.host>localhost</db.host>
+				<db.port>9092</db.port>
+				<!-- at which port should H2 run (if started using db:start or db:prepare)
+				This might not be the same as db.port (see tcp-forwarder), so we cannot use ${db.port} here -->
+				<db.internal.port>9092</db.internal.port>
+				<db.database-name>el4j</db.database-name>
+				<db.url>jdbc:h2:${el4j.project.home}/tools/h2/h2-databases/${db.database-name}/db</db.url>
+			</properties>
+		</profile>
+		<profile>
 			<id>oracle</id>
 			<properties>
 				<db.name>oracle</db.name>
@@ -1503,6 +1516,12 @@
 			<dependency>
 				<groupId>ch.elca.el4j.modules</groupId>
 				<artifactId>module-database-db2</artifactId>
+				<version>${version.module-database}</version>
+				<type>jar</type>
+			</dependency>
+			<dependency>
+				<groupId>ch.elca.el4j.modules</groupId>
+				<artifactId>module-database-h2</artifactId>
 				<version>${version.module-database}</version>
 				<type>jar</type>
 			</dependency>
