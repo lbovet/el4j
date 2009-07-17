@@ -20,7 +20,6 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 
 import ch.elca.el4j.maven.plugins.database.AbstractDBExecutionMojo;
-import ch.elca.el4j.maven.plugins.database.util.derby.DerbyNetworkServerStarter;
 
 
 /**
@@ -48,11 +47,7 @@ public class CleanUpDatabaseMojo extends AbstractDBExecutionMojo {
 			//Execute drop
 			executeAction("drop", true, false);
 			getLog().info("Stopping database... ");
-			// Stop Derby Network Server if necessary
-			if (needStartup()) {
-				DerbyNetworkServerStarter.setHomeDir(getDerbyLocation());
-				DerbyNetworkServerStarter.stopNetworkServer();
-			}
+			getDbController().stop();
 		} catch (Exception e) {
 			throw new MojoFailureException(e.getMessage());
 		}
