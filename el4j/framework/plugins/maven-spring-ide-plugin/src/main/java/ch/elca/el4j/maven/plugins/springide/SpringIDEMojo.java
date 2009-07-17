@@ -17,28 +17,26 @@
 package ch.elca.el4j.maven.plugins.springide;
 
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.Writer;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.maven.artifact.DependencyResolutionRequiredException;
 import org.apache.maven.artifact.repository.ArtifactRepository;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.project.MavenProject;
+import org.apache.velocity.VelocityContext;
+import org.apache.velocity.app.Velocity;
 
 import ch.elca.el4j.maven.plugins.AbstractSlf4jEnabledMojo;
-
-import freemarker.template.Configuration;
-import freemarker.template.Template;
-import freemarker.template.TemplateException;
 
 /**
  * A mojo to generate the .springIDE file and to force SpringNature on Eclipse by reading the files in the Module Application Context.
@@ -250,21 +248,21 @@ public class SpringIDEMojo extends AbstractSlf4jEnabledMojo {
 	 */
 
 	private void writespringBeansFile(String[] files) throws MojoExecutionException, MojoFailureException {
-		Map<String, Object> context = new HashMap<String, Object>();
+		VelocityContext context = new VelocityContext();
 		context.put("configs", files);
 		context.put("configSuffixes", configSuffixes.split(","));
-		context.put("allowBeanDefinitionOverriding", String.valueOf(allowBeanDefinitionOverriding));
-		context.put("incomplete", String.valueOf(incomplete));
-		context.put("enableImports", String.valueOf(enableImports));
+		context.put("allowBeanDefinitionOverriding", allowBeanDefinitionOverriding);
+		context.put("incomplete", incomplete);
+		context.put("enableImports", enableImports);
 		context.put("name", name);
 
 		getLog().info("create SpringIDE configuration for " + name);
 
 		File dotSpringBeans = new File(m_project.getBasedir(), ".springBeans");
-		applyTemplate(context, dotSpringBeans, "springBeans.fm");
+		applyTemplate(context, dotSpringBeans, "springBeans.vm");
 
 		File prefs = new File(m_project.getBasedir(), ".settings/org.springframework.ide.eclipse.core.prefs");
-		applyTemplate(context, prefs, "prefs.fm");
+		applyTemplate(context, prefs, "prefs.vm");
 
 	}
 
@@ -280,22 +278,17 @@ public class SpringIDEMojo extends AbstractSlf4jEnabledMojo {
 	 * @throws MojoExecutionException
 	 */
 
-	protected void applyTemplate(Map<String, Object> context, File out, String template) throws MojoExecutionException {
-
-		Configuration cfg = new Configuration();
-		cfg.setClassForTemplateLoading(getClass(), "");
-
+	protected void applyTemplate(VelocityContext context, File out, String template) throws MojoExecutionException {
 		out.getParentFile().mkdirs();
 		try {
 			Writer configWriter = new FileWriter(out);
-			Template tpl = cfg.getTemplate(template);
-			tpl.process(context, configWriter);
+			BufferedReader templateReader = new BufferedReader(new InputStreamReader(
+				SpringIDEMojo.class.getResourceAsStream("/" + template)));
+			Velocity.evaluate(context, configWriter, null, templateReader);
 			configWriter.close();
 			getLog().info("Write SpringIDE configuration to: " + out.getAbsolutePath());
 		} catch (IOException ioe) {
 			throw new MojoExecutionException("Unable to write SpringIDE configuration file", ioe);
-		} catch (TemplateException te) {
-			throw new MojoExecutionException("Unable to merge freemarker template", te);
 		}
 	}
 
