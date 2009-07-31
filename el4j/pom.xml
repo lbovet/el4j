@@ -2251,9 +2251,9 @@
 		<version.maven-duplicatefinder-plugin>
 			1.3-SNAPSHOT
 		</version.maven-duplicatefinder-plugin>
-		<version.maven-beans-plugin>
+		<version.maven-spring-ide-plugin>
 			1.3-SNAPSHOT
-		</version.maven-beans-plugin>
+		</version.maven-spring-ide-plugin>
 		<version.maven-extension-colorlogger>
 			1.3-SNAPSHOT
 		</version.maven-extension-colorlogger>
