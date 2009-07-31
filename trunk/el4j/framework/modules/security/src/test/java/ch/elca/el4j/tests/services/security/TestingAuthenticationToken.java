@@ -33,14 +33,13 @@ import org.springframework.security.GrantedAuthority;
 import org.springframework.security.providers.AbstractAuthenticationToken;
 
 public class TestingAuthenticationToken extends AbstractAuthenticationToken {
-	// ~ Instance fields ========================================================
 
 	private Object credentials;
 	private Object principal;
 	private GrantedAuthority[] authorities;
 	private boolean authenticated = false;
 
-	// ~ Constructors ===========================================================
+
 
 	public TestingAuthenticationToken(Object principal, Object credentials, GrantedAuthority[] authorities) {
 		this.principal = principal;
@@ -52,7 +51,7 @@ public class TestingAuthenticationToken extends AbstractAuthenticationToken {
 		throw new IllegalArgumentException("Cannot use default constructor");
 	}
 
-	// ~ Methods ================================================================
+
 	
 	public void setAuthenticated(boolean isAuthenticated) {
 		this.authenticated = isAuthenticated;
