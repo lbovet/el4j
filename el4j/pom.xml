@@ -269,7 +269,7 @@
 						<configuration>
 							<rules>
 								<requireJavaVersion>
-									<version>1.5.0-15</version>
+									<version>1.6.0-10</version>
 								</requireJavaVersion>
 							</rules>
 						</configuration>
@@ -2378,7 +2378,7 @@
 		
 		<!-- Javadoc config -->
 		<javadoc.stylesheet.path>${el4j.external}/etc/javadoc/stylesheet.css</javadoc.stylesheet.path>
-		<javadoc.link.jdk>http://java.sun.com/j2se/${el4j.java.version}/docs/api</javadoc.link.jdk>
+		<javadoc.link.jdk>http://java.sun.com/javase/6/docs/api/</javadoc.link.jdk>
 		<javadoc.link.spring>http://static.springframework.org/spring/docs/2.5.x/api</javadoc.link.spring>
 		<javadoc.link.hibernate>http://www.hibernate.org/hib_docs/v3/api</javadoc.link.hibernate>
 		
@@ -2427,7 +2427,10 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
 		<!-- Used Maven version -->
-		<el4j.java.version>1.5</el4j.java.version>
 		<el4j.maven.version>2.2.0</el4j.maven.version>
+		
+		<!-- Java version. javadoc.link.jdk has to changed too! -->
+		<el4j.java.version>1.6</el4j.java.version>
+		
 	</properties>
 </project>
