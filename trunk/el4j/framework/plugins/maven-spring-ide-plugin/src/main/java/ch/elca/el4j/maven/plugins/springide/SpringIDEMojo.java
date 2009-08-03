@@ -39,11 +39,13 @@ import org.apache.velocity.app.Velocity;
 import ch.elca.el4j.maven.plugins.AbstractSlf4jEnabledMojo;
 
 /**
- * A mojo to generate the .springIDE file and to force SpringNature on Eclipse by reading the files in the Module Application Context.
- * The sourcefile to be used to get the Module Application Context can either be specified in the
+ * A mojo to generate the .springIDE file and to force SpringNature on Eclipse by reading the files in the
+ * Module Application Context.
+ * The source file to be used to get the Module Application Context can either be specified in the
  * sourceFile parameter or, if unspecified, will be searched by the mojo.
  * Rules that this mojo adheres to for searching the source file that specify the module application context: 
- * 1. If there is a .xml file that contains <!-- $$ BEANS INCLUDE $$ --> the mojo will assume a webproject and take this file.
+ * 1. If there is a .xml file that contains <!-- $$ BEANS INCLUDE $$ --> the mojo will assume a web project
+ * and take this file.
  * 2. Else it will look through alphabetically through all files in the base directory and take the first .java
  * file that contains // $$ BEANS INCLUDE $$
 
@@ -124,7 +126,6 @@ public class SpringIDEMojo extends AbstractSlf4jEnabledMojo {
 
 		/* for a web project just take the web.xml file */
 		
-		
 		if (m_project.getPackaging().equals("war")) {
 			/* sourceFile should be null, if it's not, tell user that we are ignoring configuration */
 			if (sourceFile != null) {
@@ -133,10 +134,6 @@ public class SpringIDEMojo extends AbstractSlf4jEnabledMojo {
 			sourceFile = m_project.getBasedir() + File.separator + "src" + File.separator + "main" + File.separator
 				+ "webapp" + File.separator + "WEB-INF" + File.separator + "web.xml";
 			source = new File(sourceFile);
-			
-			
-		
-			
 
 			/* check if we really have the right file */
 			if (!(source.exists())) {
@@ -178,8 +175,8 @@ public class SpringIDEMojo extends AbstractSlf4jEnabledMojo {
 				if (temp.exists()) {
 					source = temp;
 				} else {
-					getLog().error ("Could't find sourceFile denoted by Fully Quallified Class Name:" + sourceFile);
-					getLog().error ("Can't write configuration file");					
+					getLog().error("Could't find sourceFile denoted by Fully Quallified Class Name:" + sourceFile);
+					getLog().error("Can't write configuration file");
 				}
 			}
 			/* if we just didn't find the file through the fully qualified class name */
@@ -199,7 +196,8 @@ public class SpringIDEMojo extends AbstractSlf4jEnabledMojo {
 			/* small test to make sure that we really have found includes */
 			if (ex.getInclusive() == null) {
 				getLog().error("Couldn't find any included configuration files");
-				getLog().error("Make sure that comments needed for execution of this plugin exist and are at the right place");
+				getLog().error("Make sure that comments needed for execution of this plugin exist "
+					+ "and are at the right place");
 				return;
 			}
 

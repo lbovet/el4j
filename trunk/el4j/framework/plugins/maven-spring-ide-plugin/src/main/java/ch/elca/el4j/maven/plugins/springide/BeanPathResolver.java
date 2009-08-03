@@ -185,7 +185,7 @@ public class BeanPathResolver {
 				m_logger.debug("Inclusive files:");
 				if (m_inclusive != null) {
 					for (String s : m_inclusive) {
-							m_logger.debug(" + " + s);
+						m_logger.debug(" + " + s);
 					}
 				}
 				
@@ -193,7 +193,7 @@ public class BeanPathResolver {
 				m_logger.debug("Exclusive files:");
 				if (m_exclusive != null) {
 					for (String s : m_exclusive) {
-							m_logger.debug(" - " + s);
+						m_logger.debug(" - " + s);
 					}
 				}
 				
