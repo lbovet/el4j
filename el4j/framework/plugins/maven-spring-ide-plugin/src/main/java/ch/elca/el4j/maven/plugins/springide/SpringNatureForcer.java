@@ -44,17 +44,23 @@ import org.slf4j.LoggerFactory;
  * @author Daniel Thomas (DTH)
  */
 
-public class SpringNatureForcer {
+public final class SpringNatureForcer {
 	
 	/**
 	 * The logger.
 	 */
 	private static final Logger s_logger = LoggerFactory.getLogger(SpringNatureForcer.class);
 	
+	/**
+	 * Hidden constructor.
+	 */
+	private SpringNatureForcer() { }
 	
 	/**
 	 * Forces SpringNature (in the .project file that is checked by eclipse). -> adds a tag in the nature tag of the
 	 * (xml) .project file
+	 * 
+	 * @param baseDirectory    the project base directory
 	 */
 	public static void forceSpringNature(File baseDirectory) {
 		try {

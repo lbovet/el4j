@@ -89,7 +89,7 @@ public class SourceResolver {
 	}
 
 	/**
-	 * Simple seclection sort on the names of the files in the javaFiles List.
+	 * Simple selection sort on the names of the files in the javaFiles List.
 	 */
 	private static List<File> sortJavaFilesAlpabetically(List<File> javaFiles) {
 		File[] javaFilesAsArray = (File[]) javaFiles.toArray(new File[1]);
