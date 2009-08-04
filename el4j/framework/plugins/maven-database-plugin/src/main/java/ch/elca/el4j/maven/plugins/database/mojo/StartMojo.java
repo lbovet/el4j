@@ -24,12 +24,7 @@ import ch.elca.el4j.maven.plugins.database.AbstractDBMojo;
 /**
  * This class is a database mojo for the 'start' statement.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @goal start
  * @author David Stefan (DST)

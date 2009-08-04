@@ -19,12 +19,7 @@ package ch.elca.el4j.util.objectwrapper;
 /**
  * Base interface of all wrappables.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL: https://cvs.elca.ch/subversion/el4j-internal/trunk/sandbox/cacher/src/main/java/caching/aspects/Aspect.java $",
- *    "$Revision: 1549 $",
- *    "$Date: 2008-07-30 14:25:13 +0200 (Wed, 30 Jul 2008) $",
- *    "$Author: dbd@ELCA.CH $"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author David Bernhard (DBD)
  */

@@ -23,12 +23,7 @@ import ch.elca.el4j.core.context.ModuleApplicationContext;
 /**
  * Main class to stop test server after tests have run.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author David Bernhard (DBD)
  */

@@ -33,12 +33,7 @@ import ch.elca.el4j.tests.services.persistence.hibernate.offlining.dom.SimplePer
  * Tests that do not depend on the offlining strategy. These are run once with the ALL
  * strategy.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author David Bernhard (DBD)
  */

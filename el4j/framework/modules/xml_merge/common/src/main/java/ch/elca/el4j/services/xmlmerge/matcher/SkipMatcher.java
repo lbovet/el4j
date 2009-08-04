@@ -23,12 +23,7 @@ import ch.elca.el4j.services.xmlmerge.Matcher;
 /**
  * Elements compared with this matcher never match.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Laurent Bovet (LBO)
  * @author Alex Mathey (AMA)

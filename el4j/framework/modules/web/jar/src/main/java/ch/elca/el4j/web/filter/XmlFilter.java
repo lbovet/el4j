@@ -47,12 +47,7 @@ import org.slf4j.LoggerFactory;
  * compatible or not, this filter generates a html page and sends it to the
  * client or lets the browser do the xslt transformation.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Jacques-Olivier Haenni (JOH)
  */

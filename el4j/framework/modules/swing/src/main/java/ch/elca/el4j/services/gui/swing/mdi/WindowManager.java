@@ -68,12 +68,7 @@ import ch.elca.el4j.services.gui.swing.mdi.JInternalFrameComparator;
  *
  * Adapted from project http://zeus-jscl.sourceforge.net/
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Gregory Kotsaftis
  * @since 1.04

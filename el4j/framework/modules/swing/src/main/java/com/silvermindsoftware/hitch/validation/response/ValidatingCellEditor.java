@@ -41,12 +41,7 @@ import ch.elca.el4j.util.config.GenericConfig;
 /**
  * A validating cell editor for tables.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Stefan Wismer (SWI)
  */

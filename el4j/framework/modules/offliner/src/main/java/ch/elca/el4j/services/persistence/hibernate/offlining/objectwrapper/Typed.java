@@ -21,12 +21,7 @@ import ch.elca.el4j.util.objectwrapper.Wrappable;
 /**
  * Wrappable that an object can be NULL, LOCAL, or REMOTE - keyed.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author David Bernhard (DBD)
  */

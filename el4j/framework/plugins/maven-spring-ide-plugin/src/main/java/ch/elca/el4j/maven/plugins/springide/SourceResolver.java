@@ -33,12 +33,7 @@ import org.apache.commons.io.filefilter.FileFilterUtils;
  * Application Context in a web project, afterwards it will check through all .java files in the source
  * alphabetically and return the first one that contains // $$ BEANS INCLUDE $$
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Daniel Thomas (DTH)
  */

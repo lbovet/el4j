@@ -23,12 +23,7 @@ import ch.elca.el4j.core.context.ModuleApplicationContext;
 /**
  * Main class to start server for tests during the maven build. 
  * 
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  * 
  * @author David Bernhard (DBD)
  */

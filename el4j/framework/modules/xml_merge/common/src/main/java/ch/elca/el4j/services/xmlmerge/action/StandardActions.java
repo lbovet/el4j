@@ -20,12 +20,7 @@ package ch.elca.el4j.services.xmlmerge.action;
  * Constants for built-in actions. The constant names are also used in the
  * configuration.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Laurent Bovet (LBO)
  * @author Alex Mathey (AMA)

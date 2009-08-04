@@ -28,12 +28,7 @@ import ch.elca.el4j.services.persistence.hibernate.offlining.util.GenericSeriali
  * (i.e. domain objects) to unique keys. Object identity can be defined as having equal unique keys. 
  *
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author David Bernhard (DBD)
  */

@@ -27,12 +27,7 @@ import ch.elca.el4j.services.gui.swing.frames.ToolWindowTabConfiguration;
 /**
  * This factory wraps components into {@link ToolWindowTabApplicationFrame}s.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Stefan Wismer (SWI)
  */

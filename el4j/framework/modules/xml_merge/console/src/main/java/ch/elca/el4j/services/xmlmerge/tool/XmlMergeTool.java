@@ -34,12 +34,7 @@ import ch.elca.el4j.services.xmlmerge.merge.DefaultXmlMerge;
 /**
  * XmlMerge as a Command-line tool.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Laurent Bovet (LBO)
  * @author Alex Mathey (AMA)

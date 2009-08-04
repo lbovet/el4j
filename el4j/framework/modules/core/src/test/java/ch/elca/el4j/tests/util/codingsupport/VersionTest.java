@@ -26,12 +26,7 @@ import ch.elca.el4j.util.codingsupport.Version;
  *
  * For full tests, run this class in JDK 5 and 6
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Philipp Oser (POS)
  */

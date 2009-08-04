@@ -25,12 +25,7 @@ import org.noos.xing.mydoggy.ToolWindowManager;
 /**
  * This class holds information about the tab configuration.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Stefan Wismer (SWI)
  */

@@ -25,12 +25,7 @@ import org.xml.sax.helpers.DefaultHandler;
 /**
  * A SAX handler looking for tags having the attributes 'value' or 'final'.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Stefan Wismer (SWI)
  */

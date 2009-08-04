@@ -34,12 +34,7 @@ import org.slf4j.LoggerFactory;
  * writes them into the .springBeans file. 
  * Additionally it can set the springNature in the .projects file of eclipse.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "DTH"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Daniel Thomas (DTH)
  */

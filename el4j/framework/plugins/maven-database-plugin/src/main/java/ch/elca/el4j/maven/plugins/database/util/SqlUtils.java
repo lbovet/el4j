@@ -32,12 +32,7 @@ import ch.elca.el4j.maven.plugins.database.holder.DatabaseHolderException;
 /**
  * A utility class for SQL file operations used in maven-database-plugin.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author David Stefan (DST)
  * @author Stefan Wismer (SWI)

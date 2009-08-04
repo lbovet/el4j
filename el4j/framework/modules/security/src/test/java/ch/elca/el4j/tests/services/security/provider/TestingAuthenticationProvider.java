@@ -9,12 +9,7 @@ import ch.elca.el4j.tests.services.security.TestingAuthenticationToken;
 /**
  * 
  * This class is an implementation of the AthenticationProvider for testing purposes.
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Daniel Thomas (DTH)
  */

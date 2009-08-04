@@ -31,12 +31,7 @@ import org.slf4j.LoggerFactory;
  *
  * The returned UUID is a hex-encoded 32-digit number.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Martin Zeltner (MZE)
  */

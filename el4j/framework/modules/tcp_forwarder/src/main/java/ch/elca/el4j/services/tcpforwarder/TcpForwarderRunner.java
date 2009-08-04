@@ -26,12 +26,7 @@ import org.springframework.util.StringUtils;
 /**
  * Used to start the tcp forwarder from command line.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Martin Zeltner (MZE)
  */
