@@ -24,12 +24,7 @@ import ch.elca.el4j.tests.remoting.ejb.service.Calculator;
 /**
  * Calculator implementation used for testing.
  * 
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Andreas Bur (ABU)
  */

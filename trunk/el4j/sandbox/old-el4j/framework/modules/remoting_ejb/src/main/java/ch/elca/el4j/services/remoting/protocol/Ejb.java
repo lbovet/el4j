@@ -45,12 +45,7 @@ import ch.elca.el4j.services.remoting.protocol.ejb.RemoteStatelessSessionProxyFa
 /**
  * This class implements the protocol to access an EJB transparently.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Nicolas Schiper (NSC)
  * @author Andreas Bur (ABU)

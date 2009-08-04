@@ -23,12 +23,7 @@ import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
  * Convenience sqlmap client dao support class to be able to return the
  * convenience sqlmap client template without casting it.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Martin Zeltner (MZE)
  */

@@ -27,12 +27,7 @@ import ch.elca.el4ant.velocity.VelocityEngineTask;
 /**
  * This task generates the ear deployment descriptor (application.xml).
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  * 
  * @author Nicolas Schiper (NSC)
  */

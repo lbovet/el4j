@@ -28,12 +28,7 @@ package ch.elca.el4j.services.remoting.protocol.ejb.generator;
  * <p/><b>Copy this interface definition to the build system plugin that crates
  * the EJB classes after each modification.</b>
  * 
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Andreas Bur (ABU)
  */

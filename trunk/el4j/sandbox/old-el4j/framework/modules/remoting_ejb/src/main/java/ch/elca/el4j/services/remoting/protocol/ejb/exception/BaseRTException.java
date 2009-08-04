@@ -22,12 +22,7 @@ import java.text.MessageFormat;
 /**
  * This is the parent exception of all the unchecked exceptions in EL4J.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author  Alain Borlet-Hote (ABH)
  * @author  Philipp Oser (POS)

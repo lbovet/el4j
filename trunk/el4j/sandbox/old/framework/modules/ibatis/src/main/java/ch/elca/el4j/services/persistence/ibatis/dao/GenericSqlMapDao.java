@@ -46,12 +46,7 @@ import ch.elca.el4j.util.codingsupport.Reject;
  * Note that when using this DAO, a special ibatis xml configuration file using
  * is necessary for every domain object.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @param <T>
  *            The domain class the DAO is responsible for

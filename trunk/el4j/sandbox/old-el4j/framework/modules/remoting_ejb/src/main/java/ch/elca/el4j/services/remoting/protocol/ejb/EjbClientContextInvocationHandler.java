@@ -30,12 +30,7 @@ import ch.elca.el4j.services.remoting.ClientContextInvocationHandler;
  * It is used on client side and allows to pass <code>remove</code> invocations
  * and unwraps runtime exceptions.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Andreas Bur (ABU)
  */

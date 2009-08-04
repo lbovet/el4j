@@ -40,10 +40,7 @@ import org.apache.commons.logging.LogFactory;
  * stack trace and message are available as strings. The Java serialized
  * exception in the <code>byte[]</code> can be ignored.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *   "$Revision$", "$Date$", "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  **/
 public class ExceptionWrapperException extends Exception {
     

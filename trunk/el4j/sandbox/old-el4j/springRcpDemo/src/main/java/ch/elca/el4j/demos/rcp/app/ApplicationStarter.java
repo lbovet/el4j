@@ -24,12 +24,7 @@ import org.springframework.richclient.application.ApplicationLauncher;
 /**
  * This class is Starts the Master/Detail RCP Demo.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author David Stefan (DST)
  */

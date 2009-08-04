@@ -35,12 +35,7 @@ import com.ibatis.sqlmap.client.extensions.TypeHandlerCallback;
  * Type handler callback for iBatis SqlMaps 2.0 to store an object as a byte
  * array an vice versa.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Andreas Pfenninger (APR)
  */

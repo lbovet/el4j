@@ -23,12 +23,7 @@ import java.util.HashMap;
  * This class maps class names to interfaces. It is used to store enriched and
  * dynamically created interfaces.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Andreas Bur (ABU)
  */

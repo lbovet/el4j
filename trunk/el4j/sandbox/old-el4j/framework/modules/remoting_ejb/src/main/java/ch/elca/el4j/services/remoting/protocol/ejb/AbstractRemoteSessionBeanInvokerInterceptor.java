@@ -37,12 +37,7 @@ import ch.elca.el4j.services.remoting.protocol.ejb.exception.WrapperException;
  * {@link ch.elca.el4j.services.remoting.protocol.ejb.EJBLifecycleManager} to
  * remove it explicitely (but this is not required by the EJB standard).
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Andreas Bur (ABU)
  */

@@ -48,12 +48,7 @@ import ch.elca.el4j.util.codingsupport.CollectionUtils;
 /**
  * This class is the proxy factory for the client side.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Martin Zeltner (MZE)
  */
