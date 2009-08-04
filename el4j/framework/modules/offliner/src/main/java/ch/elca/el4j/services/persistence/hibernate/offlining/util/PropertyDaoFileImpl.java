@@ -28,12 +28,7 @@ import java.util.Properties;
  * Property dao implementation that uses a file.
  * Used only until the bug is found that prevents them from going to database.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author David Bernhard (DBD)
  */

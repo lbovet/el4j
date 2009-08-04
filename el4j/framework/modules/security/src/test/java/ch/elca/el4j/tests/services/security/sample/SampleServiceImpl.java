@@ -24,12 +24,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Sample service implementation.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Andreas Pfenninger (APR)
  */

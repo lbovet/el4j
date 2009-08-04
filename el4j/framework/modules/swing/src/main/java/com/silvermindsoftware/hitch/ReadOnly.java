@@ -17,12 +17,7 @@ package com.silvermindsoftware.hitch;
  */
 
 /**
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  */
 public enum ReadOnly {
 

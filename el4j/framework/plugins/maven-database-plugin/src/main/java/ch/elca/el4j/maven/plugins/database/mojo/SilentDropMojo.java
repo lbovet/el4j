@@ -26,12 +26,7 @@ import ch.elca.el4j.maven.plugins.database.AbstractDBExecutionMojo;
  * It executes the same statement as the drop mojo, but ignores exceptions.
  * It's intended to be used as a "safe" drop before a the create mojo, e.g.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @goal silentDrop
  * @author David Stefan (DST)

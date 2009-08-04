@@ -28,12 +28,7 @@ import org.codehaus.plexus.util.StringUtils;
  *
  * This class filters artifacts according to their name, group and version.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Philippe Jacot (PJA)
  */

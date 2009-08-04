@@ -21,12 +21,7 @@ package ch.elca.el4j.util.observer.impl;
  *
  * @param <T> see supertype.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @see ch.elca.el4j.util.observer.ObservableValue
  * @author Adrian Moos (AMS)

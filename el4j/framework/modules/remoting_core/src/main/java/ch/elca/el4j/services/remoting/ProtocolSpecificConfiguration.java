@@ -22,12 +22,7 @@ import org.springframework.beans.factory.InitializingBean;
 /**
  * Interface to describe additional protocol specific configuration.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Martin Zeltner (MZE)
  */

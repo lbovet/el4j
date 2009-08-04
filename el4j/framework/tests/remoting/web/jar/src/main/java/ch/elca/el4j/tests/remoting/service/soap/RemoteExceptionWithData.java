@@ -25,12 +25,7 @@ import ch.elca.el4j.tests.remoting.service.CalculatorValueObject;
 /**
  * Jax-Rpc 1.1 wsdl fault specification conform exception.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Martin Zeltner (MZE)
  */

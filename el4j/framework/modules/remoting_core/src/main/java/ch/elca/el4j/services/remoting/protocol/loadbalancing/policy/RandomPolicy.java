@@ -30,12 +30,7 @@ import ch.elca.el4j.services.remoting.protocol.loadbalancing.NoProtocolAvailable
  * Chooses the protocol according to a random policy. Protocols for whom a
  * failure has been notified, are removed.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Stefan Pleisch (SPL)
  */

@@ -28,12 +28,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Manages resolving of files to classpath entries.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author David Bernhard (DBD)
  */

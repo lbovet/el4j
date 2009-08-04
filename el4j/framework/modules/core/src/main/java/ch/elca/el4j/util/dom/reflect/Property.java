@@ -26,12 +26,7 @@ import java.lang.reflect.Method;
  * Properties declared using fields are writable, properties declared using
  * accessors are writable if and only if setters are declared.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Adrian Moos (AMS)
  */

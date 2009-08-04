@@ -21,12 +21,7 @@ package ch.elca.el4j.services.persistence.hibernate.offlining.util;
  * DAO for hibernate access to properties. We need an interface/impl pair as 
  * our dao might be proxied.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author David Bernhard (DBD)
  */

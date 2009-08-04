@@ -19,12 +19,7 @@ package ch.elca.el4j.core.context;
 /**
  * An additional interface for Spring application contexts that provide a method to ask if context is fully refreshed.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Stefan Wismer (SWI)
  */

@@ -36,12 +36,7 @@ import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
  * </a> for more details. This bean must be used as prototype and must have
  * attribute <code>id</code> set.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @deprecated This former hack is no longer required. It is solved in
  *             <code>ModuleApplicationContext</code> and

@@ -24,12 +24,7 @@ import ch.elca.el4j.services.remoting.protocol.loadbalancing.NoProtocolAvailable
  *
  * Chooses protocols according to a round robin policy.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Stefan Pleisch (SPL)
  */

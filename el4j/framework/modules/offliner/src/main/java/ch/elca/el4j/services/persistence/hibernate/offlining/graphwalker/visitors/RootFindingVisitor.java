@@ -40,12 +40,7 @@ import ch.elca.el4j.util.objectwrapper.interfaces.Linked;
  * <p>
  * <i>"root" is thus not a well-defined term as it depends on the order in which the graph is traversed.</i>
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author David Bernhard (DBD)
  */

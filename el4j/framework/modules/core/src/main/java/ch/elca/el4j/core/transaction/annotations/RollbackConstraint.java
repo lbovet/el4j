@@ -35,12 +35,7 @@ import ch.elca.el4j.core.transaction.AnnotationTransactionMetaDataSource;
  * parameters set the meta data source will automatically add {@link RuntimeException} and {@link Error} as
  * rollback-for.</b></p>
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Martin Zeltner (MZE)
  * @see org.springframework.transaction.annotation.Transactional

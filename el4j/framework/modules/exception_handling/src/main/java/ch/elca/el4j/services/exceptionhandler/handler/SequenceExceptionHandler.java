@@ -29,12 +29,7 @@ import ch.elca.el4j.services.exceptionhandler.RetryException;
  * exception. In this case, it returns its result. If all exception handler
  * fail, the last caught exception is thrown.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Andreas Bur (ABU)
  */

@@ -23,12 +23,7 @@ import org.springframework.util.Assert;
 /**
  * A utility class to evaluate maven-styled expressions.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Stefan Wismer (SWI)
  */

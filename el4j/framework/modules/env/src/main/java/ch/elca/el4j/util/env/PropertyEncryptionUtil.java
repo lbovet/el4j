@@ -32,12 +32,7 @@ import ch.elca.el4j.util.encryption.PasswordSource;
  * separate class to make it accessible from Override- and
  * Placeholder-configurer and avoid code duplication.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author David Bernhard (DBD)
  */

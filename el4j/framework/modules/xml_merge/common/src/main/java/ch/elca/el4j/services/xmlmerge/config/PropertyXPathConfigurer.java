@@ -31,12 +31,7 @@ import ch.elca.el4j.services.xmlmerge.ConfigurationException;
  * Reads the {@link ch.elca.el4j.services.xmlmerge.factory.XPathOperationFactory}
  * configuration from a property file or a map.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Laurent Bovet (LBO)
  * @author Alex Mathey (AMA)

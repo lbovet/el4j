@@ -27,12 +27,7 @@ import ch.elca.el4j.services.persistence.hibernate.offlining.impl.MappingEntry;
  * The "mapping table" for the server. Because it is only used temporarily during synchronization,
  * it is not stored in a separate database. Instead, it is maintained in-memory.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author David Bernhard (DBD)
  */
