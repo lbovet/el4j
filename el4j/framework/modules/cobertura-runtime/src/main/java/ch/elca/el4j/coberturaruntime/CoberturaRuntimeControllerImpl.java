@@ -35,12 +35,7 @@ import net.sourceforge.cobertura.util.ConfigurationUtil;
 /**
  * Bean to control the cobertura runtime behavior.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Martin Zeltner (MZE)
  */

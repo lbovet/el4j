@@ -42,12 +42,7 @@ import ch.elca.el4j.tests.remoting.jaxws.service.SomeIntValue;
  * This class is a test for JAX-WS using proxies on the generated classes
  * to get the same interfaces as on the server.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Philippe Jacot (PJA)
  * @author Stefan Wismer (SWI)

@@ -24,12 +24,7 @@ import ch.elca.el4j.coberturaruntime.CoberturaRuntimeControllerImpl;
 /**
  * Goal to create the cobertura report as via the JMX MBean.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Martin Zeltner (MZE)
  * 

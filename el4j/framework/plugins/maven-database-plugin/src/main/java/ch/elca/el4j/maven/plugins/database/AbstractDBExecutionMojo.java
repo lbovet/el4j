@@ -44,14 +44,7 @@ import ch.elca.el4j.util.env.EnvPropertiesUtils;
  * This class is the abstract class for all mojos, which are executing SQL
  * statements.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL: https://el4j.svn.sourceforge.net/svnroot/el4j/trunk/el4j/
- *   maven/plugins/maven-database-plugin/src/main/java/ch/elca/el4j/plugins/
- *   database/AbstractDBExecutionMojo.java $",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author David Stefan (DST)
  */

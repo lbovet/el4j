@@ -28,12 +28,7 @@ import ch.elca.el4j.util.config.HierarchicalGenericConfig;
 /**
  * This class tests {@link HierarchicalGenericConfig}.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Stefan Wismer (SWI)
  */

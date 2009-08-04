@@ -27,12 +27,7 @@ import java.net.URLClassLoader;
  * Remark: '<code>mvn exec:java</code>' uses an URLClassloader for the main class and
  * passes all project dependencies plus the target directories as URLs to that.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author David Bernhard (DBD)
  */

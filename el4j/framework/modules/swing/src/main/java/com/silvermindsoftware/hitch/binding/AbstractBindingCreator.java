@@ -23,12 +23,7 @@ import org.jdesktop.beansbinding.AutoBinding.UpdateStrategy;
 /**
  * This abstract class just provides an update strategy field to its subclasses.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @param <T>    the type of form component it belongs to
  *

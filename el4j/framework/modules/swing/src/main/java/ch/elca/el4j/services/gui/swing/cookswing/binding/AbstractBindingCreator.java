@@ -33,12 +33,7 @@ import cookxml.core.interfaces.Creator;
 /**
  * This class provides basic functionality for cookXML binding creators.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Stefan Wismer (SWI)
  */

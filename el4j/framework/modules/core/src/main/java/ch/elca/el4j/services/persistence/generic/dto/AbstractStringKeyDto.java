@@ -22,12 +22,7 @@ import ch.elca.el4j.util.codingsupport.ObjectUtils;
 /**
  * This class adds to the <code>AbstractDto</code> a primary key as a string.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @deprecated Please use <code>AbstractStringKeyIntOptimisticLockingDto</code>
  *             instead.

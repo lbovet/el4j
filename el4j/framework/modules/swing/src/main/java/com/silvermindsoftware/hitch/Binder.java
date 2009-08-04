@@ -30,12 +30,7 @@ import com.silvermindsoftware.hitch.validation.response.ValidationResponder;
 /**
  * Interface for convenience beans binding support between model and GUI.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Stefan Wismer (SWI)
  */

@@ -26,12 +26,7 @@ import org.springframework.core.io.Resource;
  * some class loader issues (problems with Spring's wildcard notation, e.g.
  * <code>classpath*:mandatory/*</code>).
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Andreas Bur (ABU)
  */

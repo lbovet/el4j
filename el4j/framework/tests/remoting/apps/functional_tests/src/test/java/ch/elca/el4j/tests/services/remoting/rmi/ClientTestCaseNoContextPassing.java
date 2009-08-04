@@ -30,8 +30,9 @@ import ch.elca.el4j.tests.services.remoting.loadbalancing.common.BusinessObject;
 
 /**
  * This class tests the idempotent invocation interceptor that handles retrials
- * by itself. <script type="text/javascript">printFileStatus ("$URL$",
- * "$Revision$", "$Date$", "$Author$" );</script>
+ * by itself.
+ *
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Stefan Pleisch (SPL)
  */

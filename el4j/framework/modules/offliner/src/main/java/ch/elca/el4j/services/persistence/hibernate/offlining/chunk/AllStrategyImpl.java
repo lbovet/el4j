@@ -26,12 +26,7 @@ import ch.elca.el4j.services.persistence.hibernate.offlining.impl.OfflinerInfo;
 /**
  * Implementation of ALL chunking strategy.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author David Bernhard (DBD)
  */

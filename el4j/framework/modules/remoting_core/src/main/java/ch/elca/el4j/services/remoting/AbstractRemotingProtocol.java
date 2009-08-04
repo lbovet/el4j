@@ -33,12 +33,7 @@ import ch.elca.el4j.core.contextpassing.ImplicitContextPassingRegistry;
  * This abstract class defines a base for remote protocols. It contains
  * basically the host name and port number.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Martin Zeltner (MZE)
  */

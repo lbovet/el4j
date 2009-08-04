@@ -32,12 +32,7 @@ import ch.elca.el4j.services.exceptionhandler.SafetyFacadeInterceptor;
  * free to choose another number of retries (e.g. if different retry exception
  * handler are used).
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Andreas Bur (ABU)
  */

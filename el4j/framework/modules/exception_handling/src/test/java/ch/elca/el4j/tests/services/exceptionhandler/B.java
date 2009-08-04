@@ -21,12 +21,7 @@ package ch.elca.el4j.tests.services.exceptionhandler;
  * This class is used to show the substitution and the reconfigure exception
  * handling strategies.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Andreas Bur (ABU)
  */

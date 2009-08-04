@@ -33,12 +33,7 @@ import com.silvermindsoftware.hitch.reflect.ClassManager;
 /**
  * This class manages binder instances.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Stefan Wismer (SWI), based on Hitch by Brandon Goodin
  */

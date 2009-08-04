@@ -42,12 +42,7 @@ import ch.elca.el4j.util.codingsupport.Reject;
 /**
  * The proxy class for an ApplicationContext.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Raphael Boog (RBO)
  */

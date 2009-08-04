@@ -35,12 +35,7 @@ import ch.elca.el4j.tests.services.persistence.hibernate.offlining.dom.SimplePer
 /**
  * Tests that depend on a strategy. The strategy is chosen in a subclass.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author David Bernhard (DBD)
  */

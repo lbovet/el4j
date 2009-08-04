@@ -31,12 +31,7 @@ import org.springframework.util.StringUtils;
 /**
  * Goal to collect java source files of instrumented class files.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Martin Zeltner (MZE)
  * 

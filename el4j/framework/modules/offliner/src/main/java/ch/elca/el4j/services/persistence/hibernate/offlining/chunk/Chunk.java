@@ -28,12 +28,7 @@ import ch.elca.el4j.services.persistence.hibernate.offlining.impl.MappingEntry;
  * Invariant: The sizes of the object and mapping arrays are equal, and the mapping entry for m_objects[i]
  * is in m_mappings[i].
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author David Bernhard (DBD)
  */

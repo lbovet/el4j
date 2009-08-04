@@ -25,12 +25,7 @@ import ch.elca.el4j.maven.plugins.database.AbstractDBExecutionMojo;
 /**
  * <em>DEPRECATED</em> This class is a convenience mojo that includes the 'drop' and 'stop' mojo.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @goal cleanUpDB
  * @author David Stefan (DST)

@@ -28,12 +28,7 @@ import ch.elca.el4j.util.interfaceenrichment.MethodDescriptor;
  * This interface decorator adds a map with assembled implicit context to each
  * method of the given interface.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Martin Zeltner (MZE)
  */

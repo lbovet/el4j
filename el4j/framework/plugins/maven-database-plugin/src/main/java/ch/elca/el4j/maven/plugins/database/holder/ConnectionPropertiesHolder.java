@@ -29,12 +29,7 @@ import ch.elca.el4j.maven.ResourceLoader;
  * This class holds the data needed to connect to a database, namely the
  * URL, the username, the password and the JDBC driver.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author David Stefan (DST)
  */

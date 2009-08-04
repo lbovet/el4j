@@ -44,12 +44,7 @@ import ch.elca.el4j.tests.services.security.sample.SampleService;
 /**
  * Tests various logins and authorization in a local environment.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Raphael Boog (RBO)
  */

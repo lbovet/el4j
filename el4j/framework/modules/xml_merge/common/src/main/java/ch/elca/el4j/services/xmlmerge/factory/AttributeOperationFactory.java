@@ -27,12 +27,7 @@ import ch.elca.el4j.services.xmlmerge.OperationFactory;
  * Creates operations by inspecting keywords passed as attributes in patch
  * elements.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Laurent Bovet (LBO)
  * @author Alex Mathey (AMA)

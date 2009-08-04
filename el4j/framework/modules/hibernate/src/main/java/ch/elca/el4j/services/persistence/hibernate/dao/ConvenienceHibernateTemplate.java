@@ -39,12 +39,7 @@ import ch.elca.el4j.util.codingsupport.Reject;
  *            (they use the <em>Strong</em> suffixes)
  *   </ul>
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Alex Mathey (AMA)
  */

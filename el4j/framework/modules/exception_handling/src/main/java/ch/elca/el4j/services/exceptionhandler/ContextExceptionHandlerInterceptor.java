@@ -74,12 +74,7 @@ import org.slf4j.LoggerFactory;
  * foo(); // an exception is handled by the batch policy
  * </pre>
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Andreas Bur (ABU)
  * @see ch.elca.el4j.services.exceptionhandler.ContextExceptionHandlerFactoryBean

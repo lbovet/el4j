@@ -46,12 +46,7 @@ import ch.elca.el4j.maven.depgraph.RegexArtifactFilter;
  *
  * A starting point for DepGraph Mojos.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Philippe Jacot (PJA), Claude Humard (CHD)
  * @requiresDependencyResolution test

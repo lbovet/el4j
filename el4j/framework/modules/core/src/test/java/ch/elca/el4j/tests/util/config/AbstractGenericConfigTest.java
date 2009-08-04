@@ -28,12 +28,7 @@ import ch.elca.el4j.util.config.GenericConfig;
 /**
  * This class tests {@link GenericConfig}.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Stefan Wismer (SWI)
  */

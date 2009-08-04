@@ -21,12 +21,7 @@ import ch.elca.el4j.services.gui.swing.ActionsContext;
 /**
  * This interface has to be implemented if an Object wants to expose its {@link ActionsContext}.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Stefan Wismer (SWI)
  */

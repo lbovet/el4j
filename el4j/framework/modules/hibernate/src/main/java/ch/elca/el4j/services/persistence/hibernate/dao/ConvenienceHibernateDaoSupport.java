@@ -11,12 +11,7 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
  * Convenience Hibernate dao support class to be able to return the convenience
  * Hibernate template without casting it.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Alex Mathey (AMA)
  */

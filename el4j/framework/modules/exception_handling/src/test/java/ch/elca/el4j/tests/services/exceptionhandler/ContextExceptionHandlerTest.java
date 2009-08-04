@@ -30,12 +30,7 @@ import ch.elca.el4j.services.exceptionhandler.MissingContextException;
 /**
  * This class tests the context exception handler.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Andreas Bur (ABU)
  */

@@ -20,12 +20,7 @@ package ch.elca.el4j.tests.core.aop;
 /**
  * Abstract sample class used in the tests.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Andreas Bur (ABU)
  */

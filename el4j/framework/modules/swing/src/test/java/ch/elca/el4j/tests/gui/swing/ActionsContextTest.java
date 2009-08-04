@@ -30,12 +30,7 @@ import ch.elca.el4j.tests.gui.swing.actions.ParentActions;
 /**
  * Test {@link ActionsContext}s.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Stefan Wismer (SWI)
  */

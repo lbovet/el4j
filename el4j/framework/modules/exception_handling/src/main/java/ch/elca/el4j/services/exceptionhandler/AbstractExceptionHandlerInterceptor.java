@@ -31,12 +31,7 @@ import org.springframework.aop.target.HotSwappableTargetSource;
  * This class provides functionality to handle exceptions centrally (with
  * respect to a number of classes or the whole system).
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Andreas Bur (ABU)
  */

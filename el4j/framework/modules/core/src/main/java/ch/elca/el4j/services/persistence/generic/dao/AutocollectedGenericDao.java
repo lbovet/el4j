@@ -59,12 +59,7 @@ import ch.elca.el4j.services.persistence.generic.dao.impl.DefaultDaoRegistry;
  *     class="ch.elca.el4j.services.persistence.hibernate.dao.HibernateSessionFactoryInjectorBeanPostProcessor" /&gt;
  * </pre>
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Philipp Oser (POS)
  */

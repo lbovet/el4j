@@ -26,12 +26,7 @@ import org.apache.maven.plugin.MojoFailureException;
 /**
  * Class inspector - launch duplicate finder and show the class inspector.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author David Bernhard (DBD)
  *

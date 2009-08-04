@@ -24,12 +24,7 @@ package ch.elca.el4j.tests.services.remoting.loadbalancing.common;
  * Rather, its methods highlight the properties of the tested module.
  *
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Stefan Pleisch (SPL)
  */

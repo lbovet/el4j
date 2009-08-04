@@ -19,12 +19,7 @@ package ch.elca.el4j.util.observer.impl;
 /**
  * A computable value.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @param <T> the result's type
  * @author Adrian Moos (AMS)

@@ -31,12 +31,7 @@ import ch.elca.el4j.util.classpath.DuplicateClassFinder;
 /**
  * Plugin to run duplicatefinder as part of the build lifecycle.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author David Bernhard (DBD)
  * @phase test

@@ -9,12 +9,7 @@ import org.springframework.util.Assert;
  * Describes the location of a class, accessible through the given classloader. The url points to
  * the real class file location.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  */
 public class ClassLocation {
 

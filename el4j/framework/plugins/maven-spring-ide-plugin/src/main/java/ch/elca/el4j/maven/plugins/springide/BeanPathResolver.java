@@ -35,12 +35,7 @@ import ch.elca.el4j.maven.plugins.springide.resolvers.ResolverManager;
  * style definition of include and exclude locations and a classpath (Url[])
  * to search.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  *
  * @author David Bernhard (DBD)

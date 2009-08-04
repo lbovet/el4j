@@ -22,12 +22,7 @@ import com.silvermindsoftware.hitch.Binder;
  * This interface enables a class to get its bindings created by cookSwing
  * reading the XML GUI description.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Stefan Wismer (SWI)
  */

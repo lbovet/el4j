@@ -29,12 +29,7 @@ import ch.elca.el4j.services.exceptionhandler.RetryException;
  * invocation. This is achieved by reconfiguring the class that is advised by
  * this exception handler's interceptor.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Andreas Bur (ABU)
  * @see ch.elca.el4j.services.exceptionhandler.handler.AbstractSwappableTargetExceptionHandler
