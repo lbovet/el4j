@@ -24,12 +24,7 @@ import ch.elca.el4j.services.persistence.hibernate.offlining.impl.MappingEntry;
 /**
  * Chunk of entries to delete.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author David Bernhard (DBD)
  */

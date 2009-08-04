@@ -23,12 +23,7 @@ import org.apache.maven.plugin.MojoExecutionException;
  * This class is used to create some sort of output from a given
  * Dependency element.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Philippe Jacot (PJA)
  */

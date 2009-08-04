@@ -27,12 +27,7 @@ import java.io.Serializable;
  *
  * Refer to tests of keyword/test module for example usages
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  *  @author Martin Zeltner (MZE)
  */

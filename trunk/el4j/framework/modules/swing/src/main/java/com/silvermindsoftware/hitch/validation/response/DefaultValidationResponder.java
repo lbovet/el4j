@@ -26,12 +26,7 @@ import ch.elca.el4j.services.gui.swing.GUIApplication;
  * A default ValidationResponder that makes the background of the corresponding
  * GUI element red.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Stefan Wismer (SWI)
  */

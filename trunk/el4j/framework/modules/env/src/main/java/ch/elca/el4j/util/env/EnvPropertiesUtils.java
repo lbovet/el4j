@@ -31,12 +31,7 @@ import ch.elca.el4j.util.codingsupport.PropertiesHelper;
 /**
  * This class provides access to the currently used environment properties.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Alex Mathey (AMA)
  * @author Martin Zeltner (MZE)

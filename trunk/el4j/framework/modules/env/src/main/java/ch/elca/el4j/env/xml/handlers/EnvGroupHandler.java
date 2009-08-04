@@ -24,12 +24,7 @@ import org.xml.sax.ContentHandler;
 /**
  * The interface that a handler has to implement to parse a group of the env.xml file.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Stefan Wismer (SWI)
  */

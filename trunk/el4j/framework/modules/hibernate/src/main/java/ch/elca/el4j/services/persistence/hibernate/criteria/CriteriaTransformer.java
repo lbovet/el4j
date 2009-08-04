@@ -42,12 +42,7 @@ import ch.elca.el4j.services.search.criterias.Order;
  * This class transforms the EL4J Criteria of a given <code>QueryObject</code>
  * into the corresponding Hibernate DetachedCriteria.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Alex Mathey (AMA)
  * @author Philipp Oser (POS)

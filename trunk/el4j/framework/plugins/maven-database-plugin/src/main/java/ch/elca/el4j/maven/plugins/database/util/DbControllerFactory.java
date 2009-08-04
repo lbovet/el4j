@@ -25,12 +25,7 @@ import ch.elca.el4j.maven.plugins.database.util.h2.H2Controller;
 /**
  * A factory for {@link DbController}s.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Stefan Wismer (SWI)
  */

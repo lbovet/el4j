@@ -44,12 +44,7 @@ import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
  * </ul>
  * <br>
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Raphael Boog (RBO)
  * @author Andreas Pfenninger (APR)

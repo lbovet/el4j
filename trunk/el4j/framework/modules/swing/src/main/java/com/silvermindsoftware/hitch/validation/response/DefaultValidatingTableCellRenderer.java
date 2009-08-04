@@ -29,12 +29,7 @@ import ch.elca.el4j.services.gui.swing.GUIApplication;
 /**
  * A validating cell renderer for tables.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Stefan Wismer (SWI)
  */

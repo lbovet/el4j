@@ -38,12 +38,7 @@ import ch.elca.el4j.tests.services.persistence.hibernate.offlining.notifications
 /**
  * Simulate a dao.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author David Bernhard (DBD)
  */

@@ -21,12 +21,7 @@ import java.util.Map;
 /**
  * A registry for DAOs.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Adrian Moos (AMS)
  * @author Alex Mathey (AMA)

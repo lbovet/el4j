@@ -30,12 +30,7 @@ import ch.elca.el4j.maven.ResourceLoader;
  *
  * This class holds the DatabaseName.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author David Stefan (DST)
  */

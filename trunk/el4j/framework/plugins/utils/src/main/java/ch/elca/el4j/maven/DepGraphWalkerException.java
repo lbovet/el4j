@@ -19,12 +19,7 @@ package ch.elca.el4j.maven;
 /**
  * An exception that can occur during the dependency graph walk.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author David Stefan (DST)
  */

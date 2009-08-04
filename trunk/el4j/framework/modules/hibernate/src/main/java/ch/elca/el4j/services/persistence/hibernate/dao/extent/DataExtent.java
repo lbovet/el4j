@@ -131,12 +131,7 @@ import static ch.elca.el4j.services.persistence.hibernate.dao.extent.ExtentEntit
  *			</pre>
  *		</code>
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @see ch.elca.el4j.apps.refdb.dao.impl.hibernate.HibernateFileDao for an example 
  * 

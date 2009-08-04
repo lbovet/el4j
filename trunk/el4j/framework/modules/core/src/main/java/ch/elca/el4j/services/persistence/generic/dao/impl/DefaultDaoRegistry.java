@@ -58,12 +58,7 @@ import net.sf.cglib.proxy.Enhancer;
  * because it waits for this context to be fully initialized. If another
  * context is taken it will wait forever.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Adrian Moos (AMS)
  * @author Alex Mathey (AMA)

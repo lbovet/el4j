@@ -26,12 +26,7 @@ import ch.elca.el4j.maven.plugins.database.AbstractDBExecutionMojo;
  * This class is a database mojo for the 'destroy' statement.
  * It deletes all database tables.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @goal destroy
  * @author Stefan Wismer (SWI)

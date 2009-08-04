@@ -11,12 +11,7 @@ import ch.elca.el4j.tests.services.persistence.hibernate.entityfinder.entities.E
 /**
  * Test for {@link EntityDetectorAnnotationSessionFactoryBean}
  * 
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author pos
  */

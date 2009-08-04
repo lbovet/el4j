@@ -23,12 +23,7 @@ import java.util.Set;
 /**
  * This {@link Properties} implementation logs all attempts to access a not existing key thought the method get().
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Stefan Wismer (SWI)
  */

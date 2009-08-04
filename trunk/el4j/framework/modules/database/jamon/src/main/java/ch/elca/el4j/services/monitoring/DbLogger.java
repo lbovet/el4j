@@ -27,12 +27,7 @@ import com.jamonapi.MonitorFactory;
  * executing thread). It is a minimalistic wrapper for {@link MonitorFactory},
  * so use JAMons MonitorFactory directly if you need more control.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Stefan Wismer (SWI)
  */

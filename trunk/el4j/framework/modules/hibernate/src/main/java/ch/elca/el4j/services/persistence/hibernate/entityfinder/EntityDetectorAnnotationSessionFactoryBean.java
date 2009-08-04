@@ -44,12 +44,7 @@ import org.springframework.util.StringUtils;
  *
  * Source of the idea: secutix project
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  */
 public class EntityDetectorAnnotationSessionFactoryBean extends AnnotationSessionFactoryBean
 	implements InitializingBean {

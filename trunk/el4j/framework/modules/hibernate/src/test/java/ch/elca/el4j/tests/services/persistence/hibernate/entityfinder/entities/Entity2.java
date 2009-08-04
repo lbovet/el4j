@@ -1,12 +1,7 @@
 package ch.elca.el4j.tests.services.persistence.hibernate.entityfinder.entities;
 
 /**
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  */
 @javax.persistence.Entity
 public class Entity2 {
