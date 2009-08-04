@@ -23,12 +23,7 @@ import ch.elca.el4j.tests.person.dom.Person;
  * The HibernateDao Interface to be used to both access 
  * {@link PersonDao} and {@link ConvenienceGenericHibernateDao} methods. 
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Andreas Rueedlinger (ARR)
  */

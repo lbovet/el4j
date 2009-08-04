@@ -40,12 +40,7 @@ import cookxml.cookswing.CookSwing;
  *
  * See also associated MainFormMDI.properties file that contains resources
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Stefan Wismer (SWI)
  */

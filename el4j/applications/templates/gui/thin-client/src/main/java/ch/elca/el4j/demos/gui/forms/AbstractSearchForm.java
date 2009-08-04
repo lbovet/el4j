@@ -28,12 +28,7 @@ import net.java.dev.designgridlayout.DesignGridLayout;
 /**
  * This class represents a standard search dialog.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Stefan Wismer (SWI)
  */

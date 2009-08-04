@@ -31,12 +31,7 @@ import ch.elca.el4j.services.gui.swing.GUIApplication;
 /**
  * This class shows how to use the acegi security framework.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Stefan Wismer (SWI)
  */

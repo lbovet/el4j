@@ -49,12 +49,7 @@ import cookxml.cookswing.CookSwing;
  * As this class implements {@link Bindable}, cookSwing is able to set up all
  * bindings declared in the XML file.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Stefan Wismer (SWI)
  */

@@ -22,12 +22,7 @@ package ch.elca.el4j.tests.refdb.service;
  * Test case for <code>DefaultReferenceService</code> using Hibernate
  * as ORM framework.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Alex Mathey (AMA)
  */

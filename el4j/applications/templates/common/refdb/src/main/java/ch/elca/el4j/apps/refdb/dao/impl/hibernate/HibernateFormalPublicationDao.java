@@ -29,12 +29,7 @@ import ch.elca.el4j.services.search.criterias.IncludeCriteria;
  *
  * DAO for formal publications which is using Hibernate.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Alex Mathey (AMA)
  */

@@ -27,12 +27,7 @@ import ch.elca.el4j.services.persistence.hibernate.dao.ConvenienceGenericHiberna
  * This interface represents a DAO for the keyword domain object.
  * It defines the methods which are specific to the keyword domain object.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Alex Mathey (AMA)
  */

@@ -22,12 +22,7 @@ import ch.elca.el4j.core.exceptions.BaseException;
 /**
  * This exception is used for testing.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Martin Zeltner (MZE)
  */

@@ -44,12 +44,7 @@ import static ch.elca.el4j.services.persistence.hibernate.dao.extent.ExtentEntit
  * Test case for <code>DataExtent</code> to test
  * the the fluent API and the functionality.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Andreas Rueedlinger (ARR)
  */

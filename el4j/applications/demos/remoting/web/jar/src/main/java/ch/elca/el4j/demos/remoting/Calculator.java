@@ -22,12 +22,7 @@ package ch.elca.el4j.demos.remoting;
 /**
  * This interface is a calculator.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Martin Zeltner (MZE)
  * @author Rashid Waraich (RWA)

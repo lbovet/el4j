@@ -30,12 +30,7 @@ import ch.elca.el4j.core.context.annotations.LazyInit;
  * This class is a very simple resource injection demo form.
  * See ResourceInjectionDemoForm.properties.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Stefan Wismer (SWI)
  */

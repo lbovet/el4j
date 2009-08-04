@@ -28,12 +28,7 @@ import ch.elca.el4j.services.gui.swing.GUIApplication;
 /**
  * This class represents a simple text field that only accepts integers.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Stefan Wismer (SWI)
  */

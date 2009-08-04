@@ -58,12 +58,7 @@ import static ch.elca.el4j.services.persistence.hibernate.dao.extent.ExtentColle
  * Test case for <code>GenericHibernateDao</code> to test
  * the Extent-functionality.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Andreas Rueedlinger (ARR)
  */
