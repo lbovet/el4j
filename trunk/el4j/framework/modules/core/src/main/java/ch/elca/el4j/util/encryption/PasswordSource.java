@@ -21,12 +21,7 @@ package ch.elca.el4j.util.encryption;
  *  For providing your own password, you can pass one of these as
  *  constructor argument.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author David Bernhard (DBD)
  */

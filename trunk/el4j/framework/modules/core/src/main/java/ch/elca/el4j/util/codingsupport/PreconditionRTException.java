@@ -19,12 +19,7 @@ package ch.elca.el4j.util.codingsupport;
 
 /**
  * This exception will be thrown when a precondition is not fulfilled.
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Martin Zeltner (MZE)
  */

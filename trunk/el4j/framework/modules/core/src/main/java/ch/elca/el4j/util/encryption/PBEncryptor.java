@@ -32,12 +32,7 @@ import org.apache.commons.lang.ArrayUtils;
  *  En- / decrypts strings with a key derived from a user-supplied password
  *  with java's PBEStringEncryption (DES, MD5 password hash).
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author David Bernhard (DBD)
  */

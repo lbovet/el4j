@@ -21,12 +21,7 @@ import org.springframework.core.Ordered;
 /**
  * Holder for ordered beans. Hold is just the name and its order.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Philipp Oser (POS)
  */

@@ -33,12 +33,7 @@ import java.lang.annotation.RetentionPolicy;
  * <p> The String argument should detail why the annotated element is
  * preliminary. This annotation itself is preliminary (prototype stage).
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Adrian Moos (AMS)
  */

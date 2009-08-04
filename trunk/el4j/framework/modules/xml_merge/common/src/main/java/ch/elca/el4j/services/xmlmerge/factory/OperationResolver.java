@@ -24,12 +24,7 @@ import ch.elca.el4j.services.xmlmerge.Operation;
 /**
  * Creates an operation instance given a short name (alias) or a class name.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Laurent Bovet (LBO)
  * @author Alex Mathey (AMA)

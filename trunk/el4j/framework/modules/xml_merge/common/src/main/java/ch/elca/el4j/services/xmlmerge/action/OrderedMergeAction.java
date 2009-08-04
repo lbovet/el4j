@@ -39,12 +39,7 @@ import ch.elca.el4j.services.xmlmerge.MergeAction;
  * Merge implementation traversing parallelly both element contents. Works when
  * contents are in the same order in both elements.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Laurent Bovet (LBO)
  * @author Alex Mathey (AMA)

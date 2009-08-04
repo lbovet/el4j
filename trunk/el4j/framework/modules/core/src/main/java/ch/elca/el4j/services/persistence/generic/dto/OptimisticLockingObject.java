@@ -20,12 +20,7 @@ package ch.elca.el4j.services.persistence.generic.dto;
 /**
  * Interface to provide optimistic locking version support (mainly required for iBatis, not needed for JPA/ Hibernate).
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Martin Zeltner (MZE)
  */
