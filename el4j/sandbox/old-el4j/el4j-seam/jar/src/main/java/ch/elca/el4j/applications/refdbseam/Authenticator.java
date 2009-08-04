@@ -12,12 +12,7 @@ import org.jboss.seam.security.Identity;
  * This class is provided by the Seam template. It should be used when starting
  * to work on authentication.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Philippe Jacot (PJA)
  */

@@ -34,12 +34,7 @@ import ch.elca.el4j.tests.remoting.service.CalculatorValueObject;
  * This class is a test for the calculator.
  * It uses the XFire Protocol with its default binding
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Rashid Waraich (RWA)
  */

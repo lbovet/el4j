@@ -30,12 +30,7 @@ import org.jdom.Namespace;
  * Baseclass for the JAXB context handlers, implementing some
  * common functionalities.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Philippe Jacot (PJA)
  */

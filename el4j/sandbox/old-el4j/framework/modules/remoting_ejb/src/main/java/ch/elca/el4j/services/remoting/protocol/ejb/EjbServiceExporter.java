@@ -26,12 +26,7 @@ import ch.elca.el4j.services.remoting.RemotingServiceExporter;
 /**
  * This class is a server-side bridge between an EJB and the Spring container.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Nicolas Schiper (NSC)
  * @author Andreas Bur (ABU)

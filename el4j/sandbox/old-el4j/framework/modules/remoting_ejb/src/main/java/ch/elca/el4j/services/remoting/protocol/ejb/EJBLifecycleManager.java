@@ -25,12 +25,7 @@ import org.apache.commons.logging.LogFactory;
 /**
  * This class allows to control the life cycle of an EJB Object.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Andreas Bur (ABU)
  */

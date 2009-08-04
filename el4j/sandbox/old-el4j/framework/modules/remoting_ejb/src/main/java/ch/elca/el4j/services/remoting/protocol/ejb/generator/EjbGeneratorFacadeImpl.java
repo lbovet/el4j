@@ -38,12 +38,7 @@ import ch.elca.el4j.services.remoting.protocol.ejb.xdoclet.XDocletTagGenerator;
  * This class generates all the needed informations to create EJB wrappers.
  * It is uses in the build system plugin responsible for generating them.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Andreas Bur (ABU)
  */

@@ -29,12 +29,7 @@ import ch.elca.el4j.services.remoting.ProtocolSpecificConfiguration;
  * This configuration objects contains additional informations used in order to
  * setup the EJB remoting solution.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Andreas Bur (ABU)
  */

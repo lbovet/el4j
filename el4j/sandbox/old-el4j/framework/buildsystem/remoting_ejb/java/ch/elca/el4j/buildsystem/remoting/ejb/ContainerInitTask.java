@@ -29,12 +29,7 @@ import ch.elca.el4ant.model.Module;
  * This class adds container specific dependencies to the modules that make use
  * of the remoting EJB support.
  * 
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Andreas Bur (ABU)
  */
