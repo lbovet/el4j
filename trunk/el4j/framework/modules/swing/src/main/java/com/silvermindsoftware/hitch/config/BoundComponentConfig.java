@@ -19,12 +19,7 @@ package com.silvermindsoftware.hitch.config;
 import com.silvermindsoftware.hitch.ReadOnly;
 
 /**
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  */
 public class BoundComponentConfig {
 

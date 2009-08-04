@@ -23,12 +23,7 @@ import org.xml.sax.SAXException;
 /**
  * The env.xml handler for &lt;bean-overrides&gt tags.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Stefan Wismer (SWI)
  */

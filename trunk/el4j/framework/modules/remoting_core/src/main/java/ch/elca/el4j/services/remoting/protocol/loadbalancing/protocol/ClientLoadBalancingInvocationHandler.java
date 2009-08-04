@@ -44,12 +44,7 @@ import ch.elca.el4j.services.remoting.protocol.loadbalancing.policy.AbstractPoli
  *
  * @{link ch.elca.el4j.loadbalancing.policy.AbstractPolicy}.
  *
- * <script type="text/javascript">printFileStatus
-*   ("$URL$",
-	*    "$Revision$",
-	*    "$Date$",
-	*    "$Author$"
-	* );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Stefan Pleisch (SPL)
  */

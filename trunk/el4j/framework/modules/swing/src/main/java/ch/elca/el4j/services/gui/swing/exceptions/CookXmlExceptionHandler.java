@@ -22,12 +22,7 @@ import cookxml.core.interfaces.ExceptionHandler;
 /**
  * A cookXml exception handler that redirects all exceptions to the exception handler of module Swing.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Stefan Wismer (SWI)
  */

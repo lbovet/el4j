@@ -25,12 +25,7 @@ import ch.elca.el4j.services.xmlmerge.matcher.TagMatcher;
 /**
  * Gathers the operation factory-related behaviour and a default configuration.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Laurent Bovet (LBO)
  * @author Alex Mathey (AMA)

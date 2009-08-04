@@ -21,12 +21,7 @@ import ch.elca.el4j.tests.remoting.jaxws.service.Calculator;
 /**
  * This additional calculator is just to test a second service.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Stefan Wismer (SWI)
  */

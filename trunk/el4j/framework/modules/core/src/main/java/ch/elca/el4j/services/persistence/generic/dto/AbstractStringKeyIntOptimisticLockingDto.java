@@ -31,12 +31,7 @@ import ch.elca.el4j.util.codingsupport.ObjectUtils;
  * This class is an abstract dto which uses a string as key value and an integer
  * for optimistic locking version controlling.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Martin Zeltner (MZE)
  */

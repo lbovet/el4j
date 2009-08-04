@@ -28,12 +28,7 @@ import ch.elca.el4j.core.contextpassing.AbstractImplicitContextPasser;
  * The ImplicitContextPasser for the AuthenticationService. It handles the
  * passing of the AuthenticationData and stores it in a ThreadLocal.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Raphael Boog (RBO)
  * @author Andreas Pfenninger (APR)

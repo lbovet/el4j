@@ -34,12 +34,7 @@ import ch.elca.el4j.services.xmlmerge.matcher.TagMatcher;
 /**
  * Configure to apply actions declared as attributes in the patch DOM.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Laurent Bovet (LBO)
  * @author Alex Mathey (AMA)

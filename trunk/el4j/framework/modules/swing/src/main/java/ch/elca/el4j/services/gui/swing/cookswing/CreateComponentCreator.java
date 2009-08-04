@@ -34,12 +34,7 @@ import cookxml.core.interfaces.Creator;
  * The create-method is invoked when the XML tag is opened and
  * the finish-method when the tag is closed.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Stefan Wismer (SWI)
  */

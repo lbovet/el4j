@@ -54,12 +54,7 @@ import org.springframework.util.ClassUtils;
  * Remark: We delegate sometimes to the AOPUtil of Spring
  *    (we duplicated the methods here for simplicity).
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Philipp Oser (POS)
  */

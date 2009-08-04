@@ -25,12 +25,7 @@ import ch.elca.el4j.services.persistence.generic.primarykey.PrimaryKeyGenerator;
  * Optimistic locking is implemented by using a
  * <code>PrimaryKeyGenerator</code>. Primary key are strings in this case.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @deprecated Please use <code>AbstractIntOptimisticLockingDto</code> instead.
  * @see AbstractIntOptimisticLockingDto

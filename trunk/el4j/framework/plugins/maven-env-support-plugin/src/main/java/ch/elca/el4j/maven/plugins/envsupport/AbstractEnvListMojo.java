@@ -28,12 +28,7 @@ import ch.elca.el4j.maven.plugins.envsupport.handlers.ExplainPlaceholdersHandler
 /**
  * Abstract base class for all 'list env properties'-mojos. 
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Stefan Wismer (SWI)
  */

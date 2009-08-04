@@ -36,12 +36,7 @@ import ch.elca.el4j.services.search.QueryObject;
  * This interface extends {@link ConvenienceGenericDao} with query methods using
  * {@link DetachedCriteria}s.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @param <T>     the domain object type
  * @param <ID>    the id of the domain object to find

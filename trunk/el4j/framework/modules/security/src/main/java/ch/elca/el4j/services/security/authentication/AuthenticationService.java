@@ -25,12 +25,7 @@ import org.springframework.security.Authentication;
  * AuthenticationService interface. Provides methods to log in and out. If you
  * are already logged in, you have to log out first and then log in again.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Raphael Boog (RBO)
  * @author Andreas Pfenninger (APR)

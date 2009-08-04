@@ -25,12 +25,7 @@ import java.io.FileReader;
  * Extracts configuration information (inclusive and exclusive configuration
  * locations) from a java or xml file.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author David Bernhaed (DBD)
  */

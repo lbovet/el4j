@@ -29,12 +29,7 @@ import org.springframework.metadata.Attributes;
  * Helper class to get annotations of a field, method, and class. Annotations
  * can also fetched filtered.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Martin Zeltner (MZE)
  */

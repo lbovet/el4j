@@ -23,12 +23,7 @@ import ch.elca.el4j.util.codingsupport.Reject;
 /**
  * Criteria to compare fields to values.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Martin Zeltner (MZE)
  */

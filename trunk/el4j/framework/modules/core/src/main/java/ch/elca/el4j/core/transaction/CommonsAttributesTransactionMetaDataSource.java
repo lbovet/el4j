@@ -30,12 +30,7 @@ import org.springframework.transaction.interceptor.TransactionAttribute;
  * Meta data source for transactional metadata of type
  * <b>Commons Attributes</b>.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Martin Zeltner (MZE)
  */

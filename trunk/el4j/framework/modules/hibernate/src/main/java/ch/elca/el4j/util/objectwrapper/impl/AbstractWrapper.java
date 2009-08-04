@@ -26,12 +26,7 @@ import ch.elca.el4j.util.objectwrapper.ObjectWrapperRTException;
  * The abstract wrapper implementations are created as prototypes and passed to ObjectWrapper, which clones them 
  * whenever one is needed.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author David Bernhard (DBD)
  */

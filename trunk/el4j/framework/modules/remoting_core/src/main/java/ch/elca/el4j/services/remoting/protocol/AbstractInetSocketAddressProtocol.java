@@ -25,12 +25,7 @@ import ch.elca.el4j.services.remoting.AbstractRemotingProtocol;
 /**
  * This is an abstract <code>InetSocketAddress</code> protocol.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Martin Zeltner (MZE)
  */

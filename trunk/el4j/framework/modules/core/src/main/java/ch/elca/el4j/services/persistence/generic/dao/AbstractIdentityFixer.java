@@ -107,12 +107,7 @@ import ch.elca.el4j.util.codingsupport.AopHelper;
  * "suppressAccessChecks" if a security manager is present and an object
  * requiring fixing has non-public fields.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Adrian Moos (AMS)
  */

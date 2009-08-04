@@ -30,12 +30,7 @@ import org.apache.commons.codec.binary.Base64;
 /**
  * This class can be used to en/decrypt Strings using the AES algorithm.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Stefan Wismer (SWI)
  */

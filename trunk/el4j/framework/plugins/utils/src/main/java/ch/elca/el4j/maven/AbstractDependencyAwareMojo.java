@@ -34,12 +34,7 @@ import org.apache.maven.shared.dependency.tree.DependencyTreeBuilderException;
  * It should be simply copied from maven-util, because java-doc annotations are not recognized if this
  * file is located in a separate jar (namely maven-util). See also http://jira.codehaus.org/browse/MNG-3042
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  * 
  * @deprecated do not use this class directly. Copy it to your maven plagin (see comment above).
  *

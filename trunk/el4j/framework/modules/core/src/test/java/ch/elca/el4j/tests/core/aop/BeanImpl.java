@@ -22,12 +22,7 @@ package ch.elca.el4j.tests.core.aop;
  * This class just holds the name, under which it is registered in the
  * container.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Andreas Bur (ABU)
  */

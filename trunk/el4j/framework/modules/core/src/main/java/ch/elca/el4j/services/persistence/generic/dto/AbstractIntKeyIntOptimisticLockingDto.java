@@ -34,12 +34,7 @@ import ch.elca.el4j.util.codingsupport.Reject;
  * This class is an abstract dto which uses an integer as key value and also
  * an integer for optimistic locking version controlling.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Martin Zeltner (MZE)
  */

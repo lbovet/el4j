@@ -23,12 +23,7 @@ import org.springframework.aop.framework.autoproxy.AbstractAutoProxyCreator;
 /**
  * Auto proxy creator that identifies beans to proxy via a list of classes.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Andreas Bur (ABU)
  */

@@ -19,12 +19,7 @@ package ch.elca.el4j.services.xmlmerge;
 /**
  * Base class for all exceptions thrown by XmlMerge.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Laurent Bovet (LBO)
  * @author Alex Mathey (AMA)

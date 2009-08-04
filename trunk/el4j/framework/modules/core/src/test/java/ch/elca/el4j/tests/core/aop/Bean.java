@@ -22,12 +22,7 @@ import org.springframework.beans.factory.BeanNameAware;
 /**
  * Simple test interface for a bean that simply returns its name.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Andreas Bur (ABU)
  */

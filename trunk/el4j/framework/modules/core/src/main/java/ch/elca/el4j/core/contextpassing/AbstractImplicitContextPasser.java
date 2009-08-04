@@ -27,11 +27,7 @@ import ch.elca.el4j.util.codingsupport.Reject;
  * passer bean that extends this class. The passer needs a reference to the
  * <code>ImplicitContextPassingRegistry</code> where it is should be registered.
  *
- * <script type="text/javascript">printFileStatus
- * ("$URL$",
- *  "$Revision$",
- *  "$Date$",
- *  "$Author$" ); </script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Andreas Pfenninger (APR)
  */

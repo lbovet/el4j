@@ -24,9 +24,9 @@ import org.springframework.context.ApplicationContextAware;
 
 /**
  * Defines a dummy business object whose sole purpose is the illustration of the
- * idempotent invocation functionality. <script
- * type="text/javascript">printFileStatus ("$URL$", "$Revision$", "$Date$",
- * "$Author$" );</script>
+ * idempotent invocation functionality.
+ *
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Stefan Pleisch (SPL)
  */

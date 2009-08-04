@@ -21,12 +21,7 @@ import ch.elca.el4j.core.exceptions.BaseRTException;
 /**
  * An exception expressing that an action could not be found.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Stefan Wismer (SWI)
  */

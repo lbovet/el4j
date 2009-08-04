@@ -24,12 +24,7 @@ import ch.elca.el4j.util.codingsupport.BeanPropertyUtils;
 /**
  * An ExtentPart is the abstract super Class of Extent parts like ExtentEntity or ExtentCollection.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Andreas Rueedlinger (ARR)
  */

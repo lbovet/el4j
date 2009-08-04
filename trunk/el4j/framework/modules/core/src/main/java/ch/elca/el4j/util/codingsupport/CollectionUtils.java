@@ -46,12 +46,7 @@ import ch.elca.el4j.util.collections.impl.DefaultTransformedList;
  *
  *
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Martin Zeltner (MZE), Adrian Moos (AMS)
  */

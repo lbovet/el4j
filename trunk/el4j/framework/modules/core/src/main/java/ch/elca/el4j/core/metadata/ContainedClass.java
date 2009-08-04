@@ -25,12 +25,7 @@ import java.lang.annotation.Target;
  * Annotation to describe the contained class of a property. This is required if the getter
  * returns a collection or map.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author David Bernhard (DBD)
  */

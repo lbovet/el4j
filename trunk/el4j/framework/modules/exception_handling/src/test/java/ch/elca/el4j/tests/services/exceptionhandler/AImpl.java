@@ -20,12 +20,7 @@ package ch.elca.el4j.tests.services.exceptionhandler;
 /**
  * Sample bean class used for testing.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Andreas Bur (ABU)
  */

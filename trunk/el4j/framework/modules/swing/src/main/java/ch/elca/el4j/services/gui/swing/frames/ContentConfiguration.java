@@ -27,12 +27,7 @@ import org.noos.xing.mydoggy.ToolWindowTab;
  * A descriptor of a {@link Content} or {@link ToolWindowTab}.
  * This is used to specify a docking frame before it gets created.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Stefan Wismer (SWI)
  */

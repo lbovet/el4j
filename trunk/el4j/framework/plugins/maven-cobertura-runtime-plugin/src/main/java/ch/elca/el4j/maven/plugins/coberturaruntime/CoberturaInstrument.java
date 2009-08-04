@@ -33,12 +33,7 @@ import net.sourceforge.cobertura.instrument.Main;
 /**
  * Goal to instrument class files with cobertura stuff.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Martin Zeltner (MZE)
  * 

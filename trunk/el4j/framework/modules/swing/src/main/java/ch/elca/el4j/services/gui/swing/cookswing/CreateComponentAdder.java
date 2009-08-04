@@ -27,12 +27,7 @@ import cookxml.core.interfaces.Adder;
  * To add child elements, write a method doing this and register
  * it in the finish-method attribute of the &lt;create-component&gt; tag.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Stefan Wismer (SWI)
  */

@@ -35,12 +35,7 @@ import ch.elca.el4j.util.classpath.DuplicateClassFinder;
 /**
  * A GUI to inspect all defined classes of a project.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author David Bernhard (DBD)
  */

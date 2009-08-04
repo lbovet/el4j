@@ -31,12 +31,7 @@ import ch.elca.el4j.tests.remoting.service.CalculatorOperation;
 /**
  * This class is a test for the calculator.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Waraich Rashid (RWA)
  */

@@ -32,12 +32,7 @@ import ch.elca.el4j.util.observer.ValueObserver;
  *
  * @param <T> see supertype.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Adrian Moos (AMS)
  */

@@ -26,12 +26,7 @@ import org.springframework.util.StringUtils;
  * Criteria that combines n Criteria with AND (i.e. all
  *  Criterias must be true).
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Philipp Oser (POS)
  */

@@ -30,12 +30,7 @@ import ch.elca.el4j.env.xml.ResolverUtils;
 /**
  * An {@link EnvGroupHandler} that handles inheritable properties (which can also be abstract or final).
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Stefan Wismer (SWI)
  */

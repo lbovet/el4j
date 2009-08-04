@@ -30,12 +30,7 @@ import ch.elca.el4j.core.transaction.annotations.RollbackConstraint;
  * As EL4J only supports Hibernate as persistence framework it's more convenient to use
  * ConvenienceGenericHibernateDao directly.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @param <T>
  *            The generic type of the domain class the DAO is responsible for

@@ -22,12 +22,7 @@ import javax.management.ObjectName;
 /**
  * The interface of the proxy class for an ApplicationContext.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Raphael Boog (RBO)
  */

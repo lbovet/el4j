@@ -22,12 +22,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 /**
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  */
 public class ComponentMeta {
 

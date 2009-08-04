@@ -55,12 +55,7 @@ import org.springframework.util.StringUtils;
  *    <br>
  * Limitation: cut and paste (with external info) is currently not supported.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Philipp H. Oser (POS)
  */

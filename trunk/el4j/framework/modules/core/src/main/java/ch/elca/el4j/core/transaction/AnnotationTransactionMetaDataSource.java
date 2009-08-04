@@ -30,12 +30,7 @@ import ch.elca.el4j.core.transaction.annotations.RollbackConstraint;
 /**
  * Meta data source for transactional metadata of type <b>Java 5 Annotation</b>.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Martin Zeltner (MZE)
  */

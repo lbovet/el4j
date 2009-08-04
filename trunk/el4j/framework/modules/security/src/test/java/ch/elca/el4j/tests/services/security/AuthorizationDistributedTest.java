@@ -52,12 +52,7 @@ import ch.elca.el4j.tests.services.security.server.AuthorizationServer;
  * <li>then runs AuthorizationTestDistributed as unit server</li>
  * </ul>
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Raphael Boog (RBO)
  */

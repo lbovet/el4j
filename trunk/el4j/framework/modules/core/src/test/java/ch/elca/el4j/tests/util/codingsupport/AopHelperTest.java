@@ -20,12 +20,7 @@ import ch.elca.el4j.util.codingsupport.AopHelper;
 /**
  * This class shows some exceptions on stdout (for information purposes)
  * 
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  */
 public class AopHelperTest {
 

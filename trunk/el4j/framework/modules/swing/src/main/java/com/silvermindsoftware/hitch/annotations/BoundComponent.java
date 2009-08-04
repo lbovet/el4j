@@ -23,12 +23,7 @@ import java.lang.annotation.*;
 /**
  * BoundComponent to bind domain objects to Swing components
  * 
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  */
 @Target({ElementType.FIELD})
 @Documented

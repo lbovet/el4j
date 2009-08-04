@@ -37,12 +37,7 @@ import ch.elca.el4j.services.gui.swing.frames.ApplicationFrame;
  * as {@link JComponent}s are automatically wrapped into the right "container"
  * (see {@link GUIApplication#show(JComponent)}.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @param <T>    the type of wrapper
  *

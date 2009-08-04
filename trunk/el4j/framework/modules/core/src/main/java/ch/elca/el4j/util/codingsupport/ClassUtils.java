@@ -25,12 +25,7 @@ import org.springframework.util.StringUtils;
  * This class helps transforming a class or class related structures into a
  * string representation.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Andreas Bur (ABU)
  */

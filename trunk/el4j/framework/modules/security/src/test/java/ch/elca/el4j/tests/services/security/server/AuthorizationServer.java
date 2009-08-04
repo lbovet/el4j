@@ -27,12 +27,7 @@ import ch.elca.el4j.core.context.ModuleApplicationContext;
 /**
  * The server part for <code>AuthorizationTestDistributed</code>.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Andreas Pfenninger (APR)
  */

@@ -32,12 +32,7 @@ import ch.elca.el4j.maven.plugins.database.util.DbControllerFactory;
  * execute an action, i.e. extract and execute SQL statements from a given
  * source path.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author David Stefan (DST)
  *
