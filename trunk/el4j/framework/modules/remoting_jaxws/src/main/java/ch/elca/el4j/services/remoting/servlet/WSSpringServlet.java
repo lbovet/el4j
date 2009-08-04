@@ -44,12 +44,7 @@ import ch.elca.el4j.services.remoting.protocol.Jaxws;
  * Remark: This class cannot extend ModuleContextLoaderServlet because
  * doPost, doGet, doPut and doDelete are final.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Stefan Wismer (SWI)
  */

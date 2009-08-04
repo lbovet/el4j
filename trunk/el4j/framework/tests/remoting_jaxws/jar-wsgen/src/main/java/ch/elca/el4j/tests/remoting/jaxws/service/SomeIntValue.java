@@ -19,12 +19,7 @@ package ch.elca.el4j.tests.remoting.jaxws.service;
 /**
  * This class simply stores an integer value.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Stefan Wismer (SWI)
  */

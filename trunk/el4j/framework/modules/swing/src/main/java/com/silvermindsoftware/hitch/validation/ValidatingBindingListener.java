@@ -32,12 +32,7 @@ import com.silvermindsoftware.hitch.validation.response.ValidationResponder;
 /**
  * This class listens to a binding and performs a validation on sync.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Stefan Wismer (SWI)
  */

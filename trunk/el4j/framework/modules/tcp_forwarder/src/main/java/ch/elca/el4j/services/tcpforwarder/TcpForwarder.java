@@ -39,12 +39,7 @@ import org.slf4j.LoggerFactory;
  * to and from it achieving the same effect but for requiring the application to
  * connect on the forwarder's port.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Adrian Moos (AMS)
  * @author Alex Mathey (AMA)

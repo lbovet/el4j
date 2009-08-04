@@ -50,12 +50,7 @@ import ch.elca.el4j.maven.plugins.AbstractSlf4jEnabledMojo;
  * file that contains // $$ BEANS INCLUDE $$
 
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author David Bernhard (DBD) 
  * @author Daniel Thomas (DTH)

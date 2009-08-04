@@ -12,12 +12,7 @@ import org.jdesktop.application.ApplicationContext;
 /**
  * JMenu handling the Windows Menu for an MDI application.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Stefan Wismer (SWI)
  */

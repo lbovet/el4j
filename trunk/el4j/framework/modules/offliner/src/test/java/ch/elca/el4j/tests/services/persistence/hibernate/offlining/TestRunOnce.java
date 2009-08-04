@@ -35,12 +35,7 @@ import ch.elca.el4j.util.objectwrapper.ObjectWrapper;
 /**
  * Operations that should be done once per test run / JVM like setting up the application contexts.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author David Bernhard (DBD)
  */

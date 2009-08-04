@@ -27,12 +27,7 @@ import ch.elca.el4j.maven.ResourceLoader;
 /**
  * Print a list of all test env properties with their resolved values.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  * 
  * @goal listTest
  * @requiresProject true

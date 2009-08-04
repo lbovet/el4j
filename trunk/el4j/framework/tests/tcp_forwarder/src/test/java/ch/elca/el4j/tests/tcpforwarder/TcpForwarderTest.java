@@ -44,12 +44,7 @@ import ch.elca.el4j.util.env.EnvPropertiesUtils;
  * 2) The Application Context can be created and the Dao retrieved with the
  * connection to the database cut.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author David Stefan (DST)
  */

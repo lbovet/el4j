@@ -22,12 +22,7 @@ package ch.elca.el4j.services.persistence.hibernate.offlining.generic;
  * <p>
  * This class is a simpler form of serialization for value holder classes.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author David Bernhard (DBD)
  */

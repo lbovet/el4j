@@ -30,12 +30,7 @@ import ch.elca.el4j.maven.ResourceLoader;
  * Test environment support plugin. Filters the test resources of given env dir
  * and saves the generate test resources in a special dir.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Martin Zeltner (MZE)
  *

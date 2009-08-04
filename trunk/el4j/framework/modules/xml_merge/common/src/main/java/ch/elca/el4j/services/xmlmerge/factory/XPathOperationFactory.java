@@ -34,12 +34,7 @@ import ch.elca.el4j.services.xmlmerge.OperationFactory;
  * String), Operation }. The order in the map is relevant if several XPath
  * matches.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Laurent Bovet (LBO)
  * @author Alex Mathey (AMA)

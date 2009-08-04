@@ -34,12 +34,7 @@ import cookxml.core.interfaces.Creator;
  * The cookSwing creator for &lt;windowmenu&gt;s, which list all opened forms
  * inside the desktop pane and some operations on them.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Stefan Wismer (SWI)
  */
