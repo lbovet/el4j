@@ -5,12 +5,7 @@ import java.io.File;
 /**
  * Parses wsdl and binding files and generates Java code needed to access it.
  * 
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @goal wsimport
  * @phase generate-sources

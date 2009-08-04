@@ -23,12 +23,7 @@ import org.slf4j.impl.MavenLoggerFactory;
 /**
  * An extension of {@link AbstractMojo} that correctly sets up SLF4J using the maven logging back-end.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Stefan Wismer (SWI)
  */

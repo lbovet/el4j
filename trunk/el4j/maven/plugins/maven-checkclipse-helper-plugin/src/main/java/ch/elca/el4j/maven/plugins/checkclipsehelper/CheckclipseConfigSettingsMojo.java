@@ -32,12 +32,7 @@ import org.springframework.util.StringUtils;
 /**
  * Mojo to config files in the .settings directory.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Martin Zeltner (MZE)
  *

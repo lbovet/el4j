@@ -26,12 +26,7 @@ import org.codehaus.plexus.PlexusTestCase;
 import org.junit.Test;
 
 /**
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  */
 public class MavenRecursiveMojoTest extends AbstractMojoTestCase {
 

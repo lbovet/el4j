@@ -42,12 +42,7 @@ import org.slf4j.LoggerFactory;
  * This class defines some supporting operations for file and directory
  * modification (copy, move, delete, rename, read and write operations).
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Alex Mathey (AMA)
  */

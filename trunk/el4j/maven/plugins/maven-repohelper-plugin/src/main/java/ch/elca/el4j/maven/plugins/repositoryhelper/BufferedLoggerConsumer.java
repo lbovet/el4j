@@ -24,12 +24,7 @@ import org.slf4j.LoggerFactory;
  * Stream consumer to buffer output in a string buffer and directly log it
  * on level "info".
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Martin Zeltner (MZE)
  */

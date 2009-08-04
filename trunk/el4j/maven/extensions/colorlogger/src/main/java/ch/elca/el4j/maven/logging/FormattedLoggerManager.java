@@ -35,12 +35,7 @@ import ch.elca.el4j.maven.logging.html.HtmlLogger;
  * HtmlLogger if a property is set, otherwise a ConsoleLogger. Based on
  * {@link ConsoleLoggerManager}.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author David Bernhard (DBD)
  */

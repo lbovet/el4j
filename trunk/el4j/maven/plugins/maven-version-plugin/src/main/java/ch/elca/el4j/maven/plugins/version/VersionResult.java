@@ -29,12 +29,7 @@ import org.apache.maven.artifact.versioning.DefaultArtifactVersion;
  * This class holds the result of a query for available versions and provides
  * easy access to the newer versions available.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Philippe Jacot (PJA)
  */

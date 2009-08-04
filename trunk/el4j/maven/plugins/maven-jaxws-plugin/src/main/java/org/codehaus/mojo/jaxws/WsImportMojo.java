@@ -29,12 +29,7 @@ import com.sun.tools.ws.wscompile.WsimportTool;
 
 
 /**
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author gnodet <gnodet@apache.org>
  * @author dantran <dantran@apache.org>

@@ -41,12 +41,7 @@ import org.slf4j.Logger;
  * MavenLoggerFactory is an implementation of {@link ILoggerFactory} returning the appropriately named
  * {@link MavenLoggerAdapter} instance.
  * 
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  * 
  * @author Ceki G&uuml;lc&uuml;
  */

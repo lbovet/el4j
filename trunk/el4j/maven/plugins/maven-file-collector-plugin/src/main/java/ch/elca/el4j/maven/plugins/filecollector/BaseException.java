@@ -32,12 +32,7 @@ import java.text.MessageFormat;
  * This class uses the exception wrapping mechanism of the java.lang.Exception
  * class that was introduced with the JDK 1.4.
  *
- * <script type="text/javascript">printFileStatus
- * ("$URL$",
- *  "$Revision$",
- *  "$Date$",
- *  "$Author$" );
- * </script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Alain Borlet-Hote (ABH), Philipp Oser (POS), Paul E. Sevinç (PES),
  *         Yves Martin (YMA), Martin Zeltner (MZE)
