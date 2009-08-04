@@ -26,8 +26,9 @@ import ch.elca.el4j.core.context.ModuleApplicationContext;
 /**
  * Defines the server used to test the idempotent invocation module. Launches a
  * business object whose unique purpose is to illustrate the behavior of the
- * module. <script type="text/javascript">printFileStatus ("$URL$",
- * "$Revision$", "$Date$", "$Author$" );</script>
+ * module.
+ *
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Stefan Pleisch (SPL)
  */

@@ -27,12 +27,7 @@ import org.springframework.context.annotation.ScopeMetadata;
  * the bean definition according to that. This is a bit hacky because lazy initialization actually has nothing to do
  * with the scope, but no better extension point could be found in Spring 2.5.5. 
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Stefan Wismer (SWI)
  */

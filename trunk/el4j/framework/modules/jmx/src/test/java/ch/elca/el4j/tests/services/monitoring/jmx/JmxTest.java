@@ -48,12 +48,7 @@ import ch.elca.el4j.core.context.ModuleApplicationContext;
  * can be found at <A
  * HREF="http://mc4j.sourceforge.net/">http://mc4j.sourceforge.net/ </A>.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Raphael Boog (RBO)
  */

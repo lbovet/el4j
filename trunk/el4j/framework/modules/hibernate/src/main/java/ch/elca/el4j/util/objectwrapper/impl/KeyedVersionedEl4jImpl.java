@@ -25,12 +25,7 @@ import ch.elca.el4j.util.objectwrapper.interfaces.KeyedVersioned;
 /**
  * Implementation of KeyedVersioned that uses the provided methods of the EL4J base class. Thus, it is more efficient.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author David Bernhard (DBD)
  */

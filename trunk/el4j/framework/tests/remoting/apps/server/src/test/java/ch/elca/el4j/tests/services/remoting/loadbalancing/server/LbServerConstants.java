@@ -21,12 +21,7 @@ package ch.elca.el4j.tests.services.remoting.loadbalancing.server;
  * Contains the constants used for the testing servers. The values should not
  * be modified unless the client needs more time to contact the server.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Stefan Pleisch (SPL)
  */

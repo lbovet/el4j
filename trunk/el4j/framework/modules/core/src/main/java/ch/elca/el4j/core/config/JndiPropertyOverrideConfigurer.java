@@ -39,12 +39,7 @@ import org.springframework.util.StringUtils;
  * org.springframework.beans.factory.config.PropertyOverrideConfigurer}'s
  * behaviour, if there are any JNDI-related problems.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Andreas Bur (ABU)
  * @see ch.elca.el4j.core.config.JndiPropertyPlaceholderConfigurer

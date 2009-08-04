@@ -19,12 +19,7 @@ package ch.elca.el4j.tests.services.persistence.hibernate.offlining;
 /**
  * Allows the kill method from the server to be exported to the client for shutting down after tests.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author David Bernhard (DBD)
  */

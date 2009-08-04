@@ -35,12 +35,7 @@ import ch.elca.el4j.util.classpath.DuplicateClassFinder;
  * The proxy class for the JVM. Each MBean Server contains exactly one JVM
  * MBean.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Raphael Boog (RBO)
  * @author Rashid Waraich (RWA)
