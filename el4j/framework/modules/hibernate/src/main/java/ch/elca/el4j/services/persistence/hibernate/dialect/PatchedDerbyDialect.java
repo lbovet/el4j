@@ -26,12 +26,7 @@ import org.hibernate.id.TableHiLoGenerator;
  * fix is currently beeing determined.
  *
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Adrian Moos (AMS)
  */

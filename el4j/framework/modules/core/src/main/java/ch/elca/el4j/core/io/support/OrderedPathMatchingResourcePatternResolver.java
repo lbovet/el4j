@@ -32,12 +32,7 @@ import org.springframework.util.StringUtils;
  * This class extends PathMatchingResourcePatternResolver in the way that
  * it sorts the files in a folder alphabetically.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Stefan Wismer (SWI)
  */

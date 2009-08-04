@@ -62,12 +62,7 @@
  * must include the copyright and license notice.
  * </p>
  * 
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  */
 package ch.elca.el4j.util.concurrency;
