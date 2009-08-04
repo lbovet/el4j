@@ -31,8 +31,8 @@ done
 
 result=0
 
-# check if all java files contain "printFileStatus" and "URL: "
-echo "Checking for valid printFileStatus..."
+# check if all java files contain "@svnLink"
+echo "Checking for valid @svnLink..."
 echo "" > java_files.tmp
 cat files.tmp | grep  ".java$" >> java_files.tmp
 for i in $(grep -v "/maven/archetypes/" java_files.tmp) ; do
@@ -40,17 +40,10 @@ for i in $(grep -v "/maven/archetypes/" java_files.tmp) ; do
 	# dummy command to make it unix style
 	sed "s/ABC/ABC/" < $i > current.tmp
 	
-	egrep "printFileStatus" current.tmp > /dev/null
+	egrep "@svnLink" current.tmp > /dev/null
 	if [ $? -ne 0 ] ; then
-		echo "printFileStatus missing: $i"
+		echo "@svnLink missing: $i"
 		result=1
-	else
-		egrep "URL: http" current.tmp > /dev/null
-		if [ $? -ne 0 ] ; then
-			echo "'URL:' has to be followed by a space: $i"
-			egrep -n "URL: http" $i
-			result=1
-		fi
 	fi
 done
 rm java_files.tmp

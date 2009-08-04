@@ -48,7 +48,7 @@
 	<module name="SuppressionCommentFilter">
 		<property name="offCommentFormat" value="Checkstyle: UseLogger off" />
 		<property name="onCommentFormat" value="Checkstyle: UseLogger on" />
-		<property name="checkFormat" value="GenericIllegalRegexp" />
+		<property name="checkFormat" value="Regexp" />
 	</module>
 	
 	
@@ -143,7 +143,7 @@
 			<!-- Ignore the long  '* 15.11.04 XYZ ...' in ELCA java comment header -->
 			<!-- Ignore the first text line of header. -->
 			<property name="ignorePattern"
-				value="^( *\* *[^ ]+)$|^( \* *\(.\$URL: [^$]*\$., ?)$|^(import [^ ]+)$|^( *\* *@[^ ]+ [^ ]+)$|^ \* \d\d.\d\d.\d{2,4}[ ]+[a-zA-Z]{3}[ ]+[a-zA-Z0-9 \./\(\)]+$|^ \* EL4J, the Enterprise Library for Java, complementing Spring http://el4j\.sf\.net$" />
+				value="^( *\* *[^ ]+)$|^( \* *@svnLink .*)$|^(import [^ ]+)$|^( *\* *@[^ ]+ [^ ]+)$|^ \* \d\d.\d\d.\d{2,4}[ ]+[a-zA-Z]{3}[ ]+[a-zA-Z0-9 \./\(\)]+$|^ \* EL4J, the Enterprise Library for Java, complementing Spring http://el4j\.sf\.net$" />
 		</module>
 		<module name="MethodLength">
 			<property name="max" value="150" />
@@ -312,9 +312,6 @@
 
 		<!-- Miscellaneous -->
 
-		<!--module name="GenericIllegalRegexp"-->
-		<!--property name="format" value="System\.out\.println"/-->
-		<!--/module-->
 		<module name="TodoComment">
 			<property name="format" value="TBD|TODO" />
 		</module>
