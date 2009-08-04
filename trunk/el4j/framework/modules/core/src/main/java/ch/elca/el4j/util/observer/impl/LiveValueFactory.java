@@ -23,12 +23,7 @@ import ch.elca.el4j.util.observer.ObservableValue;
 /**
  * Convenience class providing a few standard LiveValues.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Adrian Moos (AMS)
  */

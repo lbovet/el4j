@@ -26,12 +26,7 @@ import ch.elca.el4j.services.exceptionhandler.handler.SimpleLogExceptionHandler;
 /**
  * Simple log exception handler used in the context handler tests.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Andreas Bur (ABU)
  */

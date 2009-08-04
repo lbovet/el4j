@@ -20,12 +20,7 @@ package ch.elca.el4j.services.statistics.light;
 /**
  * This interface defines the functionality accessible through JMX.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Andreas Bur (ABU)
  */

@@ -33,12 +33,7 @@ import ch.elca.el4j.services.persistence.hibernate.offlining.OfflinerInternalRTE
  * Proxy for local daos that intercepts delete methods and marks the objects for deletion in the database
  * on resynchronisation.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author David Bernhard (DBD)
  */

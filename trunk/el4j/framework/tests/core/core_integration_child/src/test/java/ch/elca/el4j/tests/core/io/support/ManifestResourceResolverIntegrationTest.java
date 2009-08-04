@@ -38,12 +38,7 @@ import ch.elca.el4j.core.io.support.ManifestOrderedConfigLocationProvider;
  * It works only if the <code>MANIFEST.MF</code> files with the special
  * configuration location section are available.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Andreas Bur (ABU)
  */

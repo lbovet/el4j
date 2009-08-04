@@ -32,12 +32,7 @@ import ch.elca.el4j.util.objectwrapper.interfaces.KeyedVersioned;
 /**
  * Mapped implementation that uses an in-memory table class.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author David Bernhard (DBD)
  */

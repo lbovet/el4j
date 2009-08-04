@@ -23,12 +23,7 @@ import ch.elca.el4j.util.objectwrapper.Wrappable;
 /**
  * Wrappable that gives an object a mapping entry.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author David Bernhard (DBD)
  */

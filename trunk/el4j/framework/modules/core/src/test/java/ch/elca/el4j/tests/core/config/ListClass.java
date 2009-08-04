@@ -24,12 +24,7 @@ import java.util.List;
  * This class is used for testing the ListPropertyMergeConfigurer class. It has
  * a list member and provides a setter and a getter method for this member.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Raphael Boog (RBO)
  */

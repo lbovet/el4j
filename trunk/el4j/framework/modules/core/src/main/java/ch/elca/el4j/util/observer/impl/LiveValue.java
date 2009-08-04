@@ -48,12 +48,7 @@ import ch.elca.el4j.util.observer.ObservableValue;
  * by itself. Otherwise, updates must be requested manually using
  * {@link #revise()}.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @param <T> see supertype
  * @see LiveValueFactory

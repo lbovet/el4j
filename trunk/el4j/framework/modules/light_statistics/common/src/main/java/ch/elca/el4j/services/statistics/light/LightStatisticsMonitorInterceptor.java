@@ -29,12 +29,7 @@ import com.jamonapi.MonitorFactory;
  * <p/>This one does not require logging to be set to <code>DEBUG</code> level,
  * in contrast to the one implemented by Spring.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Andreas Bur (ABU)
  * @see org.springframework.aop.interceptor.JamonPerformanceMonitorInterceptor

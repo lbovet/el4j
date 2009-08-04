@@ -45,12 +45,7 @@ import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
  * are no resources found by this class. Hence the list of resource names does
  * not have to be exhaustive.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Andreas Bur (ABU)
  */
