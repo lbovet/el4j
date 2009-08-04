@@ -32,12 +32,7 @@ import org.springframework.util.StringUtils;
  * Maven mojo to deploy multiple libraries (jars and sources) in the given
  * repository.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Martin Zeltner (MZE)
  *

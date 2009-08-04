@@ -32,12 +32,7 @@ import org.apache.maven.project.MavenProject;
 
 
 /**
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author dantran <dantran@apache.org>
  * @version $Id$ *

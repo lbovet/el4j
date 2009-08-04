@@ -24,12 +24,7 @@ import java.util.List;
  * Data-container containing project information required by
  * MavenRecursivePlugin.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author chd
  *

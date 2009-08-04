@@ -32,12 +32,7 @@ import org.apache.maven.project.MavenProject;
 /**
  * A common superclass for version goals that center on a project.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Philippe Jacot (PJA)
  */

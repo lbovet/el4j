@@ -6,12 +6,7 @@ import org.slf4j.spi.MDCAdapter;
 /**
  * This implementation is bound to {@link NOPMakerAdapter}.
  * 
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  * 
  * @author Ceki G&uuml;lc&uuml;
  */

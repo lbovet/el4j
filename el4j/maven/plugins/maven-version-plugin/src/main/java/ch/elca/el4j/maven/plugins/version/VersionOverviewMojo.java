@@ -28,12 +28,7 @@ import org.apache.maven.project.MavenProject;
  * Mojo to create an overview over all subfolder to get an idea of the used
  * artifacts and their versions.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Philippe Jacot (PJA)
  * @goal overview

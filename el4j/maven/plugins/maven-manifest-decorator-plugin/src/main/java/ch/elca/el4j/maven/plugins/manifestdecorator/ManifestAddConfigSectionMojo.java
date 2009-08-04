@@ -37,12 +37,7 @@ import ch.elca.el4j.maven.plugins.AbstractSlf4jEnabledMojo;
 /**
  * Prepares data for the special config section inside the manifest.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Martin Zeltner (MZE)
  *

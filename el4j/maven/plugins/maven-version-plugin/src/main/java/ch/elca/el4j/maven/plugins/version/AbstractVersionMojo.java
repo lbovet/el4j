@@ -37,12 +37,7 @@ import org.apache.maven.plugin.AbstractMojo;
  * This class is the starting point for analyzing the versions of artifacts
  * and provides some general tools.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Philippe Jacot (PJA)
  */

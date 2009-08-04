@@ -42,12 +42,7 @@ import ch.elca.el4j.maven.plugins.AbstractSlf4jEnabledMojo;
  * Abstract mojo to add multiple libraries (jars and sources) to a given
  * repository.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Martin Zeltner (MZE)
  */

@@ -23,12 +23,7 @@ import org.codehaus.plexus.logging.Logger;
 /**
  * Base class for various formatting loggers.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author David Bernhard (DBD)
  */

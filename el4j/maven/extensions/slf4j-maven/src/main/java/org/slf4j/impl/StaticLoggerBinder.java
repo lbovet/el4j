@@ -41,12 +41,7 @@ import org.slf4j.spi.LoggerFactoryBinder;
  * The binding of {@link LoggerFactory} class with an actual instance of {@link ILoggerFactory} is performed using
  * information returned by this class.
  * 
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  * 
  * @author Ceki G&uuml;lc&uuml;
  */

@@ -46,12 +46,7 @@ import org.jdom.JDOMException;
  * Plugin to execute maven commands recursive on dependent projects. Please refer to the full documentation
  *  in the wiki, the maven quick reference sheet or  the reference documentation.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author chd
  * @goal execute

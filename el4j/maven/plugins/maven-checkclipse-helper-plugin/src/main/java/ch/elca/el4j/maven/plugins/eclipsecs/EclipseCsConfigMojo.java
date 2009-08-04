@@ -35,12 +35,7 @@ import org.springframework.util.StringUtils;
 /**
  * Mojo to create .checkstyle file.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Stefan Wismer (SWI)
  * @author Martin Zeltner (MZE)

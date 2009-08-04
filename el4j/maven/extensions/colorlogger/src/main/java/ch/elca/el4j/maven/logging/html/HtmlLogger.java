@@ -21,12 +21,7 @@ import ch.elca.el4j.maven.logging.AbstractFormattingLogger;
 /**
  * Logger that outputs html colors around warn/error messages.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author your David Bernhard (DBD)
  */
