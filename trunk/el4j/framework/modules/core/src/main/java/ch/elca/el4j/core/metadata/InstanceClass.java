@@ -29,12 +29,7 @@ import java.lang.annotation.Target;
  * This class is useful if the return type of the property is an interface and you want to declare
  * a default implementation.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author David Bernhard (DBD)
  */

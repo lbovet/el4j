@@ -29,12 +29,7 @@ import javax.swing.JInternalFrame;
  * A simple comparator for <code>JInternalFrames</code>, based on their title.
  * <p>
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Gregory Kotsaftis
  * @since 1.04

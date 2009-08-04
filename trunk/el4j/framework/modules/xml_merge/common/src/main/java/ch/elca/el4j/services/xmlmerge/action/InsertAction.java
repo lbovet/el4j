@@ -30,12 +30,7 @@ import ch.elca.el4j.services.xmlmerge.Action;
  * existing elements of the same name. Usually applied with the
  * {@link ch.elca.el4j.services.xmlmerge.matcher.SkipMatcher}.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Laurent Bovet (LBO)
  * @author Alex Mathey (AMA)

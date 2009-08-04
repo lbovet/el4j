@@ -19,12 +19,7 @@ package ch.elca.el4j.env;
 /**
  * An exception stating that the content of an env.xml file is not valid.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Stefan Wismer (SWI)
  */

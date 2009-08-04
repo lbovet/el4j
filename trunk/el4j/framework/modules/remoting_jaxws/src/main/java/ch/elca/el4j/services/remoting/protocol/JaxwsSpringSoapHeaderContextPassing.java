@@ -33,12 +33,7 @@ import ch.elca.el4j.services.remoting.protocol.jaxws.JaxwsContextHandler;
  * ability to transfer the implicit context inside the SOAP header using Jaxb
  * to serialize the parameters and context.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Stefan Wismer (SWI)
  */

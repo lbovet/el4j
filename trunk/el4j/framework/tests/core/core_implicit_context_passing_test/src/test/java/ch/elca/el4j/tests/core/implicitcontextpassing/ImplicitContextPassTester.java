@@ -21,12 +21,7 @@ package ch.elca.el4j.tests.core.implicitcontextpassing;
  * This interface provides common data of ImplicitContextPasserImplA and
  * ImplicitContextPasserImplA.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author David Stefan (DST)
  */

@@ -34,12 +34,7 @@ import ch.elca.el4j.util.interfaceenrichment.MethodDescriptor;
 /**
  * This is the test case for the interface enrichment.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Martin Zeltner (MZE)
  */

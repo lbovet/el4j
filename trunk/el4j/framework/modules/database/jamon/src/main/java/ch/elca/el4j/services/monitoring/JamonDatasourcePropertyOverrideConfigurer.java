@@ -25,12 +25,7 @@ import org.springframework.beans.factory.config.TypedStringValue;
 /**
  * A property override configurer that makes the data source bean use the JAMon JDBC interceptor.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Stefan Wismer (SWI)
  */
