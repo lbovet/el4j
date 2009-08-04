@@ -27,12 +27,7 @@ import ch.elca.el4j.services.exceptionhandler.handler.AbstractReconfigureExcepti
  * This exception handler reconfigures the A bean, exchanging the concrete
  * {@link ch.elca.el4j.tests.services.exceptionhandler.Adder} implementation.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Andreas Bur (ABU)
  */

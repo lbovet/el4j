@@ -39,12 +39,7 @@ import ch.elca.el4j.util.codingsupport.Reject;
 /**
  * A MessageSource based on {@link MessageRewriter MessageRewriters}.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Adrian Moos (AMS)
  */

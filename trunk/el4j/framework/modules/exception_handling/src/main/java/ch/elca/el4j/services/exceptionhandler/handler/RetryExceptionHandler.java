@@ -27,12 +27,7 @@ import ch.elca.el4j.services.exceptionhandler.RetryException;
  * This class implements an exception handler that tries to call the target
  * several times after waiting a configurable delay.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Andreas Bur (ABU)
  */

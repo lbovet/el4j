@@ -30,12 +30,7 @@ import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
  * even supports repairing targets that are not contained in the list of
  * alternative targets.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Andreas Bur (ABU)
  */

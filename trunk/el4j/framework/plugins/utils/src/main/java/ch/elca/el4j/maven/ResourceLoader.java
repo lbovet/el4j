@@ -38,12 +38,7 @@ import ch.elca.el4j.core.io.support.OrderedPathMatchingResourcePatternResolver;
  *
  * This class contains the enriched classloader as well as the Path matcher needed for resource loading.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author David Stefan (DST)
  * @author Stefan Wismer (SWI)

@@ -28,12 +28,7 @@ import ch.elca.el4j.services.security.encryption.AESCipher;
  * This ContextPasser en/decrypts credentials using an AES-128 cipher such that no plain text passwords
  * are sent over the network.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Stefan Wismer (SWI)
  */

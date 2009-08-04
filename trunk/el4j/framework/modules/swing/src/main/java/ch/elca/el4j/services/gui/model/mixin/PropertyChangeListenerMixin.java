@@ -56,12 +56,7 @@ import ch.elca.el4j.util.codingsupport.AopHelper;
  * It also contains a simple implementation of the {@link SaveRestoreCapability}. All Java bean properties of
  * primitive or immutable (see IMMUTABLE_CLASSES) type can be saved and restored.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Stefan Wismer (SWI)
  */

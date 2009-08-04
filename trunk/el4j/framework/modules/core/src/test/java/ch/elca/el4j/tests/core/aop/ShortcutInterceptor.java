@@ -27,12 +27,7 @@ import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
  * Simple test interceptor that shortcuts all method invocations on methods
  * with a given name and returns the given result.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Andreas Bur (ABU)
  */

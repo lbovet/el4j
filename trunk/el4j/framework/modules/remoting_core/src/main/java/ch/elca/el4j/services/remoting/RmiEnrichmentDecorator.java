@@ -27,12 +27,7 @@ import ch.elca.el4j.util.interfaceenrichment.MethodDescriptor;
 /**
  * This interface decorator adds to a given interface rmi needs.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Martin Zeltner (MZE)
  */

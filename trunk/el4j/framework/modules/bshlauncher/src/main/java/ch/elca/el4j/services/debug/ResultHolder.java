@@ -21,12 +21,7 @@ import java.io.Serializable;
 /**
  * This class holds the result of a method execution.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Philipp H. Oser (POS)
  */

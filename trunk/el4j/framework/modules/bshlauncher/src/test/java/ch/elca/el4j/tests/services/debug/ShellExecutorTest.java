@@ -30,12 +30,7 @@ import ch.elca.el4j.services.debug.ShellExecutor;
 import ch.elca.el4j.services.debug.ShellExecutorImpl;
 
 /**
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  */
 public class ShellExecutorTest {
 

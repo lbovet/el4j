@@ -42,12 +42,7 @@ import org.springframework.metadata.Attributes;
  *
  * @see org.acegisecurity.annotation.SecurityAnnotationAttributes
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Alex Mathey (AMA)
  */

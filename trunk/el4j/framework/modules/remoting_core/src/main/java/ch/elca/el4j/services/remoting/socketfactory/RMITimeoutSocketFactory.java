@@ -28,12 +28,7 @@ import java.rmi.server.RMISocketFactory;
  * The value of this timeout can be set in the spring configuration file
  * rmi-timeout.xml (in main/resources/mandatory).
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Dominik Zindel (DZI)
  */

@@ -43,12 +43,7 @@ import bsh.TargetError;
  *      <li> {@code $_} the last return result
  *    </ul>
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  * 
  * @author Philipp H. Oser (POS)
  */

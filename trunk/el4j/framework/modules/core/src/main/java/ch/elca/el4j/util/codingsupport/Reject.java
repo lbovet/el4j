@@ -76,12 +76,7 @@ import org.springframework.util.StringUtils;
  * arguments is not
  * verified statically and must therefore be ensured by the user.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Martin Zeltner (MZE), Adrian Moos(AMS)
  */

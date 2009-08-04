@@ -48,12 +48,7 @@ import ch.elca.el4j.util.objectwrapper.interfaces.KeyedVersioned;
  * "dependent-error" as errors in the mapping table too to prevent it from being processed again
  * and to return a consistent mapping table to the client after the operation has run.</li></ul>
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author David Bernhard (DBD)
  */

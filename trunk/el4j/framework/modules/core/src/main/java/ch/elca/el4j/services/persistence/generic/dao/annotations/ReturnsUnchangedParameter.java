@@ -48,12 +48,7 @@ import java.lang.annotation.Target;
  *
  * @see ch.elca.el4j.services.persistence.generic.dao.AbstractIdentityFixer
  *
- *<script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Adrian Moos (AMS)
  */

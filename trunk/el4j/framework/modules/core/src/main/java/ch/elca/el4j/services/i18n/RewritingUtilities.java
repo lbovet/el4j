@@ -29,12 +29,7 @@ import java.util.Map;
  *
  * <pre><i>namespace</i> <i>function</i> . <i>argument</i> </pre>
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Adrian Moos (AMS)
  */

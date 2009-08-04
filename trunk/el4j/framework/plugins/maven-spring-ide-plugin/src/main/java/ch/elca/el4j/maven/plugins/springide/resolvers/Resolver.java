@@ -22,12 +22,7 @@ import java.io.IOException;
 /**
  * Interface for resolving bean path entries against their type (file, jar ...).
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author David Bernhard (DBD)
  */
