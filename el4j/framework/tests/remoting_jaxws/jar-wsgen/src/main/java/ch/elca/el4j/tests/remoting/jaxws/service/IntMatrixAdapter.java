@@ -21,12 +21,7 @@ import javax.xml.bind.annotation.adapters.XmlAdapter;
 /**
  * This class is an adapter which converts int[][] to String and back.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Stefan Wismer (SWI)
  */

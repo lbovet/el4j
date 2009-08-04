@@ -60,12 +60,7 @@ import ch.elca.el4j.util.env.EnvPropertiesUtils;
  * &lt;/filter&gt;
  * </pre>
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Fabian Reichlin (FRE)
  * @author Laurent Bovet (LBO)

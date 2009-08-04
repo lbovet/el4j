@@ -27,12 +27,7 @@ import org.springframework.aop.framework.autoproxy.AbstractAutoProxyCreator;
  * members (plus getter and setter for them) do just take place in this class,
  * because class {@link AbstractAutoProxyCreator} hides them.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Martin Zeltner (MZE)
  */

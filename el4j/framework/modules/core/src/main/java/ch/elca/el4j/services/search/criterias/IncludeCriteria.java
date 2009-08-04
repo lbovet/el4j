@@ -21,12 +21,7 @@ package ch.elca.el4j.services.search.criterias;
  *
  * Criteria for the include pattern.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @deprecated no longer needed.
  * @author Alex Mathey (AMA)

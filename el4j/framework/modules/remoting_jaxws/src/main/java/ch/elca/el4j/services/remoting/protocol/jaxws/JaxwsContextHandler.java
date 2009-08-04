@@ -45,12 +45,7 @@ import ch.elca.el4j.core.contextpassing.ImplicitContextPassingRegistry;
  * This class is a JAX-WS Handler that injects the implicit context while
  * sending a SOAP message and extract it while retrieving one.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Stefan Wismer (SWI)
  */
