@@ -27,12 +27,7 @@ import org.springframework.richclient.application.config.DefaultApplicationLifec
  * This class is the Application Lifecycle Advisor. It provides hooks for 
  * executing code at certain points of the lifecycle.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author David Stefan (DST)
  */

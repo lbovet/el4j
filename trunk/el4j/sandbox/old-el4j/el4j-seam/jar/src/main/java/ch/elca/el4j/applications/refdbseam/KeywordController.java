@@ -40,12 +40,7 @@ import ch.elca.el4j.services.persistence.generic.dao.DaoRegistry;
  * 
  * This class can be used to work with Keywords, based on a list of keywords.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Philippe Jacot (PJA)
  */

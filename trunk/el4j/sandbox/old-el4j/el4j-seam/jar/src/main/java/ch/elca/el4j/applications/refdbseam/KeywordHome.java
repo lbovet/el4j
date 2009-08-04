@@ -28,12 +28,7 @@ import ch.elca.el4j.apps.keyword.dom.Keyword;
  * 
  * This is a EntityHome for Keywords.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Philippe Jacot (PJA)
  */

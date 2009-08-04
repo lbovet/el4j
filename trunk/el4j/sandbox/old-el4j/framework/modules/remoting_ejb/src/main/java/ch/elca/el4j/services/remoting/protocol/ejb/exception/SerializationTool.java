@@ -36,12 +36,7 @@ import java.util.Map;
  * serialization header (for serialization to be more stateless), refer to the
  * trace console.)
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  */
 public final class SerializationTool {
 

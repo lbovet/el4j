@@ -25,12 +25,7 @@ package ch.elca.el4j.services.remoting.protocol.ejb.exception;
  * This interface enables the control of format string and parameters for the
  * use of {@link java.text.MessageFormat}.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Yves Martin (YMA)
  **/

@@ -20,12 +20,7 @@ package ch.elca.el4j.services.remoting.protocol.ejb.xdoclet;
 /**
  * This exception is thrown during the XDoclet comment generation process.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Andreas Bur (ABU)
  */

@@ -37,12 +37,7 @@ import ch.elca.el4j.services.remoting.RemotingServiceExporter;
 /**
  * This class implements all needed things for the xfire protocol.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Rashid Waraich (RWA)
  * @author Philippe Jacot (PJA)

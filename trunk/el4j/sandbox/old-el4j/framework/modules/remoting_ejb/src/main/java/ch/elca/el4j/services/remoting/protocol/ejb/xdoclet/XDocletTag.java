@@ -28,12 +28,7 @@ import org.apache.commons.logging.LogFactory;
  * This class represents an XDoclet tag. It allows to parse string
  * representations and helps merging multiple tags.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Andreas Bur (ABU)
  */

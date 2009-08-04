@@ -46,12 +46,7 @@ import ch.elca.el4j.util.codingsupport.CollectionUtils;
 /**
  * Soap request handler for implicit context passing via soap header.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Martin Zeltner (MZE)
  */

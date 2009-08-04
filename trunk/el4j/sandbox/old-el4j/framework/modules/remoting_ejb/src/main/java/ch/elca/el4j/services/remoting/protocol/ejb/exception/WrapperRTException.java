@@ -43,10 +43,7 @@ import java.io.StringWriter;
  * Caused by: B: message of B<br>
  * &nbsp;&nbsp;at .... [the stack trace of B].</tt>
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *   "$Revision$", "$Date$", "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Yves Martin (YMA)
  * @see WrapperException WrapperException gives the same features but as a

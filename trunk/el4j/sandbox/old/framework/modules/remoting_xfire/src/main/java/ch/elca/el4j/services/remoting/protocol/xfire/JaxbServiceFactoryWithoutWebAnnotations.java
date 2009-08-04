@@ -36,12 +36,7 @@ import org.codehaus.xfire.transport.TransportManager;
  * directly from the ObjectServiceFactory, by this it does not require serice
  * classes to have WebAnnoations on them.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Rashid Waraich (RWA)
  * @author Philippe Jacot (PJA)

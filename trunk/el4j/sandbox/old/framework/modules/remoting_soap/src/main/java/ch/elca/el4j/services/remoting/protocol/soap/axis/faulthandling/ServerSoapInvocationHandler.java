@@ -26,12 +26,7 @@ import java.lang.reflect.Method;
  * service. Used for soap services. Further each business exception will
  * be translated into a <code>SOAPFaultException</code>.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Martin Zeltner (MZE)
  */
