@@ -36,12 +36,7 @@ import ch.elca.el4j.util.collections.helpers.Function;
  *
  * @param <T> the element type
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Adrian Moos (AMS)
  */

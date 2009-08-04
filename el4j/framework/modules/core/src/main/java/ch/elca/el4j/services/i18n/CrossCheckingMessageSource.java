@@ -38,12 +38,7 @@ import ch.elca.el4j.util.codingsupport.Reject;
  * message it is asked to resolve from both sources, and {@code assert} they
  * agree about the message's value. (You should therefore enable assertions ...)
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Adrian Moos (AMS)
  */

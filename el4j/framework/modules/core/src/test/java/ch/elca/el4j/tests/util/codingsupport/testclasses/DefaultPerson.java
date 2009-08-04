@@ -4,12 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  */
 public class DefaultPerson implements Person {
 	protected String firstName;

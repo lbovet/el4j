@@ -23,12 +23,7 @@ import ch.elca.el4j.services.search.QueryObject;
  *
  *  For sample usage please refer to {@link QueryObject}
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Philipp Oser (POS)
  */

@@ -19,12 +19,7 @@ package ch.elca.el4j.services.statistics.detailed.jmx;
 /**
  * This class publishes the detailed statistics through JMX (MBean Interface).
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Rashid Waraich (RWA)
  * @author David Stefan (DST)

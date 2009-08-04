@@ -30,12 +30,7 @@ import org.apache.maven.artifact.versioning.VersionRange;
  * This class implements the ResolutionListener interface and saves the
  * dependency hierarchy. It Filters according to an artifact filter.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Philippe Jacot (PJA)
  */

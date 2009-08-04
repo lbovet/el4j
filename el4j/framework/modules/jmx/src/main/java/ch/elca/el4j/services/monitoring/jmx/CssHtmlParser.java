@@ -30,12 +30,7 @@ import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
 /**
  * This MBean adds css information to a given html page.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Martin Zeltner (MZE)
  */

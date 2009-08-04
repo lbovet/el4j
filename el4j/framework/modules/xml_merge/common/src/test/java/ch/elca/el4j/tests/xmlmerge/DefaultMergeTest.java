@@ -59,12 +59,7 @@ import ch.elca.el4j.services.xmlmerge.merge.DefaultXmlMerge;
  * This class tests several functionalities of the xml_merge module, using a
  * <code>DefaultXmlMerge</code> instance.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Laurent Bovet (LBO)
  * @author Alex Mathey (AMA)
@@ -518,12 +513,7 @@ public class DefaultMergeTest {
 	 * This class is a custom matcher. With this matcher, the original and patch
 	 * elements match only if their tag name is "servlet-name".
 	 *
-	 * <script type="text/javascript">printFileStatus
-	 *   ("$URL$",
-	 *    "$Revision$",
-	 *    "$Date$",
-	 *    "$Author$"
-	 * );</script>
+	 * @svnLink $Revision$;$Date$;$Author$;$URL$
 	 *
 	 * @author Laurent Bovet (LBO)
 	 * @author Alex Mathey (AMA)

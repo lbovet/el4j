@@ -33,12 +33,7 @@ import ch.elca.el4j.util.metadata.MetaDataSourceAware;
 /**
  * The interceptor to be invoked if an ExampleAnnotation is set.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Martin Zeltner (MZE)
  */

@@ -21,12 +21,7 @@ import ch.elca.el4j.services.persistence.generic.dao.GenericDao;
  */
 
 /**
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  */
 @AutocollectedGenericDao(value="titi")
 public class Dao1 extends DummyDao<String> implements GenericDao<String> {

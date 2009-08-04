@@ -28,12 +28,7 @@ import ch.elca.el4j.core.context.ModuleApplicationContext;
 /**
  * This class test the environment support.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Andreas Bur (ABU)
  */

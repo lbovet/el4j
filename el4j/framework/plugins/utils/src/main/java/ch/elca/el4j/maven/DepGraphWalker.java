@@ -53,12 +53,7 @@ import ch.elca.el4j.maven.depgraph.RegexArtifactFilter;
  * which you state the dependencies in the pom.xml file would matter.
  * This could lead to nasty side-effects that we want to prevent.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author David Stefan (DST)
  */

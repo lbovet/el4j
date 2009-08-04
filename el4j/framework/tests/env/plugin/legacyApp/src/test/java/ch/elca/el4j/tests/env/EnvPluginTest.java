@@ -28,12 +28,7 @@ import ch.elca.el4j.util.env.EnvPropertiesUtils;
 /**
  * This class tests if all env placeholder could be evaluated properly.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Stefan Wismer (SWI)
  */

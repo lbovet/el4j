@@ -24,11 +24,7 @@ import java.util.Map;
  * Default implementation of <code>ImplicitContextPassingRegistry</code>. To
  * register the implicit context passers, their classname is used as id.
  *
- * <script type="text/javascript">printFileStatus
- * ("$URL$",
- *  "$Revision$",
- *  "$Date$",
- *  "$Author$" ); </script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Andreas Pfenninger (APR)
  */

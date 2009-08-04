@@ -26,12 +26,7 @@ import ch.elca.el4j.services.xmlmerge.OperationFactory;
  * An operation factory delegating to other operation factories according to the
  * existence of the original and patch element.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Laurent Bovet (LBO)
  * @author Alex Mathey (AMA)

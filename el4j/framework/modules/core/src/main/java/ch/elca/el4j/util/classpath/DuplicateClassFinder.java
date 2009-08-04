@@ -42,12 +42,7 @@ import org.slf4j.LoggerFactory;
  * A tool for looking up duplicate class definitions in the classpath.
  * It can also be used to inspect all class definitions loaded.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author David Bernhard (DBD)
  */

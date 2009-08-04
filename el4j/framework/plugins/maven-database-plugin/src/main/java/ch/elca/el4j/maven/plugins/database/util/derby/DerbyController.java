@@ -27,12 +27,7 @@ import ch.elca.el4j.maven.plugins.database.util.DbController;
 /**
  * This class starts the Derby NetworkServer.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  * @author David Stefan (DST)
  */
 public final class DerbyController implements DbController {

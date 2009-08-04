@@ -24,12 +24,7 @@ package ch.elca.el4j.util.interfaceenrichment;
  * interface. The shadow interface can additionally implement a new interfaces
  * and/or one can change any signatures of its methods.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Martin Zeltner (MZE)
  */

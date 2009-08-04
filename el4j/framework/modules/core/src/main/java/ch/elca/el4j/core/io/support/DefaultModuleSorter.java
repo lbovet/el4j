@@ -42,12 +42,7 @@ import org.slf4j.LoggerFactory;
  * unsatisfied dependencies, which could happen if there are cycles in the
  * dependency graph.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Andreas Bur (ABU)
  * @author Martin Zeltner (MZE)

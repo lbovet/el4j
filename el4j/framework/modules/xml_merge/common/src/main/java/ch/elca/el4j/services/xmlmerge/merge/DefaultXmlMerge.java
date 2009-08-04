@@ -51,12 +51,7 @@ import ch.elca.el4j.services.xmlmerge.matcher.TagMatcher;
  * Default implementation of XmlMerge. Create all JDOM documents, then perform
  * the merge into a new JDOM document.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Laurent Bovet (LBO)
  * @author Alex Mathey (AMA)

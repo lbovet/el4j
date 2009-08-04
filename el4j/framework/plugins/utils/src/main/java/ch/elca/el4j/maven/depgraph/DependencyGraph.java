@@ -28,12 +28,7 @@ import org.apache.maven.artifact.Artifact;
  *
  * This class is a set of artifacts that make up a dependency graph.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Philippe Jacot (PJA)
  */

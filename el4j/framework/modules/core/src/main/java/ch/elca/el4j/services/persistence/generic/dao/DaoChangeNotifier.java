@@ -21,12 +21,7 @@ package ch.elca.el4j.services.persistence.generic.dao;
  *
  * The notifications sent are consistent.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Adrian Moos (AMS)
  */
