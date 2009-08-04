@@ -26,12 +26,7 @@ import org.springframework.metadata.Attributes;
 /**
  * Interface for the metadata source.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Raphael Boog (RBO)
  * @author Martin Zeltner (MZE)

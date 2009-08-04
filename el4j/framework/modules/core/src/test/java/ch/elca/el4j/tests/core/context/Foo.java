@@ -21,12 +21,7 @@ package ch.elca.el4j.tests.core.context;
  * This class is used to test the ModuleApplicationContext class. It contains
  * and provides nothing.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Raphael Boog (RBO)
  */

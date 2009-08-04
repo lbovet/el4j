@@ -66,12 +66,7 @@ import cookxml.cookswing.CookSwing;
  *   <li> defines an {@link ActionsContext} which allows to spread Actions over several classes
  *  </ul>
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Stefan Wismer (SWI)
  */

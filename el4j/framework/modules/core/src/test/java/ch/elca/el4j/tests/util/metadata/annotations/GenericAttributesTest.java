@@ -34,12 +34,7 @@ import ch.elca.el4j.core.context.ModuleApplicationContext;
  *
  * Please be sure to compile the Commons Attributes before launching this test.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Raphael Boog (RBO)
  */

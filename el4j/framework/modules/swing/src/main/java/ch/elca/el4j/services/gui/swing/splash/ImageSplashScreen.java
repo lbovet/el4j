@@ -34,12 +34,7 @@ import java.awt.Window;
  * <li> Launch the main application window via GuiApplication.launch
  * </ul>
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Philipp Oser (POS)
  * @author Stefan Wismer (SWI)

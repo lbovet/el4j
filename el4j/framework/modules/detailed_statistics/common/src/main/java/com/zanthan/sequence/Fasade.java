@@ -14,12 +14,7 @@ import javax.imageio.ImageIO;
  * It is located in the pacakge com.zanathan.sequence to access classes that
  * have other than public visability.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author David Stefan (DST)
  */

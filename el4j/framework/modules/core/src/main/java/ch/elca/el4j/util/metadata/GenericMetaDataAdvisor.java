@@ -71,12 +71,7 @@ import ch.elca.el4j.util.metadata.annotations.Annotations;
  *       the configuration file.</dd>
  * </dl>
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Raphael Boog (RBO)
  * @author Martin Zeltner (MZE)

@@ -41,12 +41,7 @@ import junit.framework.TestCase;
  * Example of using graphwalker for copying files recursively. This is an analogon
  * of synchronizing two databases.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author David Bernhard (DBD)
  */

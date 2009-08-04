@@ -31,12 +31,7 @@ import ch.elca.el4j.util.objectwrapper.interfaces.KeyedVersioned;
 /**
  * Version of the offlining visitor that forces an object to be overwritten.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author David Bernhard (DBD)
  */

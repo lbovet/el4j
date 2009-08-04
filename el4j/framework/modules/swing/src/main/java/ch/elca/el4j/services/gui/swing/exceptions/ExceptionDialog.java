@@ -39,12 +39,7 @@ import cookxml.cookswing.CookSwing;
 /**
  * The default dialog that appears when an exception occurred.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Stefan Wismer (SWI)
  */

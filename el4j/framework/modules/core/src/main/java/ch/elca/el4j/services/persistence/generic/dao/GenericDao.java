@@ -40,12 +40,7 @@ import ch.elca.el4j.services.search.QueryObject;
  * For direct programmer-usage we recommend to use the convenience subclasses
  *  (@link ConvenienceGenericDao).
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @param <T>
  *            The generic type of the domain class the DAO is responsible for

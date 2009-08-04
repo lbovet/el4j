@@ -34,12 +34,7 @@ import ch.elca.el4j.core.aop.ExceptionChainConversionInterceptor;
 /**
  * Test case for exception chain converter.
  * 
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author pos
  */

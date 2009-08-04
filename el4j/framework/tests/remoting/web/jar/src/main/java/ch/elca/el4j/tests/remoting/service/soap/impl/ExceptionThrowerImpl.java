@@ -27,12 +27,7 @@ import ch.elca.el4j.tests.remoting.service.soap.RemoteExceptionWithData;
 /**
  * Implementation of the Jax-Rpc 1.1 wsdl fault specification conform service.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Martin Zeltner (MZE)
  */

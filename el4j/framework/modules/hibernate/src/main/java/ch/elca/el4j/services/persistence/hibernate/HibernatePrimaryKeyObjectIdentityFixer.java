@@ -21,12 +21,7 @@ import ch.elca.el4j.services.persistence.generic.dto.PrimaryKeyObject;
 /**
  *  An identity fixer for objects loaded by hibernate and implementing the <code>PrimaryKeyObject</code> interface.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @see HibernateProxyAwareIdentityFixer
  * 

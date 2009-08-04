@@ -23,12 +23,7 @@ import java.util.List;
 /**
  * This class represents a policy on how to merge object graphs in the identity fixer.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @see AbstractIdentityFixer
  * 

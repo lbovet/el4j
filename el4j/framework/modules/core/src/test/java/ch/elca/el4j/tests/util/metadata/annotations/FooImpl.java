@@ -24,12 +24,7 @@ import org.slf4j.LoggerFactory;
 /**
  * This class contains a method called test(int) with annotation declarations.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Raphael Boog (RBO)
  * @author Martin Zeltner (MZE)

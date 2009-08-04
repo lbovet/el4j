@@ -22,12 +22,7 @@ import ch.elca.el4j.services.persistence.generic.dao.GenericDao;
  * This class extends the {@link DefaultDaoRegistry} with a fallback function:
  * If no DAO can be found for an entityType, a generic DAO is created.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Stefan Wismer (SWI)
  */

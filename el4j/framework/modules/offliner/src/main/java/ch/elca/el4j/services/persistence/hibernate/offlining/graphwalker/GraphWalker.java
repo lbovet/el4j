@@ -84,12 +84,7 @@ import ch.elca.el4j.util.objectwrapper.interfaces.Linked;
  * are equal. If a different instance im memory is seen that is equal to a previously seen one, it is treated as the
  * same node for state purposes (<i>states are in fact stored as a map of UniqueKey to NodeState</i>).
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author David Bernhard (DBD)
  */
