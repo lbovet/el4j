@@ -38,12 +38,7 @@ import org.springframework.transaction.support.TransactionSynchronizationManager
  * a single session feature.
  *
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Pham Quoc Ky (QKP)
  */

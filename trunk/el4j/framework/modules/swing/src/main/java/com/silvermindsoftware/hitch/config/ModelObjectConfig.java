@@ -17,12 +17,7 @@ package com.silvermindsoftware.hitch.config;
  */
 
 /**
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  */
 public class ModelObjectConfig {
 

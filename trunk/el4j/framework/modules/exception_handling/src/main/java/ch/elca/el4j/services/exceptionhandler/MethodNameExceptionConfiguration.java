@@ -25,12 +25,7 @@ import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
  * This exception configuration uses the exception class as well as the invoked
  * method's name to specify the exception handler.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Andreas Bur (ABU)
  */

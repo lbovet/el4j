@@ -21,12 +21,7 @@ package ch.elca.el4j.util.metadata;
  * Interface to be implemented by an interceptor object that wishes to be
  * notified of the MetaDataSource.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Raphael Boog (RBO)
  */

@@ -18,12 +18,7 @@ import java.lang.annotation.*;
  * that might otherwise be assumed to be thread-safe, despite the fact that it is a bad
  * idea to assume a class is thread-safe without good reason.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @see ThreadSafe
  */

@@ -44,12 +44,7 @@ import ch.elca.el4j.services.persistence.hibernate.offlining.util.TotallyGeneric
  * It takes an offlining server as parameter (via the info)
  * and passes calls to it; synchronize() is chunked.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author David Bernhard (DBD)
  */

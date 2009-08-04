@@ -22,12 +22,7 @@ import org.jdom.Element;
  * Creates operation (action, mapper and matcher) instances corresponding to a
  * pair of elements from the original and patch DOMs.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Laurent Bovet (LBO)
  * @author Alex Mathey (AMA)

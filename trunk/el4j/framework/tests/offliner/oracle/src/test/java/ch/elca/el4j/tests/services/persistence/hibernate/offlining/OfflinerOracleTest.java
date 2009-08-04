@@ -33,12 +33,7 @@ import org.springframework.context.annotation.ClassPathScanningCandidateComponen
  * <b>WARNING. All tests must be annotated with @Component to get them to run.</b>
  * <i>THIS FILE IS A COPY OF THE ONE IN TESTS-DB2. REMEMBER TO UPDATE BOTH ON ANY CHANGE.</i>
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author David Bernhard (DBD)
  */

@@ -34,12 +34,7 @@ import ch.elca.el4j.util.objectwrapper.impl.AbstractWrapper;
  * want and we cannot emulate it either. As it is a RuntimeException it is not
  * always declared; getting such an exception is under most circumstances non-recoverable anyway. 
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL: https://cvs.elca.ch/subversion/el4j-internal/trunk/sandbox/cacher/src/main/java/caching/aspects/Aspects.java $",
- *    "$Revision: 1583 $",
- *    "$Date: 2008-08-08 14:19:17 +0200 (Fri, 08 Aug 2008) $",
- *    "$Author: dbd@ELCA.CH $"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author David Bernhard (DBD)
  */

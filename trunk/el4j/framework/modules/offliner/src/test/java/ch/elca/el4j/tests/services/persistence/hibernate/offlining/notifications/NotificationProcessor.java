@@ -25,12 +25,7 @@ import org.apache.log4j.Logger;
 /**
  * Utiility to check that the correct notifications arrive in the correct order. 
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author David Bernhard (DBD)
  */

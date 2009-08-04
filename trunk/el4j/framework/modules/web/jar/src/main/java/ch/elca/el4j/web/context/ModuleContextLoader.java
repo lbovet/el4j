@@ -39,12 +39,7 @@ import org.springframework.web.context.WebApplicationContext;
  * manifest files should be merged with resources found by searching in the file
  * system.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @see org.springframework.web.context.ContextLoader
  * @see ModuleContextLoaderListener

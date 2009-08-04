@@ -24,12 +24,7 @@ import cookxml.core.exception.SetterException;
  * This setter enhances the {@link VarSetter} so that it can set variables of
  * type {@link NoAddValueHolder}.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Stefan Wismer (SWI)
  */
