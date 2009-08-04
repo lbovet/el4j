@@ -21,12 +21,7 @@ import java.util.Arrays;
 /**
  * Notification called from a method to track the correct order of method calls.
  * 
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  * 
  * @author David Bernhard (DBD)
  */

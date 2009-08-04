@@ -35,12 +35,7 @@ import ch.elca.el4j.util.codingsupport.Reject;
  * least-recently-used strategy.
  *
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Rashid Waraich (RWA)
  * @author David Stefan (DST)

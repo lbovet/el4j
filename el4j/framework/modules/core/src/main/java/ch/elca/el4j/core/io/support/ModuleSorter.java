@@ -21,12 +21,7 @@ package ch.elca.el4j.core.io.support;
  * This interface is used to transform the order of modules given as
  * dependencies into a list of modules that respects the partial order.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Andreas Bur (ABU)
  */

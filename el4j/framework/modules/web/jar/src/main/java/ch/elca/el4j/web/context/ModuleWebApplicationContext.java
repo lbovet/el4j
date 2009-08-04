@@ -56,12 +56,7 @@ import ch.elca.el4j.core.io.support.ManifestOrderedConfigLocationProvider;
  * those, that have to be excluded. This allows removing individual
  * configuration files that are included using using wildcard notation.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Andreas Bur (ABU)
  * @author Martin Zeltner (MZE)

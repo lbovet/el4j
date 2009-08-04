@@ -19,12 +19,7 @@ package ch.elca.el4j.services.search.criterias;
 /**
  * A Criteria that negates the Criteria it wraps.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Philipp Oser (POS)
  */

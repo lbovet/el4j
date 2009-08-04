@@ -23,12 +23,7 @@ import ch.elca.el4j.services.persistence.hibernate.offlining.graphwalker.GraphWa
  * <p>
  * For documentation see GraphWalker.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author David Bernhard (DBD)
  */

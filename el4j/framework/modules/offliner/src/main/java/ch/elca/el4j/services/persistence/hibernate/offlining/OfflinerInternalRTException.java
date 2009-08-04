@@ -20,12 +20,7 @@ package ch.elca.el4j.services.persistence.hibernate.offlining;
  * Represents a serious problem in the offliner code a.k.a. "this should never happen".
  * If you ever see one of these it's probably a offliner bug.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author David Bernhard (DBD)
  */

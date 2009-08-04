@@ -27,12 +27,7 @@ import ch.elca.el4j.core.context.ModuleApplicationContext;
 /**
  * This class implements a cache for {@link ModuleApplicationContext}s.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Stefan Wismer (SWI)
  */

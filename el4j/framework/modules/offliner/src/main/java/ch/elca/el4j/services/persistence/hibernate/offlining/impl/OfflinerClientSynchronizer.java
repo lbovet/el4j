@@ -52,12 +52,7 @@ import ch.elca.el4j.services.persistence.hibernate.offlining.util.TotallyGeneric
 /**
  * All client-side synchronization stuff in an extra class as OfflinerClientImpl got too big.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author David Bernhard (DBD)
  */

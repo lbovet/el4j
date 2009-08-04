@@ -33,12 +33,7 @@ import org.springframework.context.annotation.ClassPathScanningCandidateComponen
  * <b>WARNING. All tests must be annotated with @Component to get them to run.</b>
  * <i>REMEMBER TO UPDATE THE COPY IN TESTS-ORACLE TOO ON ANY CHANGE.</i> 
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author David Bernhard (DBD)
  */

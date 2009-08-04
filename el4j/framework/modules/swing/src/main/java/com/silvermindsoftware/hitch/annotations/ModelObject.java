@@ -19,12 +19,7 @@ package com.silvermindsoftware.hitch.annotations;
 import java.lang.annotation.*;
 
 /**
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  */
 @Target({ElementType.FIELD})
 @Documented

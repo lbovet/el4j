@@ -23,12 +23,7 @@ import org.springframework.web.context.ContextLoaderListener;
  * Bootstrap listener to start up the root ModuleWebApplicationContext.
  * Simply delegates to ModuleContextLoader.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * Sample Configuration in web.xml:
  *

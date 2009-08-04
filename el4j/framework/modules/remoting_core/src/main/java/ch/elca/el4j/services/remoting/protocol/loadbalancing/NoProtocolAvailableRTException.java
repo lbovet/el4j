@@ -21,12 +21,7 @@ import ch.elca.el4j.core.exceptions.BaseRTException;
 /**
  * Exception used to notify the user that no more protocols are available.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Stefan Pleisch (SPL)
  */

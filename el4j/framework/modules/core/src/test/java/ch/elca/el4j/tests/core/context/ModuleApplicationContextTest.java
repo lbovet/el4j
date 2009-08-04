@@ -31,12 +31,7 @@ import ch.elca.el4j.core.context.ModuleApplicationContext;
 /**
  * JUnit Test Class for the ModuleApplicationContext.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Raphael Boog (RBO)
  */

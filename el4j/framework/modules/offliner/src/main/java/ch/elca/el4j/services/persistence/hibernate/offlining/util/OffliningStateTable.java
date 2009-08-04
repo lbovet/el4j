@@ -24,12 +24,7 @@ import ch.elca.el4j.services.persistence.hibernate.offlining.impl.UniqueKey;
 /**
  * Table of mappings from local key to offlining state. Used during synchronization to hold temporary states.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author David Bernhard (DBD)
  */

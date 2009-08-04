@@ -25,12 +25,7 @@ import ch.elca.el4j.services.persistence.hibernate.offlining.chunk.UpdateChunk;
 /**
  * Offlining server. This runs on the server and recieves the offlining client's calls.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author David Bernhard (DBD)
  */

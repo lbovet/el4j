@@ -28,12 +28,7 @@ import ch.elca.el4j.tests.core.io.support.helper.Employee;
 /**
  * Tests the order how resources are loaded by the module application context.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Martin Zeltner (MZE)
  */

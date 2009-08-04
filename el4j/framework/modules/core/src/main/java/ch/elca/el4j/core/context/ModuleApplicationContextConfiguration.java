@@ -23,12 +23,7 @@ import org.springframework.context.ApplicationContext;
  * be used to specify how a ModuleApplicationContext should be configured
  * without actually creating the application context.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Alex Mathey (AMA)
  * @author Martin Zeltner (MZE)

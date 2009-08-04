@@ -22,12 +22,7 @@ import cookxml.core.interfaces.NoAdd;
  * This class holds some object and prevents it from being added
  * to the parent.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @param <T>    the type of object to hold
  *

@@ -34,12 +34,7 @@ import ch.elca.el4j.util.objectwrapper.ObjectWrapper;
  * The ObjectCollectingVisitor collects all objects in an object graph and their metadata. It is run locally
  * on object graphs to synchronize; results of one or more such runs form a Chunk for sending to the server.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author David Bernhard (DBD)
  */

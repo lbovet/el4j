@@ -28,12 +28,7 @@ import ch.elca.el4j.services.xmlmerge.Mapper;
 /**
  * Filters out elements and attributes with a specified namespace.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Laurent Bovet (LBO)
  * @author Alex Mathey (AMA)

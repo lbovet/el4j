@@ -37,12 +37,7 @@ import ch.elca.el4j.core.io.ExplicitClassPathResource;
  * This class represents a simplified view of a module (EL4Ant build system
  * unit). It contains its name, the configuration files and the dependencies.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Andreas Bur (ABU)
  */

@@ -26,12 +26,7 @@ import org.springframework.web.context.ContextLoaderServlet;
  * Note that this class has been deprecated for containers implementing
  * Servlet API 2.4 or higher in favour of ModuleContextLoaderListener.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Stefan Wismer (SWI)
  */

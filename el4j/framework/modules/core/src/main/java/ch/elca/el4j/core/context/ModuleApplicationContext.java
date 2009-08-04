@@ -89,11 +89,7 @@ import ch.elca.el4j.core.io.support.ManifestOrderedConfigLocationProvider;
  *
  * @see ModuleWebApplicationContext
  *
- * <script type="text/javascript">printFileStatus
- * ("$URL$",
- *  "$Revision$",
- *  "$Date$",
- *  "$Author$" ); </script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Raphael Boog (RBO)
  * @author Andreas Bur (ABU)

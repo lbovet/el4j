@@ -21,12 +21,7 @@ package ch.elca.el4j.services.exceptionhandler;
  * This exception is thrown if the context of a context exception handler has
  * not been set appropriately.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Andreas Bur (ABU)
  * @see ch.elca.el4j.services.exceptionhandler.ContextExceptionHandlerInterceptor
