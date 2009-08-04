@@ -36,12 +36,7 @@ import ch.elca.el4j.apps.refdb.dom.Reference;
  * This test class tests custom validation of a reference domain
  * object.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Alex Mathey (AMA)
  */

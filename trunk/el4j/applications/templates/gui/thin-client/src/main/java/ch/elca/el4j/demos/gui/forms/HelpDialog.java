@@ -32,12 +32,7 @@ import ch.elca.el4j.services.gui.swing.GUIApplication;
 /**
  * A very simple help dialog just containing a label.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Andreas Rueedlinger (ARR)
  */

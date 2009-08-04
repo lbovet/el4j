@@ -35,12 +35,7 @@ import ch.elca.el4j.services.persistence.generic.dao.DaoRegistry;
  *
  * This is the default implementation of the keyword service.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Alex Mathey (AMA)
  * @author Adrian Moos (AMS)

@@ -40,12 +40,7 @@ import ch.elca.el4j.tests.keyword.AbstractTestCaseBase;
 /**
  * Abstract test case for <code>KeywordService</code>.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Alex Mathey (AMA)
  */

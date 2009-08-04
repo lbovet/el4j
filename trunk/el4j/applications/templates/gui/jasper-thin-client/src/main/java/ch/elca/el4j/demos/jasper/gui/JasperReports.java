@@ -32,12 +32,7 @@ import ch.elca.el4j.demos.jasper.gui.reporting.ReportViewer;
  *
  * See also associated JasperReports.properties file that contains resources.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Fabian Reichlin (FRE)
  */

@@ -23,12 +23,7 @@ import org.slf4j.LoggerFactory;
  *  This class is a dummy class for presentation purposes for the
  *  detailed statistics demo.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author David Stefan (DST)
  */

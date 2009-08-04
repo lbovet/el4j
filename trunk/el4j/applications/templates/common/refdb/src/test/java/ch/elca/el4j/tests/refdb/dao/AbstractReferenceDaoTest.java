@@ -56,12 +56,7 @@ import ch.elca.el4j.tests.refdb.AbstractTestCaseBase;
 /**
  * Abstract test case for the reference dao.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Martin Zeltner (MZE)
  */

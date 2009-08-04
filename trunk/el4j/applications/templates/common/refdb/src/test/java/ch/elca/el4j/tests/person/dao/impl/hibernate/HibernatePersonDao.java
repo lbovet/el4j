@@ -25,12 +25,7 @@ import ch.elca.el4j.tests.person.dom.Person;
  *
  * Implementation of the keyword DAO which is using Hibernate.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Alex Mathey (AMA)
  */

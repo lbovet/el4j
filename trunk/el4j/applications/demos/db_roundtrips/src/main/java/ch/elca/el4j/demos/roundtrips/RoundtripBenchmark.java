@@ -31,12 +31,7 @@ import ch.elca.el4j.services.persistence.generic.dao.impl.DefaultDaoRegistry;
 /**
  * This class reports roundtrip counts for various Hibernate operations.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Stefan Wismer (SWI)
  */

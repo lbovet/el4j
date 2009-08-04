@@ -23,12 +23,7 @@ import ch.elca.el4j.apps.refdb.dom.FormalPublication;
  * This interface represents a DAO for the formal publication domain object.
  * Specific data access operations for this entity can be introduced here.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Alex Mathey (AMA)
  */

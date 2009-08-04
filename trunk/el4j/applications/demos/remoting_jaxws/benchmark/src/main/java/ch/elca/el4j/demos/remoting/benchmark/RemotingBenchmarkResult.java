@@ -20,12 +20,7 @@ package ch.elca.el4j.demos.remoting.benchmark;
 /**
  * This class contains a result set for a benchmark.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Martin Zeltner (MZE)
  * @author Rashid Waraich (RWA)

@@ -27,12 +27,7 @@ import ch.elca.el4j.util.codingsupport.Reject;
  * reference objects which can be of different types, the service layer should
  * be used.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @param <T>
  *            The generic type of the domain class the DAO is responsible for

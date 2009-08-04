@@ -31,12 +31,7 @@ import ch.elca.el4j.services.persistence.hibernate.dao.ConvenienceGenericHiberna
  * sources of information.
  * It defines the methods which are specific to these domain objects.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @param <T>
  *            The generic type of the domain class the DAO is responsible for

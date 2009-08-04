@@ -24,12 +24,7 @@ import ch.elca.el4j.tests.person.dom.Person;
  * This interface represents a DAO for the keyword domain object.
  * It defines the methods which are specific to the keyword domain object.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Alex Mathey (AMA)
  */

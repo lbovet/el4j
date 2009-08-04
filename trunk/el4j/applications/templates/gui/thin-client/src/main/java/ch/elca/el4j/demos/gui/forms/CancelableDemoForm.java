@@ -47,12 +47,7 @@ import net.java.dev.designgridlayout.DesignGridLayout;
  * Adding the ability to save and restore values (simple undo) is simple:
  * Just apply a mixin using <code>addPropertyChangeMixin</code>.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Stefan Wismer (SWI)
  */

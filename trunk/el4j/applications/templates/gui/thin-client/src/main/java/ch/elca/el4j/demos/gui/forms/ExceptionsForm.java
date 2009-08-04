@@ -52,12 +52,7 @@ import cookxml.cookswing.CookSwing;
 /**
  * This form shows all exceptions that occurred.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Stefan Wismer (SWI)
  */

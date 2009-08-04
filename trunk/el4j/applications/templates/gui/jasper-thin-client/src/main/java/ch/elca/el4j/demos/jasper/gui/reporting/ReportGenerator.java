@@ -35,12 +35,7 @@ import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
  * This class is the base class for generating a jasper report. By instantiating
  * this class, a new jasper report will be generated.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Fabian Reichlin (FRE)
  */

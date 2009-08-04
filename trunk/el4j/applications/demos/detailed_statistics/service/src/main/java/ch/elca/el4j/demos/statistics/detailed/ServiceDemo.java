@@ -23,12 +23,7 @@ import ch.elca.el4j.core.context.ModuleApplicationContext;
 /**
  * This class is the service class for the detailed statistics demo.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Fabian Reichlin (FRE)
  * @author David Stefan (DST)

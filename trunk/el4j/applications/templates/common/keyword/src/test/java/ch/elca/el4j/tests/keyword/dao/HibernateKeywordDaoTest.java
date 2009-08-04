@@ -43,12 +43,7 @@ import ch.elca.el4j.services.search.criterias.Order;
  *
  * Test class for <code>HibernateKeywordDao</code>.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Alex Mathey (AMA)
  * @author Philipp Oser (POS)

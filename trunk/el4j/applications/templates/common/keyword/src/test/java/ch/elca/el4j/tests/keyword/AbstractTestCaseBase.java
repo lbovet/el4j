@@ -31,12 +31,7 @@ import ch.elca.el4j.tests.core.AbstractTest;
 /**
  * This class is a base class for tests in module <code>keyword-core</code>.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Martin Zeltner (MZE)
  */

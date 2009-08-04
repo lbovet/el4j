@@ -22,12 +22,7 @@ import ch.elca.el4j.demos.statistics.detailed.DemoA;
  * This class is a dummy implementation for presentation purposes for the
  * detailed statistics demo.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author David Stefan (DST)
  */

@@ -28,12 +28,7 @@ import org.hibernate.search.annotations.Indexed;
  * FormalPublication domain object. This class is a reference and describes a
  * formal publication.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Martin Zeltner (MZE)
  */

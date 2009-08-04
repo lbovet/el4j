@@ -27,12 +27,7 @@ import org.hibernate.search.annotations.Indexed;
  * Link domain object. This class is a reference and describes an internet link
  * (URL).
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Martin Zeltner (MZE)
  */

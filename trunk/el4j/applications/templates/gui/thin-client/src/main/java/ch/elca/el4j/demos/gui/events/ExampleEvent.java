@@ -19,12 +19,7 @@ package ch.elca.el4j.demos.gui.events;
 /**
  * This class represents an example event for EventBus.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Stefan Wismer (SWI)
  */

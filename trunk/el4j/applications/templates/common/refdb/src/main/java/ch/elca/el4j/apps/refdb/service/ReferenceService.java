@@ -32,12 +32,7 @@ import ch.elca.el4j.services.search.QueryObject;
  * This interface provides the business methods which can be used in the
  * presentation layer and which are not already present in the underlying DAOs.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Martin Zeltner (MZE)
  * @author Alex Mathey (AMA)

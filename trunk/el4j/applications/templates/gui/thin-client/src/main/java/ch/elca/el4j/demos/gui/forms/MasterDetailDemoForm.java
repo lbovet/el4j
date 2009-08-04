@@ -61,12 +61,7 @@ import net.java.dev.designgridlayout.DesignGridLayout;
  * binding. Specialized tables like JXTable by swinglabs.org don't work
  * properly!
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Stefan Wismer (SWI)
  */

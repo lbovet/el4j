@@ -26,12 +26,7 @@ import ch.elca.el4j.apps.refdb.dom.Annotation;
  *
  * This interface represents a DAO for the annotation domain object.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Alex Mathey (AMA)
  */

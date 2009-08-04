@@ -69,12 +69,7 @@ import net.java.dev.designgridlayout.DesignGridLayout;
  * <code>CustomValidationResponder</code> shows the validation messages on a
  * label on the form (see {@link CustomValidationResponder}).
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Stefan Wismer (SWI)
  */

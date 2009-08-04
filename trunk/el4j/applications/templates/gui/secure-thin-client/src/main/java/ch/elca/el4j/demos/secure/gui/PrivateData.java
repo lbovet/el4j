@@ -26,12 +26,7 @@ import org.springframework.security.annotation.Secured;
  * This class is used to test access restriction using
  * acegi's '@Secured' annotation.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Stefan Wismer (SWI)
  */

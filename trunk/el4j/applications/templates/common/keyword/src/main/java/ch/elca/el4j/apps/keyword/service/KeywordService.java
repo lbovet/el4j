@@ -27,12 +27,7 @@ import ch.elca.el4j.core.transaction.annotations.RollbackConstraint;
  * This interface provides the business methods which can be used in the
  * presentation layer and which are not already present in the underlying DAO.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Martin Zeltner (MZE)
  * @author Alex Mathey (AMA)

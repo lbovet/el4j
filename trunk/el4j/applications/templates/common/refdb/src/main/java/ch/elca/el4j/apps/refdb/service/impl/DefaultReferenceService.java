@@ -51,12 +51,7 @@ import ch.elca.el4j.util.codingsupport.Reject;
 /**
  * This is the default implementation of the reference service.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Martin Zeltner (MZE)
  * @author Alex Mathey (AMA)

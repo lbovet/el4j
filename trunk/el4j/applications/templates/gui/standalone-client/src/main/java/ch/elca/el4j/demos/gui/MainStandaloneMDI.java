@@ -31,12 +31,7 @@ import ch.elca.el4j.services.gui.swing.splash.ImageSplashScreen;
 /**
  * This class is used to start the Swing demo application in standalone mode.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Stefan Wismer (SWI)
  */

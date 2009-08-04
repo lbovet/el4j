@@ -20,12 +20,7 @@ package ch.elca.el4j.tests.keyword.service;
  *
  * Hibernate-specific test class for <code>KeywordService</code>.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Alex Mathey (AMA)
  */
