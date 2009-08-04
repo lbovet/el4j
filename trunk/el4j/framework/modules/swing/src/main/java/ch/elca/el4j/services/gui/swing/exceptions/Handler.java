@@ -21,12 +21,7 @@ package ch.elca.el4j.services.gui.swing.exceptions;
  * contain the logic for each of its 2 concerns: (1) recognizing Exceptions
  * it can handle and (2) handling those Exceptions appropriately.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Stefan Wismer (SWI)
  */

@@ -27,12 +27,7 @@ import ch.elca.el4j.services.security.encryption.RSACipher;
  * Provider for testing reasons. This class throws a BadCredentialsException in
  * case the username is not equal to the password.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Raphael Boog (RBO)
  */

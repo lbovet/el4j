@@ -24,12 +24,7 @@ import java.lang.reflect.Field;
  * This container is used in the {@link AbstractIdentityFixer} to remember which collections has to be
  * replaced in the 2-way merging.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Andreas Rueedlinger (ARR)
  */

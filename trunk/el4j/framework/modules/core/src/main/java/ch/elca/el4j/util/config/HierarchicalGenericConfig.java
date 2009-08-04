@@ -32,12 +32,7 @@ import java.util.Properties;
  * where you can use <code>getSubConfig("ch.elca.el4j")</code>.
  *
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Stefan Wismer (SWI)
  */

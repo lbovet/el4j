@@ -21,12 +21,7 @@ import java.util.regex.Pattern;
 /**
  * This class represents a find {@link Pattern} together with its replacement String.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Stefan Wismer (SWI)
  */

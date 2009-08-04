@@ -21,12 +21,7 @@ import java.lang.annotation.Target;
  * when holding a particular lock, which may be a built-in (synchronization) lock,
  * or may be an explicit java.util.concurrent.Lock.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * The argument determines which lock guards the annotated field or method:
  * <ul>

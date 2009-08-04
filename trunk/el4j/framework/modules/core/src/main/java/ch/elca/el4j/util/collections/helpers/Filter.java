@@ -21,12 +21,7 @@ package ch.elca.el4j.util.collections.helpers;
  *
  * A generified version of Commons Collection's Predicate.
  *
- *  <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @param <T> the type of objects that can be filtered by this filter.
  * @author Adrian Moos (AMS)

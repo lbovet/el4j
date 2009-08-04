@@ -30,12 +30,7 @@ import java.util.*;
  * This class holds all of the meta data gathered from the different
  * configuration mediums (annotations, BinderConfig).
  * 
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  */
 public class FormMeta {
 

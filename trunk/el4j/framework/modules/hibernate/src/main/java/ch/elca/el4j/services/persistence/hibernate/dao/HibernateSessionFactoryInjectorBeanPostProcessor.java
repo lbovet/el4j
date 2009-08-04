@@ -37,12 +37,7 @@ import ch.elca.el4j.util.codingsupport.Reject;
  *   by using the default name {@link SESSION_FACTORY_BEAN_DEFAULT_NAME} or
  *   via its setter method.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Philipp Oser (POS)
  */

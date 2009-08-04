@@ -28,12 +28,7 @@ import org.springframework.util.Assert;
  * only a path that can point to multiple resources. By using the given url too
  * this resource explicitly points to one resource.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Martin Zeltner (MZE)
  */

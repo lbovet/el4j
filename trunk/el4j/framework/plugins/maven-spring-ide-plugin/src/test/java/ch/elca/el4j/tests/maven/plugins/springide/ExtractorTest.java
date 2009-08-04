@@ -26,12 +26,7 @@ import junit.framework.TestCase;
 /**
  * Tests for extracting configuration from files.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author David Bernhard (DBD)
  */

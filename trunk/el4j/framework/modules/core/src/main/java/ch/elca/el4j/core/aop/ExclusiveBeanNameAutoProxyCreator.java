@@ -55,12 +55,7 @@ import org.springframework.util.StringUtils;
  *        proxies hide the fact that certain beans should be intercepted).
  *  </ul> 
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Andreas Bur (ABU)
  * @see org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator

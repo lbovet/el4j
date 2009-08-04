@@ -24,12 +24,7 @@ import org.apache.log4j.Logger;
 /**
  * Utility to make {@link GridBagConstraints} code nicer.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author David Bernhard (DBD)
  */

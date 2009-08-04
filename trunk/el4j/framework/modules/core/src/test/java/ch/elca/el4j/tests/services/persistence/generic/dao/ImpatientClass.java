@@ -28,12 +28,7 @@ import ch.elca.el4j.services.persistence.generic.dao.GenericDao;
 /**
  * This impatient class tries to access the daoRegistry before the Spring context is initialized.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Stefan Wismer (SWI)
  */

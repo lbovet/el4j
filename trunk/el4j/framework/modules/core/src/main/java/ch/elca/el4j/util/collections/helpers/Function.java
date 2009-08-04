@@ -20,12 +20,7 @@ package ch.elca.el4j.util.collections.helpers;
  * A function.
  *
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @param <D> the function's domain
  * @param <R> the function's range

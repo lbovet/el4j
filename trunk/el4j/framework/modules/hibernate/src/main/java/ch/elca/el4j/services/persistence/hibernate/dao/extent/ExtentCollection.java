@@ -31,12 +31,7 @@ import static ch.elca.el4j.services.persistence.hibernate.dao.extent.ExtentEntit
  *  </ul>
  * For further details, see {@link DataExtent}. 
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Andreas Rueedlinger (ARR)
  */

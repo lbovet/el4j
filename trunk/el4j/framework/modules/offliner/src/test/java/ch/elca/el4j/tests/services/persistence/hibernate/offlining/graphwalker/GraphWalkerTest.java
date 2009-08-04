@@ -34,12 +34,7 @@ import junit.framework.TestCase;
 /**
  * Graph walker test.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author David Bernhard (DBD)
  */

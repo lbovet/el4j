@@ -23,12 +23,7 @@ import ch.elca.el4j.tests.gui.swing.ValueHolder;
 /**
  * Grandparent class containing actions.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Stefan Wismer (SWI)
  */

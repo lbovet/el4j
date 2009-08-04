@@ -25,12 +25,7 @@ import ch.elca.el4j.services.monitoring.jmx.display.HtmlTabulator;
 /**
  * JUnit tests for HtmlTabulator.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author David Bernhard (DBD)
  */

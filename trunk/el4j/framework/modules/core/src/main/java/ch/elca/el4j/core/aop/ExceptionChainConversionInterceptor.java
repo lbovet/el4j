@@ -38,12 +38,7 @@ import org.slf4j.LoggerFactory;
  *
  * This class was contributed to EL4J by Reto Fankhauser.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Reto Fankhauser (RFA)
  */

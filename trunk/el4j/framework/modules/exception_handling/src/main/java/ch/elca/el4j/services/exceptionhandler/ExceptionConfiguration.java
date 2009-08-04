@@ -26,12 +26,7 @@ import ch.elca.el4j.services.exceptionhandler.handler.ExceptionHandler;
  * is able to handle a given exception that was thrown in a given method
  * invocation.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Andreas Bur (ABU)
  */

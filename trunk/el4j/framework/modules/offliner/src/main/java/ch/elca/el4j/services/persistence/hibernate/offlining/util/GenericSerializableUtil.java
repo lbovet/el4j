@@ -31,12 +31,7 @@ import java.io.Serializable;
  * Due to java generics limitations we rely on a completely unchecked cast here.
  * "If you must do something ugly, put it in a class" ~Bruce Eckels
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author David Bernhard (DBD)
  */
