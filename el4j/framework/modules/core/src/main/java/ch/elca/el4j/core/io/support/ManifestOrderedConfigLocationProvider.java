@@ -38,12 +38,7 @@ import ch.elca.el4j.core.exceptions.BaseRTException;
  * This configuration location provider extracts module dependency information
  * from manifest files.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Andreas Bur (ABU)
  */

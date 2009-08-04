@@ -25,12 +25,7 @@ import ch.elca.el4j.services.remoting.protocol.loadbalancing.policy.AbstractPoli
  *
  * Defines the configuration parameters for {@link LoadBalancingProtocol}.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Stefan Pleisch (SPL)
  */

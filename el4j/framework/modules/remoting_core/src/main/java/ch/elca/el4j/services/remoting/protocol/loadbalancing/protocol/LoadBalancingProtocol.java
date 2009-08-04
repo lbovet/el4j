@@ -40,8 +40,7 @@ import ch.elca.el4j.services.remoting.protocol.loadbalancing.policy.RoundRobinPo
  * the load balancer behaves similarly to any protocol instance. In particular,
  * connection exceptions are escalated to the user.
  *
- * <script type="text/javascript">printFileStatus ("$URL$", "$Revision$",
- * "$Date$", "$Author$" );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Stefan Pleisch (SPL)
  * @see ch.elca.el4j.services.remoting.protocol.loadbalancing.policy.AbstractPolicy

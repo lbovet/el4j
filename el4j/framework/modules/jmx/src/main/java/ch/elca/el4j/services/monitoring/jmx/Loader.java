@@ -52,12 +52,7 @@ import ch.elca.el4j.util.codingsupport.Reject;
  * Context, then it will set up the whole JMX world by creating the proxies and
  * setting the corresponding references.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Raphael Boog (RBO)
  * @author Rashid Waraich (RWA)

@@ -26,12 +26,7 @@ import java.util.Set;
  *
  * This class is a simple, generic FIFO Cache restricted to a certain size.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @param <K> Generic type of Key.
  * @param <E> Generic type of Element.

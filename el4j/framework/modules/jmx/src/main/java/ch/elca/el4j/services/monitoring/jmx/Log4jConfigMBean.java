@@ -22,12 +22,7 @@ import org.apache.log4j.Level;
 /**
  * The interface of the logging proxy class, for setting logging properties via JMX.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Rashid Waraich (RWA)
  */

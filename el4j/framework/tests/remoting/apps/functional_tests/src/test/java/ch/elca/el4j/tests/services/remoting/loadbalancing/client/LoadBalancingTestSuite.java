@@ -28,12 +28,7 @@ import ch.elca.el4j.tests.services.remoting.loadbalancing.client.roundrobin.LbRo
  * Groups the test cases in this artifact into a test suite in order to ensure
  * that they are executed in a certain order.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Stefan Pleisch (SPL)
  */

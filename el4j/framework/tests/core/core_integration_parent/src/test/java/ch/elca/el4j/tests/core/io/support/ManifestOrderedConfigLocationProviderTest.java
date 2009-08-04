@@ -27,12 +27,7 @@ import ch.elca.el4j.core.io.support.ManifestOrderedConfigLocationProvider;
  * This test checks whether the set of given configuration files is found
  * by the configuration location provider.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Andreas Bur (ABU)
  */

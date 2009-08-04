@@ -107,12 +107,7 @@ import ch.elca.el4j.util.codingsupport.Reject;
  *we get "A piece of rock called home.". If we look up "Mars.poetic" instead,
  *we get "A piece of rock called Mars."
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Adrian Moos (AMS)
  */

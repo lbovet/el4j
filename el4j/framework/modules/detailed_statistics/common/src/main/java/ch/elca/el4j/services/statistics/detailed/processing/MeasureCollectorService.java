@@ -45,12 +45,7 @@ import ch.elca.el4j.services.statistics.detailed.MeasureItem;
  * Original authors: YMA,DBA.
  * Leaf2 package name: ch.elca.leaf.services.measuring
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Rashid Waraich (RWA)
  *

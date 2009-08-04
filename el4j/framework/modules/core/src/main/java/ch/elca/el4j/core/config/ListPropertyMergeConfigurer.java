@@ -61,12 +61,7 @@ import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
  * possible pattern for defining map entries in a properties file is (tbd):
  * "bean_name.property_name = key1=value1, key2=value2".
  *
- * <script type="text/javascript">printFileStatus
- * ("$URL$",
- *  "$Revision$",
- *  "$Date$",
- *  "$Author$" );
- * </script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Raphael Boog (RBO)
  * @author Martin Zeltner (MZE)

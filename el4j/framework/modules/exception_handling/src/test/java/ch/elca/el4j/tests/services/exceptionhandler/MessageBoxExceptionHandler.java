@@ -28,12 +28,7 @@ import ch.elca.el4j.services.exceptionhandler.handler.AbstractExceptionHandler;
  * This simple exception handler logs exception messages in a dialogue,
  * printed to the standard out.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Andreas Bur (ABU)
  */
