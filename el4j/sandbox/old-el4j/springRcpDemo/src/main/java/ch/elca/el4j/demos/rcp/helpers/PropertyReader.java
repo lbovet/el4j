@@ -28,12 +28,7 @@ import ch.elca.el4j.util.env.EnvPropertiesUtils;
  * This class reads the properties from the env.properties file and provides
  * lists of the properties.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author David Stefan (DST)
  */

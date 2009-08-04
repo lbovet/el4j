@@ -27,12 +27,7 @@ import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
 /**
  * This class is a value object to describe a type mapping.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Martin Zeltner (MZE)
  */

@@ -35,12 +35,7 @@ import ch.elca.el4j.services.remoting.protocol.xfire.XFireJaxbContextOutHandler;
  * It is intended to be used together with the {@link JaxbServiceFactory} or the
  * {@link JaxbServiceFactoryWithoutAnnotations}.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Philippe Jacot (PJA)
  */

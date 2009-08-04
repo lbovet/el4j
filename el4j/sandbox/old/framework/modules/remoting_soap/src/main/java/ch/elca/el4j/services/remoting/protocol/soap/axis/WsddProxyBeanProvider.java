@@ -25,12 +25,7 @@ import org.apache.axis.deployment.wsdd.WSDDService;
 /**
  * This class is used by axis to get an instance of the proxy bean provider.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Martin Zeltner (MZE)
  */

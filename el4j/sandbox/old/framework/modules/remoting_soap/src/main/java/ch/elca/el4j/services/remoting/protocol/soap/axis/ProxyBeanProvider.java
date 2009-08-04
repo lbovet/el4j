@@ -31,12 +31,7 @@ import ch.elca.el4j.core.exceptions.BaseRTException;
 /**
  * This provider is used in axis to be able to wrap spring beans.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Martin Zeltner (MZE)
  */

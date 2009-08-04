@@ -36,12 +36,7 @@ import ch.elca.el4j.core.contextpassing.ImplicitContextPassingRegistry;
  * This class is a XFire handler that takes care of appending the implicit
  * context to the Soap header.
  *
- * <script type="text/javascript">printFileStatus
- * ("$URL$",
- *  "$Revision$",
- *  "$Date$",
- *  "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Philippe Jacot (PJA)
  */

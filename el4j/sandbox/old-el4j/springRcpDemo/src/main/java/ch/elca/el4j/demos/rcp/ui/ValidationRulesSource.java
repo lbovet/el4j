@@ -37,12 +37,7 @@ import ch.elca.el4j.demos.rcp.helpers.HibernateConstraint;
  * rules source for rules that apply to the class of a form object 
  * (in this case, that's objects of type {@link Contact}.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @param <T> domain type
  * @author David Stefan (DST)

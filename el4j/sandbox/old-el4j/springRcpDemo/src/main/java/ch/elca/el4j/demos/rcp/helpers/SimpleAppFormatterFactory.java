@@ -39,12 +39,7 @@ import org.springframework.util.StringUtils;
  * Mostly taken from Spring RCP v.0.3 by Keith Donald
  * 
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author David Stefan (DST)
  */

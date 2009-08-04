@@ -36,12 +36,7 @@ import ch.elca.el4j.core.contextpassing.ImplicitContextPassingRegistry;
  *
  * This class is an XFire Handler that takes care of retrieving the context.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Philippe Jacot (PJA)
  */

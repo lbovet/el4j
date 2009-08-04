@@ -20,12 +20,7 @@ package ch.elca.el4j.services.remoting.protocol.ejb;
 /**
  * This class creates stateless EJB remote proxies.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Andreas Bur (ABU)
  */

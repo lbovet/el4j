@@ -29,12 +29,7 @@ import org.apache.commons.logging.LogFactory;
 /**
  * This class creates stateful EJB remote proxies.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Andreas Bur (ABU)
  */

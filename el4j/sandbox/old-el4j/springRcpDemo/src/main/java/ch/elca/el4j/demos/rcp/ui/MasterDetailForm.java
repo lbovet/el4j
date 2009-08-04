@@ -43,12 +43,7 @@ import ch.elca.el4j.services.persistence.generic.dao.GenericDao;
  * It gets the domain class from the view and uses the ReflectionHelper to get
  * the needed knowledge about the domain class.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @param <T> Domain class we'd like to display
  * @author David Stefan (DST)

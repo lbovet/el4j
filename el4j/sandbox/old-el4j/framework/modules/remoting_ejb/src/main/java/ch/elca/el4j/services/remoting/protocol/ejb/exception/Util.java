@@ -30,12 +30,7 @@ import java.util.Vector;
  * Various utility methods.
  * <p>
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  **/
 public class Util {
     ///////////////////// time and date stamp method //////////////

@@ -60,12 +60,7 @@ import ch.elca.el4j.services.persistence.generic.dao.GenericDao;
  * registered as a listener for application events.</li>
  * </ul>
  * 
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  * 
  * @param <T> Class type of Domain Object we want to display
  * @author David Stefan (DST)

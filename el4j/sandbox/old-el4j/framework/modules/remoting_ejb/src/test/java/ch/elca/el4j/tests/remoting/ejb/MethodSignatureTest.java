@@ -30,12 +30,7 @@ import junit.framework.TestCase;
  * Tests the method signature implementation used in the EJB session bean
  * generator.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Andreas Bur (ABU)
  */
