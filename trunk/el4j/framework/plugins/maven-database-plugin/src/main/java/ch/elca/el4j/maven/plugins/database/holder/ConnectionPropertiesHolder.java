@@ -110,8 +110,7 @@ public class ConnectionPropertiesHolder extends DatabaseNameHolder {
 	public void loadConnectionProperties(String sourceDir) {
 		if (sourceDir != null) {
 			String source = replaceDbName(sourceDir);
-			if (!source.startsWith("classpath:")
-				&& !source.startsWith("classpath*:")) {
+			if (!source.startsWith("file:/") && !source.startsWith("classpath:") && !source.startsWith("classpath*:")) {
 				source = "classpath*:" + source;
 			}
 			try {
