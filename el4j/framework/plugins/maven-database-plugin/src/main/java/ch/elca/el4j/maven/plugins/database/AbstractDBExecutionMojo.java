@@ -16,7 +16,9 @@
  */
 package ch.elca.el4j.maven.plugins.database;
 
+import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.SQLException;
@@ -66,11 +68,12 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
 	 * Path to properties file where connection properties (username, password
 	 * and url)can be found.
 	 *
-	 * For this property, no prefix <code>classpath*:</code> is needed.
+	 * The path can be specified relative to the current directory. In this case
+	 * it has to start with './' or '../' otherwise it is assumed to be
+	 * a classpath resource. For classpath resources, no prefix
+	 * <code>classpath*:</code> is needed.
 	 * Moreover it can include a generic <code>{db.name}</code> if a
 	 * <code>env.properties</code> file is provided (in the project dir).
-	 *
-	 *
 	 *
 	 * @parameter expression="${db.connectionPropertiesSource}"
 	 */
@@ -201,6 +204,14 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
 		if (StringUtils.hasText(connectionPropertiesSource)) {
 			getLog().info("Connection properties defined via pom parameter "
 				+ "'connectionPropertiesSource':" + connectionPropertiesSource);
+			if (connectionPropertiesSource.startsWith("./") || connectionPropertiesSource.startsWith("../")) {
+				try {
+					connectionPropertiesSource = new File(connectionPropertiesSource).toURI().toURL().toString();
+				} catch (MalformedURLException e) {
+					// do not change connectionPropertiesSource
+					getLog().warn("Could not create URL for relative path " + connectionPropertiesSource);
+				}
+			}
 		} else if (tryLoadingDatabasePropertiesViaEnvironment()) {
 			getLog().info("Connection properties found via the environment: "
 				+ connectionPropertiesSource);
