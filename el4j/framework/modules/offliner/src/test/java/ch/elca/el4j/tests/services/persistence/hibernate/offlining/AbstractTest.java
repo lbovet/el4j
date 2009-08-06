@@ -25,6 +25,12 @@ import java.util.Map;
 import org.hibernate.criterion.CriteriaSpecification;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
+import org.testng.annotations.AfterSuite;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
+
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
 
 import ch.elca.el4j.services.persistence.hibernate.dao.ConvenienceGenericHibernateDao;
 import ch.elca.el4j.services.persistence.hibernate.offlining.Conflict;
@@ -33,8 +39,6 @@ import ch.elca.el4j.services.persistence.hibernate.offlining.chunk.ChunkingStrat
 import ch.elca.el4j.tests.services.persistence.hibernate.offlining.dom.Person;
 import ch.elca.el4j.tests.services.persistence.hibernate.offlining.dom.SimplePerson;
 
-import junit.framework.TestCase;
-
 /**
  * Base class of tests. 
  *
@@ -42,23 +46,31 @@ import junit.framework.TestCase;
  *
  * @author David Bernhard (DBD)
  */
-public abstract class AbstractTest extends TestCase {
+@Test
+public abstract class AbstractTest {
 
 	/** The offliner. */
 	protected Offliner m_offliner;
 	
 	/**
-	 * Set up the offliner.
+	 * Set up the offliner tests.
 	 */
+	@BeforeMethod
 	public void setUp() {
-		// Hack to load the offliner, context etc. ONCE
 		TestRunOnce once = new TestRunOnce(getStrategy());
 		m_offliner = once.getOffliner();
-		
 		m_offliner.setOnline(true);
 		assertTrue(m_offliner.isOnline());
 		
 		clearAll();
+	}
+	
+	/**
+	 * Shutdown the offliner tests.
+	 */
+	@AfterSuite
+	protected void tearDown() {
+		TestRunOnce.shutdown();
 	}
 
 	/**
@@ -233,6 +245,7 @@ public abstract class AbstractTest extends TestCase {
 	/**
 	 * @return The SimplePerson DAO.
 	 */
+	@SuppressWarnings("unchecked")
 	protected ConvenienceGenericHibernateDao<SimplePerson, Serializable>
 	getSimplePersonDao() {
 		return (ConvenienceGenericHibernateDao<SimplePerson, Serializable>)
@@ -242,6 +255,7 @@ public abstract class AbstractTest extends TestCase {
 	/**
 	 * @return The Person DAO.
 	 */
+	@SuppressWarnings("unchecked")
 	protected ConvenienceGenericHibernateDao<Person, Serializable>
 	getPersonDao() {
 		return (ConvenienceGenericHibernateDao<Person, Serializable>)

@@ -20,7 +20,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.stereotype.Component;
+import static org.testng.Assert.*;
 
 import ch.elca.el4j.services.persistence.hibernate.offlining.Conflict;
 import ch.elca.el4j.services.persistence.hibernate.offlining.chunk.AllStrategyImpl;
@@ -37,7 +37,6 @@ import ch.elca.el4j.tests.services.persistence.hibernate.offlining.dom.SimplePer
  *
  * @author David Bernhard (DBD)
  */
-@Component
 public class StrategyIndependentTest extends AbstractTest {
 
 	/**

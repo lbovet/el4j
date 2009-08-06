@@ -24,6 +24,8 @@ import org.hibernate.criterion.CriteriaSpecification;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 
+import static org.testng.Assert.*;
+
 import ch.elca.el4j.services.persistence.generic.dao.GenericDao;
 import ch.elca.el4j.services.persistence.hibernate.dao.ConvenienceGenericHibernateDao;
 import ch.elca.el4j.services.persistence.hibernate.offlining.Conflict;
