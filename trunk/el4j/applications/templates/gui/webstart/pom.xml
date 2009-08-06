@@ -60,6 +60,14 @@
 									<version>${version.application-refdb}</version>
 									<mainClass>ch.elca.el4j.demos.gui.MainStandaloneDocking</mainClass>
 								</jarResource>
+								<!-- workaround for jdk bug 6533653 (webstarts can't handle jar with no real entries (jar of empty dir)) -->
+								<!-- http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6533653 -->
+								<jarResource>
+									<groupId>ch.elca.el4j.modules</groupId>
+									<artifactId>module-database</artifactId>
+									<version>${version.module-database}</version>
+									<includeInJnlp>false</includeInJnlp>
+								</jarResource>
 							</jarResources>
 						</jnlpFile>
 					</jnlpFiles>
