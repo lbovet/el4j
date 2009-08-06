@@ -22,15 +22,16 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
-import org.springframework.stereotype.Component;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
+
+import static org.testng.Assert.assertEquals;
 
 import ch.elca.el4j.services.persistence.hibernate.offlining.graphwalker.GraphWalker;
 import ch.elca.el4j.services.persistence.hibernate.offlining.graphwalker.visitors.RootFindingVisitor;
 import ch.elca.el4j.services.persistence.hibernate.offlining.impl.UniqueKey;
 import ch.elca.el4j.services.persistence.hibernate.offlining.objectwrapper.UniqueKeyed;
 import ch.elca.el4j.util.objectwrapper.ObjectWrapper;
-
-import junit.framework.TestCase;
 
 /**
  * Test of root finder.
@@ -39,8 +40,8 @@ import junit.framework.TestCase;
  *
  * @author David Bernhard (DBD)
  */
-@Component
-public class RootFinderTest extends TestCase {
+@Test
+public class RootFinderTest {
 
 	/** The test object. */
 	private RootFindingVisitor m_visitor;
@@ -54,6 +55,7 @@ public class RootFinderTest extends TestCase {
 	/**
 	 * Set up the root finder. 
 	 */
+	@BeforeMethod
 	public void setUp() {
 		m_wrapper = new ObjectWrapper();
 		// We don't need to register any wrappers because the LinkedObject class implements them itself.

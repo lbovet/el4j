@@ -19,8 +19,6 @@ package ch.elca.el4j.tests.services.persistence.hibernate.offlining;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import org.springframework.context.ApplicationContext;
-
 import ch.elca.el4j.core.context.ModuleApplicationContext;
 import ch.elca.el4j.services.persistence.generic.dao.DaoRegistry;
 import ch.elca.el4j.services.persistence.hibernate.offlining.Offliner;
@@ -42,7 +40,7 @@ import ch.elca.el4j.util.objectwrapper.ObjectWrapper;
 public class TestRunOnce {
 
 	/** The local application context. */
-	private static ApplicationContext s_localContext;
+	private static ModuleApplicationContext s_localContext;
 	
 	/** The offliner. */
 	private static Offliner s_offliner;
@@ -92,5 +90,12 @@ public class TestRunOnce {
 	public Offliner getOffliner() {
 		return s_offliner;
 	}
-		
+	
+	/**
+	 * Shutdown the context.
+	 */
+	public static void shutdown() {
+		s_localContext.close();
+	}
+	
 }

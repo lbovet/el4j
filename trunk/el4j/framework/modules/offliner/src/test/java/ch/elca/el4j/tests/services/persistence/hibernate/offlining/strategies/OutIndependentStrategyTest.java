@@ -19,8 +19,6 @@ package ch.elca.el4j.tests.services.persistence.hibernate.offlining.strategies;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import org.springframework.stereotype.Component;
-
 import ch.elca.el4j.services.persistence.hibernate.offlining.chunk.AllStrategyImpl;
 import ch.elca.el4j.services.persistence.hibernate.offlining.chunk.ChunkingStrategyImpl;
 import ch.elca.el4j.services.persistence.hibernate.offlining.chunk.OutIndependentStrategyImpl;
@@ -36,7 +34,6 @@ import ch.elca.el4j.tests.services.persistence.hibernate.offlining.dom.SimplePer
  *
  * @author David Bernhard (DBD)
  */
-@Component
 public class OutIndependentStrategyTest extends AbstractStrategyDependentTests {
 
 	/** {@inheritDoc} */

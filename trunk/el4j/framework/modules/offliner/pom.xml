@@ -46,6 +46,13 @@
 			<groupId>ch.elca.el4j.modules</groupId>
 			<artifactId>module-remoting_core</artifactId>
 		</dependency>
+		
+		<dependency>
+			<groupId>org.testng</groupId>
+			<artifactId>testng</artifactId>
+			<scope>test</scope>
+			<classifier>jdk15</classifier>
+		</dependency>
 
 		<dependency>
 			<!-- Dependency to database-plugin to use it's DerbyNetworkServerStarter. -->

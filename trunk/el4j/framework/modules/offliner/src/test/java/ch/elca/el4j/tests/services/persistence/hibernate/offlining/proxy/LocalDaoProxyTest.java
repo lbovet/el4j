@@ -21,7 +21,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.stereotype.Component;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
+
+import static org.testng.Assert.assertTrue;
+import static org.testng.Assert.fail;
 
 import ch.elca.el4j.services.persistence.generic.dao.GenericDao;
 import ch.elca.el4j.services.persistence.hibernate.dao.ConvenienceGenericHibernateDao;
@@ -32,8 +36,6 @@ import ch.elca.el4j.services.persistence.hibernate.offlining.util.LocalDaoProxy;
 import ch.elca.el4j.tests.services.persistence.hibernate.offlining.notifications.Notification;
 import ch.elca.el4j.tests.services.persistence.hibernate.offlining.notifications.NotificationProcessor;
 
-import junit.framework.TestCase;
-
 /**
  * Tests for the local dao proxy.
  *
@@ -41,8 +43,8 @@ import junit.framework.TestCase;
  *
  * @author David Bernhard (DBD)
  */
-@Component
-public class LocalDaoProxyTest extends TestCase {
+@Test
+public class LocalDaoProxyTest {
 
 	/** Simulates a offliner. */
 	private Offliner m_offliner;
@@ -55,6 +57,7 @@ public class LocalDaoProxyTest extends TestCase {
 	
 	/** Set up the test objects. */
 	@SuppressWarnings("unchecked")
+	@BeforeMethod
 	public void setUp() {
 		m_offliner = new OfflinerStub();
 		m_processor = new NotificationProcessor();
