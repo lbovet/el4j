@@ -79,7 +79,7 @@
 		<module name="LineLength">
 			<property name="severity" value="error"/>
 			<property name="max" value="120"/>
-			<property name="ignorePattern" value="^( *\* *[^ ]+)$|^( \* *\(.\$URL: [^$]*\$., ?)$|^(import [^ ]+)$|^( *\* *@[^ ]+ [^ ]+)$|^ \* \d\d.\d\d.\d{2,4}[ ]+[a-zA-Z]{3}[ ]+[a-zA-Z0-9 \./\(\)]+$|^ \* EL4J, the Enterprise Library for Java, complementing Spring http://el4j\.sf\.net$"/>
+			<property name="ignorePattern" value="^( *\* *[^ ]+)$|^( \* *@svnLink .*)$|^(import [^ ]+)$|^( *\* *@[^ ]+ [^ ]+)$|^ \* \d\d.\d\d.\d{2,4}[ ]+[a-zA-Z]{3}[ ]+[a-zA-Z0-9 \./\(\)]+$|^ \* EL4J, the Enterprise Library for Java, complementing Spring http://el4j\.sf\.net$"/>
 		</module>
 		<module name="MethodLength">
 			<property name="severity" value="error"/>
