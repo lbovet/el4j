@@ -17,7 +17,9 @@
 package ch.elca.el4j.services.remoting.protocol;
 
 import java.lang.reflect.Method;
+import java.util.Map;
 
+import javax.xml.ws.BindingProvider;
 import javax.xml.ws.Service;
 
 import org.jvnet.jax_ws_commons.spring.SpringService;
@@ -64,7 +66,7 @@ public class Jaxws extends AbstractInetSocketAddressWebProtocol {
 		adaptExporterService(service);
 		
 		SpringBinding binding = new SpringBinding();
-		binding.setUrl(generateUrl(exporterBean));
+		binding.setUrl("/" + exporterBean.getServiceName());
 		try {
 			binding.setService(service.getObject());
 		} catch (Exception e) {
@@ -87,7 +89,7 @@ public class Jaxws extends AbstractInetSocketAddressWebProtocol {
 		
 		try {
 			Class wsServiceClass;
-			String methodName;
+			String portName;
 			
 			ProtocolSpecificConfiguration cfg
 				= proxyBean.getProtocolSpecificConfiguration();
@@ -97,11 +99,11 @@ public class Jaxws extends AbstractInetSocketAddressWebProtocol {
 				
 				// use wsimport-generated classes directly (no dynamic proxies)
 				wsServiceClass = jaxWsConfig.getServiceImplementation();
-				methodName = "get" + serviceInterface.getSimpleName();
+				portName = "get" + serviceInterface.getSimpleName();
 			} else {
 				// use generated classes directly (no dynamic proxies)
 				wsServiceClass = Class.forName(serviceName + "Service");
-				methodName = "get" + serviceInterface.getSimpleName() + "Port";
+				portName = "get" + serviceInterface.getSimpleName() + "Port";
 			}
 			
 			Service clientService = (Service) wsServiceClass.newInstance();
@@ -109,9 +111,16 @@ public class Jaxws extends AbstractInetSocketAddressWebProtocol {
 			// give potential subclasses the chance to adapt the service
 			adaptProxyService(clientService);
 			
-			Method getter = wsServiceClass.getMethod(methodName);
+			Method portGetter = wsServiceClass.getMethod(portName);
+			Object port = portGetter.invoke(clientService);
 
-			createdProxy = getter.invoke(clientService);
+			// overwrite endpoint address
+			BindingProvider bindingProvider = (BindingProvider) port;
+			Map<String, Object> context = bindingProvider.getRequestContext();
+			
+			context.put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, generateUrl(proxyBean));
+			
+			createdProxy = port;
 		} catch (Exception e) {
 			CoreNotificationHelper.notifyMisconfiguration(
 				"Could not create JAX-WS binding for "
@@ -131,8 +140,16 @@ public class Jaxws extends AbstractInetSocketAddressWebProtocol {
 	/** {@inheritDoc} */
 	@Override
 	public String generateUrl(AbstractRemotingBase remoteBase) {
-		// ATTENTION: The complete url is defined manually in the wsdl
-		return "/" + remoteBase.getServiceName();
+		StringBuffer sb = new StringBuffer();
+		sb.append("http://");
+		sb.append(getServiceHost());
+		sb.append(":");
+		sb.append(getServicePort());
+		sb.append("/");
+		sb.append(getContextPath());
+		sb.append("/");
+		sb.append(remoteBase.getServiceName());
+		return sb.toString();
 	}
 
 	/** {@inheritDoc} */
