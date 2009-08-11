@@ -305,7 +305,7 @@
 		</module>
 		<module name="RequiredRegexp">
 			<property name="severity" value="error"/>
-			<property name="format" value="printFileStatus"/>
+			<property name="format" value="@svnLink"/>
 		</module>
 	</module>
 </module>
