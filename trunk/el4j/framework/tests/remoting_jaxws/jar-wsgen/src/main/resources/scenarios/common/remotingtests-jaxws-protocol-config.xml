@@ -10,15 +10,11 @@
 
 	<!-- JAX-WS Soap Protocol -->
 	<bean id="jaxwsProtocol" class="ch.elca.el4j.services.remoting.protocol.JaxwsSoapHeaderContextPassing">
-		<!--
-			Properties "serviceHost" and "servicePort" are ignored.
-			They have to be specified in the configuration section of maven-jaxws-plugin.
-		-->
 		<property name="serviceHost">
-			<value>ignored</value>
+			<value>${jee-web.host}</value>
 		</property>
 		<property name="servicePort">
-			<value>9999</value>
+			<value>${jee-web.port}</value>
 		</property>
 		
 		<property name="contextPath">
