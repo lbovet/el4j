@@ -324,7 +324,7 @@
 		<module name="Indentation" />
 		<module name="TrailingComment" />
 		<module name="Regexp">
-			<property name="format" value="printFileStatus" />
+			<property name="format" value="@svnLink" />
 		</module>
 
 
