@@ -63,7 +63,7 @@ abstract class WsImportMojo extends AbstractJaxwsMojo
 	/**
 	 * Directory containing wsdl files.
 	 *
-	 * @parameter default-value="${project.build.directory}/jaxws/wsgen/wsdl"
+	 * @parameter default-value="${basedir}/src/wsdl"
 	 */
 	private File wsdlDirectory;
 
@@ -139,6 +139,13 @@ abstract class WsImportMojo extends AbstractJaxwsMojo
 		throws MojoExecutionException
 	{
 
+		if (getWSDLFiles().length > 1 && wsdlLocation != null) {
+			getLog().warn("If 'wsdlLocation' is set, only one wsdl can be properly processed "
+				+ "per maven execution. Define multiple maven executions having different ids!");
+			getLog().warn("Also define different staleFiles "
+				+ "(see http://blog.darevay.com/2009/03/importing-multiple-wsdls-with-maven/)");
+		}
+		
 		// Need to build a URLClassloader since Maven removed it form the chain
 		ClassLoader parent = this.getClass().getClassLoader();
 		String originalSystemClasspath = this.initClassLoader( parent );
