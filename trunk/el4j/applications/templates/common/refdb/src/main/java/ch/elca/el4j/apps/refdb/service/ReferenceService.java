@@ -25,7 +25,6 @@ import org.springframework.dao.OptimisticLockingFailureException;
 
 import ch.elca.el4j.apps.keyword.service.KeywordService;
 import ch.elca.el4j.apps.refdb.dom.Reference;
-import ch.elca.el4j.core.transaction.annotations.RollbackConstraint;
 import ch.elca.el4j.services.search.QueryObject;
 
 /**
@@ -111,7 +110,6 @@ public interface ReferenceService extends KeywordService {
 	 * @throws OptimisticLockingFailureException
 	 *             If reference has been modified in the meantime.
 	 */
-	@RollbackConstraint
 	public Reference saveReference(Reference reference)
 		throws DataAccessException, DataIntegrityViolationException, OptimisticLockingFailureException;
 
@@ -125,7 +123,6 @@ public interface ReferenceService extends KeywordService {
 	 * @throws OptimisticLockingFailureException
 	 *             If reference could not be deleted.
 	 */
-	@RollbackConstraint
 	public void deleteReference(int key) throws DataAccessException, OptimisticLockingFailureException;
 	
 	/**
@@ -136,7 +133,6 @@ public interface ReferenceService extends KeywordService {
 	 * @throws OptimisticLockingFailureException
 	 *          Keyword could not be deleted.
 	 */
-	@RollbackConstraint
 	public void deleteKeyword(int key) throws OptimisticLockingFailureException;
 	
 	/**
@@ -146,7 +142,6 @@ public interface ReferenceService extends KeywordService {
 	 * @throws DataIntegrityViolationException
 	 *          If deleted keywords belong to other references.
 	 */
-	@RollbackConstraint
 	public void deleteReferenceAndKeywords(int refKey) throws DataIntegrityViolationException;
 	
 	/**

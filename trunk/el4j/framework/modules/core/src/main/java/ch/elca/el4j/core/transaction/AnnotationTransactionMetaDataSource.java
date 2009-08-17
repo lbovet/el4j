@@ -25,8 +25,6 @@ import org.springframework.transaction.interceptor.NoRollbackRuleAttribute;
 import org.springframework.transaction.interceptor.RollbackRuleAttribute;
 import org.springframework.transaction.interceptor.RuleBasedTransactionAttribute;
 
-import ch.elca.el4j.core.transaction.annotations.RollbackConstraint;
-
 /**
  * Meta data source for transactional metadata of type <b>Java 5 Annotation</b>.
  *
@@ -38,10 +36,6 @@ public class AnnotationTransactionMetaDataSource
 	extends TransactionMetaDataSource {
 	
 	/**
-	 * Adds rollback constraints defined in {@link RollbackConstraint} to the
-	 * existing transaction attribute. Uses only the first found transaction
-	 * and rollback constraint annotation.
-	 *
 	 * {@inheritDoc}
 	 */
 	@Override
@@ -66,14 +60,6 @@ public class AnnotationTransactionMetaDataSource
 		// rollback constraint.
 		Collection result;
 		if (rbta != null) {
-			for (Object att : metaData) {
-				if (att instanceof RollbackConstraint) {
-					RollbackConstraint rollbackConstraint
-						= (RollbackConstraint) att;
-					addMetaDataRollbackConstraint(rbta, rollbackConstraint);
-					break;
-				}
-			}
 			finalizeRollbackBehavior(rbta);
 			result = Collections.singleton(rbta);
 		} else {
@@ -126,58 +112,6 @@ public class AnnotationTransactionMetaDataSource
 			NoRollbackRuleAttribute rule
 				= new NoRollbackRuleAttribute(nrbfc[i]);
 			rollBackRules.add(rule);
-		}
-	
-		rbta.getRollbackRules().addAll(rollBackRules);
-	}
-
-	/**
-	 * Adds the given rollback constraint to the given rule based rollback
-	 * attribute.
-	 *
-	 * @param rbta Is the rule based rollback attribute to complete
-	 * @param rollbackConstraint Is the rollback constraint to add.
-	 */
-	@SuppressWarnings("unchecked")
-	protected void addMetaDataRollbackConstraint(
-		RuleBasedTransactionAttribute rbta,
-		RollbackConstraint rollbackConstraint) {
-		ArrayList<RollbackRuleAttribute> rollBackRules
-			= new ArrayList<RollbackRuleAttribute>();
-	
-		Class[] rbf = rollbackConstraint.rollbackFor();
-		for (int i = 0; i < rbf.length; ++i) {
-			RollbackRuleAttribute rule
-				= new RollbackRuleAttribute(rbf[i]);
-			rollBackRules.add(rule);
-		}
-	
-		String[] rbfc = rollbackConstraint.rollbackForClassName();
-		for (int i = 0; i < rbfc.length; ++i) {
-			RollbackRuleAttribute rule
-				= new RollbackRuleAttribute(rbfc[i]);
-			rollBackRules.add(rule);
-		}
-	
-		Class[] nrbf = rollbackConstraint.noRollbackFor();
-		for (int i = 0; i < nrbf.length; ++i) {
-			NoRollbackRuleAttribute rule
-				= new NoRollbackRuleAttribute(nrbf[i]);
-			rollBackRules.add(rule);
-		}
-	
-		String[] nrbfc
-			= rollbackConstraint.noRollbackForClassName();
-		for (int i = 0; i < nrbfc.length; ++i) {
-			NoRollbackRuleAttribute rule
-				= new NoRollbackRuleAttribute(nrbfc[i]);
-			rollBackRules.add(rule);
-		}
-		
-		// Add runtime exception and error if the rollback constraint did not define anything
-		if (rollBackRules.isEmpty()) {
-			rollBackRules.add(new RollbackRuleAttribute(RuntimeException.class));
-			rollBackRules.add(new RollbackRuleAttribute(Error.class));
 		}
 	
 		rbta.getRollbackRules().addAll(rollBackRules);
