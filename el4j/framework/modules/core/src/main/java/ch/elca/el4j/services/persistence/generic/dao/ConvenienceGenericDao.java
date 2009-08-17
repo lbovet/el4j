@@ -23,8 +23,6 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.dao.OptimisticLockingFailureException;
 
-import ch.elca.el4j.core.transaction.annotations.RollbackConstraint;
-
 /**
  * Extends the GenericDao with a few convenience methods.
  * As EL4J only supports Hibernate as persistence framework it's more convenient to use
@@ -82,7 +80,6 @@ public interface ConvenienceGenericDao<T, ID extends Serializable>
 	 * @deprecated Renamed to deleteById as of el4j 1.6
 	 */
 	@Deprecated
-	@RollbackConstraint
 	void delete(ID id)
 		throws OptimisticLockingFailureException, DataAccessException;
 	
@@ -97,7 +94,6 @@ public interface ConvenienceGenericDao<T, ID extends Serializable>
 	 * @throws DataAccessException
 	 *             If general data access problem occurred
 	 */
-	@RollbackConstraint
 	void deleteById(ID id)
 		throws OptimisticLockingFailureException, DataAccessException;
 	
@@ -121,7 +117,6 @@ public interface ConvenienceGenericDao<T, ID extends Serializable>
 	 * @throws DataAccessException
 	 *             If general data access problem occurred
 	 */
-	@RollbackConstraint
 	void delete(T entity)
 		throws OptimisticLockingFailureException, DataAccessException;
 	
@@ -133,7 +128,6 @@ public interface ConvenienceGenericDao<T, ID extends Serializable>
 	 * @throws DataAccessException
 	 *             If general data access problem occurred
 	 */
-	@RollbackConstraint
 	public void deleteAll()
 		throws OptimisticLockingFailureException, DataAccessException;
 	
