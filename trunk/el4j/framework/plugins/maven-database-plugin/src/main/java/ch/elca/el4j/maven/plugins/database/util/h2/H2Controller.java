@@ -116,4 +116,25 @@ public final class H2Controller implements DbController {
 		}
 	}
 	
+	/**
+	 * Start the web UI.
+	 * 
+	 * @param port    the port where the web UI will be listening.
+	 * @throws Exception
+	 */
+	public void startWebUI(int port) throws Exception {
+		if (m_server == null) {
+			m_server = Server.createWebServer(new String[] {"-webPort", Integer.toString(port)});
+			m_server.start();
+		}
+	}
+	
+	/**
+	 * Stop the web UI.
+	 */
+	public void stopWebUI() {
+		if (m_server != null) {
+			m_server.stop();
+		}
+	}
 }
