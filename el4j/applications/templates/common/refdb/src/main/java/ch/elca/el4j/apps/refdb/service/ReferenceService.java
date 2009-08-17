@@ -23,6 +23,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.dao.OptimisticLockingFailureException;
 
+import ch.elca.el4j.apps.keyword.dom.Keyword;
 import ch.elca.el4j.apps.keyword.service.KeywordService;
 import ch.elca.el4j.apps.refdb.dom.Reference;
 import ch.elca.el4j.services.search.QueryObject;
@@ -61,6 +62,16 @@ public interface ReferenceService extends KeywordService {
 	 *             If general data access problem occurred.
 	 */
 	public List<Reference> getReferencesByName(String name) throws DataAccessException;
+	
+	/**
+	 * Get all references having at least one of the given keywords.
+	 *
+	 * @param keywords    a list of keywords.
+	 * @return Returns a list with references. Returns never <code>null</code>.
+	 * @throws DataAccessException
+	 *             If general data access problem occurred.
+	 */
+	public List<Reference> getReferencesByKeywords(List<Keyword> keywords) throws DataAccessException;
 
 	/**
 	 * Get all references.

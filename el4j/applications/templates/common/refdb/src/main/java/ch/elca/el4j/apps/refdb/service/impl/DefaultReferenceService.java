@@ -16,6 +16,7 @@
  */
 package ch.elca.el4j.apps.refdb.service.impl;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -46,6 +47,7 @@ import ch.elca.el4j.apps.refdb.service.ReferenceService;
 import ch.elca.el4j.core.context.ModuleApplicationListener;
 import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
 import ch.elca.el4j.services.search.QueryObject;
+import ch.elca.el4j.util.codingsupport.CollectionUtils;
 import ch.elca.el4j.util.codingsupport.Reject;
 
 /**
@@ -142,6 +144,19 @@ public class DefaultReferenceService extends DefaultKeywordService
 		list.addAll(listFormalPublications);
 		list.addAll(listBooks);
 		return list;
+	}
+	
+	/** {@inheritDoc} */
+	@SuppressWarnings("unchecked")
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Reference> getReferencesByKeywords(List<Keyword> keywords) throws DataAccessException {
+		if (!CollectionUtils.isEmpty(keywords)) {
+			final String query = "select distinct r from Reference r left join r.keywords as keyword "
+				+ "where keyword in (:list)";
+			return getKeywordDao().getConvenienceHibernateTemplate().findByNamedParam(query, "list", keywords);
+		} else {
+			return new ArrayList<Reference>();
+		}
 	}
 
 	/**
