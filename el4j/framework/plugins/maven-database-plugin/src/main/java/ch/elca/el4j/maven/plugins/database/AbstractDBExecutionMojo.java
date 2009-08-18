@@ -481,10 +481,12 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
 	@SuppressWarnings("unchecked")
 	protected long getLastModified(File directory) {
 		long lastModified = 0;
-		List<File> listFiles = (List<File>) FileUtils.listFiles(directory, null, true);
-		for (File f : listFiles) {
-			if (f.lastModified() > lastModified) {
-				lastModified = f.lastModified();
+		if (directory.exists()) {
+			List<File> listFiles = (List<File>) FileUtils.listFiles(directory, null, true);
+			for (File f : listFiles) {
+				if (f.lastModified() > lastModified) {
+					lastModified = f.lastModified();
+				}
 			}
 		}
 		return lastModified;
@@ -498,10 +500,12 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
 	@SuppressWarnings("unchecked")
 	protected List<File> getFilesModifiedAfter(File directory, long timestamp) {
 		List<File> result = new ArrayList<File>();
-		List<File> listFiles = (List<File>) FileUtils.listFiles(directory, null, true);
-		for (File f : listFiles) {
-			if (f.lastModified() > timestamp) {
-				result.add(f);
+		if (directory.exists()) {
+			List<File> listFiles = (List<File>) FileUtils.listFiles(directory, null, true);
+			for (File f : listFiles) {
+				if (f.lastModified() > timestamp) {
+					result.add(f);
+				}
 			}
 		}
 		return result;
