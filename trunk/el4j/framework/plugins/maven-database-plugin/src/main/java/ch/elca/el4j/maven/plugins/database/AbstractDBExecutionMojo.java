@@ -27,11 +27,14 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 import java.util.regex.Pattern;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.maven.artifact.Artifact;
 import org.apache.maven.plugin.MojoFailureException;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.util.StringUtils;
 
@@ -251,6 +254,7 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
 			if (reversed) {
 				Collections.reverse(resources);
 			}
+			resources = updateModifiedResources(resources);
 			resources = preProcessResources(resources);
 			processResources(resources, goal, isSilent);
 		} else {
@@ -409,6 +413,98 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
 		}
 		
 		return patterns;
+	}
+	
+	/**
+	 * Replace outdated resources in target directory by newer resources in source resource folder.
+	 * 
+	 * @param resources    a list of all resources
+	 * @return             the updated list
+	 */
+	protected List<Resource> updateModifiedResources(List<Resource> resources) throws MojoFailureException {
+		final String outputDirectory = getProject().getBuild().getOutputDirectory();
+		final String testOutputDirectory = getProject().getBuild().getTestOutputDirectory();
+		final int baseDirLength = getProject().getBasedir().getPath().length() + 1;
+		
+		Map<String, File> updatedResources = new HashMap<String, File>();
+		long outputLastModified = getLastModified(new File(outputDirectory));
+		for (org.apache.maven.model.Resource res : getProject().getBuild().getResources()) {
+			List<File> modifiedFiles = getFilesModifiedAfter(new File(res.getDirectory()), outputLastModified);
+			for (File file : modifiedFiles) {
+				updatedResources.put(file.getPath().substring(
+					new File(res.getDirectory()).getPath().length() + 1), file);
+			}
+		}
+		Map<String, File> updatedTestResources = new HashMap<String, File>();
+		long testOutputLastModified = getLastModified(new File(testOutputDirectory));
+		for (org.apache.maven.model.Resource res : getProject().getBuild().getTestResources()) {
+			List<File> modifiedFiles = getFilesModifiedAfter(new File(res.getDirectory()), testOutputLastModified);
+			for (File file : modifiedFiles) {
+				updatedTestResources.put(file.getPath().substring(
+					new File(res.getDirectory()).getPath().length() + 1), file);
+			}
+		}
+		
+		for (int i = 0; i < resources.size(); i++) {
+			Resource resource = resources.get(i);
+			if (resource instanceof FileSystemResource) {
+				FileSystemResource fsRes = (FileSystemResource) resource;
+				if (fsRes.getFile().getPath().startsWith(outputDirectory)) {
+					String path = fsRes.getFile().getPath().substring(outputDirectory.length() + 1);
+					if (updatedResources.containsKey(path)) {
+						getLog().warn("Replacing outdated target resource '"
+							+ fsRes.getFile().getPath().substring(baseDirLength)
+							+ "' by (unfiltered!) source resource '"
+							+ updatedResources.get(path).getPath().substring(baseDirLength) + "'.");
+						resources.set(i, new FileSystemResource(updatedResources.get(path)));
+					}
+				}
+				if (fsRes.getFile().getPath().startsWith(testOutputDirectory)) {
+					String path = fsRes.getFile().getPath().substring(testOutputDirectory.length() + 1);
+					if (updatedTestResources.containsKey(path)) {
+						getLog().warn("Replacing outdated target test resource '"
+							+ fsRes.getFile().getPath().substring(baseDirLength)
+							+ "' by (unfiltered!) source resource '"
+							+ updatedTestResources.get(path).getPath().substring(baseDirLength) + "'.");
+						resources.set(i, new FileSystemResource(updatedTestResources.get(path)));
+					}
+				}
+			}
+		}
+		return resources;
+	}
+	
+	/**
+	 * @param directory    the directory to scan
+	 * @return             the latest point in time a file in the directory was modified
+	 */
+	@SuppressWarnings("unchecked")
+	protected long getLastModified(File directory) {
+		long lastModified = 0;
+		List<File> listFiles = (List<File>) FileUtils.listFiles(directory, null, true);
+		for (File f : listFiles) {
+			if (f.lastModified() > lastModified) {
+				lastModified = f.lastModified();
+			}
+		}
+		return lastModified;
+	}
+	
+	/**
+	 * @param directory    the directory to scan
+	 * @param timestamp    the timestamp to use
+	 * @return             a list of all files in the directory that are modified after the timestamp
+	 */
+	@SuppressWarnings("unchecked")
+	protected List<File> getFilesModifiedAfter(File directory, long timestamp) {
+		List<File> result = new ArrayList<File>();
+		List<File> listFiles = (List<File>) FileUtils.listFiles(directory, null, true);
+		for (File f : listFiles) {
+			if (f.lastModified() > timestamp) {
+				result.add(f);
+			}
+		}
+		return result;
 	}
 	
 	/**
