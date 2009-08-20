@@ -25,8 +25,6 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.dao.OptimisticLockingFailureException;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
 import ch.elca.el4j.services.persistence.generic.dao.ConvenienceGenericDao;
 import ch.elca.el4j.services.persistence.hibernate.dao.extent.DataExtent;
@@ -62,6 +60,9 @@ public interface ConvenienceGenericHibernateDao<T, ID extends Serializable>
 	 * Retrieves all the domain objects matching the Hibernate criteria.
 	 * 
 	 * @param hibernateCriteria    the criteria that the result has to fulfill
+	 *                             <b>Note: Do not reuse criteria objects! They need to recreated
+	 *                             (or cloned e.g. using <tt>SerializationUtils.clone()</tt>) per execution,
+	 *                             due to the suboptimal design of Hibernate's criteria facility.</b>
 	 * @return                     all object that fulfill the criteria
 	 * @throws DataAccessException
 	 *
@@ -75,7 +76,10 @@ public interface ConvenienceGenericHibernateDao<T, ID extends Serializable>
 	 * Loads at least the given extent.
 	 * 
 	 * @param hibernateCriteria    the criteria that the result has to fulfill
-	 * @param extent			   the extent in which objects get loaded.
+	 *                             <b>Note: Do not reuse criteria objects! They need to recreated
+	 *                             (or cloned e.g. using <tt>SerializationUtils.clone()</tt>) per execution,
+	 *                             due to the suboptimal design of Hibernate's criteria facility.</b>
+	 * @param extent               the extent in which objects get loaded.
 	 * @return                     all object that fulfill the criteria
 	 * @throws DataAccessException
 	 *
@@ -88,6 +92,9 @@ public interface ConvenienceGenericHibernateDao<T, ID extends Serializable>
 	 * Retrieves a range of domain objects matching the Hibernate criteria.
 	 * 
 	 * @param hibernateCriteria    the criteria that the result has to fulfill
+	 *                             <b>Note: Do not reuse criteria objects! They need to recreated
+	 *                             (or cloned e.g. using <tt>SerializationUtils.clone()</tt>) per execution,
+	 *                             due to the suboptimal design of Hibernate's criteria facility.</b>
 	 * @param firstResult          the index of the first result to return
 	 * @param maxResults           the maximum number of results to return
 	 * @return                     the specified subset of object that fulfill
@@ -104,9 +111,12 @@ public interface ConvenienceGenericHibernateDao<T, ID extends Serializable>
 	 * Loads at least the given extent.
 	 * 
 	 * @param hibernateCriteria    the criteria that the result has to fulfill
+	 *                             <b>Note: Do not reuse criteria objects! They need to recreated
+	 *                             (or cloned e.g. using <tt>SerializationUtils.clone()</tt>) per execution,
+	 *                             due to the suboptimal design of Hibernate's criteria facility.</b>
 	 * @param firstResult          the index of the first result to return
 	 * @param maxResults           the maximum number of results to return
-	 * @param extent			   the extent in which objects get loaded.
+	 * @param extent               the extent in which objects get loaded.
 	 * @return                     the specified subset of object that fulfill
 	 *                             the criteria
 	 * @throws DataAccessException
@@ -120,6 +130,9 @@ public interface ConvenienceGenericHibernateDao<T, ID extends Serializable>
 	 * Retrieves the number of domain objects matching the Hibernate criteria.
 	 * 
 	 * @param hibernateCriteria    the criteria that the result has to fulfill
+	 *                             <b>Note: Do not reuse criteria objects! They need to recreated
+	 *                             (or cloned e.g. using <tt>SerializationUtils.clone()</tt>) per execution,
+	 *                             due to the suboptimal design of Hibernate's criteria facility.</b>
 	 * @return                     the number of objects that fulfill
 	 *                             the criteria
 	 * @throws DataAccessException
@@ -136,8 +149,8 @@ public interface ConvenienceGenericHibernateDao<T, ID extends Serializable>
 	 * after this method call.
 	 * Loads at least the given extent.
 	 *
-	 * @param id			The id of the domain object to find
-	 * @param extent		the extent in which objects get loaded.
+	 * @param id        The id of the domain object to find
+	 * @param extent    the extent in which objects get loaded.
 	 * @return Returns the found domain object.
 	 * @throws DataRetrievalFailureException
 	 *             If no domain object could be found with given id.
@@ -163,7 +176,7 @@ public interface ConvenienceGenericHibernateDao<T, ID extends Serializable>
 	 *            Indicates whether a database lock should be obtained for this
 	 *            operation
 	 * @param extent
-	 * 			  the extent in which objects get loaded.
+	 *            the extent in which objects get loaded.
 	 * 
 	 * @throws DataAccessException
 	 *             If general data access problem occurred
@@ -178,7 +191,7 @@ public interface ConvenienceGenericHibernateDao<T, ID extends Serializable>
 	 * Retrieves all the domain objects of type T.
 	 * Loads at least the given extent.
 	 *
-	 * @param extent	the extent in which objects get loaded.
+	 * @param extent    the extent in which objects get loaded.
 	 * 
 	 * @return The list containing all the domain objects of type T; if no such
 	 *         domain objects exist, an empty list will be returned
@@ -193,8 +206,8 @@ public interface ConvenienceGenericHibernateDao<T, ID extends Serializable>
 	 *   of implementing class).
 	 * Loads at least the given extent.
 	 *
-	 * @param q 		The search query object
-	 * @param extent	the extent in which objects get loaded.
+	 * @param q         The search query object
+	 * @param extent    the extent in which objects get loaded.
 	 * @throws  DataAccessException
 	 *             If general data access problem occurred
 	 * @return A list containing 0 or more domain objects
@@ -208,8 +221,8 @@ public interface ConvenienceGenericHibernateDao<T, ID extends Serializable>
 	 *
 	 * @param entity
 	 *            The domain object to re-read the state of
-	 * @param extent	
-	 * 			  the extent in which objects get loaded.
+	 * @param extent
+	 *            the extent in which objects get loaded.
 	 * @throws DataAccessException
 	 *             If general data access problem occurred
 	 * @throws DataRetrievalFailureException
@@ -226,8 +239,8 @@ public interface ConvenienceGenericHibernateDao<T, ID extends Serializable>
 	 *
 	 * @param entity
 	 *            The domain object to re-read the state of
-	 * @param extent	
-	 * 			  the extent in which objects get loaded.
+	 * @param extent
+	 *            the extent in which objects get loaded.
 	 * @throws DataAccessException
 	 *             If general data access problem occurred
 	 * @throws DataRetrievalFailureException
