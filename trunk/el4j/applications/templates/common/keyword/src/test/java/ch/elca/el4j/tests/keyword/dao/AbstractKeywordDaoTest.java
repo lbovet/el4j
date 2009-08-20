@@ -16,22 +16,25 @@
  */
 package ch.elca.el4j.tests.keyword.dao;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
 import java.util.List;
 
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Order;
+import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.junit.Test;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.dao.OptimisticLockingFailureException;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
 import ch.elca.el4j.apps.keyword.dao.KeywordDao;
 import ch.elca.el4j.apps.keyword.dom.Keyword;
 import ch.elca.el4j.services.persistence.generic.dao.impl.DefaultDaoRegistry;
+import ch.elca.el4j.services.persistence.hibernate.criteria.DetachedCriteriaUtils;
 import ch.elca.el4j.services.search.QueryObject;
 import ch.elca.el4j.services.search.criterias.LikeCriteria;
 import ch.elca.el4j.tests.keyword.AbstractTestCaseBase;
@@ -83,59 +86,39 @@ public abstract class AbstractKeywordDaoTest
 	 */
 	@Test
 	public void testInsertKeywords() {
-		KeywordDao dao = getKeywordDao();
-		Keyword keyword = new Keyword();
-		keyword.setName("Java");
-		keyword.setDescription("Java related documentation");
-		keyword = dao.saveOrUpdate(keyword);
+		createKeyword("Java", "Java related documentation", true);
 
-		Keyword keyword2 = new Keyword();
-		keyword2.setName("This is a too large keyword");
-		keyword2.setDescription("I'm too long, I'm too long"
-				+ "I'm too long, I'm too long" + "I'm too long, I'm too long"
-				+ "I'm too long, I'm too long" + "I'm too long, I'm too long"
-				+ "I'm too long, I'm too long" + "I'm too long, I'm too long"
-				+ "I'm too long, I'm too long" + "I'm too long, I'm too long"
-				+ "I'm too long, I'm too long");
 		try {
-			keyword2 = dao.saveOrUpdate(keyword2);
+			createKeyword("This is a too large keyword", "I'm too long, I'm too long"
+				+ "I'm too long, I'm too long" + "I'm too long, I'm too long"
+				+ "I'm too long, I'm too long" + "I'm too long, I'm too long"
+				+ "I'm too long, I'm too long" + "I'm too long, I'm too long"
+				+ "I'm too long, I'm too long" + "I'm too long, I'm too long"
+				+ "I'm too long, I'm too long", true);
 			fail("A keyword with more than max length could be saved.");
 		} catch (Exception e) {
 			s_logger.debug("Expected exception catched.", e);
 		}
 		
-		Keyword keyword3 = new Keyword();
-		keyword3.setName("Java");
-		keyword3.setDescription("Once again the same name");
 		try {
-			keyword3 = dao.saveOrUpdate(keyword3);
+			createKeyword("Java", "Once again the same name", true);
 			fail("Keyword names need not to be unique.");
 		} catch (DataIntegrityViolationException e) {
 			s_logger.debug("Expected exception catched.", e);
 		}
 		
-		Keyword keyword4 = new Keyword();
-		keyword4.setName("KeywordWithoutDescription");
-		keyword4.setDescription(null);
-		dao.saveOrUpdate(keyword4);
+		createKeyword("KeywordWithoutDescription", null, true);
 		
-		Keyword keyword5 = new Keyword();
-		keyword5.setName(null);
-		keyword5.setDescription(null);
 		try {
-			dao.saveOrUpdate(keyword5);
+			createKeyword(null, null, true);
 			fail("Possible to insert a keyword without a name and a "
 				+ "description.");
 		} catch (DataIntegrityViolationException e) {
 			s_logger.debug("Expected exception catched.", e);
 		}
 		
-		Keyword keyword6 = new Keyword();
-		keyword6.setName(null);
-		keyword6.setDescription("A description");
-		
 		try {
-			dao.saveOrUpdate(keyword6);
+			createKeyword(null, "A description", true);
 			fail("Possible to insert a keyword without a name.");
 		} catch (DataIntegrityViolationException e) {
 			s_logger.debug("Expected exception catched.", e);
@@ -239,7 +222,7 @@ public abstract class AbstractKeywordDaoTest
 		keyword.setName("Java");
 		keyword.setDescription("Java related documentation");
 		Keyword keyword2 = dao.saveOrUpdate(keyword);
-		dao.delete(keyword2.getKey());
+		dao.deleteById(keyword2.getKey());
 		try {
 			dao.findById(keyword2.getKey());
 			fail("The removed keyword is still in the DB.");
@@ -247,7 +230,7 @@ public abstract class AbstractKeywordDaoTest
 			s_logger.debug("Expected exception catched.", e);
 		}
 		try {
-			dao.delete(keyword2.getKey());
+			dao.deleteById(keyword2.getKey());
 			fail("Delete should throw an exception!");
 		} catch (OptimisticLockingFailureException e) {
 			s_logger.debug("Expected exception catched.", e);
@@ -263,11 +246,8 @@ public abstract class AbstractKeywordDaoTest
 	 */
 	@Test
 	public void testInsertModifyDeleteKeywordByTwoPeople() {
+		createKeyword("Java", "Java related documentation", true);
 		KeywordDao dao = getKeywordDao();
-		Keyword keyword = new Keyword();
-		keyword.setName("Java");
-		keyword.setDescription("Java related documentation");
-		dao.saveOrUpdate(keyword);
 		Keyword keyword2 = dao.getKeywordByName("Java");
 		Keyword keyword3 = dao.getKeywordByName("Java");
 		keyword2.setDescription("Java API");
@@ -296,28 +276,13 @@ public abstract class AbstractKeywordDaoTest
 	 */
 	@Test
 	public void testSearchKeywords() {
-		KeywordDao dao = getKeywordDao();
-		Keyword keyword = new Keyword();
-		keyword.setName("Java");
-		keyword.setDescription("Java related documentation");
-		Keyword keyword2 = new Keyword();
-		keyword2.setName("XML");
-		keyword2.setDescription("Xml related documentation");
-		Keyword keyword3 = new Keyword();
-		keyword3.setName("Ghost");
-		keyword3.setDescription("");
-		Keyword keyword4 = new Keyword();
-		keyword4.setName("Chainsaw");
-		keyword4.setDescription("Tool of Log4J to filter logfiles");
-		Keyword keyword5 = new Keyword();
-		keyword5.setName("Zombie");
-		keyword5.setDescription("");
+		Keyword keyword = createKeyword("Java", "Java related documentation", true);
+		Keyword keyword2 = createKeyword("XML", "Xml related documentation", true);
+		Keyword keyword3 = createKeyword("Ghost", "", true);
+		Keyword keyword4 = createKeyword("Chainsaw", "Tool of Log4J to filter logfiles", true);
+		createKeyword("Zombie", "", true);
 		
-		keyword = dao.saveOrUpdate(keyword);
-		keyword2 = dao.saveOrUpdate(keyword2);
-		keyword3 = dao.saveOrUpdate(keyword3);
-		keyword4 = dao.saveOrUpdate(keyword4);
-		keyword5 = dao.saveOrUpdate(keyword5);
+		KeywordDao dao = getKeywordDao();
 		
 		QueryObject query = new QueryObject();
 		query.addCriteria(LikeCriteria.caseInsensitive("description", "%doc%"));
@@ -373,15 +338,82 @@ public abstract class AbstractKeywordDaoTest
 	 */
 	@Test
 	public void testRefreshKeyword() {
-		KeywordDao dao = getKeywordDao();
-		Keyword keyword = new Keyword();
-		keyword.setName("Xml");
-		keyword.setDescription("Xml related documentation");
-		dao.saveOrUpdate(keyword);
+		Keyword keyword = createKeyword("Xml", "Xml related documentation", true);
+		
 		keyword.setName("Java");
+		
+		KeywordDao dao = getKeywordDao();
 		keyword = dao.refresh(keyword);
 		assertEquals("The inserted keyword has not been refreshed correctly",
 			keyword.getName(), "Xml");
+	}
+	
+	/**
+	 * Test reuse issues of the Criteria API.
+	 */
+	@Test
+	public void testReuseCriteria() {
+		KeywordDao dao = getKeywordDao();
+		
+		createKeyword("AAA", "zzz", true);
+		createKeyword("BBB", "yyy", true);
+		createKeyword("CCC", "xxx", true);
+		createKeyword("DDD", "www", true);
+		createKeyword("EEE", "vvv", true);
+		List<Keyword> result;
+		
+		dao.setDefaultOrder(Order.asc("name"));
+		DetachedCriteria criteria = dao.getOrderedCriteria();
+		result = dao.findByCriteria(criteria);
+		assertEquals(5, result.size());
+		assertEquals("AAA", result.get(0).getName());
+		assertEquals("EEE", result.get(4).getName());
+		
+		// adding an additional order doesn't work
+		criteria.addOrder(Order.desc("name"));
+		result = dao.findByCriteria(criteria);
+		assertEquals(5, result.size());
+		assertEquals("AAA", result.get(0).getName());
+		assertEquals("EEE", result.get(4).getName());
+		
+		try {
+			assertEquals(5, dao.findCountByCriteria(criteria));
+			fail("Surprise: Hibernate finally supports count() on an ordered criteria!");
+		} catch (Exception e) {
+			// unfortunately the normal case
+		}
+		
+		DetachedCriteriaUtils.removeOrders(criteria);
+		
+		// now it works
+		assertEquals(5, dao.findCountByCriteria(criteria));
+		
+		// creating a new order works of course
+		dao.setDefaultOrder(Order.desc("name"));
+		criteria = dao.getOrderedCriteria();
+		result = dao.findByCriteria(criteria);
+		assertEquals(5, result.size());
+		assertEquals("EEE", result.get(0).getName());
+		assertEquals("AAA", result.get(4).getName());
+		
+	}
+	
+	/**
+	 * Create and optionally save keyword.
+	 * 
+	 * @param name           the name of the keyword
+	 * @param description    the description of the keyword
+	 * @param save           whether to save the keyword to the database or not
+	 * @return               the create keyword
+	 */
+	private Keyword createKeyword(String name, String description, boolean save) {
+		Keyword keyword = new Keyword();
+		keyword.setName(name);
+		keyword.setDescription(description);
+		if (save) {
+			getKeywordDao().saveOrUpdate(keyword);
+		}
+		return keyword;
 	}
 }
 //Checkstyle: MagicNumber on
