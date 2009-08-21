@@ -378,9 +378,9 @@ public abstract class AbstractKeywordDaoTest
 		
 		try {
 			assertEquals(5, dao.findCountByCriteria(criteria));
-			fail("Surprise: Hibernate finally supports count() on an ordered criteria!");
+			// count() on an ordered criteria: oracle can do this ...
 		} catch (Exception e) {
-			// unfortunately the normal case
+			// ... unfortunately derby can't
 		}
 		
 		DetachedCriteriaUtils.removeOrders(criteria);
