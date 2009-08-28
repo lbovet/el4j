@@ -12,5 +12,11 @@
 				<include>**/*</include>
 			</includes>
 		</fileSet>
+		<fileSet filtered="false" packaged="false">
+			<directory></directory>
+			<includes>
+				<include>gettingStarted.txt</include>
+			</includes>
+		</fileSet>
 	</fileSets>
 </archetype-descriptor>

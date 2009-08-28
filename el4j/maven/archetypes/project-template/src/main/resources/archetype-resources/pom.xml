@@ -18,7 +18,7 @@
 
 	<groupId>${groupId}</groupId>
 	<artifactId>${artifactId}</artifactId>
-	<version>${version}</version>
+	<version>${dollar}{version.${projectNameOneWord}}</version>
 	<packaging>pom</packaging>
 	<name>${projectNaturalName}</name>
 	<description>Root artifact of the ${projectNaturalName} project.</description>
@@ -113,6 +113,6 @@
 	</repositories>
 	
 	<properties>
-		<version.${projectNameOneWord}>1.0</version.${projectNameOneWord}>
+		<version.${projectNameOneWord}>${version}</version.${projectNameOneWord}>
 	</properties>
 </project>
