@@ -43,6 +43,9 @@ fi
 # individual functions, aliases etc.
 # developers can put their adaptations here
 
+# enable tab completion
+#source /etc/bash_completion
+
 umask 022
 if [ ! -z $PROJECT_DIRECTORY ]; then cd "$PROJECT_DIRECTORY"; fi
 if [ ! -z $PROJECT_INIT_SCRIPT ]; then source "$PROJECT_INIT_SCRIPT"; fi
