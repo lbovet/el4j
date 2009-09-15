@@ -65,6 +65,11 @@ public class HtmlAdapterFactoryBean
 	private MBeanServer m_server;
 	
 	/**
+	 * Whether to ignore InstanceAlreadyExistsExceptions or not.
+	 */
+	private boolean m_ignoreInstanceAlreadyExistsException = false;
+	
+	/**
 	 * Is the path to the used stylesheet. Default is set to
 	 * <code>etc/jmx/stylesheet.css</code>.
 	 */
@@ -124,36 +129,40 @@ public class HtmlAdapterFactoryBean
 		 */
 		setInstanceCounter();
 		
-		/**
-		 * Setup css html parser.
-		 */
-		CssHtmlParser htmlParser = new CssHtmlParser(getStylesheetPath());
 		if (!StringUtils.hasText(m_htmlParserName)) {
-			m_htmlParserName
-				= "HtmlAdapter:name=HtmlParser" + getInstanceCounter();
+			m_htmlParserName = "HtmlAdapter:name=HtmlParser" + getInstanceCounter();
 		}
 		ObjectName htmlParserObjectName = new ObjectName(m_htmlParserName);
-		getServer().registerMBean(htmlParser, htmlParserObjectName);
+		if (!getServer().isRegistered(htmlParserObjectName) || !m_ignoreInstanceAlreadyExistsException) {
+			
+			/**
+			 * Setup css html parser.
+			 */
+			CssHtmlParser htmlParser = new CssHtmlParser(getStylesheetPath());
+			
+			getServer().registerMBean(htmlParser, htmlParserObjectName);
+		}
 		
-		
-		/**
-		 * Setup html adapter server.
-		 */
-		m_htmlAdaptorServer = new HtmlAdaptorServer();
-		m_htmlAdaptorServer.setPort(m_port);
 		if (!StringUtils.hasText(m_name)) {
 			m_name = "HtmlAdapter:name=HtmlAdapter" + getInstanceCounter();
 		}
 		ObjectName htmlAdapterServerObjectName = new ObjectName(getName());
-		getServer().registerMBean(m_htmlAdaptorServer,
-			htmlAdapterServerObjectName);
-
-		
-		/**
-		 * Set css html parser in html adaptor server.
-		 */
-		m_htmlAdaptorServer.setParser(htmlParserObjectName);
-		m_htmlAdaptorServer.start();
+		if (!getServer().isRegistered(htmlAdapterServerObjectName) || !m_ignoreInstanceAlreadyExistsException) {
+			
+			/**
+			 * Setup html adapter server.
+			 */
+			m_htmlAdaptorServer = new HtmlAdaptorServer();
+			m_htmlAdaptorServer.setPort(m_port);
+			
+			getServer().registerMBean(m_htmlAdaptorServer, htmlAdapterServerObjectName);
+			
+			/**
+			 * Set css html parser in html adaptor server.
+			 */
+			m_htmlAdaptorServer.setParser(htmlParserObjectName);
+			m_htmlAdaptorServer.start();
+		}
 	}
 
 	/**
@@ -212,6 +221,20 @@ public class HtmlAdapterFactoryBean
 	 */
 	public void setServer(MBeanServer mBeanServer) {
 		this.m_server = mBeanServer;
+	}
+	
+	/**
+	 * @return    whether to ignore InstanceAlreadyExistsExceptions or not
+	 */
+	public boolean isIgnoreInstanceAlreadyExistsException() {
+		return m_ignoreInstanceAlreadyExistsException;
+	}
+	
+	/**
+	 * @param ignoreInstanceAlreadyExistsException    whether to ignore InstanceAlreadyExistsExceptions or not
+	 */
+	public void setIgnoreInstanceAlreadyExistsException(boolean ignoreInstanceAlreadyExistsException) {
+		m_ignoreInstanceAlreadyExistsException = ignoreInstanceAlreadyExistsException;
 	}
 
 	/**
