@@ -29,6 +29,7 @@ import org.hibernate.impl.CriteriaImpl.OrderEntry;
 
 /**
  * A utility class that allows to perform some modifications on {@link DetachedCriteria}s.
+ * <b>ATTENTION: This class depends on the actual Hibernate Criteria implementation ({@link CriteriaImpl})</b>
  *
  * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
@@ -94,6 +95,8 @@ public final class DetachedCriteriaUtils {
 	}
 	
 	/**
+	 * Get the field value of the Criteria.
+	 * 
 	 * @param criteria     the criteria to get the field
 	 * @param fieldName    the field name
 	 * @return             the value stored in that field
