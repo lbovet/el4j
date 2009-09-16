@@ -50,7 +50,7 @@
 	<build>
 		<pluginManagement>
 			<plugins>
-				<!-- IDE config for eclipse-cs -->
+				<!-- IDE config for eclipse, TODO you can delete this if you don't modify the workspace config -->
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-eclipse-plugin</artifactId>
