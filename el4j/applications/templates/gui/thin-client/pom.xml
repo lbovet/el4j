@@ -30,8 +30,8 @@
 				</configuration>
 			</plugin>
 			<plugin>
-			<groupId>ch.elca.el4j.maven.plugins</groupId>
-			<artifactId>maven-spring-ide-plugin</artifactId>
+				<groupId>ch.elca.el4j.maven.plugins</groupId>
+				<artifactId>maven-spring-ide-plugin</artifactId>
 				<configuration>
 					<sourceFile>
 						ch.elca.el4j.demos.gui.MainFormDistributedMDI 
@@ -42,6 +42,19 @@
 						<phase>verify</phase>
 						<goals>
 							<goal>spring-ide</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>macker-maven-plugin</artifactId>
+				<version>1.0.0-el4j_20090901_1630</version>
+				<executions>
+					<execution>
+						<phase>compile</phase>
+						<goals>
+							<goal>macker</goal>
 						</goals>
 					</execution>
 				</executions>
