@@ -88,6 +88,9 @@ public abstract class AbstractTestCaseBase extends AbstractTest {
 	 */
 	private FileDao m_fileDao;
 
+	/**
+	 * Keyword DAO. Created by application context.
+	 */
 	private KeywordDao m_keywordDao;
 	
 	/**
