@@ -69,11 +69,6 @@ public abstract class AbstractReferenceServiceTest
 	 * Reference service. Created by application context.
 	 */
 	private ReferenceService m_referenceService;
-
-	/**
-	 * Keyword DAO. Created by application context.
-	 */
-	private KeywordDao m_keywordDao;
 	
 	/**
 	 * Hide default constructor.
