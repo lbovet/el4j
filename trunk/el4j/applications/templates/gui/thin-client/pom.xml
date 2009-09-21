@@ -49,7 +49,7 @@
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>macker-maven-plugin</artifactId>
-				<version>1.0.0-el4j_20090901_1630</version>
+				<version>1.0.0-el4j_20090921_1415</version>
 				<executions>
 					<execution>
 						<phase>compile</phase>
