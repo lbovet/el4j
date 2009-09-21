@@ -25,6 +25,7 @@
 package org.slf4j.impl;
 
 import org.apache.maven.plugin.logging.Log;
+import org.apache.maven.plugin.logging.SystemStreamLog;
 import org.slf4j.Logger;
 import org.slf4j.helpers.MarkerIgnoringBase;
 import org.slf4j.helpers.MessageFormatter;
@@ -39,14 +40,28 @@ import org.slf4j.helpers.MessageFormatter;
  * @author Stefan Wismer
  */
 public final class MavenLoggerAdapter extends MarkerIgnoringBase {
-	final Log log;
+	Log log;
 	final String name;
 
 	// WARN: MavenLoggerAdapter constructor should have only package access so
 	// that only MavenLoggerAdapter be able to create one.
 	MavenLoggerAdapter(Log log, String name) {
-		this.log = log;
+		if (log == null) {
+			// no logger set -> create new logger, which might be replaced using setLog()
+			this.log = new SystemStreamLog();
+		} else {
+			this.log = log;
+		}
 		this.name = name;
+	}
+	
+	/**
+	 * Lazy initialize logger.
+	 * 
+	 * @param log    the maven logger
+	 */
+	public void setLog(Log log) {
+		this.log = log;
 	}
 
 	public String getName() {
