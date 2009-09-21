@@ -33,6 +33,9 @@
 
 package org.slf4j.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.maven.plugin.logging.Log;
 import org.slf4j.ILoggerFactory;
 import org.slf4j.Logger;
@@ -48,6 +51,7 @@ import org.slf4j.Logger;
 public class MavenLoggerFactory implements ILoggerFactory {
 
 	private static Log s_log;
+	private static List loggersToLazyInit = new ArrayList();
 	private Logger cachedLogger;
 
 	/*
@@ -61,6 +65,9 @@ public class MavenLoggerFactory implements ILoggerFactory {
 			logger = cachedLogger;
 			if (logger == null) {
 				logger = new MavenLoggerAdapter(s_log, name);
+				if (s_log == null) {
+					loggersToLazyInit.add(logger);
+				}
 				cachedLogger = logger;
 			}
 		}
@@ -69,5 +76,9 @@ public class MavenLoggerFactory implements ILoggerFactory {
 
 	public static void setLog(Log log) {
 		s_log = log;
+		for (int i = 0; i < loggersToLazyInit.size(); i++) {
+			((MavenLoggerAdapter) loggersToLazyInit.get(i)).setLog(s_log);
+		}
+		loggersToLazyInit.clear();
 	}
 }
