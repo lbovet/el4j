@@ -35,6 +35,11 @@
 		<level value="DEBUG"/>
 	</logger-->
 	
+	<!-- suppress logging of StaleObjectStateException. Spring will handle this for us -->
+	<logger name="org.hibernate.event.def.AbstractFlushingEventListener">
+		<level value="FATAL"/>
+	</logger>
+	
 	<root>
 		<level value="WARN"/>
 		<appender-ref ref="console"/>
