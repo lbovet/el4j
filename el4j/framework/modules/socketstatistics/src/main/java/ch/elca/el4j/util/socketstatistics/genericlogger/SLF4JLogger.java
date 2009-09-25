@@ -19,9 +19,10 @@ package ch.elca.el4j.util.socketstatistics.genericlogger;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-
 /**
  * The facade to the SLF4J logger.
+ *
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Jonas Hauenstein (JHN)
  */

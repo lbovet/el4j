@@ -21,7 +21,6 @@ import java.lang.reflect.Method;
 import java.util.Map;
 import java.util.WeakHashMap;
 
-
 /**
  * LogFactory that returns a GenericLogger.
  *
@@ -35,6 +34,8 @@ import java.util.WeakHashMap;
  *
  * If none of these logging facilities is found, it uses the JDK 
  * logging (java.util.logging).
+ *
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Jonas Hauenstein (JHN)
  */

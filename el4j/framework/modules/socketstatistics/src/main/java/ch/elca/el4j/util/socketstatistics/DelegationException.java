@@ -16,9 +16,12 @@
  */
 package ch.elca.el4j.util.socketstatistics;
 
+
 /**
  * Exception handling for class RefelctiveDelegator.
- * 
+ *
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
+ *
  * @author Jonas Hauenstein (JHN)
  */
 public class DelegationException extends RuntimeException {

@@ -22,6 +22,8 @@ import java.lang.reflect.Method;
 /**
  * The facade to the Apache Commons Logging logger.
  *
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
+ *
  * @author Jonas Hauenstein (JHN)
  */
 public class CommonsLoggingLogger extends GenericLogger {

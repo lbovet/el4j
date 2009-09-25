@@ -22,12 +22,14 @@ import java.io.InputStream;
 import ch.elca.el4j.util.socketstatistics.genericlogger.GenericLogFactory;
 import ch.elca.el4j.util.socketstatistics.genericlogger.GenericLogger;
 
+
 /**
  * Implementation of InputStream with modification for logging.
- * 
+ *
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
+ *
  * @author Jonas Hauenstein (JHN)
  */
-
 public class InputStreamLogger extends InputStream {
 
 	/**

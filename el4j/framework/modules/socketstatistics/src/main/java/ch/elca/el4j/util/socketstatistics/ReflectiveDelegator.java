@@ -26,9 +26,10 @@ import java.lang.reflect.Method;
  *
  * Inspired by http://www.javaspecialists.eu/archive/Issue168.html
  *
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
+ *
  * @author Jonas Hauenstein (JHN)
  */
-
 public class ReflectiveDelegator {
 
 	/**

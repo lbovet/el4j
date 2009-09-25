@@ -19,9 +19,10 @@ package ch.elca.el4j.util.socketstatistics.genericlogger;
 import java.util.logging.Logger;
 import java.util.logging.Level;
 
-
 /**
  * The facade to the JDK logger.
+ *
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Jonas Hauenstein (JHN)
  */

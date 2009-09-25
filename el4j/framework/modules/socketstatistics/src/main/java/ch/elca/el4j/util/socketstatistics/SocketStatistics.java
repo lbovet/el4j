@@ -27,10 +27,11 @@ import java.util.TreeSet;
 
 /**
  * Keeps statistics for all sockets / from all socket connections.
- * 
+ *
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
+ *
  * @author Jonas Hauenstein (JHN)
  */
-
 public class SocketStatistics implements SocketStatisticsMXBean {
 
 	/**
