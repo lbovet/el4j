@@ -1843,6 +1843,14 @@
 				<scope>test</scope>
 			</dependency>
 
+			<!-- module-socketstatistics -->
+			<dependency>
+				<groupId>ch.elca.el4j.modules</groupId>
+				<artifactId>module-socketstatistics</artifactId>
+				<version>${version.module-socketstatistics}</version>
+				<type>jar</type>
+			</dependency>
+
 			<!-- **************************** -->
 			<!-- * Application dependencies *-->
 			<!-- **************************** -->
@@ -2370,7 +2378,10 @@
 		<version.module-offliner>
 			1.4-SNAPSHOT
 		</version.module-offliner>
-
+		<version.module-socketstatistics>
+			1.0-SNAPSHOT
+		</version.module-socketstatistics>
+		
 		<!-- Maven utils -->
 		<version.maven-utils>
 			1.4-SNAPSHOT

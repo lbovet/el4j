@@ -44,5 +44,6 @@
 		<module>bshlauncher</module>
 		<module>cobertura-runtime</module>
 		<module>offliner</module>
+		<module>socketstatistics</module>
 	</modules>
 </project>
