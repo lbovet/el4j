@@ -32,10 +32,11 @@ import ch.elca.el4j.util.socketstatistics.genericlogger.GenericLogger;
 
 /**
  * Implementation of SocketImplFactory for the creation of SocketImplLogger.
- * 
+ *
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
+ *
  * @author Jonas Hauenstein (JHN)
  */
-
 public class LoggerSocketFactory implements SocketImplFactory {
 
 	/**

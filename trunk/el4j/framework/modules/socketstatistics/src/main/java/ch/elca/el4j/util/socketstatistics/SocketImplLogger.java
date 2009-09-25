@@ -27,10 +27,11 @@ import java.net.SocketImpl;
 /**
  * SocketImpl for use with SocketStatistics. Generates and returns modified InputStreams / OutputStreams with support
  * logging. In other cases, it behaves just like the original java.net class
- * 
+ *
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
+ *
  * @author Jonas Hauenstein (JHN)
  */
-
 public class SocketImplLogger extends SocketImpl {
 
 	/**

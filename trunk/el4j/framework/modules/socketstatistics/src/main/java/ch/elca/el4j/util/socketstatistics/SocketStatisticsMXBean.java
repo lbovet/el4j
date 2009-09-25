@@ -23,6 +23,8 @@ import java.util.Set;
  * This MBean provides the possibility to monitor open / closed socket connections
  * and their properties.
  *
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
+ *
  * @author Jonas Hauenstein (JHN)
  */
 public interface SocketStatisticsMXBean {

@@ -22,12 +22,14 @@ import java.util.Date;
 import ch.elca.el4j.util.socketstatistics.genericlogger.GenericLogFactory;
 import ch.elca.el4j.util.socketstatistics.genericlogger.GenericLogger;
 
+
 /**
  * Keeps statistics of one (open / closed) socket connection.
- * 
+ *
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
+ *
  * @author Jonas Hauenstein (JHN)
  */
-
 public class ConnectionStatistics implements Comparable<ConnectionStatistics> {
 
 	/**

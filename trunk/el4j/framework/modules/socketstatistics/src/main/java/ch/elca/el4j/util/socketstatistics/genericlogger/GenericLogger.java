@@ -21,9 +21,10 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
-
 /**
  * Base class for different facades to the actual logger interface.
+ *
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Jonas Hauenstein (JHN)
  */
