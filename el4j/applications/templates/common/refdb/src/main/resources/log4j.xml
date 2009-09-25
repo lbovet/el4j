@@ -36,8 +36,12 @@
 	<logger name="org.springframework.aop.interceptor">
 		<level value="TRACE"/>
 	</logger>
+	
+	<!-- suppress logging of StaleObjectStateException. Spring will handle this for us -->
+	<logger name="org.hibernate.event.def.AbstractFlushingEventListener">
+		<level value="FATAL"/>
+	</logger>
 
-	<!-- External tools: show only warnings -->
 
 	<root>
 		<level value="WARN"/>
