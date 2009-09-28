@@ -250,10 +250,8 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
 				+ getConnPropHolder().replaceDbName(connectionPropertiesSource)
 				+ "'");
 
-			List<Resource> resources = getResources(getSqlSourcesPath(goal));
-			if (reversed) {
-				Collections.reverse(resources);
-			}
+			List<Resource> resources = getResources(getSqlSourcesPath(goal), reversed);
+			
 			resources = updateModifiedResources(resources);
 			resources = preProcessResources(resources);
 			processResources(resources, goal, isSilent);
@@ -620,17 +618,24 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
 	 *
 	 * @param sourcePaths
 	 *            of sql files
+	 * @param reversed    is execution order of sql scripts reversed
 	 * @return Array of resources
 	 */
-	private List<Resource> getResources(List<String> sourcePaths) {
+	private List<Resource> getResources(List<String> sourcePaths, boolean reversed) {
 		HashMap<String, Resource> resourcesMap
 			= new HashMap<String, Resource>();
 		Resource[] resources;
 		List<Resource> result = new ArrayList<Resource>();
+		
+		ConnectionPropertiesHolder holder = new ConnectionPropertiesHolder(
+			getResourceLoader(!reversed, !reversed, true),
+			getProject(),
+			connectionPropertiesSource,
+			driverPropertiesSource);
 
 		try {
 			for (String source : sourcePaths) {
-				resources = getConnPropHolder().getResources(source);
+				resources = holder.getResources(source);
 				for (Resource resource : resources) {
 					if (!resourcesMap.containsKey(resource.getURL().toString())) {
 						result.add(resource);
