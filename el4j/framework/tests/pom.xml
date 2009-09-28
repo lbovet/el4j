@@ -38,5 +38,6 @@
 		<module>remoting</module>
 		<module>remoting_jaxws</module>
 		<module>tcp_forwarder</module>
+		<module>plugins</module>
 	</modules>
 </project>
