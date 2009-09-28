@@ -88,7 +88,7 @@ public class Socket {
 	 * @revised 1.4
 	 */
 	public Socket() {
-	setImpl();
+		setImpl();
 	}
 
 	/**
@@ -136,7 +136,7 @@ public class Socket {
 			security.checkConnect(epoint.getHostName(), epoint.getPort());
 		else
 			security.checkConnect(epoint.getAddress().getHostAddress(),
-					  epoint.getPort());
+			epoint.getPort());
 		}
 		impl = new SocksSocketImpl(p);
 		impl.setSocket(this);
@@ -204,11 +204,10 @@ public class Socket {
 	 * @see		SecurityManager#checkConnect
 	 */
 	public Socket(String host, int port)
-	throws UnknownHostException, IOException
-	{
+		throws UnknownHostException, IOException {
 	this(host != null ? new InetSocketAddress(host, port) :
-		 new InetSocketAddress(InetAddress.getByName(null), port),
-		 (SocketAddress) null, true);
+		new InetSocketAddress(InetAddress.getByName(null), port),
+		(SocketAddress) null, true);
 	}
 
 	/**
@@ -236,7 +235,7 @@ public class Socket {
 	 */
 	public Socket(InetAddress address, int port) throws IOException {
 		this(address != null ? new InetSocketAddress(address, port) : null, 
-		 (SocketAddress) null, true);
+			(SocketAddress) null, true);
 	}
 
 	/**
@@ -265,10 +264,10 @@ public class Socket {
 	 * @since   JDK1.1
 	 */
 	public Socket(String host, int port, InetAddress localAddr,
-		  int localPort) throws IOException {
-	this(host != null ? new InetSocketAddress(host, port) :
-		   new InetSocketAddress(InetAddress.getByName(null), port),
-		 new InetSocketAddress(localAddr, localPort), true);
+		int localPort) throws IOException {
+		this(host != null ? new InetSocketAddress(host, port) :
+		new InetSocketAddress(InetAddress.getByName(null), port),
+		new InetSocketAddress(localAddr, localPort), true);
 	}
 
 	/**
@@ -292,9 +291,9 @@ public class Socket {
 	 * @since   JDK1.1
 	 */
 	public Socket(InetAddress address, int port, InetAddress localAddr,
-		  int localPort) throws IOException {
+		int localPort) throws IOException {
 	this(address != null ? new InetSocketAddress(address, port) : null,
-		 new InetSocketAddress(localAddr, localPort), true);
+		new InetSocketAddress(localAddr, localPort), true);
 	}
 
 	/**
@@ -337,8 +336,8 @@ public class Socket {
 	@Deprecated
 	public Socket(String host, int port, boolean stream) throws IOException {
 	this(host != null ? new InetSocketAddress(host, port) :
-		   new InetSocketAddress(InetAddress.getByName(null), port),
-		 (SocketAddress) null, stream);
+		new InetSocketAddress(InetAddress.getByName(null), port),
+		(SocketAddress) null, stream);
 	}
 
 	/**
@@ -375,12 +374,12 @@ public class Socket {
 	 */
 	@Deprecated
 	public Socket(InetAddress host, int port, boolean stream) throws IOException {
-	this(host != null ? new InetSocketAddress(host, port) : null, 
-		 new InetSocketAddress(0), stream);
+	this(host != null ? new InetSocketAddress(host, port) : null,
+		new InetSocketAddress(0), stream);
 	}
 
 	private Socket(SocketAddress address, SocketAddress localAddr,
-		   boolean stream) throws IOException {
+		boolean stream) throws IOException {
 	setImpl();
 
 	// backward compatibility
@@ -407,7 +406,7 @@ public class Socket {
 	 * @throws IOException if creation fails
 	 * @since 1.4
 	 */
-	 void createImpl(boolean stream) throws SocketException {
+	void createImpl(boolean stream) throws SocketException {
 	if (impl == null) 
 		setImpl();
 	try {
@@ -520,7 +519,7 @@ public class Socket {
 		throw new IllegalArgumentException("connect: The address can't be null");
 
 	if (timeout < 0)
-	  throw new IllegalArgumentException("connect: timeout can't be negative");
+		throw new IllegalArgumentException("connect: timeout can't be negative");
 
 	if (isClosed())
 		throw new SocketException("Socket is closed");
@@ -537,10 +536,10 @@ public class Socket {
 	if (security != null) {
 		if (epoint.isUnresolved())
 		security.checkConnect(epoint.getHostName(),
-					  epoint.getPort());
+			epoint.getPort());
 		else
 		security.checkConnect(epoint.getAddress().getHostAddress(),
-					  epoint.getPort());
+			epoint.getPort());
 	}
 	if (!created)
 		createImpl(true);
@@ -549,7 +548,7 @@ public class Socket {
 	else if (timeout == 0) {
 		if (epoint.isUnresolved())
 		impl.connect(epoint.getAddress().getHostName(),
-				 epoint.getPort());
+			epoint.getPort());
 		else
 		impl.connect(epoint.getAddress(), epoint.getPort());
 	} else
@@ -592,7 +591,7 @@ public class Socket {
 		getImpl().bind(InetAddress.anyLocalAddress(), 0);
 	else
 		getImpl().bind(epoint.getAddress(),
-			   epoint.getPort());
+			epoint.getPort());
 	bound = true;
 	}
 
@@ -1021,7 +1020,7 @@ public class Socket {
 	if (isClosed())
 		throw new SocketException("Socket is closed");
 	if (timeout < 0)
-	  throw new IllegalArgumentException("timeout can't be negative");
+		throw new IllegalArgumentException("timeout can't be negative");
 
 	getImpl().setOption(SocketOptions.SO_TIMEOUT, new Integer(timeout));
 	}
@@ -1582,9 +1581,8 @@ public class Socket {
 	 * @since 1.5
 	 */
 	public void setPerformancePreferences(int connectionTime,
-										  int latency,
-										  int bandwidth)
-	{
+		int latency,
+		int bandwidth) {
 	/* Not implemented yet */
 	}
 }
