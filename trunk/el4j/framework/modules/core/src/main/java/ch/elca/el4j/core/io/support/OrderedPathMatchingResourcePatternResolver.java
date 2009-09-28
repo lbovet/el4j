@@ -46,6 +46,19 @@ public class OrderedPathMatchingResourcePatternResolver extends
 	protected boolean m_ascending = true;
 	
 	/**
+	 * The resource comparator.
+	 */
+	protected final Comparator<Resource> m_resourceComparator = new Comparator<Resource>() {
+		public int compare(Resource f1, Resource f2) {
+			if (m_ascending) {
+				return f1.getFilename().compareTo(f2.getFilename());
+			} else {
+				return -f1.getFilename().compareTo(f2.getFilename());
+			}
+		}
+	};
+	
+	/**
 	 * Create a PathMatchingResourcePatternResolver using a DefaultResourceLoader
 	 * that sorts the files in a folder alphabetically.
 	 * <p>ClassLoader access will happen via the thread context class loader.
@@ -96,15 +109,7 @@ public class OrderedPathMatchingResourcePatternResolver extends
 	protected Set doFindPathMatchingFileResources(Resource rootDirResource, String subPattern) throws IOException {
 		Set<FileSystemResource> matchingResources = super.doFindPathMatchingFileResources(rootDirResource, subPattern);
 		List<FileSystemResource> list = new ArrayList<FileSystemResource>(matchingResources);
-		Collections.sort(list, new Comparator<FileSystemResource>() {
-			public int compare(FileSystemResource f1, FileSystemResource f2) {
-				if (m_ascending) {
-					return f1.getFilename().compareTo(f2.getFilename());
-				} else {
-					return -f1.getFilename().compareTo(f2.getFilename());
-				}
-			}
-		});
+		Collections.sort(list, m_resourceComparator);
 		return new LinkedHashSet<Resource>(list);
 	}
 	
@@ -112,14 +117,9 @@ public class OrderedPathMatchingResourcePatternResolver extends
 	@SuppressWarnings("unchecked")
 	@Override
 	protected Set doFindPathMatchingJarResources(Resource rootDirResource, String subPattern) throws IOException {
-		if (m_ascending) {
-			return super.doFindPathMatchingJarResources(rootDirResource, subPattern);
-		} else {
-			Set<Resource> matchingJarResources = super.doFindPathMatchingJarResources(rootDirResource, subPattern);
-			List<Resource> list = new ArrayList<Resource>(matchingJarResources);
-			
-			Collections.reverse(list);
-			return new LinkedHashSet<Resource>(list);
-		}
+		Set<Resource> matchingJarResources = super.doFindPathMatchingJarResources(rootDirResource, subPattern);
+		List<Resource> list = new ArrayList<Resource>(matchingJarResources);
+		Collections.sort(list, m_resourceComparator);
+		return new LinkedHashSet<Resource>(list);
 	}
 }
