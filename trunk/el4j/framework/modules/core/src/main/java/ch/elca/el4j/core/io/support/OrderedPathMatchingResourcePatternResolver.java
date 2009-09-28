@@ -16,17 +16,18 @@
  */
 package ch.elca.el4j.core.io.support;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
+import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
-import org.springframework.util.StringUtils;
 
 /**
  * This class extends PathMatchingResourcePatternResolver in the way that
@@ -40,10 +41,9 @@ public class OrderedPathMatchingResourcePatternResolver extends
 	PathMatchingResourcePatternResolver {
 	
 	/**
-	 * The logger.
+	 * Is order ascending?
 	 */
-	private static final Logger s_logger = LoggerFactory.getLogger(
-		OrderedPathMatchingResourcePatternResolver.class);
+	protected boolean m_ascending = true;
 	
 	/**
 	 * Create a PathMatchingResourcePatternResolver using a DefaultResourceLoader
@@ -76,38 +76,50 @@ public class OrderedPathMatchingResourcePatternResolver extends
 		super(resourceLoader);
 	}
 	
-	/** {@inheritDoc} */
-	@Override
-	protected void doRetrieveMatchingFiles(String fullPattern, File dir,
-		Set result) throws IOException {
-		
-		if (s_logger.isDebugEnabled()) {
-			s_logger.debug("Searching directory [" + dir.getAbsolutePath() +
-					"] for files matching pattern [" + fullPattern + "]");
-		}
-		File[] dirContents = dir.listFiles();
-		
-		// this is new {
-		Arrays.sort(dirContents, new Comparator<File>() {
-			public int compare(File f1, File f2) {
-				return f1.getName().compareTo(f2.getName());
-			}
-		});
-		// } this is new
-		
-		if (dirContents == null) {
-			throw new IOException("Could not retrieve contents of directory [" + dir.getAbsolutePath() + "]");
-		}
-		for (int i = 0; i < dirContents.length; i++) {
-			File content = dirContents[i];
-			String currPath = StringUtils.replace(content.getAbsolutePath(), File.separator, "/");
-			if (content.isDirectory() && getPathMatcher().matchStart(fullPattern, currPath + "/")) {
-				doRetrieveMatchingFiles(fullPattern, content, result);
-			}
-			if (getPathMatcher().match(fullPattern, currPath)) {
-				result.add(content);
-			}
-		}
+	/**
+	 * @return    whether order is ascending or not
+	 */
+	public boolean isAscending() {
+		return m_ascending;
 	}
 
+	/**
+	 * @param ascending    is order ascending?
+	 */
+	public void setAscending(boolean ascending) {
+		m_ascending = ascending;
+	}
+	
+	/** {@inheritDoc} */
+	@SuppressWarnings("unchecked")
+	@Override
+	protected Set doFindPathMatchingFileResources(Resource rootDirResource, String subPattern) throws IOException {
+		Set<FileSystemResource> matchingResources = super.doFindPathMatchingFileResources(rootDirResource, subPattern);
+		List<FileSystemResource> list = new ArrayList<FileSystemResource>(matchingResources);
+		Collections.sort(list, new Comparator<FileSystemResource>() {
+			public int compare(FileSystemResource f1, FileSystemResource f2) {
+				if (m_ascending) {
+					return f1.getFilename().compareTo(f2.getFilename());
+				} else {
+					return -f1.getFilename().compareTo(f2.getFilename());
+				}
+			}
+		});
+		return new LinkedHashSet<Resource>(list);
+	}
+	
+	/** {@inheritDoc} */
+	@SuppressWarnings("unchecked")
+	@Override
+	protected Set doFindPathMatchingJarResources(Resource rootDirResource, String subPattern) throws IOException {
+		if (m_ascending) {
+			return super.doFindPathMatchingJarResources(rootDirResource, subPattern);
+		} else {
+			Set<Resource> matchingJarResources = super.doFindPathMatchingJarResources(rootDirResource, subPattern);
+			List<Resource> list = new ArrayList<Resource>(matchingJarResources);
+			
+			Collections.reverse(list);
+			return new LinkedHashSet<Resource>(list);
+		}
+	}
 }
