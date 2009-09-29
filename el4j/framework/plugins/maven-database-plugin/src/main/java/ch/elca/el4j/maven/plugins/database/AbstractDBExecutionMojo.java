@@ -165,6 +165,26 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
 	 * @parameter expression="${db.sqlFindReplacePattern}" default-value=""
 	 */
 	private String sqlFindReplacePattern;
+	
+	/**
+	 * Determines whether sql files <b>inside</b> a module should be sorted ascending
+	 * or descending (in the view of create scripts; drop scripts will be
+	 * executed in reverse order).
+	 * 
+	 * <p>
+	 * Example for sortFilesAscending == true:<br/>
+	 * <code>create-1.sql, create-2.sql, create-A.sql, create-B.sql</code><br/>
+	 * <code>drop-B.sql, drop-A.sql, drop-2.sql, drop-1.sql</code><br/>
+	 * </p>
+	 * <p>
+	 * Example for sortFilesAscending == false:<br/>
+	 * <code>create-B.sql, create-A.sql, create-2.sql, create-1.sql</code><br/>
+	 * <code>drop-1.sql, drop-2.sql, drop-A.sql, drop-B.sql</code><br/>
+	 * </p>
+	 * 
+	 * @parameter expression="${sortFilesAscending}" default-value="true"
+	 */
+	private boolean sortFilesAscending;
 
 	/**
 	 * The Data Holder.
@@ -628,7 +648,7 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
 		List<Resource> result = new ArrayList<Resource>();
 		
 		ConnectionPropertiesHolder holder = new ConnectionPropertiesHolder(
-			getResourceLoader(!reversed, !reversed, true),
+			getResourceLoader(!reversed, !reversed == sortFilesAscending, true),
 			getProject(),
 			connectionPropertiesSource,
 			driverPropertiesSource);
