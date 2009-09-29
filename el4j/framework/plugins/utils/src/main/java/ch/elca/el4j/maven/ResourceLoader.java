@@ -4,13 +4,13 @@
  * Copyright (C) 2006 by ELCA Informatique SA, Av. de la Harpe 22-24,
  * 1000 Lausanne, Switzerland, http://www.elca.ch
  *
- * EL4J is published under the GNU General Public License (GPL) Version 2.0.
- * http://www.gnu.org/licenses/
+ * EL4J is published under the GNU Lesser General Public License (LGPL)
+ * Version 2.1. See http://www.gnu.org/licenses/
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
+ * GNU Lesser General Public License for more details.
  *
  * For alternative licensing, please contact info@elca.ch
  */
@@ -77,23 +77,30 @@ public class ResourceLoader {
 	private ListResourcePatternResolverDecorator m_dependenciesResolver;
 
 	/**
-	 * Is most specific resource last?
+	 * <code>true</code> if resources inside modules must be sorted ascending.
 	 */
-	private final boolean m_mostSpecificResourceLast;
+	private final boolean m_mostSpecificModuleLast;
+
+	/**
+	 * Should resources inside modules be sorted ascending?
+	 */
+	private final boolean m_orderModuleResourcesAscending;
 	
 	/**
 	 * Create a resource loader.
 	 * @param repository Maven repository for artifacts
 	 * @param project Maven project we're working on
 	 * @param walker The Dependency GraphWalker
-	 * @param mostSpecificResourceLast    Indicates whether the most specific resource should be the last resource
-	 *                                    in the fetched resource array.
-	 * @param includeTestResources        Whether test resources should be include
+	 * @param mostSpecificModuleLast    Indicates whether the most specific module should be the last resource
+	 *                                  in the fetched resource array.
+	 * @param orderModuleResourcesAscending    <code>true</code> if resources inside modules must be sorted ascending
+	 * @param includeTestResources      Whether test resources should be include
 	 */
-	public ResourceLoader(ArtifactRepository repository,
-		MavenProject project, DepGraphWalker walker, boolean mostSpecificResourceLast, boolean includeTestResources) {
+	public ResourceLoader(ArtifactRepository repository, MavenProject project, DepGraphWalker walker,
+		boolean mostSpecificModuleLast, boolean orderModuleResourcesAscending, boolean includeTestResources) {
 		
-		m_mostSpecificResourceLast = mostSpecificResourceLast;
+		m_mostSpecificModuleLast = mostSpecificModuleLast;
+		m_orderModuleResourcesAscending = orderModuleResourcesAscending;
 		
 		List<URL> projectUrls = getProjectUrls(repository, project, includeTestResources);
 		List<URL> dependenciesUrls = walker.getDependencyURLs(includeTestResources ? "test" : "runtime");
@@ -112,10 +119,17 @@ public class ResourceLoader {
 	}
 	
 	/**
-	 * @return    <code>true</code> if most specific resource is last
+	 * @return    <code>true</code> if most specific module is last
 	 */
-	public boolean isMostSpecificResourceLast() {
-		return m_mostSpecificResourceLast;
+	public boolean isMostSpecificModuleLast() {
+		return m_mostSpecificModuleLast;
+	}
+	
+	/**
+	 * @return    <code>true</code> if resources inside modules must be sorted ascending
+	 */
+	public boolean isOrderModuleResourcesAscending() {
+		return m_orderModuleResourcesAscending;
 	}
 
 	
@@ -196,10 +210,15 @@ public class ResourceLoader {
 		URLClassLoader classloader = URLClassLoader.newInstance(
 			urls.toArray(new URL[0]));
 		
+		OrderedPathMatchingResourcePatternResolver patternResovler
+			= new OrderedPathMatchingResourcePatternResolver(classloader);
+		// flip order if mostSpecificModuleLast is true
+		patternResovler.setAscending(m_orderModuleResourcesAscending != m_mostSpecificModuleLast);
+		
 		ListResourcePatternResolverDecorator resolver = new ListResourcePatternResolverDecorator(
 			new ManifestOrderedConfigLocationProvider(),
-			new OrderedPathMatchingResourcePatternResolver(classloader));
-		resolver.setMostSpecificResourceLast(m_mostSpecificResourceLast);
+			patternResovler);
+		resolver.setMostSpecificResourceLast(m_mostSpecificModuleLast);
 		resolver.setMergeWithOuterResources(true);
 		
 		return resolver;

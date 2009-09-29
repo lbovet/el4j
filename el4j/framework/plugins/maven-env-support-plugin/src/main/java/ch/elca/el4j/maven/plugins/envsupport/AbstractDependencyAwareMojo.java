@@ -149,9 +149,25 @@ public abstract class AbstractDependencyAwareMojo extends AbstractMojo {
 	 * @return    the resource loader.
 	 */
 	protected ResourceLoader getResourceLoader(boolean mostSpecificResourceLast, boolean includeTestResources) {
-		if (m_resourceLoader == null || m_resourceLoader.isMostSpecificResourceLast() != mostSpecificResourceLast) {
+		return getResourceLoader(mostSpecificResourceLast, true, includeTestResources);
+	}
+	
+	/**
+	 * Get the resource loader (module aware version).
+	 * 
+	 * @param mostSpecificModuleLast           Indicates whether the most specific module should be the last resource
+	 *                                         in the fetched resource array.
+	 * @param orderModuleResourcesAscending    <code>true</code> if resources inside modules must be sorted ascending
+	 * @param includeTestResources             Whether test resources should be include
+	 * @return    the resource loader.
+	 */
+	protected ResourceLoader getResourceLoader(boolean mostSpecificModuleLast, boolean orderModuleResourcesAscending,
+		boolean includeTestResources) {
+		if (m_resourceLoader == null || m_resourceLoader.isMostSpecificModuleLast() != mostSpecificModuleLast
+			|| m_resourceLoader.isOrderModuleResourcesAscending() != orderModuleResourcesAscending) {
 			m_resourceLoader = new ResourceLoader(
-				localRepository, project, getGraphWalker(), mostSpecificResourceLast, includeTestResources);
+				localRepository, project, getGraphWalker(), mostSpecificModuleLast, orderModuleResourcesAscending,
+				includeTestResources);
 		}
 		return m_resourceLoader;
 	}

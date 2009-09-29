@@ -4,19 +4,21 @@
  * Copyright (C) 2006 by ELCA Informatique SA, Av. de la Harpe 22-24,
  * 1000 Lausanne, Switzerland, http://www.elca.ch
  *
- * EL4J is published under the GNU General Public License (GPL) Version 2.0.
- * http://www.gnu.org/licenses/
+ * EL4J is published under the GNU Lesser General Public License (LGPL)
+ * Version 2.1. See http://www.gnu.org/licenses/
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
+ * GNU Lesser General Public License for more details.
  *
  * For alternative licensing, please contact info@elca.ch
  */
 package ch.elca.el4j.maven.plugins.database;
 
+import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.SQLException;
@@ -25,11 +27,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 import java.util.regex.Pattern;
 
 import org.apache.maven.artifact.Artifact;
 import org.apache.maven.plugin.MojoFailureException;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.util.StringUtils;
 
@@ -166,6 +170,14 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
 	 * @parameter expression="${db.sqlFindReplacePattern}" default-value=""
 	 */
 	private String sqlFindReplacePattern;
+	
+	/**
+	 * Whether to sort files ascending or descending (for create scripts).
+	 * Drop scripts for example will be executed in reverse order
+	 * 
+	 * @parameter expression="${sortFilesAscending}" default-value="true"
+	 */
+	private boolean sortFilesAscending;
 
 	/**
 	 * The Data Holder.
@@ -243,10 +255,7 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
 				+ getConnPropHolder().replaceDbName(connectionPropertiesSource)
 				+ "'");
 
-			List<Resource> resources = getResources(getSqlSourcesPath(goal));
-			if (reversed) {
-				Collections.reverse(resources);
-			}
+			List<Resource> resources = getResources(getSqlSourcesPath(goal), reversed);
 			resources = preProcessResources(resources);
 			processResources(resources, goal, isSilent);
 		} else {
@@ -516,17 +525,24 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
 	 *
 	 * @param sourcePaths
 	 *            of sql files
+	 * @param reversed    is execution order of sql scripts reversed
 	 * @return Array of resources
 	 */
-	private List<Resource> getResources(List<String> sourcePaths) {
+	private List<Resource> getResources(List<String> sourcePaths, boolean reversed) {
 		HashMap<String, Resource> resourcesMap
 			= new HashMap<String, Resource>();
 		Resource[] resources;
 		List<Resource> result = new ArrayList<Resource>();
+		
+		ConnectionPropertiesHolder holder = new ConnectionPropertiesHolder(
+			getResourceLoader(!reversed, !reversed == sortFilesAscending, true),
+			getProject(),
+			connectionPropertiesSource,
+			driverPropertiesSource);
 
 		try {
 			for (String source : sourcePaths) {
-				resources = getConnPropHolder().getResources(source);
+				resources = holder.getResources(source);
 				for (Resource resource : resources) {
 					if (!resourcesMap.containsKey(resource.getURL().toString())) {
 						result.add(resource);
