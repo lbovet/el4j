@@ -26,7 +26,12 @@ import java.util.regex.Pattern;
 /**
  * Reader for xml files.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author David Bernhard (DBD)
  */

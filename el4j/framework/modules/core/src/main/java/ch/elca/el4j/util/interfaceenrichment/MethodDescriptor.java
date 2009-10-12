@@ -20,7 +20,12 @@ package ch.elca.el4j.util.interfaceenrichment;
 /**
  * Class to describe a method. This is used to decorate methods.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Martin Zeltner (MZE)
  */

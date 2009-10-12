@@ -21,8 +21,8 @@ import java.lang.reflect.Proxy;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.aop.framework.AopProxyUtils;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
@@ -58,7 +58,12 @@ import net.sf.cglib.proxy.Enhancer;
  * because it waits for this context to be fully initialized. If another
  * context is taken it will wait forever.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Adrian Moos (AMS)
  * @author Alex Mathey (AMA)
@@ -68,8 +73,8 @@ public class DefaultDaoRegistry implements DaoRegistry, ApplicationContextAware,
 	/**
 	 * Private logger of this class.
 	 */
-	private static Logger s_logger
-		= LoggerFactory.getLogger(DefaultDaoRegistry.class);
+	private static Log s_logger
+		= LogFactory.getLog(DefaultDaoRegistry.class);
 	
 	/**
 	 * Whether to collect DAOs automatically.

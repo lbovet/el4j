@@ -30,7 +30,12 @@ import org.apache.maven.project.MavenProject;
  * Lists for the current project all Dependencies, Managed Dependencies, Plugins
  * and managed Plugins if a newer version is available.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Philippe Jacot (PJA)
  *

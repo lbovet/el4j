@@ -3,9 +3,6 @@ package ch.elca.el4j.tests.util.codingsupport.testclasses;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @svnLink $Revision$;$Date$;$Author$;$URL$
- */
 public class DefaultPerson implements Person {
 	protected String firstName;
 	protected String lastName;

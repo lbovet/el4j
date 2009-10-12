@@ -31,8 +31,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Properties;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.jdom.Element;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
@@ -59,15 +59,20 @@ import ch.elca.el4j.services.xmlmerge.merge.DefaultXmlMerge;
  * This class tests several functionalities of the xml_merge module, using a
  * <code>DefaultXmlMerge</code> instance.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Laurent Bovet (LBO)
  * @author Alex Mathey (AMA)
  */
 public class DefaultMergeTest {
 
-	private static Logger logger
-		= LoggerFactory.getLogger(DefaultMergeTest.class);
+	private static Log logger
+		= LogFactory.getLog(DefaultMergeTest.class);
 	
 	/**
 	 * New line.
@@ -513,7 +518,12 @@ public class DefaultMergeTest {
 	 * This class is a custom matcher. With this matcher, the original and patch
 	 * elements match only if their tag name is "servlet-name".
 	 *
-	 * @svnLink $Revision$;$Date$;$Author$;$URL$
+	 * <script type="text/javascript">printFileStatus
+	 *   ("$URL$",
+	 *    "$Revision$",
+	 *    "$Date$",
+	 *    "$Author$"
+	 * );</script>
 	 *
 	 * @author Laurent Bovet (LBO)
 	 * @author Alex Mathey (AMA)

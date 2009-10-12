@@ -24,8 +24,8 @@ import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import ch.elca.el4j.util.codingsupport.Reject;
 
@@ -34,7 +34,12 @@ import ch.elca.el4j.util.codingsupport.Reject;
  * This class is an abstract dto which uses an integer as key value and also
  * an integer for optimistic locking version controlling.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Martin Zeltner (MZE)
  */
@@ -46,7 +51,7 @@ public abstract class AbstractIntKeyIntOptimisticLockingDto
 	/**
 	 * The logger.
 	 */
-	private static Logger s_logger = LoggerFactory.getLogger(AbstractIntKeyIntOptimisticLockingDto.class);
+	private static Log s_logger = LogFactory.getLog(AbstractIntKeyIntOptimisticLockingDto.class);
 
 	/**
 	 * Primary key.

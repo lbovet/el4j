@@ -12,7 +12,7 @@
 	<parent>
 		<groupId>ch.elca.el4j.modules</groupId>
 		<artifactId>el4j-framework-modules</artifactId>
-		<version>1.7-SNAPSHOT</version>
+		<version>1.6</version>
 	</parent>
 
 	<artifactId>module-hibernate</artifactId>
@@ -42,11 +42,11 @@
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-core</artifactId>
-			<version>3.3.2.GA</version>
+			<version>3.3.1.GA</version>
 			<exclusions>
 				<!--
-					Exclude dependencies if they were taken from another
-					repository than public-el4.elca-services.ch
+					Exclude the dependencies if they were taken from another
+					repository than the el4.elca-services.ch
 				-->
 				<exclusion>
 					<groupId>javax.transaction</groupId>
@@ -134,7 +134,7 @@
 		<dependency>
 			<groupId>javassist</groupId>
 			<artifactId>javassist</artifactId>
-			<version>3.8.0.GA</version>
+			<version>3.4.GA</version>
 		</dependency>
 		<dependency>
 			<groupId>c3p0</groupId>

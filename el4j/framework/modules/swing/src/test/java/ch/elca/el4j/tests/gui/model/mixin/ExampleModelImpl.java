@@ -5,13 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * An implementation of the example model.
- *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
- *
- * @author Stefan Wismer (SWI)
- */
 public class ExampleModelImpl implements ExampleModel {
 	private String m_property1;
 	private List<Integer> m_list;

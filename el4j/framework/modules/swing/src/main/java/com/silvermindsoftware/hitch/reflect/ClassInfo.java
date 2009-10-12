@@ -21,9 +21,6 @@ import java.util.List;
  * limitations under the License.
  */
 
-/**
- * @svnLink $Revision$;$Date$;$Author$;$URL$
- */
 public class ClassInfo {
 
 	/* Class Hierarchy */

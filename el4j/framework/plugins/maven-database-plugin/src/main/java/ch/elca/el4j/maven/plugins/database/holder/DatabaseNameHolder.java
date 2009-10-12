@@ -4,13 +4,13 @@
  * Copyright (C) 2006 by ELCA Informatique SA, Av. de la Harpe 22-24,
  * 1000 Lausanne, Switzerland, http://www.elca.ch
  *
- * EL4J is published under the GNU Lesser General Public License (LGPL)
- * Version 2.1. See http://www.gnu.org/licenses/
+ * EL4J is published under the GNU General Public License (GPL) Version 2.0.
+ * http://www.gnu.org/licenses/
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU Lesser General Public License for more details.
+ * GNU General Public License for more details.
  *
  * For alternative licensing, please contact info@elca.ch
  */
@@ -19,8 +19,8 @@ package ch.elca.el4j.maven.plugins.database.holder;
 import java.io.IOException;
 import java.util.Properties;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.maven.project.MavenProject;
 import org.springframework.core.io.Resource;
 
@@ -30,7 +30,12 @@ import ch.elca.el4j.maven.ResourceLoader;
  *
  * This class holds the DatabaseName.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author David Stefan (DST)
  */
@@ -39,8 +44,8 @@ public class DatabaseNameHolder {
 	/**
 	 * Logger.
 	 */
-	private static Logger s_logger
-		= LoggerFactory.getLogger(DatabaseNameHolder.class);
+	private static Log s_logger
+		= LogFactory.getLog(DatabaseNameHolder.class);
 	
 	/**
 	 * Placeholder for database name.

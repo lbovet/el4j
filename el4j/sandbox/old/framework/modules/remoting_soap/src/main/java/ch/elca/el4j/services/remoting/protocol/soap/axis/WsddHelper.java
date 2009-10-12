@@ -37,7 +37,12 @@ import ch.elca.el4j.core.exceptions.BaseRTException;
 /**
  * This class is used to help creating wssd documents for axis deployment.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Martin Zeltner (MZE)
  */

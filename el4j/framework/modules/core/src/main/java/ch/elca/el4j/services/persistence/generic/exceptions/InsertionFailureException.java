@@ -23,7 +23,12 @@ import org.springframework.dao.InvalidDataAccessResourceUsageException;
  * This data access exception will be thrown in business methods, if data could
  * not be inserted.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Martin Zeltner (MZE)
  */

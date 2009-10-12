@@ -12,18 +12,19 @@
 	<parent>
 		<groupId>ch.elca.el4j.maven.plugins</groupId>
 		<artifactId>el4j-maven-plugins</artifactId>
-		<version>1.7-SNAPSHOT</version>
+		<version>1.6</version>
 	</parent>
 
 	<artifactId>maven-spring-ide-plugin</artifactId>
 	<packaging>maven-plugin</packaging>
-	<version>${version.maven-spring-ide-plugin}</version>
+	<version>${version.maven-beans-plugin}</version>
 
 	<name>EL4J maven spring-ide plugin</name>
 	<description>
 		A plugin which finds all configurations of a given
 		ModuleApplicationContext and autmoatically
 		generate the .springBeans file that is used by SpringIDE.
+		(Backport of EL4J 1.7)
 	</description>
 	<build>
 		<plugins>
@@ -60,14 +61,14 @@
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-nop</artifactId>
-			<version>${version.slf4j}</version>
+			<version>1.5.2</version>
 			<scope>test</scope>
 		</dependency>
 		
 		<dependency>
-			<groupId>ch.elca.el4j.maven.plugins</groupId>
-			<artifactId>maven-utils</artifactId>
-			<version>${version.maven-utils}</version>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-maven</artifactId>
+			<version>1.5.2</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.maven</groupId>
@@ -76,6 +77,10 @@
 		<dependency>
 			<groupId>org.apache.maven</groupId>
 			<artifactId>maven-project</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>ch.elca.el4j.modules</groupId>
+			<artifactId>module-core</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.velocity</groupId>

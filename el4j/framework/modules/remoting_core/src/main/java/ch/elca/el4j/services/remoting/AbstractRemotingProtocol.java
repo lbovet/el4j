@@ -20,8 +20,8 @@ package ch.elca.el4j.services.remoting;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.ApplicationContext;
@@ -33,7 +33,12 @@ import ch.elca.el4j.core.contextpassing.ImplicitContextPassingRegistry;
  * This abstract class defines a base for remote protocols. It contains
  * basically the host name and port number.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Martin Zeltner (MZE)
  */
@@ -42,8 +47,8 @@ public abstract class AbstractRemotingProtocol implements
 	/**
 	 * Private logger.
 	 */
-	private static Logger s_logger
-		= LoggerFactory.getLogger(AbstractRemotingProtocol.class);
+	private static Log s_logger
+		= LogFactory.getLog(AbstractRemotingProtocol.class);
 
 	/**
 	 * With this ApplicationContext the current bean has been created.

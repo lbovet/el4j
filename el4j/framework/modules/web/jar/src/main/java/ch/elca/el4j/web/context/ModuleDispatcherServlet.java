@@ -29,7 +29,12 @@ import org.springframework.web.servlet.DispatcherServlet;
  * {@link ch.elca.el4j.web.context.ModuleWebApplicationContext} which
  * preserves the order of module dependencies when resources are resolved.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Andreas Bur (ABU)
  */

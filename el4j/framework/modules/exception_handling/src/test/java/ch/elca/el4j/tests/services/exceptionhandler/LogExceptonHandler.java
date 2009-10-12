@@ -18,7 +18,7 @@
 package ch.elca.el4j.tests.services.exceptionhandler;
 
 import org.aopalliance.intercept.MethodInvocation;
-import org.slf4j.Logger;
+import org.apache.commons.logging.Log;
 
 import ch.elca.el4j.services.exceptionhandler.AbstractExceptionHandlerInterceptor;
 import ch.elca.el4j.services.exceptionhandler.handler.SimpleLogExceptionHandler;
@@ -26,7 +26,12 @@ import ch.elca.el4j.services.exceptionhandler.handler.SimpleLogExceptionHandler;
 /**
  * Simple log exception handler used in the context handler tests.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Andreas Bur (ABU)
  */
@@ -40,7 +45,7 @@ public class LogExceptonHandler extends SimpleLogExceptionHandler {
 	 */
 	protected Object handleException(Throwable t,
 			AbstractExceptionHandlerInterceptor exceptionInvoker,
-			MethodInvocation invocation, Logger logger) throws Throwable {
+			MethodInvocation invocation, Log logger) throws Throwable {
 		
 		s_numberOfHandleCalls++;
 		return super.handleException(t, exceptionInvoker, invocation, logger);

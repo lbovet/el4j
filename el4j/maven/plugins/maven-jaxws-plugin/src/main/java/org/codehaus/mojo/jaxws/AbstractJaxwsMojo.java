@@ -30,9 +30,7 @@ import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.project.MavenProject;
 
-
 /**
- * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author dantran <dantran@apache.org>
  * @version $Id$ *

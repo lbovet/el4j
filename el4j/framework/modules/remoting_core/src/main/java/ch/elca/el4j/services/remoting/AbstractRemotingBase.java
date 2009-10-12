@@ -25,7 +25,12 @@ import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
 /**
  * This class is used to manage the given remote protocol.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Martin Zeltner (MZE)
  */

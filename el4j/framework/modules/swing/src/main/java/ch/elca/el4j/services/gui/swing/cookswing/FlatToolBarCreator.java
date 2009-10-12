@@ -34,7 +34,12 @@ import cookxml.core.interfaces.Creator;
  * A cookSwing creator for &lt;flattoolbar&gt;s, a convenience {@link JToolBar}
  * having flat style.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Stefan Wismer (SWI)
  */

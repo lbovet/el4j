@@ -16,8 +16,8 @@
  */
 package ch.elca.el4j.tests.services.remoting.loadbalancing.server;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext ;
 
@@ -28,9 +28,8 @@ import ch.elca.el4j.core.context.ModuleApplicationContext;
 /**
  * Defines the server used to test the idempotent invocation module. Launches a
  * business object whose unique purpose is to illustrate the behavior of the
- * module.
- *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * module. <script type="text/javascript">printFileStatus ("$URL$",
+ * "$Revision$", "$Date$", "$Author$" );</script>
  *
  * @author Stefan Pleisch (SPL)
  */
@@ -39,7 +38,7 @@ public class LbTestServerNoContextPassing {
 	/**
 	 * Private logger.
 	 */
-	private static Logger s_logger = LoggerFactory.getLogger(LbTestServerNoContextPassing.class);
+	private static Log s_logger = LogFactory.getLog(LbTestServerNoContextPassing.class);
 
 	/** {@inheritDoc} */
 	public static void main(String args[]) {

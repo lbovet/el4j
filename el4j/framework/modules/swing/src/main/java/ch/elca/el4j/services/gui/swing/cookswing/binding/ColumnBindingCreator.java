@@ -16,8 +16,8 @@
  */
 package ch.elca.el4j.services.gui.swing.cookswing.binding;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import org.jdesktop.application.ApplicationContext;
 import org.jdesktop.beansbinding.Property;
@@ -36,7 +36,12 @@ import cookxml.core.exception.CreatorException;
  * The cookSwing creator for general purpose &lt;columnbinding&gt;s inside
  * &lt;tablebinding&gt;s.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Stefan Wismer (SWI)
  */
@@ -44,7 +49,7 @@ public class ColumnBindingCreator extends AbstractBindingCreator {
 	/**
 	 * The logger.
 	 */
-	private static Logger s_logger = LoggerFactory.getLogger(ColumnBindingCreator.class);
+	private static Log s_logger = LogFactory.getLog(ColumnBindingCreator.class);
 	
 	// <column> specific attributes
 	protected static final String LABEL = "label";

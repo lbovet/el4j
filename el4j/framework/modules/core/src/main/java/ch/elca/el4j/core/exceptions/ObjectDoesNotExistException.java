@@ -19,7 +19,12 @@ package ch.elca.el4j.core.exceptions;
 /**
  * This exception will be thrown when an object does not exist.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Martin Zeltner (MZE)
  * @deprecated Spring data access exception will be used.

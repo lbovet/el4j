@@ -22,8 +22,8 @@ import java.util.List;
 
 import org.aopalliance.aop.Advice;
 import org.aopalliance.intercept.MethodInterceptor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.aop.support.StaticMethodMatcherPointcutAdvisor;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.metadata.commons.CommonsAttributes;
@@ -71,7 +71,12 @@ import ch.elca.el4j.util.metadata.annotations.Annotations;
  *       the configuration file.</dd>
  * </dl>
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Raphael Boog (RBO)
  * @author Martin Zeltner (MZE)
@@ -81,8 +86,8 @@ public class GenericMetaDataAdvisor extends StaticMethodMatcherPointcutAdvisor
 	/**
 	 * Private logger.
 	 */
-	private static Logger s_logger
-		= LoggerFactory.getLogger(GenericMetaDataAdvisor.class);
+	private static Log s_logger
+		= LogFactory.getLog(GenericMetaDataAdvisor.class);
 
 	/**
 	 * The metadata source to lookup metadata.

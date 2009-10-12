@@ -17,10 +17,10 @@
 
 package ch.elca.el4j.services.security.authentication;
 
-import org.springframework.security.Authentication; 
-import org.springframework.security.context.SecurityContextHolder;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.acegisecurity.Authentication;
+import org.acegisecurity.context.SecurityContextHolder;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import ch.elca.el4j.core.contextpassing.AbstractImplicitContextPasser;
 
@@ -28,7 +28,12 @@ import ch.elca.el4j.core.contextpassing.AbstractImplicitContextPasser;
  * The ImplicitContextPasser for the AuthenticationService. It handles the
  * passing of the AuthenticationData and stores it in a ThreadLocal.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Raphael Boog (RBO)
  * @author Andreas Pfenninger (APR)
@@ -49,8 +54,8 @@ public class AuthenticationServiceContextPasser extends
 	/**
 	 * Private logger of this class.
 	 */
-	private static Logger s_logger = LoggerFactory
-		.getLogger(AuthenticationServiceContextPasser.class);
+	private static Log s_logger = LogFactory
+		.getLog(AuthenticationServiceContextPasser.class);
 
 	/**
 	 * This method is called by the client that makes a remote invocation to

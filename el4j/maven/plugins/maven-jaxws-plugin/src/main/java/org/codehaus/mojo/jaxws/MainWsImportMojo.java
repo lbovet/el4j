@@ -4,8 +4,6 @@ import java.io.File;
 
 /**
  * Parses wsdl and binding files and generates Java code needed to access it.
- * 
- * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @goal wsimport
  * @phase generate-sources

@@ -39,7 +39,12 @@ import ch.elca.el4j.util.collections.helpers.Filter;
 /**
  * Test class to test {@link ObservableFilteredList}.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Stefan Wismer (SWI)
  */

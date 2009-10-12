@@ -6,10 +6,8 @@ import org.hibernate.proxy.HibernateProxyHelper;
 import org.springframework.util.Assert;
 
 /**
- * Describes the location of a class, accessible through the given classloader. The url points to
+ * Describes the location of a class, accessable through the given classloader. The url points to
  * the real class file location.
- *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
  */
 public class ClassLocation {
 

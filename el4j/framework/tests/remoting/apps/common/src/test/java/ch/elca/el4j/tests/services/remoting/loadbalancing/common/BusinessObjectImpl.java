@@ -16,17 +16,17 @@
  */
 package ch.elca.el4j.tests.services.remoting.loadbalancing.common;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
 /**
  * Defines a dummy business object whose sole purpose is the illustration of the
- * idempotent invocation functionality.
- *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * idempotent invocation functionality. <script
+ * type="text/javascript">printFileStatus ("$URL$", "$Revision$", "$Date$",
+ * "$Author$" );</script>
  *
  * @author Stefan Pleisch (SPL)
  */
@@ -64,8 +64,8 @@ public class BusinessObjectImpl implements BusinessObject, ApplicationContextAwa
 	/**
 	 * Private logger.
 	 */
-	private static Logger s_logger = LoggerFactory
-		.getLogger(BusinessObjectImpl.class);
+	private static Log s_logger = LogFactory
+		.getLog(BusinessObjectImpl.class);
 
 	
 }

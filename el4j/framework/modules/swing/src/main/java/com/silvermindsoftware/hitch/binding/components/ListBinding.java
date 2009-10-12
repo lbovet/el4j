@@ -21,8 +21,8 @@ import java.util.List;
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.jdesktop.beansbinding.AutoBinding;
 import org.jdesktop.beansbinding.Property;
 import org.jdesktop.swingbinding.JListBinding;
@@ -37,7 +37,12 @@ import ch.elca.el4j.util.config.GenericConfig;
 /**
  * This class creates bindings for lists.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Stefan Wismer (SWI)
  */
@@ -45,7 +50,7 @@ public class ListBinding extends AbstractBindingCreator<JList> {
 	/**
 	 * The logger.
 	 */
-	private static Logger s_logger = LoggerFactory.getLogger(ListBinding.class);
+	private static Log s_logger = LogFactory.getLog(ListBinding.class);
 	
 	/**
 	 * Which property to show in the list.

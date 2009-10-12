@@ -16,6 +16,7 @@
  */
 package ch.elca.el4j.maven.plugins.envsupport.handlers;
 
+import org.apache.maven.plugin.logging.Log;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
@@ -25,16 +26,22 @@ import ch.elca.el4j.maven.plugins.envsupport.AbstractEnvSupportMojo;
 /**
  * A verbose env.xml handler for &lt;placeholders&gt tags.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Stefan Wismer (SWI)
  */
 public class ExplainPlaceholdersHandler extends AbstractExplainHandler {
 	/**
 	 * @param mojo      the current mojo
+	 * @param logger    the maven logger
 	 */
-	public ExplainPlaceholdersHandler(AbstractEnvSupportMojo mojo) {
-		super(mojo);
+	public ExplainPlaceholdersHandler(AbstractEnvSupportMojo mojo, Log logger) {
+		super(mojo, logger);
 	}
 	
 	/** {@inheritDoc} */

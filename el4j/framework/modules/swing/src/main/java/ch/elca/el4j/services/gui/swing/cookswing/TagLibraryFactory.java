@@ -40,7 +40,12 @@ import ch.elca.el4j.services.gui.swing.cookswing.designgridlayout.RowCreator;
 /**
  * This factory creates the enhanced tag library.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Stefan Wismer (SWI)
  */

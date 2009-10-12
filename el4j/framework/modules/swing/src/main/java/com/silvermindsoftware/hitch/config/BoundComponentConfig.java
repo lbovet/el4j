@@ -18,9 +18,6 @@ package com.silvermindsoftware.hitch.config;
 
 import com.silvermindsoftware.hitch.ReadOnly;
 
-/**
- * @svnLink $Revision$;$Date$;$Author$;$URL$
- */
 public class BoundComponentConfig {
 
 	private Class type = void.class;

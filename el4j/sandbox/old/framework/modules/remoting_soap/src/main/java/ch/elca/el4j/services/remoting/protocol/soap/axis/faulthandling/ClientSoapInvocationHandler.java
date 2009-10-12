@@ -31,7 +31,12 @@ import org.springframework.remoting.RemoteAccessException;
  * Invocation handler to translate <code>AxisFault</code>s to their business
  * exceptions.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Martin Zeltner (MZE)
  */

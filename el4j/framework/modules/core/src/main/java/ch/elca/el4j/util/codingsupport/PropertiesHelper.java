@@ -41,7 +41,12 @@ import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
  * The files can be indicated absolutely or via classpath, i.e. either by
  * "file:C:/folder/..." or by "classpath:folder/...".
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Raphael Boog (RBO)
  */

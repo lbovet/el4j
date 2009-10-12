@@ -24,7 +24,12 @@ import java.lang.annotation.Target;
 /**
  * lists all members of this entity type, in order.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Adrian Moos (AMS)
  */

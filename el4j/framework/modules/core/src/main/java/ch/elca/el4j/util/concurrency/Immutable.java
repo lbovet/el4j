@@ -27,7 +27,12 @@ import java.lang.annotation.*;
  * Immutable objects are inherently thread-safe; they may be passed between threads or
  * published without synchronization.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  */
 @Documented
 @Target(ElementType.TYPE)

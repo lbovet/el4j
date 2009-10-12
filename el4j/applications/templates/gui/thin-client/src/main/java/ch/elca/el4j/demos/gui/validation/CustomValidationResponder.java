@@ -22,8 +22,8 @@ import java.util.Map;
 
 import javax.swing.JComponent;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.hibernate.validator.InvalidValue;
 
 import com.silvermindsoftware.hitch.validation.HibernateValidationCapability;
@@ -34,7 +34,12 @@ import com.silvermindsoftware.hitch.validation.response.DefaultValidationRespond
  *
  * @see BindingDemoForm
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Stefan Wismer (SWI)
  */
@@ -42,7 +47,7 @@ public class CustomValidationResponder extends DefaultValidationResponder {
 	/**
 	 * The logger.
 	 */
-	private static final Logger s_logger = LoggerFactory.getLogger(
+	private static final Log s_logger = LogFactory.getLog(
 		DefaultValidationResponder.class);
 	
 	/**

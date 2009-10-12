@@ -24,7 +24,12 @@ import ch.elca.el4j.services.exceptionhandler.AbstractExceptionHandlerIntercepto
 /**
  * This exception handler simply forwards all exceptions.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Andreas Bur (ABU)
  */

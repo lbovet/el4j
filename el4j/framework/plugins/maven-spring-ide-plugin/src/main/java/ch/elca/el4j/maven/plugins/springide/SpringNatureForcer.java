@@ -34,28 +34,27 @@ import org.slf4j.LoggerFactory;
  * writes them into the .springBeans file. 
  * Additionally it can set the springNature in the .projects file of eclipse.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "DTH"
+ * );</script>
  *
  * @author Daniel Thomas (DTH)
  */
 
-public final class SpringNatureForcer {
+public class SpringNatureForcer {
 	
 	/**
 	 * The logger.
 	 */
 	private static final Logger s_logger = LoggerFactory.getLogger(SpringNatureForcer.class);
 	
-	/**
-	 * Hidden constructor.
-	 */
-	private SpringNatureForcer() { }
 	
 	/**
 	 * Forces SpringNature (in the .project file that is checked by eclipse). -> adds a tag in the nature tag of the
 	 * (xml) .project file
-	 * 
-	 * @param baseDirectory    the project base directory
 	 */
 	public static void forceSpringNature(File baseDirectory) {
 		try {

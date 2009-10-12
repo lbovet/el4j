@@ -30,7 +30,12 @@ import net.sf.jasperreports.engine.JasperPrint;
  * This class exports a JasperPrint to a PDF file by popping up a dialog file.
  * The compilation and filling of the report is done in the report generator.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @see ch.elca.el4j.demos.jasper.gui.reporting.ReportGenerator
  *

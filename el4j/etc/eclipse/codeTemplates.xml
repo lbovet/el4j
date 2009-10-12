@@ -9,7 +9,12 @@
  */</template><template autoinsert="false" context="typecomment_context" deleted="false" description="Comment for created types" enabled="true" id="org.eclipse.jdt.ui.text.codetemplates.typecomment" name="typecomment">/**
  * This class is ...
  *
- * @svnLink $$Revision$$;$$Date$$;$$Author$$;$$URL$$
+ * &lt;script type="text/javascript"&gt;printFileStatus
+ *   ("$$URL$$",
+ *    "$$Revision$$",
+ *    "$$Date$$",
+ *    "$$Author$$"
+ * );&lt;/script&gt;
  *
  * @author your name (???)
  */</template><template autoinsert="true" context="fieldcomment_context" deleted="false" description="Comment for fields" enabled="true" id="org.eclipse.jdt.ui.text.codetemplates.fieldcomment" name="fieldcomment">/**
@@ -22,7 +27,7 @@
  */</template><template autoinsert="false" context="newtype_context" deleted="false" description="Newly created files" enabled="true" id="org.eclipse.jdt.ui.text.codetemplates.newtype" name="newtype">/*
  * EL4J, the Extension Library for the J2EE, adds incremental enhancements to
  * the spring framework, http://el4j.sf.net
- * Copyright (C) 2009 by ELCA Informatique SA, Av. de la Harpe 22-24,
+ * Copyright (C) 2008 by ELCA Informatique SA, Av. de la Harpe 22-24,
  * 1000 Lausanne, Switzerland, http://www.elca.ch
  *
  * EL4J is published under the GNU Lesser General Public License (LGPL)

@@ -19,7 +19,12 @@ package ch.elca.el4j.demos.gui.events;
 /**
  * This event informs about the search of a reference from refDB.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Stefan Wismer (SWI)
  */

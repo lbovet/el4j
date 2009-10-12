@@ -24,8 +24,8 @@ import javax.management.MBeanServer;
 import javax.management.MalformedObjectNameException;
 import javax.management.ObjectName;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.junit.Test;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -48,7 +48,12 @@ import ch.elca.el4j.core.context.ModuleApplicationContext;
  * can be found at <A
  * HREF="http://mc4j.sourceforge.net/">http://mc4j.sourceforge.net/ </A>.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Raphael Boog (RBO)
  */
@@ -57,7 +62,7 @@ public class JmxTest {
 	/**
 	 * Private logger of this class.
 	 */
-	private static Logger s_logger = LoggerFactory.getLogger(JmxTest.class);
+	private static Log s_logger = LogFactory.getLog(JmxTest.class);
 
 	/**
 	 * All xml files in the 'mandatory' folder.

@@ -19,7 +19,7 @@ package ch.elca.el4j.services.exceptionhandler.handler;
 
 import java.lang.reflect.Constructor;
 
-import org.slf4j.Logger;
+import org.apache.commons.logging.Log;
 import org.springframework.beans.factory.InitializingBean;
 
 import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
@@ -27,7 +27,12 @@ import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
 /**
  * This class transforms exceptions into other exceptions.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Andreas Bur (ABU)
  */
@@ -51,7 +56,7 @@ public class SimpleExceptionTransformerExceptionHandler
 	/**
 	 * {@inheritDoc}
 	 */
-	protected Exception transform(Throwable t, Logger logger) {
+	protected Exception transform(Throwable t, Log logger) {
 		Exception e = createExceptionWithMessageAndThrowable(t);
 		if (e == null) {
 			e = createExceptionWithMessage(t);

@@ -15,7 +15,12 @@ import ch.elca.el4j.util.codingsupport.Reject;
 /**
  * DAO for annotations which is using Hibernate.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Alex Mathey (AMA)
  */

@@ -19,8 +19,8 @@ package com.silvermindsoftware.hitch.meta;
 import com.silvermindsoftware.hitch.ReadOnly;
 import com.silvermindsoftware.hitch.config.BoundComponentConfig;
 import com.silvermindsoftware.hitch.reflect.ClassManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -29,12 +29,10 @@ import java.util.*;
 /**
  * This class holds all of the meta data gathered from the different
  * configuration mediums (annotations, BinderConfig).
- * 
- * @svnLink $Revision$;$Date$;$Author$;$URL$
  */
 public class FormMeta {
 
-	private static final Logger log = LoggerFactory.getLogger(FormMeta.class);
+	private static final Log log = LogFactory.getLog(FormMeta.class);
 
 	private boolean annotationMetaCollected;
 

@@ -21,11 +21,18 @@ import java.util.Collection;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.OptimisticLockingFailureException;
 
+import ch.elca.el4j.core.transaction.annotations.RollbackConstraint;
+
 /**
  * This interface provides the business methods which can be used in the
  * presentation layer and which are not already present in the underlying DAO.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Martin Zeltner (MZE)
  * @author Alex Mathey (AMA)
@@ -42,6 +49,7 @@ public interface KeywordService {
 	 * @throws OptimisticLockingFailureException
 	 *             If a keyword could not be deleted.
 	 */
+	@RollbackConstraint
 	public void deleteKeywords(Collection<?> keys)
 		throws OptimisticLockingFailureException, DataAccessException;
 }

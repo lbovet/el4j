@@ -21,7 +21,12 @@ import java.io.Serializable;
 /**
  * Chunk the server sends back to the client with changed data.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author David Bernhard (DBD)
  */

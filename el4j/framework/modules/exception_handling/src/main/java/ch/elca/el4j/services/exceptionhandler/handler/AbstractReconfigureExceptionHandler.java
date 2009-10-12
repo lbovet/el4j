@@ -18,7 +18,7 @@
 package ch.elca.el4j.services.exceptionhandler.handler;
 
 import org.aopalliance.intercept.MethodInvocation;
-import org.slf4j.Logger;
+import org.apache.commons.logging.Log;
 
 import ch.elca.el4j.services.exceptionhandler.AbstractExceptionHandlerInterceptor;
 import ch.elca.el4j.services.exceptionhandler.RetryException;
@@ -29,7 +29,12 @@ import ch.elca.el4j.services.exceptionhandler.RetryException;
  * invocation. This is achieved by reconfiguring the class that is advised by
  * this exception handler's interceptor.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Andreas Bur (ABU)
  * @see ch.elca.el4j.services.exceptionhandler.handler.AbstractSwappableTargetExceptionHandler
@@ -42,7 +47,7 @@ public abstract class AbstractReconfigureExceptionHandler extends
 	 */
 	protected Object retry(Throwable t,
 			AbstractExceptionHandlerInterceptor exceptionInvoker,
-			MethodInvocation invocation, Logger logger) throws Throwable {
+			MethodInvocation invocation, Log logger) throws Throwable {
 
 		reconfigure(t, invocation, logger);
 		throw new RetryException(getRetries());
@@ -62,5 +67,5 @@ public abstract class AbstractReconfigureExceptionHandler extends
 	 *      The logger.
 	 */
 	protected abstract void reconfigure(Throwable t,
-			MethodInvocation invocation, Logger logger);
+			MethodInvocation invocation, Log logger);
 }

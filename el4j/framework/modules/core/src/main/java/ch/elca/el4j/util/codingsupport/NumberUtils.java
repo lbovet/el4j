@@ -24,7 +24,12 @@ import org.springframework.util.StringUtils;
  * This class supports methods to handle with numbers. It covers only caps
  * of class <code>org.springframework.util.NumberUtils</code>.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Martin Zeltner (MZE)
  */

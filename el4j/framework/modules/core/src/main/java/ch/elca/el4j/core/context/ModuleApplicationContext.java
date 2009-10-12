@@ -22,8 +22,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Collection;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
@@ -89,7 +89,11 @@ import ch.elca.el4j.core.io.support.ManifestOrderedConfigLocationProvider;
  *
  * @see ModuleWebApplicationContext
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ * ("$URL$",
+ *  "$Revision$",
+ *  "$Date$",
+ *  "$Author$" ); </script>
  *
  * @author Raphael Boog (RBO)
  * @author Andreas Bur (ABU)
@@ -106,8 +110,8 @@ public class ModuleApplicationContext extends AbstractXmlApplicationContext
 	 * This logger is used to print out some global debugging info.
 	 * Consult it for info what is going on.
 	 */
-	protected static final Logger s_el4jLogger
-		= LoggerFactory.getLogger(EL4J_DEBUGGING_LOGGER);
+	protected static final Log s_el4jLogger
+		= LogFactory.getLog(EL4J_DEBUGGING_LOGGER);
 	
 	/**
 	 * Inclusive config locations.
@@ -343,7 +347,7 @@ public class ModuleApplicationContext extends AbstractXmlApplicationContext
 	}
 	
 	/**
-	 * Logger some interesting values.
+	 * Log some interesting values.
 	 *
 	 * Not nice: Code duplication between the 2 ModuleApplicationContext
 	 *           classes!

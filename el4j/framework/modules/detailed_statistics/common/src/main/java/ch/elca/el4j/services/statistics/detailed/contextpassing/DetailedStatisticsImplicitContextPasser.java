@@ -25,7 +25,12 @@ import ch.elca.el4j.core.contextpassing.ImplicitContextPassingRegistry;
  * This ImplicitContextPasser passes the DetailedStatisticsSharedContextHolder
  * as implicit context.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Rashid Waraich (RWA)
  * @author Philipp Oser (POS)

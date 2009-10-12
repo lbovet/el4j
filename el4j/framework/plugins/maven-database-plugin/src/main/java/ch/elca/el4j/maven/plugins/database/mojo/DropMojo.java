@@ -24,7 +24,12 @@ import ch.elca.el4j.maven.plugins.database.AbstractDBExecutionMojo;
 /**
  * This class is a database mojo for the 'drop' statement.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @goal drop
  * @author David Stefan (DST)

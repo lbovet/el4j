@@ -1,23 +1,7 @@
-/*
- * EL4J, the Extension Library for the J2EE, adds incremental enhancements to
- * the spring framework, http://el4j.sf.net
- * Copyright (C) 2008 by ELCA Informatique SA, Av. de la Harpe 22-24,
- * 1000 Lausanne, Switzerland, http://www.elca.ch
- *
- * EL4J is published under the GNU Lesser General Public License (LGPL)
- * Version 2.1. See http://www.gnu.org/licenses/
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU Lesser General Public License for more details.
- *
- * For alternative licensing, please contact info@elca.ch
- */
 package ch.elca.el4j.services.debug;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.ApplicationContext;
@@ -55,17 +39,16 @@ import org.springframework.util.StringUtils;
  *    <br>
  * Limitation: cut and paste (with external info) is currently not supported.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
- *
  * @author Philipp H. Oser (POS)
+ *
  */
 public class BshCommandLineLauncher implements ApplicationContextAware, InitializingBean {
 
 	public static final String BSH_LAUNCH_STRING = "el4j.bsh.launchstr";
 	public static final String BSH_SCRIPLET_CLASSPATH = "/bsh_scriptlets";
 	
-	private static Logger s_logger
-		= LoggerFactory.getLogger(BshCommandLineLauncher.class);
+	private static Log s_logger
+		= LogFactory.getLog(BshCommandLineLauncher.class);
 	
 	protected ShellExecutorImpl shell;
 	

@@ -19,8 +19,6 @@ import ch.elca.el4j.util.codingsupport.AopHelper;
 
 /**
  * This class shows some exceptions on stdout (for information purposes)
- * 
- * @svnLink $Revision$;$Date$;$Author$;$URL$
  */
 public class AopHelperTest {
 

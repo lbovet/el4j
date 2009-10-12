@@ -1,3 +1,4 @@
+
 /*
  * EL4J, the Extension Library for the J2EE, adds incremental enhancements to
  * the spring framework, http://el4j.sf.net
@@ -24,8 +25,8 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.junit.Test;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.dao.OptimisticLockingFailureException;
@@ -40,7 +41,12 @@ import ch.elca.el4j.tests.keyword.AbstractTestCaseBase;
 /**
  * Abstract test case for <code>KeywordService</code>.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Alex Mathey (AMA)
  */
@@ -48,8 +54,8 @@ public abstract class AbstractKeywordServiceTest extends AbstractTestCaseBase {
 	/**
 	 * Private logger.
 	 */
-	private static Logger s_logger
-		= LoggerFactory.getLogger(AbstractKeywordServiceTest.class);
+	private static Log s_logger
+		= LogFactory.getLog(AbstractKeywordServiceTest.class);
 
 	/**
 	 * Keyword service. Created by application context.

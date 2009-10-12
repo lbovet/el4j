@@ -29,7 +29,12 @@ import ch.elca.el4j.env.xml.handlers.EnvGroupHandler;
  * The main SAX handler to parse the env.xml file.
  * It delegates the env group sections to the handlers specified in the constructor.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Stefan Wismer (SWI)
  */

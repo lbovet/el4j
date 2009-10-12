@@ -22,7 +22,12 @@ import org.jdom.Element;
  * Transforms an element to another element by changing some nested content or
  * attributes.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Laurent Bovet (LBO)
  * @author Alex Mathey (AMA)

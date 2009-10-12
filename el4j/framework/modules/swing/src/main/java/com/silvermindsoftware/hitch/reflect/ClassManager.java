@@ -20,9 +20,6 @@ import java.util.Collections;
  * limitations under the License.
  */
 
-/**
- * @svnLink $Revision$;$Date$;$Author$;$URL$
- */
 public class ClassManager {
 
 	private static final Map<Class, ClassInfo> classInfoCache = Collections.synchronizedMap(new HashMap<Class, ClassInfo>());

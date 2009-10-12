@@ -26,7 +26,12 @@ import ch.elca.el4j.services.persistence.generic.dto.AbstractIntKeyIntOptimistic
  * This class is part of an example DOM of EL4J,
  * describing the brain of a person.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Andreas Rueedlinger (ARR)
  */

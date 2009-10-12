@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
+import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.logging.Log;
 import org.codehaus.plexus.util.cli.CommandLineException;
@@ -35,18 +36,21 @@ import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 
-import ch.elca.el4j.maven.plugins.AbstractSlf4jEnabledMojo;
-
 
 /**
  * Abstract mojo to add multiple libraries (jars and sources) to a given
  * repository.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Martin Zeltner (MZE)
  */
-public abstract class AbstractLibraryAdderMojo extends AbstractSlf4jEnabledMojo {
+public abstract class AbstractLibraryAdderMojo extends AbstractMojo {
 	/**
 	 * Is the classifier for poms.
 	 */
@@ -299,7 +303,7 @@ public abstract class AbstractLibraryAdderMojo extends AbstractSlf4jEnabledMojo 
 		 * Execute commandline.
 		 */
 		int result = -1;
-		BufferedLoggerConsumer blg = new BufferedLoggerConsumer();
+		BufferedLoggerConsumer blg = new BufferedLoggerConsumer(getLog());
 		try {
 			result = CommandLineUtils.executeCommandLine(
 				cmd, blg, blg);

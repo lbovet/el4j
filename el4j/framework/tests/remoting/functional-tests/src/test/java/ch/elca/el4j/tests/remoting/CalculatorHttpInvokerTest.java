@@ -20,7 +20,12 @@ package ch.elca.el4j.tests.remoting;
 /**
  * This class is a test for the calculator.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Martin Zeltner (MZE)
  * @author Waraich Rashid (RWA)

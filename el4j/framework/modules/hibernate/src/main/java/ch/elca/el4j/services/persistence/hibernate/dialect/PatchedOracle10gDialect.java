@@ -29,7 +29,12 @@ import org.hibernate.dialect.Oracle10gDialect;
  * See http://opensource.atlassian.com/projects/hibernate/browse/HHH-1961
  * or http://opensource.atlassian.com/projects/hibernate/browse/HHH-2315
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Stefan Wismer (SWI)
  */

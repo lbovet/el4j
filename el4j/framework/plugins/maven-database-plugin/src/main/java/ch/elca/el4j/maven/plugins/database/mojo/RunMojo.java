@@ -26,7 +26,12 @@ import ch.elca.el4j.maven.plugins.database.AbstractDBExecutionMojo;
  * This class is a database mojo for the generic 'run' statement which executes
  * all sql files matching the given prefix.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @goal run
  * @author Stefan Wismer (SWI)

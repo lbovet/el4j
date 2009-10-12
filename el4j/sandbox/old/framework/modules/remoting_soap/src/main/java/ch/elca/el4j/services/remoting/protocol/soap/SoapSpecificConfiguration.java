@@ -24,7 +24,12 @@ import ch.elca.el4j.services.remoting.ProtocolSpecificConfiguration;
 /**
  * This class is a value object and contains soap specific configurations.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Martin Zeltner (MZE)
  */

@@ -6,9 +6,7 @@ import java.beans.PropertyChangeSupport;
 /**
  * Interface for property change listener support
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
- *
- * @author Stefan Wismer (SWI)
+ * @author SWI
  */
 public interface PropertyChangeListenerCapability {
 	/**

@@ -24,7 +24,12 @@ import ch.elca.el4j.services.remoting.protocol.loadbalancing.NoProtocolAvailable
  * Abstract class that defines the policy of the protocol selection.
  * Protocol comparison must be done using "=="!
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Stefan Pleisch (SPL)
  */

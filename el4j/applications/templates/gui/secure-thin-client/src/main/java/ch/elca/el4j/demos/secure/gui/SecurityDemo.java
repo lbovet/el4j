@@ -26,17 +26,17 @@ import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
+import org.acegisecurity.AccessDeniedException;
+import org.acegisecurity.Authentication;
+import org.acegisecurity.AuthenticationCredentialsNotFoundException;
+import org.acegisecurity.AuthenticationManager;
+import org.acegisecurity.GrantedAuthority;
+import org.acegisecurity.context.SecurityContextHolder;
+import org.acegisecurity.providers.UsernamePasswordAuthenticationToken;
 import org.jdesktop.application.Action;
 import org.jdesktop.swingx.JXLoginPane;
 import org.jdesktop.swingx.JXLoginPane.JXLoginFrame;
 import org.jdesktop.swingx.auth.LoginService;
-import org.springframework.security.AccessDeniedException;
-import org.springframework.security.Authentication;
-import org.springframework.security.AuthenticationCredentialsNotFoundException;
-import org.springframework.security.AuthenticationManager;
-import org.springframework.security.GrantedAuthority;
-import org.springframework.security.context.SecurityContextHolder;
-import org.springframework.security.providers.UsernamePasswordAuthenticationToken;
 
 import ch.elca.el4j.demos.gui.extension.AbstractGUIExtension;
 import ch.elca.el4j.services.gui.swing.exceptions.Exceptions;
@@ -45,7 +45,12 @@ import ch.elca.el4j.services.gui.swing.exceptions.Handler;
 /**
  * This GUI extension shows security related demos.
  * 
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Stefan Wismer (SWI)
  */

@@ -18,7 +18,7 @@
 package ch.elca.el4j.services.exceptionhandler.handler;
 
 import org.aopalliance.intercept.MethodInvocation;
-import org.slf4j.Logger;
+import org.apache.commons.logging.Log;
 import org.springframework.aop.target.HotSwappableTargetSource;
 
 import ch.elca.el4j.services.exceptionhandler.AbstractExceptionHandlerInterceptor;
@@ -30,7 +30,12 @@ import ch.elca.el4j.services.exceptionhandler.RetryException;
  * another implementation with the same interface to fulfil the callers
  * invocation.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Andreas Bur (ABU)
  * @see ch.elca.el4j.services.exceptionhandler.handler.AbstractReconfigureExceptionHandler
@@ -57,7 +62,7 @@ public abstract class AbstractSwappableTargetExceptionHandler extends
 	 */
 	protected Object retry(Throwable t,
 		AbstractExceptionHandlerInterceptor exceptionInvoker,
-		MethodInvocation invocation, Logger logger)
+		MethodInvocation invocation, Log logger)
 		throws InappropriateHandlerException, RetryException {
 		
 		try {
@@ -100,6 +105,6 @@ public abstract class AbstractSwappableTargetExceptionHandler extends
 	 *      Whenever something goes wrong.
 	 */
 	protected abstract Object getNewTarget(Object current, Throwable t,
-		MethodInvocation invocation, Logger logger)
+		MethodInvocation invocation, Log logger)
 		throws RetryException, Throwable;
 }

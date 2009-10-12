@@ -17,23 +17,23 @@
 
 package ch.elca.el4j.services.security.authentication;
 
-import org.springframework.security.Authentication; 
-
-
+import org.acegisecurity.Authentication;
 
 /**
  * AuthenticationService interface. Provides methods to log in and out. If you
  * are already logged in, you have to log out first and then log in again.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Raphael Boog (RBO)
  * @author Andreas Pfenninger (APR)
  * @author Christoph Schwitter (CSC)
  */
-
-
-
 public interface AuthenticationService {
 
 	/**

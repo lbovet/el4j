@@ -35,14 +35,19 @@ import java.util.Set;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 /**
  * A tool for looking up duplicate class definitions in the classpath.
  * It can also be used to inspect all class definitions loaded.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author David Bernhard (DBD)
  */
@@ -56,7 +61,7 @@ public class DuplicateClassFinder {
 	 */
 	
 	/** The logger. */
-	private static final Logger s_log = LoggerFactory.getLogger("DuplicateClassFinder");
+	private static final Log s_log = LogFactory.getLog("DuplicateClassFinder");
 	
 	/** Holds all class names seen so far. */
 	private Map<String, List<String>> m_classes;

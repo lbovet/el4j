@@ -18,9 +18,6 @@ package com.silvermindsoftware.hitch.annotations;
 
 import java.lang.annotation.*;
 
-/**
- * @svnLink $Revision$;$Date$;$Author$;$URL$
- */
 @Target({ElementType.FIELD})
 @Documented
 @Retention(RetentionPolicy.RUNTIME)

@@ -20,7 +20,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.testng.Assert.*;
+import org.springframework.stereotype.Component;
 
 import ch.elca.el4j.services.persistence.hibernate.offlining.Conflict;
 import ch.elca.el4j.services.persistence.hibernate.offlining.chunk.AllStrategyImpl;
@@ -33,10 +33,16 @@ import ch.elca.el4j.tests.services.persistence.hibernate.offlining.dom.SimplePer
  * Tests that do not depend on the offlining strategy. These are run once with the ALL
  * strategy.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author David Bernhard (DBD)
  */
+@Component
 public class StrategyIndependentTest extends AbstractTest {
 
 	/**

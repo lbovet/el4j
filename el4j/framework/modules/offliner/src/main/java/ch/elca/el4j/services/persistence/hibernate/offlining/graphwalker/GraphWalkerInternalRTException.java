@@ -20,7 +20,12 @@ package ch.elca.el4j.services.persistence.hibernate.offlining.graphwalker;
  * Exception to indicate a "this should never happen" internal error in the
  * GraphWalker.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author David Bernhard (DBD)
  */

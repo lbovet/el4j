@@ -33,8 +33,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.context.NoSuchMessageException;
 import org.springframework.util.StringUtils;
 
@@ -107,14 +107,19 @@ import ch.elca.el4j.util.codingsupport.Reject;
  *we get "A piece of rock called home.". If we look up "Mars.poetic" instead,
  *we get "A piece of rock called Mars."
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Adrian Moos (AMS)
  */
 public class MessageRewriter {
 	/** Hm ... now what could this be ...? ;) */
-	private static final Logger s_logger
-		= LoggerFactory.getLogger(MessageRewriter.class);
+	private static final Log s_logger
+		= LogFactory.getLog(MessageRewriter.class);
 
 	/** An empty Object[]. */
 	static final Object[] EMPTY = new Object[0];

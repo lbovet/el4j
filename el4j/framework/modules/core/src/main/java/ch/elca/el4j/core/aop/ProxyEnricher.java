@@ -21,8 +21,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.aop.Advisor;
 import org.springframework.aop.TargetSource;
 import org.springframework.aop.framework.Advised;
@@ -35,7 +35,12 @@ import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
 /**
  * Used to enrich an existing proxy.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Martin Zeltner (MZE)
  */
@@ -43,8 +48,8 @@ public class ProxyEnricher {
 	/**
 	 * Private logger.
 	 */
-	private static Logger s_logger
-		= LoggerFactory.getLogger(ProxyEnricher.class);
+	private static Log s_logger
+		= LogFactory.getLog(ProxyEnricher.class);
 	
 	/**
 	 * Hide default constructor.

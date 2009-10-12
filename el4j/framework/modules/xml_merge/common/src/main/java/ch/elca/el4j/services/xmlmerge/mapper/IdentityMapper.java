@@ -24,7 +24,12 @@ import ch.elca.el4j.services.xmlmerge.Mapper;
 /**
  * Does not transform the element.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Laurent Bovet (LBO)
  * @author Alex Mathey (AMA)

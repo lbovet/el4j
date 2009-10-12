@@ -35,7 +35,12 @@ import java.util.Date;
  * Original authors: YMA, DBA.
  * Leaf2 package name: ch.elca.leaf.services.measuring
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Rashid Waraich (RWA)
  * @author Philipp Oser (POS)

@@ -1,14 +1,5 @@
 --------------------------------------------------------------------------------
- Date :   ?
-                            EL4J version  1.7
---------------------------------------------------------------------------------
- * Security
-   = Upgrade to Sping Security 2.0.4 (formerly Acegi Security), introduced new namespace definitions of Spring Security, interchanged @Secured
-	 with @RolesAllowed (@RolesAllowed is not dependent on Spring Security)
-
-
---------------------------------------------------------------------------------
- Date :   30.05.09
+ Date :   30.04.09
                             EL4J version  1.6
 --------------------------------------------------------------------------------
 * Core
@@ -83,7 +74,6 @@
     This is necessary when deploying to the root context: 'jee-web.context' is '/', but 
     'jee-web.context.cargo' needs to be 'ROOT'.
   = New JAX-WS protocol (for clients only) added, which uses the built-in support by Spring.
-  = EL4J can now be tracked in Sonar (code quality management system).
 
 --------------------------------------------------------------------------------
  Date :   22.10.08

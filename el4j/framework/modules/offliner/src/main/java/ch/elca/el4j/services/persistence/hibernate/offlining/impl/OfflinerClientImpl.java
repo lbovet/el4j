@@ -44,7 +44,12 @@ import ch.elca.el4j.services.persistence.hibernate.offlining.util.TotallyGeneric
  * It takes an offlining server as parameter (via the info)
  * and passes calls to it; synchronize() is chunked.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author David Bernhard (DBD)
  */
@@ -204,19 +209,14 @@ public class OfflinerClientImpl implements Offliner {
 				.wrap(Mapped.class, obj); 
 			MappingEntry entry = mapped.getEntry();
 			
-			// if there is no entry in the mappingEntry table (i.e. if the object was not offlined from the server)
-			//  we do not need to mark it for deletion (a local deletion is enough)		
-			if (entry != null) {
-				
-				// Deletes must be performed in the same order locally and
-				// in the database to prevent constraint violations.
-				// If an object is deleted locally, its server version
-				// becomes useless and we use the field to store the delete order.
-				++m_deleteOrder;
-				m_info.getPropertyDao().saveProperty(OfflinerProperty.DELETE_ORDER, m_deleteOrder);
-				entry.setDeleteVersion(m_deleteOrder);
-				mapped.setEntry(entry);
-			}
+			// Deletes must be performed in the same order locally and
+			// in the database to prevent constraint violations.
+			// If an object is deleted locally, its server version
+			// becomes useless and we use the field to store the delete order.
+			++m_deleteOrder;
+			m_info.getPropertyDao().saveProperty(OfflinerProperty.DELETE_ORDER, m_deleteOrder);
+			entry.setDeleteVersion(m_deleteOrder);
+			mapped.setEntry(entry);
 		}
 
 	}

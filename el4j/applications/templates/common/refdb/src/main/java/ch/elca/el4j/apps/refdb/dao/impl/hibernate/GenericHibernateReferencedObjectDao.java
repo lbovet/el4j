@@ -18,7 +18,12 @@ import ch.elca.el4j.services.persistence.hibernate.dao.GenericHibernateDao;
  * This DAO is not intended to be used directly. Only the concrete DAOs that are
  * subclasses of this generic DAO should be used directly.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @param <T>
  *            The generic type of the domain class the DAO is responsible for

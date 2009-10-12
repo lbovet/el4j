@@ -30,7 +30,12 @@ import ch.elca.el4j.core.context.ModuleApplicationContext;
  * after performing this steps for a long time. This allows to query JMX
  * (default URL: <code>http://localhost:9092/</code>).
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Andreas Bur (ABU)
  */

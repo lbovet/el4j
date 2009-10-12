@@ -19,9 +19,6 @@ import java.util.Arrays;
  * limitations under the License.
  */
 
-/**
- * @svnLink $Revision$;$Date$;$Author$;$URL$
- */
 public class MethodInfo {
 
 	private Method method;

@@ -28,7 +28,12 @@ import org.hibernate.usertype.UserType;
  * This abstract class shares the base code of {@link GenericEnumUserType} and
  * {@link GenericEnumSetUserType}.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Stefan Wismer (SWI)
  */

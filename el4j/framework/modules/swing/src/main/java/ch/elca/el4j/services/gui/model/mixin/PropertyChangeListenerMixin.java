@@ -29,8 +29,8 @@ import java.util.Map;
 import java.util.Set;
 
 import org.aopalliance.intercept.MethodInvocation;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.hibernate.validator.ClassValidator;
 import org.hibernate.validator.InvalidValue;
 import org.jdesktop.observablecollections.ObservableCollections;
@@ -56,7 +56,12 @@ import ch.elca.el4j.util.codingsupport.AopHelper;
  * It also contains a simple implementation of the {@link SaveRestoreCapability}. All Java bean properties of
  * primitive or immutable (see IMMUTABLE_CLASSES) type can be saved and restored.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Stefan Wismer (SWI)
  */
@@ -68,7 +73,7 @@ public class PropertyChangeListenerMixin extends
 	/**
 	 * The logger.
 	 */
-	private static final Logger s_logger = LoggerFactory.getLogger(PropertyChangeListenerMixin.class);
+	private static final Log s_logger = LogFactory.getLog(PropertyChangeListenerMixin.class);
 	
 	/**
 	 * A (incomplete) list of immutable classes.

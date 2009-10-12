@@ -10,7 +10,6 @@
 
 package ch.elca.el4j.util.concurrency;
 
-import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -21,7 +20,12 @@ import java.lang.annotation.Target;
  * when holding a particular lock, which may be a built-in (synchronization) lock,
  * or may be an explicit java.util.concurrent.Lock.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * The argument determines which lock guards the annotated field or method:
  * <ul>
@@ -49,10 +53,8 @@ import java.lang.annotation.Target;
  * <li>
  * <code>class-name.class</code> : The Class object for the specified class should be used as the lock object.
  * </li>
- * </ul>
  *
  */
-@Documented
 @Target({ElementType.FIELD, ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface GuardedBy {

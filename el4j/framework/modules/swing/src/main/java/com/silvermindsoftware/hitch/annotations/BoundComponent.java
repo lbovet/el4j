@@ -22,8 +22,6 @@ import java.lang.annotation.*;
 
 /**
  * BoundComponent to bind domain objects to Swing components
- * 
- * @svnLink $Revision$;$Date$;$Author$;$URL$
  */
 @Target({ElementType.FIELD})
 @Documented

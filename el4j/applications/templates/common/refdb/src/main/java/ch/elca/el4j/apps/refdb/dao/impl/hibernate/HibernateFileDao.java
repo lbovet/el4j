@@ -9,7 +9,12 @@ import ch.elca.el4j.services.persistence.hibernate.dao.extent.DataExtent;
  *
  * DAO for files which is using Hibernate.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Alex Mathey (AMA)
  */

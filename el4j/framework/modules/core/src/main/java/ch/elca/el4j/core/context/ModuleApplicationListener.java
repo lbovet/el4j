@@ -22,7 +22,12 @@ import java.util.EventListener;
  * An interface that a class can implement to get notified as soon as the {@link ModuleApplicationContext} is
  * completely refreshed.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Stefan Wismer (SWI)
  */

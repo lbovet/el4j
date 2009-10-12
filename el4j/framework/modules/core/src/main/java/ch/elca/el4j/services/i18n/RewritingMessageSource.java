@@ -25,8 +25,8 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.context.MessageSource;
 import org.springframework.context.MessageSourceResolvable;
 import org.springframework.context.NoSuchMessageException;
@@ -39,7 +39,12 @@ import ch.elca.el4j.util.codingsupport.Reject;
 /**
  * A MessageSource based on {@link MessageRewriter MessageRewriters}.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Adrian Moos (AMS)
  */
@@ -55,8 +60,8 @@ public class RewritingMessageSource implements MessageSource {
 		= new HashMap<Locale, MessageRewriter>();
 	
 	/** The logger. (duh!) */
-	protected static final Logger s_logger
-		= LoggerFactory.getLogger(RewritingMessageSource.class);
+	protected static final Log s_logger
+		= LogFactory.getLog(RewritingMessageSource.class);
 	
 	/**
 	 * Like {@link
@@ -158,7 +163,7 @@ public class RewritingMessageSource implements MessageSource {
 			try {
 				return getMessage(key, resolvable.getArguments(), locale);
 			} catch (NoSuchMessageException e) {
-				s_logger.info(e.toString());
+				s_logger.info(e);
 				if (ex == null) {
 					ex = e;
 				}

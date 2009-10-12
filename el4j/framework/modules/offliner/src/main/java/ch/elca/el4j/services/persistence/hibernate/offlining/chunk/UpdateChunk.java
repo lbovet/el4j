@@ -25,7 +25,12 @@ import ch.elca.el4j.services.persistence.hibernate.offlining.impl.MappingEntry;
  * Sent by the client to the server with all unchanged mapping entries.
  * The server responds by checking each one and sending back a chunk of updates.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author David Bernhard (DBD)
  */

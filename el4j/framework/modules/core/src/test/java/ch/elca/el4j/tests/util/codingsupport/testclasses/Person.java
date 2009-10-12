@@ -2,9 +2,6 @@ package ch.elca.el4j.tests.util.codingsupport.testclasses;
 
 import java.util.List;
 
-/**
- * @svnLink $Revision$;$Date$;$Author$;$URL$
- */
 public interface Person {
 
 	public String getFirstName();

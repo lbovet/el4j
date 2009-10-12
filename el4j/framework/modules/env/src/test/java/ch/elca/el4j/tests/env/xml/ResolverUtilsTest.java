@@ -25,9 +25,6 @@ import static org.junit.Assert.*;
 
 import ch.elca.el4j.env.xml.ResolverUtils;
 
-/**
- * @svnLink $Revision$;$Date$;$Author$;$URL$
- */
 public class ResolverUtilsTest {
 	@Test
 	public void testResolve() {

@@ -30,7 +30,12 @@ import cookxml.core.interfaces.Adder;
  * This cookXML adder handles &lt;row&gt; elements: They get added to the parent
  * designgridlayout.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Stefan Wismer (SWI)
  */

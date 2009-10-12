@@ -12,7 +12,7 @@
 	<parent>
 		<groupId>ch.elca.el4j.maven.plugins</groupId>
 		<artifactId>el4j-maven-plugins</artifactId>
-		<version>1.7-SNAPSHOT</version>
+		<version>1.6</version>
 	</parent>
 	
 	<artifactId>maven-file-collector-plugin</artifactId>
@@ -45,17 +45,6 @@
 			</plugin>
 		</plugins>
 	</build>
-	<reporting>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-plugin-plugin</artifactId>
-				<configuration>
-					<goalPrefix>collector</goalPrefix>
-				</configuration>
-			</plugin>
-		</plugins>
-	</reporting>
 	<dependencies>
 		<dependency>
 			<groupId>org.apache.maven</groupId>
@@ -74,12 +63,8 @@
 			<artifactId>spring</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>jcl-over-slf4j</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-maven</artifactId>
+			<groupId>commons-logging</groupId>
+			<artifactId>commons-logging</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>commons-collections</groupId>

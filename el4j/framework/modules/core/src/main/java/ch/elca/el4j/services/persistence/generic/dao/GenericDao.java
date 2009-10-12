@@ -24,6 +24,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.dao.OptimisticLockingFailureException;
 
+import ch.elca.el4j.core.transaction.annotations.RollbackConstraint;
 import ch.elca.el4j.services.persistence.generic.dao.annotations.ReturnsUnchangedParameter;
 import ch.elca.el4j.services.search.QueryObject;
 
@@ -39,7 +40,12 @@ import ch.elca.el4j.services.search.QueryObject;
  * For direct programmer-usage we recommend to use the convenience subclasses
  *  (@link ConvenienceGenericDao).
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @param <T>
  *            The generic type of the domain class the DAO is responsible for
@@ -87,7 +93,7 @@ public interface GenericDao<T> {
 	 * @throws DataAccessException
 	 */
 	int findCountByQuery(final QueryObject query) throws DataAccessException;
-	
+	 
 	
 	/**
 	 * Re-reads the state of the given domain object from the underlying
@@ -134,6 +140,7 @@ public interface GenericDao<T> {
 	 * @return The saved or updated domain object
 	 */
 	@ReturnsUnchangedParameter
+	@RollbackConstraint
 	T saveOrUpdate(T entity) throws DataAccessException,
 		DataIntegrityViolationException, OptimisticLockingFailureException;
 
@@ -148,6 +155,7 @@ public interface GenericDao<T> {
 	 * @throws OptimisticLockingFailureException
 	 *             If domain object has been modified/deleted in the meantime
 	 */
+	@RollbackConstraint
 	void delete(Collection<T> entities)
 		throws OptimisticLockingFailureException, DataAccessException;
 }

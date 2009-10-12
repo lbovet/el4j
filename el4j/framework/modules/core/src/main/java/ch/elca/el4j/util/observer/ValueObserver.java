@@ -20,7 +20,12 @@ package ch.elca.el4j.util.observer;
  * An object observing (i.e. receiving change notifications about) a reference
  * of type T.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @param <T> see above
  * @see ObservableValue

@@ -26,7 +26,12 @@ import ch.elca.el4j.services.persistence.hibernate.offlining.util.PropertyDaoInt
 /**
  * Base class of chunking strategies.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author David Bernhard (DBD)
  */

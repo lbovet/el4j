@@ -24,8 +24,8 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.lang.ArrayUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.PropertyValue;
 import org.springframework.beans.PropertyValues;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
@@ -46,7 +46,12 @@ import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
 /**
  * This class allows excluding some items out of a file list.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Andreas Bur (ABU)
  */
@@ -59,7 +64,7 @@ public class ModuleApplicationContextUtils {
 	private static final String MANDATORY = "mandatory/*.xml";
 	
 	/** The static logger. */
-	private static Logger s_logger = LoggerFactory.getLogger(
+	private static Log s_logger = LogFactory.getLog(
 			ModuleApplicationContextUtils.class);
 	
 	/** The application context that uses this instance. */

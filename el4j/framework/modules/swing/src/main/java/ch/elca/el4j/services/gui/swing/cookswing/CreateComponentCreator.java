@@ -20,8 +20,8 @@ import java.lang.reflect.Method;
 
 import javax.swing.JPanel;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Element;
 
 import cookxml.core.DecodeEngine;
@@ -34,7 +34,12 @@ import cookxml.core.interfaces.Creator;
  * The create-method is invoked when the XML tag is opened and
  * the finish-method when the tag is closed.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Stefan Wismer (SWI)
  */
@@ -53,8 +58,8 @@ public class CreateComponentCreator implements Creator {
 	/**
 	 * The logger.
 	 */
-	private static final Logger s_logger = LoggerFactory
-		.getLogger(CreateComponentCreator.class);
+	private static final Log s_logger = LogFactory
+		.getLog(CreateComponentCreator.class);
 	
 	/** {@inheritDoc} */
 	public Object create(String parentNS, String parentTag, Element elm,

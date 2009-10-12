@@ -13,7 +13,7 @@
 	<parent>
 		<groupId>ch.elca.el4j.modules</groupId>
 		<artifactId>el4j-framework-modules</artifactId>
-		<version>1.7-SNAPSHOT</version>
+		<version>1.6</version>
 	</parent>
 
 	<artifactId>module-security</artifactId>
@@ -44,10 +44,6 @@
 		</dependency>
 		<dependency>
 			<groupId>ch.elca.el4j.modules</groupId>
-			<artifactId>module-env</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>ch.elca.el4j.modules</groupId>
 			<artifactId>module-remoting_core</artifactId>
 			<scope>test</scope>
 		</dependency>
@@ -59,10 +55,14 @@
 			<version>1.1.1</version>
 		</dependency>
 		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-core</artifactId>
-			<version>2.0.4</version>
+			<groupId>org.acegisecurity</groupId>
+			<artifactId>acegi-security</artifactId>
+			<version>1.0.7</version>
 			<exclusions>
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring-core</artifactId>
+				</exclusion>
 				<exclusion>
 					<groupId>org.springframework</groupId>
 					<artifactId>spring-support</artifactId>
@@ -74,80 +74,36 @@
 				<exclusion>
 					<groupId>org.springframework</groupId>
 					<artifactId>spring-remoting</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.springframework</groupId>
-					<artifactId>spring-core</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.springframework</groupId>
-					<artifactId>spring-aop</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.springframework</groupId>
-					<artifactId>spring-aopalliance</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.springframework</groupId>
-					<artifactId>spring-beans</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>commons-logging</groupId>
-					<artifactId>commons-logging</artifactId>
-				</exclusion>	
-			</exclusions> 
-		</dependency>      
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-core-tiger</artifactId>
-			<version>2.0.4</version>
-			<exclusions>
-				<exclusion>
-					<groupId>org.springframework</groupId>
-					<artifactId>spring-support</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.springframework</groupId>
-					<artifactId>spring-jdbc</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.springframework</groupId>
-					<artifactId>spring-remoting</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.springframework</groupId>
-					<artifactId>spring-core</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.springframework</groupId>
-					<artifactId>spring-aop</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.springframework</groupId>
-					<artifactId>spring-aopalliance</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.springframework</groupId>
-					<artifactId>spring-beans</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>commons-logging</groupId>
-					<artifactId>commons-logging</artifactId>
 				</exclusion>
 			</exclusions>
-		</dependency> 
+		</dependency>
 		<dependency>
-			<groupId>aspectj</groupId>
-			<artifactId>aspectjrt</artifactId>
-			<version>1.5.4</version>
-		</dependency> 
-		<!-- needed for fancy pointcut stuff -->
-		<dependency>
-			<groupId>aspectj</groupId>
-			<artifactId>aspectjweaver</artifactId>
-			<version>1.5.4</version>
-		</dependency> 
-
+			<groupId>org.acegisecurity</groupId>
+			<artifactId>acegi-security-tiger</artifactId>
+			<version>1.0.7</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring-core</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring-support</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring-jdbc</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring-remoting</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring-aop</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
 		<dependency>
 			<groupId>javax.annotation</groupId>
 			<artifactId>jsr250-api</artifactId>

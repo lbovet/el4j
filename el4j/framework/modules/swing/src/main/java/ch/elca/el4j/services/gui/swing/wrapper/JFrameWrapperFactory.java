@@ -24,7 +24,12 @@ import ch.elca.el4j.services.gui.swing.frames.ExternalApplicationFrame;
 /**
  * This class wraps components into {@link JFrame}s.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Stefan Wismer (SWI)
  */

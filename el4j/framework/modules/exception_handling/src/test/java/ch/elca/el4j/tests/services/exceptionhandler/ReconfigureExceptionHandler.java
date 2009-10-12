@@ -18,7 +18,7 @@
 package ch.elca.el4j.tests.services.exceptionhandler;
 
 import org.aopalliance.intercept.MethodInvocation;
-import org.slf4j.Logger;
+import org.apache.commons.logging.Log;
 
 import ch.elca.el4j.services.exceptionhandler.InappropriateHandlerException;
 import ch.elca.el4j.services.exceptionhandler.handler.AbstractReconfigureExceptionHandler;
@@ -27,7 +27,12 @@ import ch.elca.el4j.services.exceptionhandler.handler.AbstractReconfigureExcepti
  * This exception handler reconfigures the A bean, exchanging the concrete
  * {@link ch.elca.el4j.tests.services.exceptionhandler.Adder} implementation.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Andreas Bur (ABU)
  */
@@ -50,7 +55,8 @@ public class ReconfigureExceptionHandler extends
 	/**
 	 * {@inheritDoc}
 	 */
-	protected void reconfigure(Throwable t, MethodInvocation invocation, Logger logger) {
+	protected void reconfigure(Throwable t, MethodInvocation invocation,
+			Log logger) {
 		
 		if (!"add".equals(invocation.getMethod().getName())) {
 			throw new InappropriateHandlerException();

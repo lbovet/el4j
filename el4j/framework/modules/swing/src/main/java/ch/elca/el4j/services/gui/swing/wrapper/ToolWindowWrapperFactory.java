@@ -24,13 +24,6 @@ import org.noos.xing.mydoggy.ToolWindowAnchor;
 import ch.elca.el4j.services.gui.swing.frames.ToolWindowTabApplicationFrame;
 import ch.elca.el4j.services.gui.swing.frames.ToolWindowTabConfiguration;
 
-/**
- * This factory wraps components into {@link ToolWindowTabApplicationFrame}s.
- *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
- *
- * @author Stefan Wismer (SWI)
- */
 public class ToolWindowWrapperFactory extends AbstractWrapperFactory<ToolWindowTabApplicationFrame> {
 	/**
 	 * The abstract factory.

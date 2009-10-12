@@ -22,7 +22,12 @@ import java.io.Serializable;
  * An object PrimaryKeyGenerator is an object able to generate unique keys that
  * can be used as primary keys for database storage.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Martin Zeltner (MZE)
  */

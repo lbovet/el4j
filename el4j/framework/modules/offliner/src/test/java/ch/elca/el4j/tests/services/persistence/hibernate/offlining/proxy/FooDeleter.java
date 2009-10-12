@@ -19,7 +19,12 @@ package ch.elca.el4j.tests.services.persistence.hibernate.offlining.proxy;
 /**
  * Interface to declare deleteFoo() in for tests. 
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author David Bernhard (DBD)
  */

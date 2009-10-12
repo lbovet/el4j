@@ -54,7 +54,12 @@ import java.util.NoSuchElementException;
  * method in each enumeration is not needed because JDK 1.2.2 is no longer
  * supported by EL4J.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Raphael Boog (RBO)
  */

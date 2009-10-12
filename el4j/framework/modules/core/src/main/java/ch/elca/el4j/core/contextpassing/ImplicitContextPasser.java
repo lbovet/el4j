@@ -22,7 +22,12 @@ package ch.elca.el4j.core.contextpassing;
  * Please refer to the documentation of the
  * remoting_and_interface_enrichment module more information on this.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Martin Zeltner (MZE)
  */

@@ -23,7 +23,12 @@ package ch.elca.el4j.util.encryption;
  * The interface itself is visible in external as it is used by env-plugin.
 
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author David Bernhard (DBD)
  */

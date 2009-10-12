@@ -29,7 +29,12 @@ import org.springframework.util.StringUtils;
  * an absolute log file path.
  *
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Rashid Waraich (RWA)
  */

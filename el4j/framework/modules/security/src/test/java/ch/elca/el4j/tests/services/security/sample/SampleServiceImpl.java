@@ -17,21 +17,26 @@
 
 package ch.elca.el4j.tests.services.security.sample;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 
 /**
  * Sample service implementation.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Andreas Pfenninger (APR)
  */
 public class SampleServiceImpl implements SampleService {
 	
 	/** The static logger. */
-	private static Logger s_logger = LoggerFactory.getLogger(SampleServiceImpl.class);
+	private static Log s_logger = LogFactory.getLog(SampleServiceImpl.class);
 	
 	/**
 	 * {@inheritDoc}

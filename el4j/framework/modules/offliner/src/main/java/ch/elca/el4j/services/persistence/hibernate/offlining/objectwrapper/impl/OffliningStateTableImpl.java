@@ -37,7 +37,12 @@ import ch.elca.el4j.util.objectwrapper.interfaces.KeyedVersioned;
  * <p>
  * <i>This is currently used on both the server and the client, though two separate tables are used.</i>
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author David Bernhard (DBD)
  */

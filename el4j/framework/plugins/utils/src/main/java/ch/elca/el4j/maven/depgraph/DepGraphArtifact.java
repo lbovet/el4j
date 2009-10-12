@@ -25,7 +25,12 @@ import org.apache.maven.artifact.Artifact;
  *
  * This class represents an artifact.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Philippe Jacot (PJA)
  */

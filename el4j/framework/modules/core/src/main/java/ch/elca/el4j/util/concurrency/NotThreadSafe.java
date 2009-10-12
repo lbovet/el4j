@@ -7,7 +7,7 @@
  * Any republication or derived work distributed in source code form
  * must include this copyright and license notice.
  */
-
+ 
 package ch.elca.el4j.util.concurrency;
 
 import java.lang.annotation.*;
@@ -18,7 +18,12 @@ import java.lang.annotation.*;
  * that might otherwise be assumed to be thread-safe, despite the fact that it is a bad
  * idea to assume a class is thread-safe without good reason.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @see ThreadSafe
  */

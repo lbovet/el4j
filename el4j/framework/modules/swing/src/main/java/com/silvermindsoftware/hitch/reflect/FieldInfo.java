@@ -18,9 +18,6 @@ import java.lang.reflect.Field;
  * limitations under the License.
  */
 
-/**
- * @svnLink $Revision$;$Date$;$Author$;$URL$
- */
 public class FieldInfo {
 
 	private Field field;

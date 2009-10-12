@@ -24,6 +24,7 @@ import java.util.Properties;
 
 import org.apache.maven.model.Build;
 import org.apache.maven.model.Dependency;
+import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.project.MavenProject;
 import org.codehaus.plexus.util.FileUtils;
@@ -31,13 +32,16 @@ import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
-import ch.elca.el4j.maven.plugins.AbstractSlf4jEnabledMojo;
-
 
 /**
  * Prepares data for the special config section inside the manifest.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Martin Zeltner (MZE)
  *
@@ -45,7 +49,7 @@ import ch.elca.el4j.maven.plugins.AbstractSlf4jEnabledMojo;
  * @phase package
  * @requiresProject true
  */
-public class ManifestAddConfigSectionMojo extends AbstractSlf4jEnabledMojo {
+public class ManifestAddConfigSectionMojo extends AbstractMojo {
 	// Checkstyle: MemberName off
 	
 	/**
@@ -110,7 +114,6 @@ public class ManifestAddConfigSectionMojo extends AbstractSlf4jEnabledMojo {
 	/**
 	 * {@inheritDoc}
 	 */
-	@SuppressWarnings("unchecked")
 	public void execute() throws MojoExecutionException {
 		String projectPackaging = project.getPackaging();
 		if (!StringUtils.hasText(projectPackaging)
@@ -136,7 +139,7 @@ public class ManifestAddConfigSectionMojo extends AbstractSlf4jEnabledMojo {
 		List<Dependency> testDeps = project.getTestDependencies();
 		String manifestTestDependencies = getDependencyList(testDeps, false);
 		
-		logDependencies(deps, testDeps);
+		logDependencies (deps, testDeps);
 		
 		// Prepend dependency to own (main) module jar.
 		manifestTestDependencies
@@ -159,7 +162,6 @@ public class ManifestAddConfigSectionMojo extends AbstractSlf4jEnabledMojo {
 		
 		/**
 		 * Write the generated properties into project properties.
-		 * maven has problems with empty Strings: it writes "null" into the manifest instead of "".
 		 */
 		Properties projectProperties = project.getProperties();
 		projectProperties.setProperty(
@@ -167,18 +169,17 @@ public class ManifestAddConfigSectionMojo extends AbstractSlf4jEnabledMojo {
 		projectProperties.setProperty(
 			propertyNamePrefix + ".testmodule", manifestTestModule);
 		projectProperties.setProperty(
-			propertyNamePrefix + ".files", ensureNotEmpty(manifestFiles));
+			propertyNamePrefix + ".files", manifestFiles);
 		projectProperties.setProperty(
-			propertyNamePrefix + ".testfiles", ensureNotEmpty(manifestTestFiles));
+			propertyNamePrefix + ".testfiles", manifestTestFiles);
 		projectProperties.setProperty(
-			propertyNamePrefix + ".dependencies", ensureNotEmpty(manifestDependencies));
+			propertyNamePrefix + ".dependencies", manifestDependencies);
 		projectProperties.setProperty(
-			propertyNamePrefix + ".testdependencies", ensureNotEmpty(manifestTestDependencies));
+			propertyNamePrefix + ".testdependencies", manifestTestDependencies);
 	}
 
 	/**
-	 * Log dependencies more intelligently.
-	 * 
+	 * log dependencies more intelligently
 	 * @param deps	the dependencies for normal executions
 	 * @param testDeps  the dependencies for tests
 	 */
@@ -204,8 +205,8 @@ public class ManifestAddConfigSectionMojo extends AbstractSlf4jEnabledMojo {
 			+ deps.size() + " runtime dependencies: "
 			+ manifestDependencies);
 		
-		getLog().info("Delta for tests:    only in tests: " + getDependencyList(onlyInTests, true)
-			+ "  | only in normal execution: " + getDependencyList(onlyInNormal, true));
+		getLog().info("Delta for tests:    only in tests: "+ getDependencyList(onlyInTests, true)
+			+ "  | only in normal execution: "+ getDependencyList(onlyInNormal, true));
 		
 	}
 
@@ -215,10 +216,10 @@ public class ManifestAddConfigSectionMojo extends AbstractSlf4jEnabledMojo {
 		for (Dependency d : deps) {
 			boolean found = false;
 			for (Dependency tDep : testDeps) {
-				if ((d.getArtifactId().equals(tDep.getArtifactId()))
-					&& (d.getGroupId().equals(tDep.getGroupId()))
-					&& (d.getVersion().equals(tDep.getVersion()))
-					&& (d.getType().equals(tDep.getType()))) {
+				if ((d.getArtifactId().equals(tDep.getArtifactId())) &&
+					(d.getGroupId().equals(tDep.getGroupId())) &&
+					(d.getVersion().equals(tDep.getVersion())) &&
+					(d.getType().equals(tDep.getType()))) {
 					
 					found = true;
 					break;
@@ -269,7 +270,7 @@ public class ManifestAddConfigSectionMojo extends AbstractSlf4jEnabledMojo {
 	}
 
 	/**
-	 * @param fileResourceDirectoryString Is the resource directory as string.
+	 * @param fileResourceDirectoryString Is the resource directiory as string.
 	 * @param directoryName Is the name of the given directory.
 	 * @return Returns a list of file resources as string.
 	 */
@@ -283,7 +284,6 @@ public class ManifestAddConfigSectionMojo extends AbstractSlf4jEnabledMojo {
 				&& fileResourceDirectory.isDirectory()
 				&& fileResourceDirectory.canRead()) {
 				try {
-					@SuppressWarnings("unchecked")
 					List<String> resourceFileList = FileUtils.getFileNames(
 						fileResourceDirectory, fileListIncludes,
 						fileListExcludes, false, true);
@@ -323,13 +323,5 @@ public class ManifestAddConfigSectionMojo extends AbstractSlf4jEnabledMojo {
 				+ " directory.");
 		}
 		return resourceFiles;
-	}
-	
-	/**
-	 * @param string    the String that must not be empty
-	 * @return          " " if string was empty, otherwise the string itself
-	 */
-	private String ensureNotEmpty(String string) {
-		return string.length() > 0 ? string : " ";
 	}
 }

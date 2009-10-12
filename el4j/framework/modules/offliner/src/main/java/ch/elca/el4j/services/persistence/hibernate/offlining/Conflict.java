@@ -27,7 +27,12 @@ import org.springframework.dao.OptimisticLockingFailureException;
  * Invariant: All conflicts carry the object in question in m_localObject, and it is keyed
  * correctly for the user to recommit it (after dealing with the conflict) to the server.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author David Bernhard (DBD)
  */

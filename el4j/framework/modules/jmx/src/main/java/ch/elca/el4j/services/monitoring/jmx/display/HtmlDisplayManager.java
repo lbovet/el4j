@@ -25,7 +25,12 @@ import java.util.regex.Pattern;
 /**
  * Utility for displaying HTML information and creating strings out of it.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author David Bernhard (DBD)
  */

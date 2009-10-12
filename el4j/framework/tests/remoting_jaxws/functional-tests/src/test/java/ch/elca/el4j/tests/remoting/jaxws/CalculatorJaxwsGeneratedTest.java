@@ -38,7 +38,12 @@ import ch.elca.el4j.tests.remoting.jaxws.webservice.SomeIntValue;
  *
  * This class is a test for JAX-WS using the generated classes directly.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Philippe Jacot (PJA)
  * @author Stefan Wismer (SWI)

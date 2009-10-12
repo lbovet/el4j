@@ -56,7 +56,12 @@ import ch.elca.el4j.maven.plugins.envsupport.handlers.VariablesAndFinalPropertie
  * Abstract environment support plugin. Filters the resources of given env dir
  * and saves the generate resources in a special dir.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Martin Zeltner (MZE)
  */

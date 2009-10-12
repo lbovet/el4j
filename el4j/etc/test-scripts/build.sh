@@ -14,9 +14,9 @@ if [ $# -ge 2 ] ; then
 	mkdir $LOG_DIR
 fi
 
-if [ $# -ge 3 ] && [ $3 == "Java7" ] ; then
-	cat settings.xml | sed 's#/m2repository#/m2repositoryJava7#' > ~/.m2/settings.xml
-	OPTS="-Del4j.java.version=1.7"
+if [ $# -ge 3 ] && [ $3 == "Java6" ] ; then
+	cat settings.xml | sed 's#/m2repository#/m2repositoryJava6#' > ~/.m2/settings.xml
+	OPTS="-Del4j.java.version=1.6"
 else
 	cp settings.xml ~/.m2/settings.xml
 	OPTS=""

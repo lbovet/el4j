@@ -24,8 +24,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.codehaus.plexus.util.FileUtils;
 import org.codehaus.plexus.util.StringUtils;
@@ -42,7 +42,12 @@ import ch.elca.el4j.maven.depgraph.DependencyGraph;
 /**
  * This class projects a dependency graph to the graphviz format.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Philippe Jacot (PJA)
  */
@@ -89,8 +94,8 @@ public class GraphvizProjector implements DepGraphProjector {
 	/**
 	 * Logger.
 	 */
-	private static Logger s_log = LoggerFactory
-		.getLogger(GraphvizProjector.class);
+	private static Log s_log = LogFactory
+		.getLog(GraphvizProjector.class);
 
 	/**
 	 * Id counter.

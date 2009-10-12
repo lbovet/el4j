@@ -19,7 +19,12 @@ package ch.elca.el4j.services.persistence.generic.dao;
 /**
  * This object receives change notifications from DAO change notifiers.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Adrian Moos (AMS)
  * @see DaoChangeNotifier

@@ -7,7 +7,7 @@
 	<parent>
 		<groupId>ch.elca.el4j.applications</groupId>
 		<artifactId>el4j-applications</artifactId>
-		<version>1.7-SNAPSHOT</version>
+		<version>1.6</version>
 	</parent>
 	
 	<groupId>${groupId}</groupId>
@@ -61,7 +61,7 @@
 			</releases>
 			<id>el4jReleaseRepositoryExternal</id>
 			<name>External release repository of the EL4J project</name>
-			<url>http://public-el4.elca-services.ch/el4j/maven2repository</url>
+			<url>http://el4.elca-services.ch/el4j/maven2repository</url>
 		</repository>
 	</repositories>
 </project>

@@ -25,7 +25,12 @@ import org.codehaus.plexus.util.FileUtils;
 /**
  * Goal to clean the cobertura data directory.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Martin Zeltner (MZE)
  * 

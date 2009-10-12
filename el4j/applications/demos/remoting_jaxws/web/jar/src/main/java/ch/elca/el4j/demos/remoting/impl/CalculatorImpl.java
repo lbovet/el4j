@@ -30,7 +30,12 @@ import ch.elca.el4j.demos.remoting.ComplexNumber;
  *
  * This class is a annotated version of {@link CalculatorImpl}.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Stefan Wismer (SWI)
  *

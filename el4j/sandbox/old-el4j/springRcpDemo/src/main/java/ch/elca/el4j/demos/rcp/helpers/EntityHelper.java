@@ -28,7 +28,12 @@ import javax.persistence.Entity;
  * 
  * This class is a helper that provides lists of getters for a specific class.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @param <T> Class type this class is helper for
  * @author David Stefan (DST)

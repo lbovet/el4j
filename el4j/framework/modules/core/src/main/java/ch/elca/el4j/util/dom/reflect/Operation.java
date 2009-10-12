@@ -21,7 +21,12 @@ import java.lang.reflect.Method;
 /** represents an operation. Operations are declared using public methods (
  * that are neither getters nor setters).
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Adrian Moos (AMS)
  */

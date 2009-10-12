@@ -26,7 +26,12 @@ import ch.elca.el4j.maven.plugins.database.AbstractDBExecutionMojo;
  * This class is a database mojo for the 'create' statement.
  * It creates the table(s) in the database.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @goal create
  * @author David Stefan (DST)

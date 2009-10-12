@@ -20,11 +20,20 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 
 import ch.elca.el4j.maven.plugins.database.AbstractDBMojo;
+import ch.elca.el4j.maven.plugins.database.util.derby.DerbyNetworkServerStarter;
 
 /**
  * This class is a database mojo for the 'start' statement.
+ * In case of using derby it starts the DerbyNetworkServer.
+ * In case of using oracle, is does nothing (as we require
+ * the oracle database to run when using this plugin).
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @goal start
  * @author David Stefan (DST)
@@ -38,21 +47,21 @@ public class StartMojo extends AbstractDBMojo {
 	
 	// Checkstyle: MemberName off
 	/**
-	 * The port to run the DB.
+	 * The port to run derby.
 	 *
 	 * @parameter expression="${db.internal.port}"  default-value="-1"
 	 */
 	private int dbPort;
 	
 	/**
-	 * The user name required to access the DB.
+	 * The user name required to access derby.
 	 *
 	 * @parameter expression="${db.username}"  default-value=""
 	 */
 	private String dbUsername;
 	
 	/**
-	 * The password required to access the DB.
+	 * The password required to access derby.
 	 *
 	 * @parameter expression="${db.password}"  default-value=""
 	 */
@@ -64,19 +73,22 @@ public class StartMojo extends AbstractDBMojo {
 	 */
 	public void executeInternal() throws MojoExecutionException, MojoFailureException {
 		try {
-			getLog().info("Starting database (StartMojo)...");
-			getDbController().setPort(dbPort);
-			getDbController().setUsername(dbUsername);
-			getDbController().setPassword(dbPassword);
-			getDbController().start();
-			
-			if (hasToWait()) {
-				Thread.sleep(DELAY);
-				getLog().info("Press Ctrl-C to stop Server");
-				try {
-					Thread.sleep(Long.MAX_VALUE);
-				} catch (InterruptedException e) {
-					getLog().error("Error during wait", e);
+			if (needStartup()) {
+				getLog().info("Starting database (StartMojo)...");
+				
+				DerbyNetworkServerStarter.setHomeDir(getDerbyLocation());
+				DerbyNetworkServerStarter.setPort(dbPort);
+				DerbyNetworkServerStarter.setUsername(dbUsername);
+				DerbyNetworkServerStarter.setPassword(dbPassword);
+				DerbyNetworkServerStarter.startNetworkServer();
+				if (hasToWait()) {
+					Thread.sleep(DELAY);
+					getLog().info("Press Ctrl-C to stop Server");
+					try {
+						Thread.sleep(Long.MAX_VALUE);
+					} catch (InterruptedException e) {
+						getLog().error("Error during wait", e);
+					}
 				}
 			}
 		} catch (Exception e) {

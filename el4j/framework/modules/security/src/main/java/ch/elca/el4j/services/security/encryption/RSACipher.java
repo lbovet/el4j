@@ -28,7 +28,12 @@ import java.util.Random;
  * <p>Adapted from RSA.java, an RSA Encryption Implementation.
  * Copyright (C) 2003 Eugene Luzgin, eugene@luzgin.com
  * 
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Fabian Reichlin (FRE)
  * @author Laurent Bovet (LBO)

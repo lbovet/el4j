@@ -20,12 +20,18 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 
 import ch.elca.el4j.maven.plugins.database.AbstractDBExecutionMojo;
+import ch.elca.el4j.maven.plugins.database.util.derby.DerbyNetworkServerStarter;
 
 
 /**
  * <em>DEPRECATED</em> This class is a convenience mojo that includes the 'drop' and 'stop' mojo.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @goal cleanUpDB
  * @author David Stefan (DST)
@@ -42,7 +48,11 @@ public class CleanUpDatabaseMojo extends AbstractDBExecutionMojo {
 			//Execute drop
 			executeAction("drop", true, false);
 			getLog().info("Stopping database... ");
-			getDbController().stop();
+			// Stop Derby Network Server if necessary
+			if (needStartup()) {
+				DerbyNetworkServerStarter.setHomeDir(getDerbyLocation());
+				DerbyNetworkServerStarter.stopNetworkServer();
+			}
 		} catch (Exception e) {
 			throw new MojoFailureException(e.getMessage());
 		}

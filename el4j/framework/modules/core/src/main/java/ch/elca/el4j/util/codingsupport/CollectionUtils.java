@@ -28,8 +28,8 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Set;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.util.Assert;
 
 import ch.elca.el4j.util.collections.ExtendedReorderableList;
@@ -46,7 +46,12 @@ import ch.elca.el4j.util.collections.impl.DefaultTransformedList;
  *
  *
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Martin Zeltner (MZE), Adrian Moos (AMS)
  */
@@ -54,8 +59,8 @@ public class CollectionUtils {
 	/**
 	 * Private logger of this class.
 	 */
-	private static Logger s_logger
-		= LoggerFactory.getLogger(CollectionUtils.class);
+	private static Log s_logger
+		= LogFactory.getLog(CollectionUtils.class);
 	
 	/**
 	 * Hidden constructor.

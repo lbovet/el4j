@@ -19,8 +19,8 @@ package ch.elca.el4j.services.remoting.protocol.loadbalancing.policy;
 import java.util.Calendar;
 import java.util.Random;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import ch.elca.el4j.services.remoting.AbstractRemotingProtocol;
 import ch.elca.el4j.services.remoting.protocol.loadbalancing.NoProtocolAvailableRTException;
@@ -30,7 +30,12 @@ import ch.elca.el4j.services.remoting.protocol.loadbalancing.NoProtocolAvailable
  * Chooses the protocol according to a random policy. Protocols for whom a
  * failure has been notified, are removed.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Stefan Pleisch (SPL)
  */
@@ -39,8 +44,8 @@ public class RandomPolicy extends AbstractPolicy {
 	/**
 	 * Private logger.
 	 */
-	private static Logger s_logger = LoggerFactory
-			.getLogger(RandomPolicy.class);
+	private static Log s_logger = LogFactory
+			.getLog(RandomPolicy.class);
 
 	/**
 	 * Random number generator.

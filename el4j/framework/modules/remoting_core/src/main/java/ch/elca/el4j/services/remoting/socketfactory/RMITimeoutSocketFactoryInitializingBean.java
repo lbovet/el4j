@@ -28,7 +28,12 @@ import org.springframework.beans.factory.InitializingBean;
  * (in mandatory) and then sets the global socket factory from which RMI gets
  * sockets to the new {@link RMITimeoutSocketFactoryInitializingBean}.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Dominik Zindel (DZI)
  */

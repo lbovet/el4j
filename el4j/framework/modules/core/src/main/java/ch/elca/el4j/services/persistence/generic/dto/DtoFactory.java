@@ -33,7 +33,12 @@ import ch.elca.el4j.services.persistence.generic.primarykey.PrimaryKeyGenerator;
  * it in database you can create the dto directly. But recommended is to create
  * each dto with help of this dto factory.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @deprecated This class in no more used if using
  *             <code>AbstractIntOptimisticLockingDto</code>.

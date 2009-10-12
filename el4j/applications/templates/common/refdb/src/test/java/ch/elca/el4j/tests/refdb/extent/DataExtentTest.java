@@ -18,8 +18,8 @@ package ch.elca.el4j.tests.refdb.extent;
 
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotSame;
@@ -44,7 +44,12 @@ import static ch.elca.el4j.services.persistence.hibernate.dao.extent.ExtentEntit
  * Test case for <code>DataExtent</code> to test
  * the the fluent API and the functionality.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Andreas Rueedlinger (ARR)
  */
@@ -52,8 +57,8 @@ public class DataExtentTest extends AbstractTestCaseBase {
 	/**
 	 * Private logger.
 	 */
-	private static Logger s_logger
-		= LoggerFactory.getLogger(GenericHibernateDaoTest.class);
+	private static Log s_logger
+		= LogFactory.getLog(GenericHibernateDaoTest.class);
 	
 	/**
 	 * {@inheritDoc}

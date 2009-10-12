@@ -24,7 +24,12 @@ import org.springframework.dao.DataAccessException;
  * This exception will be thrown when a value, which has to be unique, already
  * exists.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Martin Zeltner (MZE)
  * @deprecated Spring data access exception will be used.

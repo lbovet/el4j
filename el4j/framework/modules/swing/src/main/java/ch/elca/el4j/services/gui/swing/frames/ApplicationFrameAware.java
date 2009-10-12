@@ -19,7 +19,12 @@ package ch.elca.el4j.services.gui.swing.frames;
 /**
  * This marker interface signals that the component needs access to the surrounding frame.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Stefan Wismer (SWI)
  */

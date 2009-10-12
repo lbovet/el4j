@@ -28,7 +28,12 @@ import javax.xml.bind.annotation.XmlType;
  * Its originally a copy of the <code>CalculatorValueObject</code>,
  * but uses different Annotations.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Philippe Jacot (PJA)
  */

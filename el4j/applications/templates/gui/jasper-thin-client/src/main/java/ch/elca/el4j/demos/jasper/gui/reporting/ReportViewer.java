@@ -23,7 +23,12 @@ import net.sf.jasperreports.view.JasperViewer;
  * This class opens a viewer to display a JasperPrint. The compilation and
  * filling of the report is done in the report generator.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @see ch.elca.el4j.demos.jasper.gui.reporting.ReportGenerator
  * @author Fabian Reichlin (FRE)

@@ -17,9 +17,10 @@
 
 package ch.elca.el4j.tests.services.security.provider;
 
-import org.springframework.security.Authentication;
-import org.springframework.security.AuthenticationException;
-import org.springframework.security.BadCredentialsException;
+import org.acegisecurity.Authentication;
+import org.acegisecurity.AuthenticationException;
+import org.acegisecurity.BadCredentialsException;
+import org.acegisecurity.providers.TestingAuthenticationProvider;
 
 import ch.elca.el4j.services.security.encryption.RSACipher;
 
@@ -27,7 +28,12 @@ import ch.elca.el4j.services.security.encryption.RSACipher;
  * Provider for testing reasons. This class throws a BadCredentialsException in
  * case the username is not equal to the password.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Raphael Boog (RBO)
  */

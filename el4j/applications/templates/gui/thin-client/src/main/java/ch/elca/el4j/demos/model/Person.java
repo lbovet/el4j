@@ -18,13 +18,6 @@ package ch.elca.el4j.demos.model;
 
 import java.util.List;
 
-/**
- * A simple Person (example model).
- *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
- *
- * @author Stefan Wismer (SWI)
- */
 public interface Person {
 
 	public String getFirstName();

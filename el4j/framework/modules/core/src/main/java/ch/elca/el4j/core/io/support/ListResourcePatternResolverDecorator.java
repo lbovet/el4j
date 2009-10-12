@@ -27,8 +27,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.ArrayUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.core.io.support.ResourcePatternResolver;
@@ -45,7 +45,12 @@ import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
  * are no resources found by this class. Hence the list of resource names does
  * not have to be exhaustive.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Andreas Bur (ABU)
  */
@@ -53,7 +58,7 @@ public class ListResourcePatternResolverDecorator
 	implements ResourcePatternResolver {
 
 	/** The static logger. */
-	private static Logger s_logger = LoggerFactory.getLogger(
+	private static Log s_logger = LogFactory.getLog(
 			ListResourcePatternResolverDecorator.class);
 	
 	/** The (ordered) list of configuration locations. */

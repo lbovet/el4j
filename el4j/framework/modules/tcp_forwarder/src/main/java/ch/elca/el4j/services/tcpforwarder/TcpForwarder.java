@@ -26,8 +26,8 @@ import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 /**
  * A TcpForwarder represents a service intended to forward TCP traffic
@@ -39,7 +39,12 @@ import org.slf4j.LoggerFactory;
  * to and from it achieving the same effect but for requiring the application to
  * connect on the forwarder's port.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Adrian Moos (AMS)
  * @author Alex Mathey (AMA)
@@ -49,8 +54,8 @@ public class TcpForwarder implements Runnable {
 	/**
 	 * Private logger.
 	 */
-	private static Logger s_logger
-		= LoggerFactory.getLogger(TcpForwarder.class);
+	private static Log s_logger
+		= LogFactory.getLog(TcpForwarder.class);
 	
 	/**
 	 * The listen port.

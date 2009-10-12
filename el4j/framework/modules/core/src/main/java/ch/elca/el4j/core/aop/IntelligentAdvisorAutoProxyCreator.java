@@ -19,8 +19,8 @@ package ch.elca.el4j.core.aop;
 import java.lang.reflect.Proxy;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.aop.TargetSource;
 import org.springframework.aop.framework.adapter.AdvisorAdapterRegistry;
 import org.springframework.aop.framework.adapter.GlobalAdvisorAdapterRegistry;
@@ -39,15 +39,20 @@ import ch.elca.el4j.util.codingsupport.AopHelper;
  * getter and setter for them) do just take place in this class, because class
  * {@link AbstractAutoProxyCreator} hides them.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Martin Zeltner (MZE)
  */
 public class IntelligentAdvisorAutoProxyCreator
 	extends DefaultAdvisorAutoProxyCreator {
 	
-	protected static final Logger s_logger = 
-		LoggerFactory.getLogger(IntelligentAdvisorAutoProxyCreator.class);
+	protected static final Log s_logger = 
+		LogFactory.getLog(IntelligentAdvisorAutoProxyCreator.class);	
 	
 	/**
 	 * COPYIED FROM SUPERCLASS!

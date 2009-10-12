@@ -19,8 +19,8 @@ package ch.elca.el4j.env.beans;
 import java.io.IOException;
 import java.util.Properties;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanDefinitionStoreException;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
@@ -41,7 +41,12 @@ import ch.elca.el4j.util.env.PropertyEncryptionUtil;
 /**
  * Specific property override configurer for the EL4J environment.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Martin Zeltner (MZE)
  * @author Stefan Wismer (SWI)
@@ -59,8 +64,8 @@ public class EnvPropertyOverrideConfigurer extends PropertyOverrideConfigurer
 	 * This logger is used to print out some global debugging info. Consult it
 	 * for info what is going on.
 	 */
-	protected static final Logger s_logger
-		= LoggerFactory.getLogger(ModuleApplicationContext.EL4J_DEBUGGING_LOGGER);
+	protected static final Log s_logger
+		= LogFactory.getLog(ModuleApplicationContext.EL4J_DEBUGGING_LOGGER);
 
 	/**
 	 * Is the used application context.

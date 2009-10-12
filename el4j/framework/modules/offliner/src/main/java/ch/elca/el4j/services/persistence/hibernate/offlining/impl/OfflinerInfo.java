@@ -31,7 +31,12 @@ import ch.elca.el4j.util.objectwrapper.ObjectWrapper;
  * The information the offliner client needs. This is a messenger class which it can pass to
  * the synchronizer and allows initialization to be factored out from the actual offliner implementation.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author David Bernhard (DBD)
  */

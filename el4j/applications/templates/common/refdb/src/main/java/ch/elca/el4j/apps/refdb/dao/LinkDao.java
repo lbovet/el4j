@@ -23,7 +23,12 @@ import ch.elca.el4j.apps.refdb.dom.Link;
  * This interface represents a DAO for the link domain object.
  * Specific data access operations for this entity can be introduced here.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Alex Mathey (AMA)
  */

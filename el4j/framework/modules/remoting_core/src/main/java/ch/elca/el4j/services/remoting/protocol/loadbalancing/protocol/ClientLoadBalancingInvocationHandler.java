@@ -21,8 +21,8 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.BeanCreationException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -44,7 +44,12 @@ import ch.elca.el4j.services.remoting.protocol.loadbalancing.policy.AbstractPoli
  *
  * @{link ch.elca.el4j.loadbalancing.policy.AbstractPolicy}.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+*   ("$URL$",
+	*    "$Revision$",
+	*    "$Date$",
+	*    "$Author$"
+	* );</script>
  *
  * @author Stefan Pleisch (SPL)
  */
@@ -54,8 +59,8 @@ public class ClientLoadBalancingInvocationHandler implements InvocationHandler,
 	/**
 	 * Private logger.
 	 */
-	private static Logger s_logger = LoggerFactory
-		.getLogger(ClientLoadBalancingInvocationHandler.class);
+	private static Log s_logger = LogFactory
+		.getLog(ClientLoadBalancingInvocationHandler.class);
 
 	private Object m_currentProtocolProxy;
 

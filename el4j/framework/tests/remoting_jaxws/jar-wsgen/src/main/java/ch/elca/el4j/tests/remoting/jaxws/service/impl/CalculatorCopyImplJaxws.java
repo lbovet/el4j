@@ -27,7 +27,12 @@ import ch.elca.el4j.tests.remoting.jaxws.service.SpecialCalculatorException;
  *
  * This class is an additional annotated version of {@link CalculatorImpl} (just to test a second service).
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Stefan Wismer (SWI)
  *

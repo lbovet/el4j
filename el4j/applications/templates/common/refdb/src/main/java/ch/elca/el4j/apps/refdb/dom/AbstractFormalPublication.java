@@ -29,7 +29,12 @@ import org.hibernate.validator.NotNull;
  * FormalPublication abstract domain object.
  * Describes the common structure of FormalPublication and its descendants.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Andreas Rueedlinger (ARR)
  */

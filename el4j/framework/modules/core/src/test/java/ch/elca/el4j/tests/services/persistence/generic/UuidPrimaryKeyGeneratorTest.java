@@ -32,7 +32,12 @@ import ch.elca.el4j.services.persistence.generic.primarykey.UuidPrimaryKeyGenera
 /**
  * This is the unit test for <code>UuidPrimaryKeyGenerator</code>.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Jacques-Olivier Haenni (JOH)
  */

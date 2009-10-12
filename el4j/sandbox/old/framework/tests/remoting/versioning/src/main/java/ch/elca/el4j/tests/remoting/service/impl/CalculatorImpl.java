@@ -25,7 +25,12 @@ import ch.elca.el4j.tests.remoting.service.CalculatorValueObject;
  * This class is the implementation of the old calculator. It is missing two
  * methods compared to the "original" one, installed on the server.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Martin Zeltner (MZE)
  * @author Philippe Jacot (PJA)

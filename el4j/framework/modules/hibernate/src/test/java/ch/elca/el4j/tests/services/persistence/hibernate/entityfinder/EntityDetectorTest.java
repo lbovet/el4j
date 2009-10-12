@@ -10,10 +10,8 @@ import ch.elca.el4j.tests.services.persistence.hibernate.entityfinder.entities.E
 
 /**
  * Test for {@link EntityDetectorAnnotationSessionFactoryBean}
- * 
- * @svnLink $Revision$;$Date$;$Author$;$URL$
- *
  * @author pos
+ *
  */
 public class EntityDetectorTest {
 

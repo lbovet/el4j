@@ -27,7 +27,12 @@ import ch.elca.el4j.services.gui.swing.GUIApplication;
 /**
  * This interface provides extension points to the GUI template (internal use only!)
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Stefan Wismer (SWI)
  */

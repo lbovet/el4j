@@ -20,8 +20,8 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.jdom.Attribute;
 import org.jdom.Comment;
 import org.jdom.Content;
@@ -39,7 +39,12 @@ import ch.elca.el4j.services.xmlmerge.MergeAction;
  * Merge implementation traversing parallelly both element contents. Works when
  * contents are in the same order in both elements.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Laurent Bovet (LBO)
  * @author Alex Mathey (AMA)
@@ -49,8 +54,8 @@ public class OrderedMergeAction extends AbstractMergeAction {
 	/**
 	 * Private logger.
 	 */
-	private static Logger s_logger
-		= LoggerFactory.getLogger(OrderedMergeAction.class);
+	private static Log s_logger
+		= LogFactory.getLog(OrderedMergeAction.class);
 	
 	/**
 	 * {@inheritDoc}

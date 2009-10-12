@@ -12,7 +12,7 @@
 	<parent>
 		<groupId>ch.elca.el4j.maven</groupId>
 		<artifactId>el4j-maven</artifactId>
-		<version>1.7-SNAPSHOT</version>
+		<version>1.6.1</version>
 	</parent>
 	
 	<groupId>ch.elca.el4j.maven.plugins</groupId>
@@ -56,6 +56,7 @@
 		<module>maven-jaxws-plugin</module>
 		<module>maven-rec-plugin</module>
 		<module>maven-abbot-plugin</module>
+		<module>maven-duplicatefinder-plugin</module>
 	</modules>
 	<dependencies>
 		<dependency>

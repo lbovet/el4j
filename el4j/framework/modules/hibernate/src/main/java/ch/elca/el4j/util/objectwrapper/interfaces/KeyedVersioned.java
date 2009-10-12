@@ -23,7 +23,12 @@ import ch.elca.el4j.util.objectwrapper.Wrappable;
 /**
  * Aspect of having a key and version.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL: https://cvs.elca.ch/subversion/el4j-internal/trunk/sandbox/cacher/src/main/java/caching/aspects/KeyedVersionedAspect.java $",
+ *    "$Revision: 1571 $",
+ *    "$Date: 2008-08-06 10:49:49 +0200 (Wed, 06 Aug 2008) $",
+ *    "$Author: dbd@ELCA.CH $"
+ * );</script>
  *
  * @author David Bernhard (DBD)
  */

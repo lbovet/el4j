@@ -4,27 +4,25 @@
  * Copyright (C) 2006 by ELCA Informatique SA, Av. de la Harpe 22-24,
  * 1000 Lausanne, Switzerland, http://www.elca.ch
  *
- * EL4J is published under the GNU Lesser General Public License (LGPL)
- * Version 2.1. See http://www.gnu.org/licenses/
+ * EL4J is published under the GNU General Public License (GPL) Version 2.0.
+ * http://www.gnu.org/licenses/
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU Lesser General Public License for more details.
+ * GNU General Public License for more details.
  *
  * For alternative licensing, please contact info@elca.ch
  */
 package ch.elca.el4j.services.remoting.protocol;
 
 import java.lang.reflect.Method;
-import java.util.Map;
 
-import javax.xml.ws.BindingProvider;
 import javax.xml.ws.Service;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.jvnet.jax_ws_commons.spring.SpringService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.sun.xml.ws.client.sei.SEIStub;
 import com.sun.xml.ws.transport.http.servlet.SpringBinding;
@@ -38,7 +36,12 @@ import ch.elca.el4j.services.remoting.RemotingServiceExporter;
 /**
  * This class implements all needed things for the soap protocol using JAX-WS.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Stefan Wismer (SWI)
  */
@@ -47,7 +50,7 @@ public class Jaxws extends AbstractInetSocketAddressWebProtocol {
 	/**
 	 * The logger.
 	 */
-	protected static final Logger s_logger = LoggerFactory.getLogger(Jaxws.class);
+	protected static final Log s_logger = LogFactory.getLog(Jaxws.class);
 
 	
 	/** {@inheritDoc} */
@@ -66,7 +69,7 @@ public class Jaxws extends AbstractInetSocketAddressWebProtocol {
 		adaptExporterService(service);
 		
 		SpringBinding binding = new SpringBinding();
-		binding.setUrl("/" + exporterBean.getServiceName());
+		binding.setUrl(generateUrl(exporterBean));
 		try {
 			binding.setService(service.getObject());
 		} catch (Exception e) {
@@ -89,7 +92,7 @@ public class Jaxws extends AbstractInetSocketAddressWebProtocol {
 		
 		try {
 			Class wsServiceClass;
-			String portName;
+			String methodName;
 			
 			ProtocolSpecificConfiguration cfg
 				= proxyBean.getProtocolSpecificConfiguration();
@@ -99,11 +102,11 @@ public class Jaxws extends AbstractInetSocketAddressWebProtocol {
 				
 				// use wsimport-generated classes directly (no dynamic proxies)
 				wsServiceClass = jaxWsConfig.getServiceImplementation();
-				portName = "get" + serviceInterface.getSimpleName();
+				methodName = "get" + serviceInterface.getSimpleName();
 			} else {
 				// use generated classes directly (no dynamic proxies)
 				wsServiceClass = Class.forName(serviceName + "Service");
-				portName = "get" + serviceInterface.getSimpleName() + "Port";
+				methodName = "get" + serviceInterface.getSimpleName() + "Port";
 			}
 			
 			Service clientService = (Service) wsServiceClass.newInstance();
@@ -111,16 +114,9 @@ public class Jaxws extends AbstractInetSocketAddressWebProtocol {
 			// give potential subclasses the chance to adapt the service
 			adaptProxyService(clientService);
 			
-			Method portGetter = wsServiceClass.getMethod(portName);
-			Object port = portGetter.invoke(clientService);
+			Method getter = wsServiceClass.getMethod(methodName);
 
-			// overwrite endpoint address
-			BindingProvider bindingProvider = (BindingProvider) port;
-			Map<String, Object> context = bindingProvider.getRequestContext();
-			
-			context.put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, generateUrl(proxyBean));
-			
-			createdProxy = port;
+			createdProxy = getter.invoke(clientService);
 		} catch (Exception e) {
 			CoreNotificationHelper.notifyMisconfiguration(
 				"Could not create JAX-WS binding for "
@@ -140,16 +136,8 @@ public class Jaxws extends AbstractInetSocketAddressWebProtocol {
 	/** {@inheritDoc} */
 	@Override
 	public String generateUrl(AbstractRemotingBase remoteBase) {
-		StringBuffer sb = new StringBuffer();
-		sb.append("http://");
-		sb.append(getServiceHost());
-		sb.append(":");
-		sb.append(getServicePort());
-		sb.append("/");
-		sb.append(getContextPath());
-		sb.append("/");
-		sb.append(remoteBase.getServiceName());
-		return sb.toString();
+		// ATTENTION: The complete url is defined manually in the wsdl
+		return "/" + remoteBase.getServiceName();
 	}
 
 	/** {@inheritDoc} */

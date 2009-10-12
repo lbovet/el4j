@@ -20,7 +20,12 @@ package ch.elca.el4j.services.xmlmerge;
  * Abstraction for matchers, mappers or actions two be creatable by the same
  * factory classes.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Laurent Bovet (LBO)
  * @author Alex Mathey (AMA)

@@ -12,7 +12,7 @@
 	<parent>
 		<groupId>ch.elca.el4j.applications</groupId>
 		<artifactId>el4j-templates-swing-demo</artifactId>
-		<version>1.7-SNAPSHOT</version>
+		<version>1.6</version>
 	</parent>
 
 	<artifactId>swing-demo-jasper-thin-client</artifactId>
@@ -40,12 +40,6 @@
 			<groupId>jasperreports</groupId>
 			<artifactId>jasperreports</artifactId>
 			<version>3.0.1</version>
-			<exclusions>
-				<exclusion>
-					<groupId>commons-logging</groupId>
-					<artifactId>commons-logging</artifactId>
-				</exclusion>
-			</exclusions>
 		</dependency>
 		<!-- use explicit version to prevent downloading some "brew" (=snapshot) version -->
 		<dependency>

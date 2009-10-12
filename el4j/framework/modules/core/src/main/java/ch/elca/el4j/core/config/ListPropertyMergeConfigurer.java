@@ -25,8 +25,8 @@ import java.util.Enumeration;
 import java.util.List;
 import java.util.Properties;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.beans.MutablePropertyValues;
 import org.springframework.beans.PropertyValue;
@@ -61,7 +61,12 @@ import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
  * possible pattern for defining map entries in a properties file is (tbd):
  * "bean_name.property_name = key1=value1, key2=value2".
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ * ("$URL$",
+ *  "$Revision$",
+ *  "$Date$",
+ *  "$Author$" );
+ * </script>
  *
  * @author Raphael Boog (RBO)
  * @author Martin Zeltner (MZE)
@@ -70,8 +75,8 @@ public class ListPropertyMergeConfigurer extends PropertyOverrideConfigurer {
 	/**
 	 * Private logger.
 	 */
-	private static Logger s_logger
-		= LoggerFactory.getLogger(ListPropertyMergeConfigurer.class);
+	private static Log s_logger
+		= LogFactory.getLog(ListPropertyMergeConfigurer.class);
 
 	/**
 	 * Properties.

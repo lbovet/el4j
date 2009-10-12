@@ -17,14 +17,19 @@
 
 package ch.elca.el4j.tests.util.metadata.annotations;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 //Checkstyle: MagicNumber off
 /**
  * This class contains a method called test(int) with annotation declarations.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Raphael Boog (RBO)
  * @author Martin Zeltner (MZE)
@@ -38,7 +43,7 @@ public class FooImpl implements Foo {
 		/**
 		 * Private logger of this inner class.
 		 */
-		private static Logger s_innerLogger = LoggerFactory.getLogger(Bar.class);
+		private static Log s_innerLogger = LogFactory.getLog(Bar.class);
 
 		/**
 		 * This method does a log.
@@ -56,7 +61,7 @@ public class FooImpl implements Foo {
 	/**
 	 * Private logger of this class.
 	 */
-	private static Logger s_logger = LoggerFactory.getLogger(FooImpl.class);
+	private static Log s_logger = LogFactory.getLog(FooImpl.class);
 
 	/**
 	 * The base member variable.

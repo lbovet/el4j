@@ -36,7 +36,12 @@ import ch.elca.el4j.services.persistence.generic.dto.AbstractIntKeyIntOptimistic
  * Therefore collections based on hash code have to be refreshed such that the new hash code is used. Otherwise inserted
  * entities won't be found anymore after persisting.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Stefan Wismer (SWI)
  */

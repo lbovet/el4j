@@ -38,11 +38,6 @@
 	<logger name="ch.elca.el4j.maven.plugins.database">
 		<level value="DEBUG"/>
 	</logger>
-	
-	<!-- suppress logging of StaleObjectStateException. Spring will handle this for us -->
-	<logger name="org.hibernate.event.def.AbstractFlushingEventListener">
-		<level value="FATAL"/>
-	</logger>
 
 	
 	<!-- External tools: show only warnings -->

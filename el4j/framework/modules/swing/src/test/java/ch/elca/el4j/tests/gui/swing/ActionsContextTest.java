@@ -16,21 +16,28 @@
  */
 package ch.elca.el4j.tests.gui.swing;
 
-import static org.junit.Assert.assertEquals;
-
-import java.awt.GraphicsEnvironment;
+import java.awt.Toolkit;
 
 import org.junit.Test;
+
+import static org.junit.Assert.*;
 
 import ch.elca.el4j.services.gui.swing.ActionsContext;
 import ch.elca.el4j.tests.gui.swing.actions.ChildActions;
 import ch.elca.el4j.tests.gui.swing.actions.GrandparentActions;
 import ch.elca.el4j.tests.gui.swing.actions.ParentActions;
 
+import sun.awt.HeadlessToolkit;
+
 /**
  * Test {@link ActionsContext}s.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Stefan Wismer (SWI)
  */
@@ -144,6 +151,6 @@ public class ActionsContextTest {
 	private boolean skipTests() {
 		// getAction(object, action) makes ResourceMap execute getMenuShortcutKeyMask() on built-in
 		// "quit"-action, which does not work in headless mode
-		return GraphicsEnvironment.isHeadless();
+		return Toolkit.getDefaultToolkit() instanceof HeadlessToolkit;
 	}
 }

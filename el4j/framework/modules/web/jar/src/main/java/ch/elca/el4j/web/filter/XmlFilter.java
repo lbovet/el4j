@@ -39,22 +39,27 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 /**
  * Class for filtering xml files. Depending on whether the browser is xslt
  * compatible or not, this filter generates a html page and sends it to the
  * client or lets the browser do the xslt transformation.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Jacques-Olivier Haenni (JOH)
  */
 public final class XmlFilter implements Filter {
 
 	/** The static logger. */
-	private static final Logger s_logger = LoggerFactory.getLogger(XmlFilter.class);
+	private static final Log s_logger = LogFactory.getLog(XmlFilter.class);
 	
 	/**
 	 * List of browsers known to support XSLT. Currently, only IE 6.0 fully

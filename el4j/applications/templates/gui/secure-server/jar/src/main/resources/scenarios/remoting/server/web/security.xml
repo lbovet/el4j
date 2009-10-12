@@ -1,51 +1,87 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:aop="http://www.springframework.org/schema/aop"
-	xmlns:tx="http://www.springframework.org/schema/tx"
-	xmlns:security="http://www.springframework.org/schema/security"
-	xsi:schemaLocation="
-	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
-	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd	
-	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
-	http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-2.0.2.xsd">
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
 
 	<!-- $Revision$ -->
 	<!-- $URL$ -->
 	<!-- $Date$ -->
 	<!-- $Author$ -->
+	<bean id="abstractMethodsecurityInterceptor"
+		class="org.acegisecurity.intercept.method.aopalliance.MethodSecurityInterceptor"
+		abstract="true">
+		<property name="authenticationManager"
+			ref="authenticationManager" />
+		<property name="accessDecisionManager"
+			ref="accessDecisionManager" />
+	</bean>
 
-
-	<!-- 
-		Reference to the default authenticationManager that is set up when using the 
-		global-method-security tag, so that other beans can reference to it.
-	 -->
-	<security:authentication-manager alias="authenticationManager"/>
-	
-	
-	<!-- 
-		Makes sure that the $Secured annotations are automatically regarded (sets up all necessary beans).
-		Pointcut in @AspectJ syntax to protect method deleteReference from beeing used by users who aren't superusers.   
-	-->
-	<security:global-method-security secured-annotations="enabled" jsr250-annotations="enabled">
-		<security:protect-pointcut expression="execution(* ch.elca.el4j.apps.refdb.service.ReferenceService.deleteReference(..))" access="ROLE_SUPERUSER"/>
-	</security:global-method-security>
-	
-	
+	<bean id="authenticationManager"
+		class="org.acegisecurity.providers.ProviderManager">
+		<property name="providers">
+			<list>
+				<ref local="authenticationProvider" />
+			</list>
+		</property>
+	</bean>
 	<bean id="authenticationProvider"
-		class="org.springframework.security.providers.dao.DaoAuthenticationProvider">
+		class="org.acegisecurity.providers.dao.DaoAuthenticationProvider">
 		<property name="userDetailsService" ref="authenticationDao" />
-		<security:custom-authentication-provider /> 
 	</bean>
 
 	
 	<bean id="authenticationDao"
-		class="org.springframework.security.userdetails.memory.InMemoryDaoImpl">
+		class="org.acegisecurity.userdetails.memory.InMemoryDaoImpl">
 		<property name="userMap">
 			<value>
 				el4super=secret,ROLE_NORMALUSER,ROLE_SUPERUSER
 				el4normal=el4j,ROLE_NORMALUSER
 			</value>
 		</property>
+	</bean>
+
+	<!-- <bean id="attributes"
+		class="org.acegisecurity.annotation.SecurityAnnotationAttributes" />
+	
+	<bean id="objectDefinitionSource"
+		class="org.acegisecurity.intercept.method.MethodDefinitionAttributes">
+		<property name="attributes">
+			<ref local="attributes" />
+		</property>
+	</bean>  -->
+	
+	<bean id="remoteReferenceServiceSecurityInterceptor" parent="abstractMethodsecurityInterceptor"
+		class="org.acegisecurity.intercept.method.aopalliance.MethodSecurityInterceptor">
+		<property name="objectDefinitionSource">
+			<value>
+				ch.elca.el4j.apps.refdb.service.ReferenceService.deleteReference*=ROLE_SUPERUSER
+			</value>
+		</property>
+	</bean>
+
+	<bean id="accessDecisionManager"
+		class="org.acegisecurity.vote.AffirmativeBased">
+		<property name="decisionVoters">
+			<list>
+				<bean class="org.acegisecurity.vote.RoleVoter">
+					<property name="rolePrefix" value="ROLE_" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="securityAutoProxyCreator"
+		class="ch.elca.el4j.core.aop.ExclusiveBeanNameAutoProxyCreator">
+		<property name="interceptorNames">
+			<list>
+				<value>remoteReferenceServiceSecurityInterceptor</value>
+			</list>
+		</property>
+		<property name="beanNames">
+			<list>
+				<value>referenceService</value>
+			</list>
+		</property>
+		<property name="proxyTargetClass" value="true" />
 	</bean>
 </beans>

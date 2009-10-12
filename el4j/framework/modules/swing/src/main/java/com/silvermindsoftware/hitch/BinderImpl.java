@@ -47,7 +47,12 @@ import ch.elca.el4j.util.config.GenericConfig;
 /**
  * This class is the default implementation of the binder.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Stefan Wismer (SWI), based on Hitch by Brandon Goodin
  */

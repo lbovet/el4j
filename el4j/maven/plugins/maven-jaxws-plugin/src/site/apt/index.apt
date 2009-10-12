@@ -2,7 +2,7 @@
  Maven JAX-WS Plugin
  -----
  -----
- 8 Jul 2009
+ 28 Jan 2008
  -----
  
 Maven JAX-WS Plugin
@@ -21,7 +21,7 @@ Maven JAX-WS Plugin
 
     * The <<<\<serviceURL\>>>> parameter sets the service name (for example <<<Calculator.Jaxws.Remotingtests>>>). All star characters (<<<*>>>) are replaced by the corresponding webservice name (<<<@WebService(name = ...)>>>) specified by the annotated class (for example <<<*.Jaxws.Remotingtests>>>).
 
-  * Before EL4J version 1.6, the default value for <<<\<wsdlDirectory\>>>> was <<<${project.build.directory}/jaxws/wsgen/wsdl>>> (in contrast to <<<${basedir}/src/wsdl>>> in the original). This simplified the generation of all needed files in one maven install pass. Since this approach is not recommended anymore (use Spring JAX-WS integration instead), the default is the same as in the original plugin.
+  * The default value for <<<\<wsdlDirectory\>>>> is <<<${project.build.directory}/jaxws/wsgen/wsdl>>> (in contrast to <<<${basedir}/src/wsdl>>> in the original). This enables the generation of all needed files in one maven install pass.
   
  This plugin uses JAXB 2.1 which conflicts with the version 2.0 included in JavaSE 6. {{https://jaxb.dev.java.net/guide/Migrating_JAXB_2_0_applications_to_JavaSE_6.html}} section 7.1.2 explains how to solve this problem.
   

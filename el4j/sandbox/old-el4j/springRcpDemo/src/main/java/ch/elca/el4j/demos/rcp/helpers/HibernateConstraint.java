@@ -25,7 +25,12 @@ import org.springframework.core.closure.Constraint;
  * This class checks constraints given as Hibernate Annotation in the 
  * domain objects.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  *
  * @param <T> Generic parameter of Class Type this Constraint is for.

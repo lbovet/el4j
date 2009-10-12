@@ -32,7 +32,12 @@ import ch.elca.el4j.core.contextpassing.ImplicitContextPassingRegistry;
  * Extended to test whether the passing of complex contexts works with XFires
  * internal context passing.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Martin Zeltner (MZE)
  * @author Philippe Jacot (PJA)

@@ -21,7 +21,12 @@ import ch.elca.el4j.services.remoting.ProtocolSpecificConfiguration;
 /**
  * The JAX-WS protocol (Spring) configuration class.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Stefan Wismer (SWI)
  */

@@ -25,7 +25,12 @@ import org.apache.log4j.Logger;
 /**
  * Utiility to check that the correct notifications arrive in the correct order. 
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author David Bernhard (DBD)
  */
@@ -137,7 +142,7 @@ public class NotificationProcessor {
 	}
 	
 	/**
-	 * Logger if number does not match.
+	 * Log if number does not match.
 	 */
 	private void dump() {
 		s_log.warn("Validation failed. Expected:");
@@ -151,7 +156,7 @@ public class NotificationProcessor {
 	}
 	
 	/**
-	 * Logger if validation fails.
+	 * Log if validation fails.
 	 * @param pos The position at which it failed.
 	 */
 	private void dump(int pos) {

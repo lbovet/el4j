@@ -20,19 +20,22 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 
 import ch.elca.el4j.maven.plugins.database.holder.DatabaseNameHolder;
-import ch.elca.el4j.maven.plugins.database.util.DbController;
-import ch.elca.el4j.maven.plugins.database.util.DbControllerFactory;
 
 /**
  * This class holds all fields and methods commmon to all database mojos, namely
  * the properties from the pom file, the Maven project and repository as well as
  * the DataHolder, which encapsulates all Database specific properties.
  *
- * It provides methods to its sublcasses to start the the DB server and to
+ * It provides methods to its sublcasses to start the derby NetworkServer and to
  * execute an action, i.e. extract and execute SQL statements from a given
  * source path.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author David Stefan (DST)
  *
@@ -64,18 +67,14 @@ public abstract class AbstractDBMojo extends AbstractDependencyAwareMojo {
 	 * @parameter expression="${skip}" default-value = "false"
 	 */
 	private boolean skip;
-	
-	// Checkstyle: MemberName on
 
 	/**
 	 * The Data Holder.
 	 */
 	private DatabaseNameHolder m_holder;
 	
-	/**
-	 * The DB controller to start and stop the DB.
-	 */
-	private DbController m_dbController;
+	// Checkstyle: MemberName on
+	
 	
 	
 	/** {@inheritDoc} */
@@ -99,22 +98,41 @@ public abstract class AbstractDBMojo extends AbstractDependencyAwareMojo {
 		MojoFailureException;
 	
 	/**
-	 * @return    the DB controller to start and stop the DB.
+	 * Returns true if database needs to be started.
+	 * That is, check database name.
+	 * Currently, only db2 databases can be started.
+	 *
+	 * @return Return whether database need to be started.
 	 */
-	protected DbController getDbController() {
-		if (m_dbController == null) {
-			try {
-				String db = getDbNameHolder().getDbName();
-				m_dbController = DbControllerFactory.create(db);
-			} catch (Exception e) {
-				getLog().error("Error getting DbName: " + e.getMessage());
-				return null;
-			}
-		}
+	protected boolean needStartup() {
 		
-		m_dbController.setHomeDir(toolsPath + "/" + m_dbController.getDbName() + "/"
-			+ m_dbController.getDbName() + "-databases");
-		return m_dbController;
+		try {
+			String db = getDbNameHolder().getDbName();
+			
+			boolean result;
+			if (db.equalsIgnoreCase("db2")) {
+				result = true;
+			} else {
+				getLog().warn("Database " + db + " can not be started "
+					+ "by this plugin.");
+				result = false;
+			}
+			return result;
+			
+		} catch (Exception e) {
+			getLog().error("Error getting DbName: " + e.getMessage());
+			return false;
+		}
+	}
+	
+	/**
+	 * Returns directory, where NetworkServer should be started.
+	 * This will be the location, where the NetworkServer looks for databases.
+	 *
+	 * @return Home Directory of NetworkServer
+	 */
+	protected String getDerbyLocation() {
+		return toolsPath + "/derby/derby-databases";
 	}
 
 	/**

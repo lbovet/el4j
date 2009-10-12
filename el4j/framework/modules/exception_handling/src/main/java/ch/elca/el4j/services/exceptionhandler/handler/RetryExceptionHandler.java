@@ -18,7 +18,7 @@
 package ch.elca.el4j.services.exceptionhandler.handler;
 
 import org.aopalliance.intercept.MethodInvocation;
-import org.slf4j.Logger;
+import org.apache.commons.logging.Log;
 
 import ch.elca.el4j.services.exceptionhandler.AbstractExceptionHandlerInterceptor;
 import ch.elca.el4j.services.exceptionhandler.RetryException;
@@ -27,7 +27,12 @@ import ch.elca.el4j.services.exceptionhandler.RetryException;
  * This class implements an exception handler that tries to call the target
  * several times after waiting a configurable delay.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Andreas Bur (ABU)
  */
@@ -55,7 +60,7 @@ public class RetryExceptionHandler extends AbstractRetryExceptionHandler {
 	 */
 	protected Object retry(Throwable t,
 			AbstractExceptionHandlerInterceptor exceptionInvoker,
-			MethodInvocation invocation, Logger logger) throws Throwable {
+			MethodInvocation invocation, Log logger) throws Throwable {
 		
 		if (m_sleepMillis > 0) {
 			Thread.sleep(m_sleepMillis);

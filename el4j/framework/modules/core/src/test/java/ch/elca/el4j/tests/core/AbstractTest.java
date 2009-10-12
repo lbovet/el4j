@@ -23,7 +23,12 @@ import org.springframework.context.ConfigurableApplicationContext;
  * This class is a base class for tests in the EL4J framework. By default it keeps the created application context
  * during all the tests in a test class.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Martin Zeltner (MZE)
  * @author Stefan Wismer (SWI)

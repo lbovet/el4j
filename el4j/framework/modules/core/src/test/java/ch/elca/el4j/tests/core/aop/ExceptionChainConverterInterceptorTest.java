@@ -33,9 +33,6 @@ import ch.elca.el4j.core.aop.ExceptionChainConversionInterceptor;
 
 /**
  * Test case for exception chain converter.
- * 
- * @svnLink $Revision$;$Date$;$Author$;$URL$
- *
  * @author pos
  */
 public class ExceptionChainConverterInterceptorTest {

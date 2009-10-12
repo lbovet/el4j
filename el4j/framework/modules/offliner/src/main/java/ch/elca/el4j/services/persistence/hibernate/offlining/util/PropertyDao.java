@@ -28,7 +28,12 @@ import ch.elca.el4j.services.persistence.hibernate.dao.GenericHibernateDao;
 /**
  * DAO for hibernate access to properties.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author David Bernhard (DBD)
  */

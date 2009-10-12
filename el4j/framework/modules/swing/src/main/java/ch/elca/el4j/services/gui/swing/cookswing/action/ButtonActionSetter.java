@@ -33,7 +33,12 @@ import cookxml.core.interfaces.Setter;
  * This class is a cookXml setter, which sets actions defined by "@Action"
  * for buttons.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Stefan Wismer (SWI)
  */

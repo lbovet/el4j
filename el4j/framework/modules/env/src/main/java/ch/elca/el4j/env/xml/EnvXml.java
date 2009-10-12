@@ -41,7 +41,12 @@ import ch.elca.el4j.util.codingsupport.PropertiesHelper;
 /**
  * The central class get env properties configured via env.xml files.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Stefan Wismer (SWI)
  */

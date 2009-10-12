@@ -5,8 +5,6 @@ import java.io.File;
 /**
  * Parses wsdl and binding files and generates Java code needed to access it
  * (for tests.)
- * 
- * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Kohsuke Kawaguchi
  */

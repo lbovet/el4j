@@ -28,7 +28,12 @@ import org.jdesktop.application.Application;
  * This class holds the Actions context, that enables to resolve the Swing Action given the action name.
  * It basically consists of an (ordered) list of objects having @Action annotated methods.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Stefan Wismer (SWI)
  */

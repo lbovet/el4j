@@ -24,7 +24,12 @@ import ch.elca.el4j.maven.plugins.database.AbstractDBMojo;
 /**
  * Block until the user hits Ctrl-C.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @goal block
  * @author Philipp H. Oser (POS)

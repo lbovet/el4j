@@ -20,7 +20,12 @@ package ch.elca.el4j.services.persistence.hibernate.usertypes;
  * This interface is required to persist an enum type using 
  * {@link GenericEnumUserType}.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  * 
  * @param <T>    enum value type
  *

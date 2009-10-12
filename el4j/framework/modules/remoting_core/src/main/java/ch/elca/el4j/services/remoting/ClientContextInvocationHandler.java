@@ -22,8 +22,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Map;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import ch.elca.el4j.core.contextpassing.ImplicitContextPassingRegistry;
 import ch.elca.el4j.util.interfaceenrichment.MethodDescriptor;
@@ -31,7 +31,12 @@ import ch.elca.el4j.util.interfaceenrichment.MethodDescriptor;
 /**
  * This class passes the context additionally with every method call.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Martin Zeltner (MZE)
  */
@@ -39,8 +44,8 @@ public class ClientContextInvocationHandler implements InvocationHandler {
 	/**
 	 * Private logger.
 	 */
-	private static Logger s_logger = LoggerFactory
-			.getLogger(ClientContextInvocationHandler.class);
+	private static Log s_logger = LogFactory
+			.getLog(ClientContextInvocationHandler.class);
 
 	/**
 	 * Is the remote object where the invocations has to be delegated.

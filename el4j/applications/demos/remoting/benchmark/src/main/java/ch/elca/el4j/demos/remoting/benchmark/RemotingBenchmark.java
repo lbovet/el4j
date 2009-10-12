@@ -28,8 +28,8 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
@@ -54,7 +54,12 @@ import ch.elca.el4j.demos.remoting.ComplexNumber;
  * <li>Soap with implicit context passing</li>
  * </ul>
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Martin Zeltner (MZE)
  * @author Rashid Waraich (RWA)
@@ -115,8 +120,8 @@ public class RemotingBenchmark {
 	/**
 	 * Private logger.
 	 */
-	private static Logger s_logger
-		= LoggerFactory.getLogger(RemotingBenchmark.class);
+	private static Log s_logger
+		= LogFactory.getLog(RemotingBenchmark.class);
 	
 	/**
 	 * Contains StackTraceElements of exceptions, which occurred during the

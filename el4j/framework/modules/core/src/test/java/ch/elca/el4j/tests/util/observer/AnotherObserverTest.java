@@ -31,7 +31,12 @@ import ch.elca.el4j.util.observer.impl.SettableObservableValue;
 /**
  * Another test case for the observer package.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Adrian Moos (AMS)
  */

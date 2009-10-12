@@ -18,9 +18,6 @@ package com.silvermindsoftware.hitch.meta;
 
 import java.lang.reflect.Field;
 
-/**
- * @svnLink $Revision$;$Date$;$Author$;$URL$
- */
 public class ModelMeta {
 
 	private Field modelField;

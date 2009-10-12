@@ -24,8 +24,8 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.UIManager;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.bushe.swing.event.EventServiceExistsException;
 import org.bushe.swing.event.EventServiceLocator;
 import org.jdesktop.application.Application;
@@ -66,7 +66,12 @@ import cookxml.cookswing.CookSwing;
  *   <li> defines an {@link ActionsContext} which allows to spread Actions over several classes
  *  </ul>
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Stefan Wismer (SWI)
  */
@@ -75,7 +80,7 @@ public abstract class GUIApplication extends SingleFrameApplication implements A
 	/**
 	 * The logger.
 	 */
-	private static final Logger s_logger = LoggerFactory.getLogger(
+	private static final Log s_logger = LogFactory.getLog(
 		GUIApplication.class);
 
 	/**

@@ -19,7 +19,12 @@ package ch.elca.el4j.demos.remoting;
 /**
  * This class represents a complex number.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Rashid Waraich (RWA)
  */

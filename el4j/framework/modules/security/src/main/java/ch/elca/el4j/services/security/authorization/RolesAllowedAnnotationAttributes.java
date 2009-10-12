@@ -25,7 +25,7 @@ import java.util.Set;
 
 import javax.annotation.security.RolesAllowed;
 
-import org.springframework.security.SecurityConfig;
+import org.acegisecurity.SecurityConfig;
 import org.springframework.metadata.Attributes;
 
 /**
@@ -42,7 +42,12 @@ import org.springframework.metadata.Attributes;
  *
  * @see org.acegisecurity.annotation.SecurityAnnotationAttributes
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Alex Mathey (AMA)
  */

@@ -19,8 +19,8 @@ package ch.elca.el4j.services.remoting;
 
 import java.lang.reflect.Proxy;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.FactoryBean;
 
 import ch.elca.el4j.util.interfaceenrichment.EnrichmentDecorator;
@@ -29,7 +29,12 @@ import ch.elca.el4j.util.interfaceenrichment.InterfaceEnricher;
 /**
  * This class is the global remote proxy bean.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Martin Zeltner (MZE)
  */
@@ -38,8 +43,8 @@ public class RemotingProxyFactoryBean extends AbstractRemotingBase implements
 	/**
 	 * Private logger.
 	 */
-	private static Logger s_logger = LoggerFactory
-			.getLogger(RemotingProxyFactoryBean.class);
+	private static Log s_logger = LogFactory
+			.getLog(RemotingProxyFactoryBean.class);
 
 	/**
 	 * This is the service proxy to work with.

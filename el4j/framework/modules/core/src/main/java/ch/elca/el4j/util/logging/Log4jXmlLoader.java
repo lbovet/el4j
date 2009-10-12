@@ -30,7 +30,12 @@ import ch.elca.el4j.util.codingsupport.Reject;
 /**
  * This class is used to load a freely choosable log4j xml configuration file.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Martin Zeltner (MZE)
  */

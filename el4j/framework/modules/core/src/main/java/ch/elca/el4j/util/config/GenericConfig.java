@@ -25,7 +25,12 @@ import java.util.Properties;
  * The base class for generic configurations. It is a hierarchical structure of
  * configuration entries, where entries can be added, inherited and overridden.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Stefan Wismer (SWI)
  */

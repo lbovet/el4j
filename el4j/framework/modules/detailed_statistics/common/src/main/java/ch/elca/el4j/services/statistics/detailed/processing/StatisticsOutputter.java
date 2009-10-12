@@ -34,7 +34,12 @@ import ch.elca.el4j.util.codingsupport.Reject;
  * ported from Leaf 2. Original authors: WHO,SHO. Leaf2 package name:
  * ch.elca.leaf.services.measuring
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author David Stefan (DST)
  */

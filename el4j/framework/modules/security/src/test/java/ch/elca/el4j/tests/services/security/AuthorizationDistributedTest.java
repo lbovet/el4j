@@ -19,17 +19,15 @@ package ch.elca.el4j.tests.services.security;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
-import org.springframework.security.AccessDeniedException;
-import org.springframework.security.Authentication;
-import org.springframework.security.AuthenticationCredentialsNotFoundException;
-import org.springframework.security.BadCredentialsException;
-import org.springframework.security.GrantedAuthority;
-import org.springframework.security.GrantedAuthorityImpl;
-
-
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.acegisecurity.AccessDeniedException;
+import org.acegisecurity.Authentication;
+import org.acegisecurity.AuthenticationCredentialsNotFoundException;
+import org.acegisecurity.BadCredentialsException;
+import org.acegisecurity.GrantedAuthority;
+import org.acegisecurity.GrantedAuthorityImpl;
+import org.acegisecurity.providers.TestingAuthenticationToken;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -52,7 +50,12 @@ import ch.elca.el4j.tests.services.security.server.AuthorizationServer;
  * <li>then runs AuthorizationTestDistributed as unit server</li>
  * </ul>
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Raphael Boog (RBO)
  */
@@ -60,8 +63,8 @@ public class AuthorizationDistributedTest {
 	/**
 	 * Private logger.
 	 */
-	private static Logger s_logger = LoggerFactory
-		.getLogger(AuthorizationDistributedTest.class);
+	private static Log s_logger = LogFactory
+		.getLog(AuthorizationDistributedTest.class);
 	
 	/**
 	 * Method access role.
@@ -200,7 +203,7 @@ public class AuthorizationDistributedTest {
 	@Test
 	public void testFailedAuthentication() throws Exception {
 		try {
-			createSecureContext("Different username", "than password", "ROLE_TELLER");
+			createSecureContext("Different username", "than password", "");
 			fail("User should not be able to authenticate since the password "
 					+ "is not valid.");
 		} catch (BadCredentialsException e) {

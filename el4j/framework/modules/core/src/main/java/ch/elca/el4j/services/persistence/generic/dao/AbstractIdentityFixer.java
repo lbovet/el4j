@@ -33,8 +33,8 @@ import java.util.Map;
 import org.aopalliance.intercept.MethodInvocation;
 import org.apache.commons.collections.map.AbstractReferenceMap;
 import org.apache.commons.collections.map.ReferenceMap;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.aop.IntroductionInterceptor;
 import org.springframework.aop.support.IntroductionInfoSupport;
 
@@ -107,7 +107,12 @@ import ch.elca.el4j.util.codingsupport.AopHelper;
  * "suppressAccessChecks" if a security manager is present and an object
  * requiring fixing has non-public fields.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Adrian Moos (AMS)
  */
@@ -122,7 +127,7 @@ public abstract class AbstractIdentityFixer {
 		= new HashMap<Class<?>, List<Field>>();
 
 	/** The logger. */
-	static Logger s_logger = LoggerFactory.getLogger(AbstractIdentityFixer.class);
+	static Log s_logger = LogFactory.getLog(AbstractIdentityFixer.class);
 	
 	/** ID generator for logging. */
 	static ObjectIdentifier s_oi = new ObjectIdentifier();
@@ -1047,7 +1052,7 @@ public abstract class AbstractIdentityFixer {
 					s_oi.format(o, sb);
 				}
 			}
-			s_logger.debug(sb.toString());
+			s_logger.debug(sb);
 		}
 	}
 

@@ -20,13 +20,19 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 
 import ch.elca.el4j.maven.plugins.database.AbstractDBExecutionMojo;
+import ch.elca.el4j.maven.plugins.database.util.derby.DerbyNetworkServerStarter;
 
 
 /**
  * <em>DEPRECATED</em> This class is a convenience mojo that includes the 'start',
  * 'silentDrop' and 'create' mojo.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @goal prepareDB
  * @author David Stefan (DST)
@@ -35,7 +41,7 @@ import ch.elca.el4j.maven.plugins.database.AbstractDBExecutionMojo;
 public class PrepareDatabaseMojo extends AbstractDBExecutionMojo {
 
 	/**
-	 * Delay to wait for the DB server.
+	 * Delay to wait for Derby Network Server.
 	 */
 	private static final int DELAY = 500;
 	
@@ -44,8 +50,13 @@ public class PrepareDatabaseMojo extends AbstractDBExecutionMojo {
 	 */
 	public void executeInternal() throws MojoExecutionException, MojoFailureException {
 		try {
-			getLog().info("Starting database (PrepareDatabaseMojo)...");
-			getDbController().start();
+			// Start Derby Network Server if necessary, but do not wait, because
+			// we know that execution will continue
+			if (needStartup()) {
+				getLog().info("Starting database (PrepareDatabaseMojo)...");
+				DerbyNetworkServerStarter.setHomeDir(getDerbyLocation());
+				DerbyNetworkServerStarter.startNetworkServer();
+			}
 			
 			Thread.sleep(DELAY);
 			getLog().info("Executing silent drop");

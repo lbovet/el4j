@@ -20,7 +20,12 @@ package ch.elca.el4j.core.exceptions;
  * This exception will be thrown when the optimistic locking detects a
  * modification.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Martin Zeltner (MZE)
  * @deprecated Spring data access exception will be used.

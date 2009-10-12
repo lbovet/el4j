@@ -18,8 +18,7 @@ package ch.elca.el4j.maven.plugins.envsupport.handlers;
 
 import java.util.Properties;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.maven.plugin.logging.Log;
 import org.springframework.core.io.Resource;
 import org.xml.sax.Attributes;
 
@@ -31,7 +30,12 @@ import ch.elca.el4j.maven.plugins.envsupport.AbstractEnvSupportMojo;
 /**
  * A verbose version of {@link AbstractInheritablePropertyHandler}.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Stefan Wismer (SWI)
  */
@@ -39,7 +43,7 @@ public abstract class AbstractExplainHandler extends AbstractInheritableProperty
 	/**
 	 * The maven logger.
 	 */
-	protected final Logger m_logger = LoggerFactory.getLogger(AbstractExplainHandler.class);
+	protected final Log m_logger;
 	
 	/**
 	 * Is the resource info header already printed to logger?
@@ -53,9 +57,11 @@ public abstract class AbstractExplainHandler extends AbstractInheritableProperty
 	
 	/**
 	 * @param mojo      the current mojo
+	 * @param logger    the maven logger
 	 */
-	public AbstractExplainHandler(AbstractEnvSupportMojo mojo) {
+	public AbstractExplainHandler(AbstractEnvSupportMojo mojo, Log logger) {
 		m_mojo = mojo;
+		m_logger = logger;
 	}
 	
 	/** {@inheritDoc} */

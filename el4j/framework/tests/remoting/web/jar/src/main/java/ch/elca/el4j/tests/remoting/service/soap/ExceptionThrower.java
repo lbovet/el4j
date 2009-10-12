@@ -21,7 +21,12 @@ package ch.elca.el4j.tests.remoting.service.soap;
  * Interface which throws only exceptions, which fulfills the Jax-Rpc 1.1 wsdl
  * fault specification.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Martin Zeltner (MZE)
  */

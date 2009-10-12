@@ -27,7 +27,12 @@ import ch.elca.el4j.services.persistence.hibernate.offlining.Offliner;
  * Spring-aware implementation of the offliner client. This waits with creating the actual client
  * until the context is complete and the DAOs are accessible.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author David Bernhard (DBD)
  */

@@ -18,12 +18,19 @@ package ch.elca.el4j.tests.services.persistence.hibernate.offlining;
 
 import java.io.IOException;
 
+import org.springframework.context.ApplicationContext;
+
 import ch.elca.el4j.core.context.ModuleApplicationContext;
 
 /**
  * Main class for offlining server.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author David Bernhard (DBD)
  */
@@ -46,7 +53,8 @@ public final class ServerMain implements Killable {
 	 */
 	// Checkstyle: UncommentedMain off
 	public static void main(String[] args) {
-		ModuleApplicationContext ctx;
+		@SuppressWarnings("unused")
+		ApplicationContext ctx;
 		
 		String[] remoteConfig = new String[] {
 			"classpath*:mandatory/*.xml",
@@ -67,12 +75,10 @@ public final class ServerMain implements Killable {
 				int i = System.in.read();
 				if (i == 'x') {
 					System.err.println("Server shutdown.");
-					ctx.close();
 					System.exit(0);
 				}
 			} catch (IOException e) {
 				System.err.println("IO exception.");
-				ctx.close();
 				System.exit(1);
 			}
 		}

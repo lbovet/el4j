@@ -21,7 +21,12 @@ package ch.elca.el4j.services.exceptionhandler;
  * This Exception signals that the called exception handler is not responsible
  * for the given situation.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Andreas Bur (ABU)
  */

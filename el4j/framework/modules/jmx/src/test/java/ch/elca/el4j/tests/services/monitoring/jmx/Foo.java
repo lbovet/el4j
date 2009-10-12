@@ -21,7 +21,12 @@ package ch.elca.el4j.tests.services.monitoring.jmx;
  * This class is used to test the JMX package. It contains a member, a getter
  * and a setter method for this member and an 'add' method.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Raphael Boog (RBO)
  */

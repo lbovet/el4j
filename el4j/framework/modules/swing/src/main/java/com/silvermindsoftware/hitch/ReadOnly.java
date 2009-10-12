@@ -16,9 +16,6 @@ package com.silvermindsoftware.hitch;
  * limitations under the License.
  */
 
-/**
- * @svnLink $Revision$;$Date$;$Author$;$URL$
- */
 public enum ReadOnly {
 
 	TRUE, FALSE, DEFAULT;

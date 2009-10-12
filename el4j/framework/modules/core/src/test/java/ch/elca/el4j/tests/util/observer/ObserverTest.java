@@ -29,7 +29,12 @@ import ch.elca.el4j.util.observer.impl.SettableObservableValue;
 /**
  * An observer test.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Adrian Moos (AMS)
  */

@@ -19,6 +19,7 @@ package ch.elca.el4j.services.gui.swing.frames;
 import javax.swing.JComponent;
 
 import org.bushe.swing.event.annotation.AnnotationProcessor;
+import org.noos.xing.mydoggy.ToolWindow;
 import org.noos.xing.mydoggy.ToolWindowTab;
 
 import ch.elca.el4j.services.gui.swing.wrapper.AbstractWrapperFactory;
@@ -26,7 +27,12 @@ import ch.elca.el4j.services.gui.swing.wrapper.AbstractWrapperFactory;
 /**
  * This class represents a tool window tab in a docking environment.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Stefan Wismer (SWI)
  */

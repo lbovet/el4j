@@ -18,8 +18,8 @@ package ch.elca.el4j.util.env;
 
 import java.util.Properties;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.core.io.support.ResourcePatternResolver;
 
 import ch.elca.el4j.env.beans.EnvPropertyOverrideConfigurer;
@@ -31,7 +31,12 @@ import ch.elca.el4j.util.codingsupport.PropertiesHelper;
 /**
  * This class provides access to the currently used environment properties.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Alex Mathey (AMA)
  * @author Martin Zeltner (MZE)
@@ -40,8 +45,8 @@ public class EnvPropertiesUtils {
 	/**
 	 * Private logger of this class.
 	 */
-	private static Logger s_logger
-		= LoggerFactory.getLogger(CollectionUtils.class);
+	private static Log s_logger
+		= LogFactory.getLog(CollectionUtils.class);
 	
 	/**
 	 * Hide default constructor.

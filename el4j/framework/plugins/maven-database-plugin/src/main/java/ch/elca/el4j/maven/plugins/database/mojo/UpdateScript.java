@@ -23,7 +23,12 @@ import org.springframework.core.io.Resource;
 /**
  * This class represents an SQL update script updating a schema from one version to another.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Stefan Wismer (SWI)
  */

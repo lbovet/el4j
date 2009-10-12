@@ -19,7 +19,12 @@ package ch.elca.el4j.services.persistence.hibernate.offlining.util;
 /**
  * The different states (for synchronization) a offlined object can be in.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author David Bernhard (DBD)
  */

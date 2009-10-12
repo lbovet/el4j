@@ -45,7 +45,12 @@ import ch.elca.el4j.services.persistence.generic.dao.GenericDao;
  * Edits in the  local db, the server and synchronizations can be performed and
  * repeated in any order.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author David Bernhard (DBD)
  */

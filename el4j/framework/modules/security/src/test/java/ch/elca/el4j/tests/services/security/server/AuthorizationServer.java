@@ -16,8 +16,8 @@
  */
 package ch.elca.el4j.tests.services.security.server;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.context.ConfigurableApplicationContext;
 
 import ch.elca.el4j.core.context.ModuleApplicationContext;
@@ -27,7 +27,12 @@ import ch.elca.el4j.core.context.ModuleApplicationContext;
 /**
  * The server part for <code>AuthorizationTestDistributed</code>.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Andreas Pfenninger (APR)
  */
@@ -36,7 +41,7 @@ public class AuthorizationServer {
 	/**
 	 * Logger.
 	 */
-	private static Logger s_logger = LoggerFactory.getLogger(AuthorizationServer.class);
+	private static Log s_logger = LogFactory.getLog(AuthorizationServer.class);
 
 	/** The application context. */
 	private static ConfigurableApplicationContext s_appContext;

@@ -12,7 +12,7 @@
 	<parent>
 		<groupId>ch.elca.el4j</groupId>
 		<artifactId>el4j-framework</artifactId>
-		<version>1.7-SNAPSHOT</version>
+		<version>1.6.1</version>
 	</parent>
 	
 	<groupId>ch.elca.el4j.maven.plugins</groupId>
@@ -48,11 +48,10 @@
 	</build>
 	<modules>
 		<module>utils</module>
-		<module>maven-cobertura-runtime-plugin</module>
+		<module>maven-beans-plugin</module>
 		<module>maven-database-plugin</module>
+		<module>maven-cobertura-runtime-plugin</module>
 		<module>maven-depgraph-plugin</module>
-		<module>maven-duplicatefinder-plugin</module>
 		<module>maven-env-support-plugin</module>
-		<module>maven-spring-ide-plugin</module>
 	</modules>
 </project>

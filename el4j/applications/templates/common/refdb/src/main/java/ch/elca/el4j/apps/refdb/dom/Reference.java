@@ -53,7 +53,12 @@ import ch.elca.el4j.services.persistence.generic.dto.AbstractIntKeyIntOptimistic
  * Reference domain object. This is the base reference class and describes a
  * source of information.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Martin Zeltner (MZE)
  * @author Alex Mathey (AMA)

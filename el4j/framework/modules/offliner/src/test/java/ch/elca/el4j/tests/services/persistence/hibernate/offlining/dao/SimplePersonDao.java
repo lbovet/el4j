@@ -24,7 +24,12 @@ import ch.elca.el4j.tests.services.persistence.hibernate.offlining.dom.SimplePer
 /**
  * SimplePerson dao.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author David Bernhard (DBD)
  */

@@ -31,7 +31,6 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.regex.Pattern;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.maven.artifact.Artifact;
 import org.apache.maven.plugin.MojoFailureException;
 import org.springframework.core.io.FileSystemResource;
@@ -49,7 +48,14 @@ import ch.elca.el4j.util.env.EnvPropertiesUtils;
  * This class is the abstract class for all mojos, which are executing SQL
  * statements.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL: https://el4j.svn.sourceforge.net/svnroot/el4j/trunk/el4j/
+ *   maven/plugins/maven-database-plugin/src/main/java/ch/elca/el4j/plugins/
+ *   database/AbstractDBExecutionMojo.java $",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author David Stefan (DST)
  */
@@ -71,12 +77,11 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
 	 * Path to properties file where connection properties (username, password
 	 * and url)can be found.
 	 *
-	 * The path can be specified relative to the current directory. In this case
-	 * it has to start with './' or '../' otherwise it is assumed to be
-	 * a classpath resource. For classpath resources, no prefix
-	 * <code>classpath*:</code> is needed.
+	 * For this property, no prefix <code>classpath*:</code> is needed.
 	 * Moreover it can include a generic <code>{db.name}</code> if a
 	 * <code>env.properties</code> file is provided (in the project dir).
+	 *
+	 *
 	 *
 	 * @parameter expression="${db.connectionPropertiesSource}"
 	 */
@@ -167,20 +172,8 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
 	private String sqlFindReplacePattern;
 	
 	/**
-	 * Determines whether sql files <b>inside</b> a module should be sorted ascending
-	 * or descending (in the view of create scripts; drop scripts will be
-	 * executed in reverse order).
-	 * 
-	 * <p>
-	 * Example for sortFilesAscending == true:<br/>
-	 * <code>create-1.sql, create-2.sql, create-A.sql, create-B.sql</code><br/>
-	 * <code>drop-B.sql, drop-A.sql, drop-2.sql, drop-1.sql</code><br/>
-	 * </p>
-	 * <p>
-	 * Example for sortFilesAscending == false:<br/>
-	 * <code>create-B.sql, create-A.sql, create-2.sql, create-1.sql</code><br/>
-	 * <code>drop-1.sql, drop-2.sql, drop-A.sql, drop-B.sql</code><br/>
-	 * </p>
+	 * Whether to sort files ascending or descending (for create scripts).
+	 * Drop scripts for example will be executed in reverse order
 	 * 
 	 * @parameter expression="${sortFilesAscending}" default-value="true"
 	 */
@@ -227,14 +220,6 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
 		if (StringUtils.hasText(connectionPropertiesSource)) {
 			getLog().info("Connection properties defined via pom parameter "
 				+ "'connectionPropertiesSource':" + connectionPropertiesSource);
-			if (connectionPropertiesSource.startsWith("./") || connectionPropertiesSource.startsWith("../")) {
-				try {
-					connectionPropertiesSource = new File(connectionPropertiesSource).toURI().toURL().toString();
-				} catch (MalformedURLException e) {
-					// do not change connectionPropertiesSource
-					getLog().warn("Could not create URL for relative path " + connectionPropertiesSource);
-				}
-			}
 		} else if (tryLoadingDatabasePropertiesViaEnvironment()) {
 			getLog().info("Connection properties found via the environment: "
 				+ connectionPropertiesSource);
@@ -271,8 +256,6 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
 				+ "'");
 
 			List<Resource> resources = getResources(getSqlSourcesPath(goal), reversed);
-			
-			resources = updateModifiedResources(resources);
 			resources = preProcessResources(resources);
 			processResources(resources, goal, isSilent);
 		} else {
@@ -431,102 +414,6 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
 		}
 		
 		return patterns;
-	}
-	
-	/**
-	 * Replace outdated resources in target directory by newer resources in source resource folder.
-	 * 
-	 * @param resources    a list of all resources
-	 * @return             the updated list
-	 */
-	protected List<Resource> updateModifiedResources(List<Resource> resources) throws MojoFailureException {
-		final String outputDirectory = getProject().getBuild().getOutputDirectory();
-		final String testOutputDirectory = getProject().getBuild().getTestOutputDirectory();
-		final int baseDirLength = getProject().getBasedir().getPath().length() + 1;
-		
-		Map<String, File> updatedResources = new HashMap<String, File>();
-		long outputLastModified = getLastModified(new File(outputDirectory));
-		for (org.apache.maven.model.Resource res : getProject().getBuild().getResources()) {
-			List<File> modifiedFiles = getFilesModifiedAfter(new File(res.getDirectory()), outputLastModified);
-			for (File file : modifiedFiles) {
-				updatedResources.put(file.getPath().substring(
-					new File(res.getDirectory()).getPath().length() + 1), file);
-			}
-		}
-		Map<String, File> updatedTestResources = new HashMap<String, File>();
-		long testOutputLastModified = getLastModified(new File(testOutputDirectory));
-		for (org.apache.maven.model.Resource res : getProject().getBuild().getTestResources()) {
-			List<File> modifiedFiles = getFilesModifiedAfter(new File(res.getDirectory()), testOutputLastModified);
-			for (File file : modifiedFiles) {
-				updatedTestResources.put(file.getPath().substring(
-					new File(res.getDirectory()).getPath().length() + 1), file);
-			}
-		}
-		
-		for (int i = 0; i < resources.size(); i++) {
-			Resource resource = resources.get(i);
-			if (resource instanceof FileSystemResource) {
-				FileSystemResource fsRes = (FileSystemResource) resource;
-				if (fsRes.getFile().getPath().startsWith(outputDirectory)) {
-					String path = fsRes.getFile().getPath().substring(outputDirectory.length() + 1);
-					if (updatedResources.containsKey(path)) {
-						getLog().warn("Replacing outdated target resource '"
-							+ fsRes.getFile().getPath().substring(baseDirLength)
-							+ "' by (unfiltered!) source resource '"
-							+ updatedResources.get(path).getPath().substring(baseDirLength) + "'.");
-						resources.set(i, new FileSystemResource(updatedResources.get(path)));
-					}
-				}
-				if (fsRes.getFile().getPath().startsWith(testOutputDirectory)) {
-					String path = fsRes.getFile().getPath().substring(testOutputDirectory.length() + 1);
-					if (updatedTestResources.containsKey(path)) {
-						getLog().warn("Replacing outdated target test resource '"
-							+ fsRes.getFile().getPath().substring(baseDirLength)
-							+ "' by (unfiltered!) source resource '"
-							+ updatedTestResources.get(path).getPath().substring(baseDirLength) + "'.");
-						resources.set(i, new FileSystemResource(updatedTestResources.get(path)));
-					}
-				}
-			}
-		}
-		return resources;
-	}
-	
-	/**
-	 * @param directory    the directory to scan
-	 * @return             the latest point in time a file in the directory was modified
-	 */
-	@SuppressWarnings("unchecked")
-	protected long getLastModified(File directory) {
-		long lastModified = 0;
-		if (directory.exists()) {
-			List<File> listFiles = (List<File>) FileUtils.listFiles(directory, null, true);
-			for (File f : listFiles) {
-				if (f.lastModified() > lastModified) {
-					lastModified = f.lastModified();
-				}
-			}
-		}
-		return lastModified;
-	}
-	
-	/**
-	 * @param directory    the directory to scan
-	 * @param timestamp    the timestamp to use
-	 * @return             a list of all files in the directory that are modified after the timestamp
-	 */
-	@SuppressWarnings("unchecked")
-	protected List<File> getFilesModifiedAfter(File directory, long timestamp) {
-		List<File> result = new ArrayList<File>();
-		if (directory.exists()) {
-			List<File> listFiles = (List<File>) FileUtils.listFiles(directory, null, true);
-			for (File f : listFiles) {
-				if (f.lastModified() > timestamp) {
-					result.add(f);
-				}
-			}
-		}
-		return result;
 	}
 	
 	/**

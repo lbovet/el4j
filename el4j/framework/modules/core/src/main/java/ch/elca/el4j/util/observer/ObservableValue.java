@@ -37,7 +37,12 @@ package ch.elca.el4j.util.observer;
  *
  * @param <T> the type of object held.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @see "Observer Pattern"
  * @see ValueObserver

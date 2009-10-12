@@ -15,8 +15,8 @@ import java.util.Map;
 import javax.persistence.Entity;
 
 import org.apache.commons.lang.ArrayUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -43,14 +43,12 @@ import org.springframework.util.StringUtils;
  *
  *
  * Source of the idea: secutix project
- *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
  */
 public class EntityDetectorAnnotationSessionFactoryBean extends AnnotationSessionFactoryBean
 	implements InitializingBean {
 
-	private static final Logger s_logger =
-		LoggerFactory.getLogger(EntityDetectorAnnotationSessionFactoryBean.class);
+	private static final Log s_logger =
+		LogFactory.getLog(EntityDetectorAnnotationSessionFactoryBean.class);
 
 	/**
 	 * Package name for given set of entities.
@@ -178,7 +176,7 @@ public class EntityDetectorAnnotationSessionFactoryBean extends AnnotationSessio
 				super.setAnnotatedClasses(localAnnotatedClasses);
 
 			} catch (Exception e) {
-				s_logger.error(e.toString());
+				s_logger.fatal(e);
 				throw new RuntimeException(e);
 			}
 

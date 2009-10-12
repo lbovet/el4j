@@ -28,7 +28,12 @@ import ch.elca.el4j.core.context.ModuleApplicationContext;
  * This class tests the {@link
  * ch.elca.el4j.core.aop.ExclusiveBeanNameAutoProxyCreator}.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Andreas Bur (ABU)
  */

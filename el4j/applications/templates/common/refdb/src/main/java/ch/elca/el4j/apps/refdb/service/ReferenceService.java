@@ -23,16 +23,21 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.dao.OptimisticLockingFailureException;
 
-import ch.elca.el4j.apps.keyword.dom.Keyword;
 import ch.elca.el4j.apps.keyword.service.KeywordService;
 import ch.elca.el4j.apps.refdb.dom.Reference;
+import ch.elca.el4j.core.transaction.annotations.RollbackConstraint;
 import ch.elca.el4j.services.search.QueryObject;
 
 /**
  * This interface provides the business methods which can be used in the
  * presentation layer and which are not already present in the underlying DAOs.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Martin Zeltner (MZE)
  * @author Alex Mathey (AMA)
@@ -62,16 +67,6 @@ public interface ReferenceService extends KeywordService {
 	 *             If general data access problem occurred.
 	 */
 	public List<Reference> getReferencesByName(String name) throws DataAccessException;
-	
-	/**
-	 * Get all references having at least one of the given keywords.
-	 *
-	 * @param keywords    a list of keywords.
-	 * @return Returns a list with references. Returns never <code>null</code>.
-	 * @throws DataAccessException
-	 *             If general data access problem occurred.
-	 */
-	public List<Reference> getReferencesByKeywords(List<Keyword> keywords) throws DataAccessException;
 
 	/**
 	 * Get all references.
@@ -121,6 +116,7 @@ public interface ReferenceService extends KeywordService {
 	 * @throws OptimisticLockingFailureException
 	 *             If reference has been modified in the meantime.
 	 */
+	@RollbackConstraint
 	public Reference saveReference(Reference reference)
 		throws DataAccessException, DataIntegrityViolationException, OptimisticLockingFailureException;
 
@@ -134,6 +130,7 @@ public interface ReferenceService extends KeywordService {
 	 * @throws OptimisticLockingFailureException
 	 *             If reference could not be deleted.
 	 */
+	@RollbackConstraint
 	public void deleteReference(int key) throws DataAccessException, OptimisticLockingFailureException;
 	
 	/**
@@ -144,6 +141,7 @@ public interface ReferenceService extends KeywordService {
 	 * @throws OptimisticLockingFailureException
 	 *          Keyword could not be deleted.
 	 */
+	@RollbackConstraint
 	public void deleteKeyword(int key) throws OptimisticLockingFailureException;
 	
 	/**
@@ -153,6 +151,7 @@ public interface ReferenceService extends KeywordService {
 	 * @throws DataIntegrityViolationException
 	 *          If deleted keywords belong to other references.
 	 */
+	@RollbackConstraint
 	public void deleteReferenceAndKeywords(int refKey) throws DataIntegrityViolationException;
 	
 	/**

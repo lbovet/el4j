@@ -38,7 +38,12 @@ import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
  * This handler is usable for exceptions with constructor which has one to many
  * string constructor argument(s).
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Martin Zeltner (MZE)
  */

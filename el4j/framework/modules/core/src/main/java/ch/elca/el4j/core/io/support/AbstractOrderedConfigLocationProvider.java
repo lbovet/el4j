@@ -27,7 +27,12 @@ import org.springframework.core.io.Resource;
 /**
  * This class simplifies writing ordered configuration location providers.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Andreas Bur (ABU)
  */

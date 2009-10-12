@@ -22,8 +22,8 @@ import java.lang.reflect.Method;
 
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.aop.framework.ReflectiveMethodInvocation;
 import org.springframework.aop.target.HotSwappableTargetSource;
 
@@ -31,7 +31,12 @@ import org.springframework.aop.target.HotSwappableTargetSource;
  * This class provides functionality to handle exceptions centrally (with
  * respect to a number of classes or the whole system).
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Andreas Bur (ABU)
  */
@@ -42,7 +47,7 @@ public abstract class AbstractExceptionHandlerInterceptor
 	protected static final ThreadLocal s_retries = new ThreadLocal();
 	
 	/** The static logger. */
-	private static Logger s_logger = LoggerFactory.getLogger(
+	private static Log s_logger = LogFactory.getLog(
 			AbstractExceptionHandlerInterceptor.class);
 
 	/**

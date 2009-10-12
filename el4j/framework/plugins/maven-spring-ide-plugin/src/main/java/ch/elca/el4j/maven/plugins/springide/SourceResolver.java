@@ -33,7 +33,12 @@ import org.apache.commons.io.filefilter.FileFilterUtils;
  * Application Context in a web project, afterwards it will check through all .java files in the source
  * alphabetically and return the first one that contains // $$ BEANS INCLUDE $$
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Daniel Thomas (DTH)
  */
@@ -84,7 +89,7 @@ public class SourceResolver {
 	}
 
 	/**
-	 * Simple selection sort on the names of the files in the javaFiles List.
+	 * Simple seclection sort on the names of the files in the javaFiles List.
 	 */
 	private static List<File> sortJavaFilesAlpabetically(List<File> javaFiles) {
 		File[] javaFilesAsArray = (File[]) javaFiles.toArray(new File[1]);

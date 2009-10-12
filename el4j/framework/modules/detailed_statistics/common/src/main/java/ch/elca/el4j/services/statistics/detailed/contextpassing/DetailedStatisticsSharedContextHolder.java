@@ -22,7 +22,12 @@ package ch.elca.el4j.services.statistics.detailed.contextpassing;
  * of Leaf 2 for the detailed statistics service. The shared context is
  * held in a static ThreadLocal variable.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Rashid Waraich (RWA)
  * @author Philipp Oser (POS)

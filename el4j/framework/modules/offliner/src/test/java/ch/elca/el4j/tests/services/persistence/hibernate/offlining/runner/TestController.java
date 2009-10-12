@@ -19,7 +19,12 @@ package ch.elca.el4j.tests.services.persistence.hibernate.offlining.runner;
 /**
  * Interface for test controller that allows the runner to be shutdown from another process.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  * 
  * @author David Bernhard (DBD)
  */

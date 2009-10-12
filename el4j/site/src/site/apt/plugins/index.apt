@@ -36,7 +36,7 @@ Plugins
 *----------------------------+-------------------+  
 | {{{maven-beans-plugin/index.html}beans}}               			   | Collects all beans files that are used in a ModuleApplicationContext.
 *----------------------------+-------------------+  
-| {{{maven-cobertura-runtime-plugin/index.html}cobertura-runtime}}     | Build and deploy the application nearly as normal with maven and let Cobertura measure the coverage while working on the application.
+| {{{maven-cobertura-runtime-plugin/index.html}beans}}                 | Build and deploy the application nearly as normal with maven and let Cobertura measure the coverage while working on the application.
 *----------------------------+-------------------+  
 
   Please refer also the plugin section of the {{{http://el4j.sourceforge.net/docs/pdf/ReferenceDoc.pdf}reference document}} and the maven cheat sheet for more information. 

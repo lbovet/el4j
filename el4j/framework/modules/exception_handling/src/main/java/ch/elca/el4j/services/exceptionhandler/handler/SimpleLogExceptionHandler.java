@@ -18,14 +18,19 @@
 package ch.elca.el4j.services.exceptionhandler.handler;
 
 import org.aopalliance.intercept.MethodInvocation;
-import org.slf4j.Logger;
+import org.apache.commons.logging.Log;
 
 import ch.elca.el4j.services.exceptionhandler.AbstractExceptionHandlerInterceptor;
 
 /**
  * This exception handler logs all exceptions and returns <code>null</code>.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Andreas Bur (ABU)
  */
@@ -36,7 +41,7 @@ public class SimpleLogExceptionHandler extends AbstractExceptionHandler {
 	 */
 	protected Object handleException(Throwable t,
 			AbstractExceptionHandlerInterceptor exceptionInvoker,
-			MethodInvocation invocation, Logger logger) throws Throwable {
+			MethodInvocation invocation, Log logger) throws Throwable {
 		
 		logger.trace("Exception thrown in "
 				+ getInvocationDescription(invocation), t);

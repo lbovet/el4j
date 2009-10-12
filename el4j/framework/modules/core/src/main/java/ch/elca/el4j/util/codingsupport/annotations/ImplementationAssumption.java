@@ -45,7 +45,12 @@ import java.lang.annotation.RetentionPolicy;
  *  Object getKey() {return this.name;}
  *  </pre>
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ *  <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @see ch.elca.el4j.util.codingsupport.Reject
  * @author Adrian Moos (AMS)

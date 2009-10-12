@@ -36,8 +36,8 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.hibernate.Hibernate;
 import org.hibernate.validator.NotNull;
 
@@ -47,7 +47,12 @@ import ch.elca.el4j.services.persistence.generic.dto.AbstractIntKeyIntOptimistic
  * Annotation domain object. This class describes an annotation of a reference
  * (formal publication, book, ...).
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Martin Zeltner (MZE)
  */
@@ -60,7 +65,7 @@ public class Annotation extends AbstractIntKeyIntOptimisticLockingDto {
 	/**
 	 * Private logger.
 	 */
-	private static Logger s_logger = LoggerFactory.getLogger(Annotation.class);
+	private static Log s_logger = LogFactory.getLog(Annotation.class);
 	
 	/**
 	 * Related reference.

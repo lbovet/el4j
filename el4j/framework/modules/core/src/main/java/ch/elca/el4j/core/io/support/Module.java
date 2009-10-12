@@ -24,8 +24,8 @@ import java.util.Enumeration;
 import java.util.List;
 import java.util.StringTokenizer;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.util.ClassUtils;
@@ -37,7 +37,12 @@ import ch.elca.el4j.core.io.ExplicitClassPathResource;
  * This class represents a simplified view of a module (EL4Ant build system
  * unit). It contains its name, the configuration files and the dependencies.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Andreas Bur (ABU)
  */
@@ -47,7 +52,7 @@ public class Module {
 	public static final String DELIMITER = ",";
 	
 	/** Private logger. */
-	private static Logger s_logger = LoggerFactory.getLogger(Module.class);
+	private static Log s_logger = LogFactory.getLog(Module.class);
 	
 	/**
 	 * Is the used class loader.

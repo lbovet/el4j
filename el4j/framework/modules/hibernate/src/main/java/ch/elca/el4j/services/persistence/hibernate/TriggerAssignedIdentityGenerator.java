@@ -42,7 +42,12 @@ import org.hibernate.id.insert.InsertGeneratedIdentifierDelegate;
  * Note: Due to a bug in Oracle drivers, sql comments on these insert statements
  * are completely disabled.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Jean-Pol Landrain - extern (XYZ)
  * @author Martin Zeltner (MZE)

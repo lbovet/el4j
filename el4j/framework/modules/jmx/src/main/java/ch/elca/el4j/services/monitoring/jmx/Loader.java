@@ -32,8 +32,8 @@ import javax.management.NotCompliantMBeanException;
 import javax.management.ObjectInstance;
 import javax.management.ObjectName;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -52,7 +52,12 @@ import ch.elca.el4j.util.codingsupport.Reject;
  * Context, then it will set up the whole JMX world by creating the proxies and
  * setting the corresponding references.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Raphael Boog (RBO)
  * @author Rashid Waraich (RWA)
@@ -69,7 +74,7 @@ public class Loader implements ApplicationContextAware, InitializingBean,
 	/**
 	 * Private logger of this class.
 	 */
-	private static Logger s_logger = LoggerFactory.getLogger(Loader.class);
+	private static Log s_logger = LogFactory.getLog(Loader.class);
 
 	/**
 	 * The Application Context proxy for the Application Context containing this

@@ -35,7 +35,12 @@ import ch.elca.el4j.maven.plugins.springide.resolvers.ResolverManager;
  * style definition of include and exclude locations and a classpath (Url[])
  * to search.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  *
  * @author David Bernhard (DBD)
@@ -180,7 +185,7 @@ public class BeanPathResolver {
 				m_logger.debug("Inclusive files:");
 				if (m_inclusive != null) {
 					for (String s : m_inclusive) {
-						m_logger.debug(" + " + s);
+							m_logger.debug(" + " + s);
 					}
 				}
 				
@@ -188,7 +193,7 @@ public class BeanPathResolver {
 				m_logger.debug("Exclusive files:");
 				if (m_exclusive != null) {
 					for (String s : m_exclusive) {
-						m_logger.debug(" - " + s);
+							m_logger.debug(" - " + s);
 					}
 				}
 				

@@ -28,7 +28,12 @@ import ch.elca.el4j.core.contextpassing.AbstractImplicitContextPasser;
  * This is the test implicit context passer B with data different to those in
  *  ImplicitContextPasserImplA.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author David Stefan (DST)
  */

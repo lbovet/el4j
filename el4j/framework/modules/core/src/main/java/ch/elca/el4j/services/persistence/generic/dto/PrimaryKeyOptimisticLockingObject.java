@@ -20,7 +20,12 @@ package ch.elca.el4j.services.persistence.generic.dto;
 /**
  * Interface to provide primary key and optimistic locking support.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Martin Zeltner (MZE)
  */

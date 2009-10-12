@@ -38,7 +38,12 @@ import ch.elca.el4j.util.dom.annotations.MemberOrder;
  *
  * <pre>EntityType.get(Person.class)</pre>
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Adrian Moos (AMS)
  */

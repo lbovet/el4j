@@ -18,13 +18,6 @@ package ch.elca.el4j.demos.model;
 
 import org.hibernate.validator.Min;
 
-/**
- * A simple number wrapper (example model).
- *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
- *
- * @author Stefan Wismer (SWI)
- */
 public class MyNumber {
 	private int m_value;
 	

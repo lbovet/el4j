@@ -21,7 +21,12 @@ package ch.elca.el4j.tests.util.metadata.annotations;
 /**
  * This is the interface of class <code>FooImpl</code>.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Martin Zeltner (MZE)
  */

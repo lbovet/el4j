@@ -37,7 +37,12 @@ import ch.elca.el4j.util.collections.impl.ExtendedArrayList;
 /**
  * Tests for the extended array list (duh!).
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Adrian Moos (AMS)
  */

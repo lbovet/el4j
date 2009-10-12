@@ -16,9 +16,6 @@ package com.silvermindsoftware.hitch.config;
  * limitations under the License.
  */
 
-/**
- * @svnLink $Revision$;$Date$;$Author$;$URL$
- */
 public class ModelObjectConfig {
 
 	private String modelField;

@@ -24,7 +24,12 @@ import ch.elca.el4j.services.statistics.detailed.MeasureId;
  *   context for the detailed statistics. One instance exists per
  *   thread.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Rashid Waraich (RWA)
  * @author Philipp Oser (POS)

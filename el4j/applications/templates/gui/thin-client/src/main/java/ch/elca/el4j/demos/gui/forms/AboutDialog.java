@@ -31,8 +31,8 @@ import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.ApplicationActionMap;
 import org.jdesktop.application.ResourceMap;
@@ -46,7 +46,12 @@ import ch.elca.el4j.services.gui.swing.GUIApplication;
 /**
  * A standard About dialog.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Stefan Wismer (SWI)
  */
@@ -57,7 +62,7 @@ public class AboutDialog extends JDialog {
 	/**
 	 * The logger.
 	 */
-	private static Logger s_logger = LoggerFactory.getLogger(AboutDialog.class);
+	private static Log s_logger = LogFactory.getLog(JDialog.class);
 	
 	/**
 	 * The resource map.

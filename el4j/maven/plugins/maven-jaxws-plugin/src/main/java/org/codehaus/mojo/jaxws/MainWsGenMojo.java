@@ -5,8 +5,6 @@ import java.io.File;
 /**
  * Reads a JAX-WS service endpoint implementation class
  * and generates all of the portable artifacts for a JAX-WS web service.
- * 
- * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @goal wsgen
  * @phase process-classes

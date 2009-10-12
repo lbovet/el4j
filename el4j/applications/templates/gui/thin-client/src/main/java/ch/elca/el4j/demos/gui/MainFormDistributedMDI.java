@@ -30,7 +30,12 @@ import ch.elca.el4j.services.gui.swing.splash.ImageSplashScreen;
  *
  * See also associated MainFormMDI.properties file that contains resources
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Stefan Wismer (SWI)
  */
@@ -56,8 +61,7 @@ public final class MainFormDistributedMDI {
 			Exceptions.getInstance().addHandler(new ExampleExceptionHandler());
 
 			PlasticLookAndFeel.setPlasticTheme(new ExperienceBlue());
-			
-			// $$ BEANS INCLUDE $$
+
 			String[] applicationContextPaths = {
 				"classpath*:mandatory/*.xml",
 				"classpath*:scenarios/gui/swing/*.xml",

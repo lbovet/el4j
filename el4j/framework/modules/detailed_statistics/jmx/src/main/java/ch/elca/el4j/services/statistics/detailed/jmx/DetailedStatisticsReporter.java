@@ -33,7 +33,12 @@ import ch.elca.el4j.util.codingsupport.Reject;
 /**
  * This class publishes the detailed statistics through JMX.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author David Stefan (DST)
  */

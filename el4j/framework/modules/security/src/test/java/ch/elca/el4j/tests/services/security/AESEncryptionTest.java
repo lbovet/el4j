@@ -33,7 +33,12 @@ import ch.elca.el4j.services.security.encryption.AESCipher;
  * 
  * This class tests the encryption and decryption using AES.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Dominik Zindel (DZI)
  */

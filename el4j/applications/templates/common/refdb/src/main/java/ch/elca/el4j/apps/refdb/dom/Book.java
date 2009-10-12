@@ -27,7 +27,12 @@ import org.hibernate.validator.Pattern;
 /**
  * Book domain object. This class is a formal publication and describes a book.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Martin Zeltner (MZE)
  */

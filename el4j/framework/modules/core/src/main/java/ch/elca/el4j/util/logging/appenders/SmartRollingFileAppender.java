@@ -24,7 +24,12 @@ import org.apache.log4j.RollingFileAppender;
  * This class applies more checks on the validityo of logfile path,
  * than the base class. Thefore this is a smarter appender.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Rashid Waraich (RWA)
  */

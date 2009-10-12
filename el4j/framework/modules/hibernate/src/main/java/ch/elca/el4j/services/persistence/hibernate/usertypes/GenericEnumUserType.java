@@ -32,7 +32,12 @@ import org.hibernate.type.TypeFactory;
  * href="http://weblog.dangertree.net/2007/09/23/mapping-java-5-enums-with-hibernate/">
  * http://weblog.dangertree.net/2007/09/23/mapping-java-5-enums-with-hibernate/</a>
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Martin Zeltner (MZE)
  * @author Stefan Wismer (SWI)

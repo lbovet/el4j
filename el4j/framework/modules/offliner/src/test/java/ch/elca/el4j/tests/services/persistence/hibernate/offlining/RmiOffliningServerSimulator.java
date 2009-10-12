@@ -30,7 +30,12 @@ import ch.elca.el4j.services.persistence.hibernate.offlining.impl.OffliningServe
  * For testing purposes, this class is instantiated in the client context and provides a 
  * link to the server context's offlining server.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author David Bernhard (DBD)
  */

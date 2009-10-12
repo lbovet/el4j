@@ -33,8 +33,8 @@ import javax.management.MalformedObjectNameException;
 import javax.management.NotCompliantMBeanException;
 import javax.management.ObjectName;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.log4j.Appender;
 import org.apache.log4j.Level;
 import org.apache.log4j.LogManager;
@@ -51,7 +51,12 @@ import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
 /**
  * The logging proxy class, for setting logging properties via JMX.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Rashid Waraich (RWA)
  */
@@ -75,7 +80,7 @@ public class Log4jConfig implements Log4jConfigMBean {
 	/**
 	 * Private logger of this class.
 	 */
-	private static Logger s_logger = LoggerFactory.getLogger(SpringBeanMB.class);
+	private static Log s_logger = LogFactory.getLog(SpringBeanMB.class);
 
 	/**
 	 * The Application Context where this Spring Bean is registered at.

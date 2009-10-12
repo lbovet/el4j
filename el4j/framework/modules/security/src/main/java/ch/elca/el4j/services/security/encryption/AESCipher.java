@@ -21,8 +21,8 @@ import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import org.apache.commons.codec.binary.Base64;
 
@@ -30,7 +30,12 @@ import org.apache.commons.codec.binary.Base64;
 /**
  * This class can be used to en/decrypt Strings using the AES algorithm.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Stefan Wismer (SWI)
  */
@@ -43,7 +48,7 @@ public class AESCipher {
 	/**
 	 * The logger.
 	 */
-	private static Logger s_logger = LoggerFactory.getLogger(AESCipher.class);
+	private static Log s_logger = LogFactory.getLog(AESCipher.class);
 	
 	/**
 	 * Cipher used for encryption.

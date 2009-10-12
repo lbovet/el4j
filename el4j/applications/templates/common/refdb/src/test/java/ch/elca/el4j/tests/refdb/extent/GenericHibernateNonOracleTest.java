@@ -32,7 +32,12 @@ import ch.elca.el4j.apps.refdb.dom.Reference;
 * Test case for <code>GenericHibernateDao</code> to test
 * the Extent-functionality, extension of GenericHibernateDaoTest with tests not running with oracle.
 *
-* @svnLink $Revision$;$Date$;$Author$;$URL$
+* <script type="text/javascript">printFileStatus
+*   ("$URL$",
+*    "$Revision$",
+*    "$Date$",
+*    "$Author$"
+* );</script>
 *
 * @author Andreas Rueedlinger (ARR)
 */

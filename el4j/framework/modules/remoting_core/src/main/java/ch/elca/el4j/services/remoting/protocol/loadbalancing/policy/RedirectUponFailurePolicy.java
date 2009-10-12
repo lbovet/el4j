@@ -28,7 +28,12 @@ import ch.elca.el4j.services.remoting.protocol.loadbalancing.NoProtocolAvailable
  * from the list of protocols, and failed protocols will eventually be returned
  * again by {@link nextProtocol}.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Stefan Pleisch (SPL)
  */

@@ -35,7 +35,12 @@ import org.springframework.util.StringUtils;
  * Generic user type for set of enumerations implementing
  * {@link SerializableEnum}.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Stefan Wismer (SWI)
  */

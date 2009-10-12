@@ -27,7 +27,12 @@ import com.ibatis.sqlmap.client.extensions.TypeHandlerCallback;
 /**
  * This class is used to make clobs work with ibatis sqlmaps.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Martin Zeltner (MZE)
  * @deprecated Use callback handler of ibatis instead.

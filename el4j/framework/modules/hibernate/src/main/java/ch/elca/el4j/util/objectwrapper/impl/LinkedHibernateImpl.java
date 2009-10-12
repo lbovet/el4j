@@ -39,7 +39,12 @@ import ch.elca.el4j.util.objectwrapper.interfaces.Linked;
 /**
  * Hibernate annotation implementation of Linked.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author David Bernhard (DBD)
  */

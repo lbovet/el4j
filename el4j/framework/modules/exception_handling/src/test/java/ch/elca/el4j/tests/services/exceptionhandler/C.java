@@ -20,7 +20,12 @@ package ch.elca.el4j.tests.services.exceptionhandler;
 /**
  * This class is used to show the reconfigure exception handling strategy.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Andreas Bur (ABU)
  */

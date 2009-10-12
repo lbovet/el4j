@@ -35,7 +35,12 @@ import ch.elca.el4j.util.collections.helpers.Filter;
  * 
  * Remark: Some convenience methods are not implemented such as {@link #listIterator()} and {@link #subList(int, int)}.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  * 
  * @param <E>    the type of the list items
  *

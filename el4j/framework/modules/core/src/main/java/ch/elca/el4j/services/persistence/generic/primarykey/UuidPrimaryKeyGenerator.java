@@ -20,8 +20,8 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.security.SecureRandom;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 /**
  * This key generator generates UUIDs as described in "EJB Design Patterns", F.
@@ -31,7 +31,12 @@ import org.slf4j.LoggerFactory;
  *
  * The returned UUID is a hex-encoded 32-digit number.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Martin Zeltner (MZE)
  */
@@ -39,8 +44,8 @@ public class UuidPrimaryKeyGenerator implements PrimaryKeyGenerator {
 	/**
 	 * Private logger of this class.
 	 */
-	private static Logger s_logger
-		= LoggerFactory.getLogger(UuidPrimaryKeyGenerator.class);
+	private static Log s_logger
+		= LogFactory.getLog(UuidPrimaryKeyGenerator.class);
 
 	/**
 	 * Middle value.

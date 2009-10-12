@@ -18,7 +18,7 @@
 package ch.elca.el4j.services.exceptionhandler.handler;
 
 import org.aopalliance.intercept.MethodInvocation;
-import org.slf4j.Logger;
+import org.apache.commons.logging.Log;
 
 import ch.elca.el4j.services.exceptionhandler.AbstractExceptionHandlerInterceptor;
 import ch.elca.el4j.services.exceptionhandler.SafetyFacadeInterceptor;
@@ -32,7 +32,12 @@ import ch.elca.el4j.services.exceptionhandler.SafetyFacadeInterceptor;
  * free to choose another number of retries (e.g. if different retry exception
  * handler are used).
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Andreas Bur (ABU)
  */
@@ -67,7 +72,7 @@ public abstract class AbstractRetryExceptionHandler
 	 */
 	public Object handleException(Throwable t,
 			AbstractExceptionHandlerInterceptor exceptionInvoker,
-			MethodInvocation invocation, Logger logger) throws Throwable {
+			MethodInvocation invocation, Log logger) throws Throwable {
 		
 		if (SafetyFacadeInterceptor.getRetries() == -1
 				|| SafetyFacadeInterceptor.getRetries() > 0) {
@@ -102,5 +107,5 @@ public abstract class AbstractRetryExceptionHandler
 	 */
 	protected abstract Object retry(Throwable t,
 			AbstractExceptionHandlerInterceptor exceptionInvoker,
-			MethodInvocation invocation, Logger logger) throws Throwable;
+			MethodInvocation invocation, Log logger) throws Throwable;
 }

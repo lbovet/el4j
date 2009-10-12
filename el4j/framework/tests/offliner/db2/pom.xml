@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>ch.elca.el4j.tests</groupId>
 		<artifactId>module-offliner-tests</artifactId>
-		<version>1.7-SNAPSHOT</version>
+		<version>1.6</version>
 	</parent>
 
 	<artifactId>module-offliner-tests-db2</artifactId>
@@ -27,12 +27,6 @@
 			<version>${version.module-offliner}</version>
 			<type>test-jar</type>
 			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.testng</groupId>
-			<artifactId>testng</artifactId>
-			<scope>test</scope>
-			<classifier>jdk15</classifier>
 		</dependency>
 	</dependencies>
 
@@ -80,11 +74,6 @@
 								</configuration>
 							</execution>
 						</executions>
-						<configuration>
-							<suiteXmlFiles>
-								<suiteXmlFile>src/test/testng/testng.xml</suiteXmlFile>
-							</suiteXmlFiles>
-						</configuration>
 					</plugin>
 
 					<!-- Start database and create tables. -->
@@ -185,8 +174,7 @@
 						<executions>
 							<execution>
 								<id>shutdown</id>
-								<!-- must not be post-integration-test otherwise database is already shut down and c3p0 gets problems -->
-								<phase>integration-test</phase>
+								<phase>post-integration-test</phase>
 								<goals>
 									<goal>java</goal>
 								</goals>

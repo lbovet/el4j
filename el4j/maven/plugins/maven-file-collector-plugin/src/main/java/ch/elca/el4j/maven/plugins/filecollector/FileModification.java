@@ -34,15 +34,20 @@ import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 import java.nio.charset.Charset;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 
 /**
  * This class defines some supporting operations for file and directory
  * modification (copy, move, delete, rename, read and write operations).
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Alex Mathey (AMA)
  */
@@ -51,8 +56,8 @@ public class FileModification {
 	/**
 	 * Private logger.
 	 */
-	private static Logger s_logger
-		= LoggerFactory.getLogger(FileModification.class);
+	private static Log s_logger
+		= LogFactory.getLog(FileModification.class);
 	
 	/**
 	 *  Default charset to use for both reading and writing files.

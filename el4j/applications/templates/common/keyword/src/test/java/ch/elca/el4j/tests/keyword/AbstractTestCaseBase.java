@@ -22,8 +22,8 @@ import java.sql.Statement;
 
 import javax.sql.DataSource;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.junit.Before;
 
 import ch.elca.el4j.tests.core.AbstractTest;
@@ -31,7 +31,12 @@ import ch.elca.el4j.tests.core.AbstractTest;
 /**
  * This class is a base class for tests in module <code>keyword-core</code>.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Martin Zeltner (MZE)
  */
@@ -39,7 +44,7 @@ public abstract class AbstractTestCaseBase extends AbstractTest {
 	/**
 	 * Private logger.
 	 */
-	private static Logger s_logger = LoggerFactory.getLogger(AbstractTestCaseBase.class);
+	private static Log s_logger = LogFactory.getLog(AbstractTestCaseBase.class);
 
 	/**
 	 * Data source. Created by application context.

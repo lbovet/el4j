@@ -19,26 +19,32 @@ package ch.elca.el4j.tests.services.persistence.hibernate.offlining.graphwalker;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
+import org.springframework.stereotype.Component;
 
 import ch.elca.el4j.services.persistence.hibernate.offlining.graphwalker.GraphWalker;
+import ch.elca.el4j.services.persistence.hibernate.offlining.graphwalker.GraphWalker.NodeState;
 import ch.elca.el4j.services.persistence.hibernate.offlining.graphwalker.NodeException;
 import ch.elca.el4j.services.persistence.hibernate.offlining.graphwalker.NodeVisitor;
-import ch.elca.el4j.services.persistence.hibernate.offlining.graphwalker.GraphWalker.NodeState;
 import ch.elca.el4j.tests.services.persistence.hibernate.offlining.notifications.Notification;
 import ch.elca.el4j.tests.services.persistence.hibernate.offlining.notifications.NotificationProcessor;
 import ch.elca.el4j.util.objectwrapper.ObjectWrapper;
 
+import junit.framework.TestCase;
+
 /**
  * Graph walker test.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author David Bernhard (DBD)
  */
-@Test
-public class GraphWalkerTest {
+@Component
+public class GraphWalkerTest extends TestCase {
 
 	/** The walker under test. */
 	private GraphWalker m_walker;
@@ -49,7 +55,6 @@ public class GraphWalkerTest {
 	/**
 	 * Initialize.
 	 */
-	@BeforeMethod
 	public void setUp() {
 		ObjectWrapper wrapper = new ObjectWrapper();
 		m_walker = new GraphWalker(new NotifyingVisitor(), wrapper);
@@ -57,7 +62,7 @@ public class GraphWalkerTest {
 	}
 	
 	/**
-	 * A successful walk.
+	 * A succcessful walk.
 	 */
 	public void testWalk() {
 		String[] names = {

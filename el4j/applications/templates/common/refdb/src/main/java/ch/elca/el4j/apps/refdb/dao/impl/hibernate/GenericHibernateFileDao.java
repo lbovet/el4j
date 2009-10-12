@@ -18,7 +18,12 @@ import ch.elca.el4j.util.codingsupport.Reject;
  * Generic DAO for files or file descriptors which is using
  * Hibernate.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @param <T>
  *            The generic type of the domain class the DAO is responsible for

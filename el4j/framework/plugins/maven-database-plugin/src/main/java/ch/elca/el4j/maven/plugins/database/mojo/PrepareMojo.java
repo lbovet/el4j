@@ -20,13 +20,19 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 
 import ch.elca.el4j.maven.plugins.database.AbstractDBExecutionMojo;
+import ch.elca.el4j.maven.plugins.database.util.derby.DerbyNetworkServerStarter;
 
 
 /**
  * This class is a convenience mojo that includes the 'start',
  * 'silentDrop' and 'create' mojo.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @goal prepare
  * @author David Stefan (DST)
@@ -34,26 +40,26 @@ import ch.elca.el4j.maven.plugins.database.AbstractDBExecutionMojo;
 public class PrepareMojo extends AbstractDBExecutionMojo {
 	// Checkstyle: MemberName off
 	/**
-	 * Delay to wait for the DB Server.
+	 * Delay to wait for Derby Network Server.
 	 */
 	private static final int DELAY = 500;
 	
 	/**
-	 * The port to run the DB.
+	 * The port to run derby.
 	 *
 	 * @parameter expression="${db.internal.port}"  default-value="-1"
 	 */
 	private int dbPort;
 	
 	/**
-	 * The user name required to access the DB.
+	 * The user name required to access derby.
 	 *
 	 * @parameter expression="${db.username}"  default-value=""
 	 */
 	private String dbUsername;
 	
 	/**
-	 * The password required to access the DB.
+	 * The password required to access derby.
 	 *
 	 * @parameter expression="${db.password}"  default-value=""
 	 */
@@ -65,11 +71,16 @@ public class PrepareMojo extends AbstractDBExecutionMojo {
 	 */
 	public void executeInternal() throws MojoExecutionException, MojoFailureException {
 		try {
-			getLog().info("Starting database (PrepareMojo)...");
-			getDbController().setPort(dbPort);
-			getDbController().setUsername(dbUsername);
-			getDbController().setPassword(dbPassword);
-			getDbController().start();
+			// Start Derby Network Server if necessary, but do not wait, because
+			// we know that execution will continue
+			if (needStartup()) {
+				getLog().info("Starting database (PrepareMojo)...");
+				DerbyNetworkServerStarter.setHomeDir(getDerbyLocation());
+				DerbyNetworkServerStarter.setPort(dbPort);
+				DerbyNetworkServerStarter.setUsername(dbUsername);
+				DerbyNetworkServerStarter.setPassword(dbPassword);
+				DerbyNetworkServerStarter.startNetworkServer();
+			}
 			
 			long startTime = System.currentTimeMillis();
 			long remainingTime = DELAY;

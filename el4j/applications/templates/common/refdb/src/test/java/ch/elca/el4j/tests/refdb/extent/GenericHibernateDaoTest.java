@@ -4,17 +4,22 @@
  * Copyright (C) 2006 by ELCA Informatique SA, Av. de la Harpe 22-24,
  * 1000 Lausanne, Switzerland, http://www.elca.ch
  *
- * EL4J is published under the GNU Lesser General Public License (LGPL)
- * Version 2.1. See http://www.gnu.org/licenses/
+ * This program is published under the GNU General Public License (GPL) license.
+ * http://www.gnu.org/licenses/gpl.txt
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU Lesser General Public License for more details.
+ * GNU General Public License for more details.
  *
  * For alternative licensing, please contact info@elca.ch
  */
 package ch.elca.el4j.tests.refdb.extent;
+
+import static ch.elca.el4j.services.persistence.hibernate.dao.extent.ExtentCollection.collection;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.util.Arrays;
 import java.util.Calendar;
@@ -23,26 +28,29 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.hibernate.LazyInitializationException;
 import org.junit.Test;
 import org.springframework.dao.DataIntegrityViolationException;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import sun.reflect.ReflectionFactory.GetReflectionFactoryAction;
 
+import ch.elca.el4j.apps.keyword.dao.impl.hibernate.HibernateKeywordDao;
 import ch.elca.el4j.apps.keyword.dom.Keyword;
+import ch.elca.el4j.apps.refdb.dao.BookDao;
 import ch.elca.el4j.apps.refdb.dao.impl.hibernate.GenericHibernateFileDaoInterface;
+import ch.elca.el4j.apps.refdb.dao.impl.hibernate.HibernateBookDao;
 import ch.elca.el4j.apps.refdb.dao.impl.hibernate.HibernateFileDao;
 import ch.elca.el4j.apps.refdb.dom.Annotation;
 import ch.elca.el4j.apps.refdb.dom.Book;
 import ch.elca.el4j.apps.refdb.dom.File;
 import ch.elca.el4j.apps.refdb.dom.Link;
 import ch.elca.el4j.apps.refdb.dom.Reference;
+import ch.elca.el4j.services.persistence.generic.dao.DaoRegistry;
 import ch.elca.el4j.services.persistence.generic.dao.impl.DefaultDaoRegistry;
 import ch.elca.el4j.services.persistence.hibernate.dao.ConvenienceGenericHibernateDao;
+import ch.elca.el4j.services.persistence.hibernate.dao.GenericHibernateDao;
 import ch.elca.el4j.services.persistence.hibernate.dao.extent.DataExtent;
 import ch.elca.el4j.services.search.QueryObject;
 import ch.elca.el4j.services.search.criterias.LikeCriteria;
@@ -51,14 +59,17 @@ import ch.elca.el4j.tests.person.dom.Brain;
 import ch.elca.el4j.tests.person.dom.Person;
 import ch.elca.el4j.tests.person.dom.Tooth;
 import ch.elca.el4j.tests.refdb.AbstractTestCaseBase;
-
-import static ch.elca.el4j.services.persistence.hibernate.dao.extent.ExtentCollection.collection;
 /**
  *
  * Test case for <code>GenericHibernateDao</code> to test
  * the Extent-functionality.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Andreas Rueedlinger (ARR)
  */
@@ -66,8 +77,8 @@ public class GenericHibernateDaoTest extends AbstractTestCaseBase {
 	/**
 	 * Private logger.
 	 */
-	protected static Logger s_logger
-		= LoggerFactory.getLogger(GenericHibernateDaoTest.class);
+	protected static Log s_logger
+		= LogFactory.getLog(GenericHibernateDaoTest.class);
 	
 	/**
 	 * Person DAO. Created by application context.

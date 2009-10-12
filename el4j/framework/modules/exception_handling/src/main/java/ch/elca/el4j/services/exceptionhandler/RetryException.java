@@ -22,7 +22,12 @@ import org.springframework.aop.target.HotSwappableTargetSource;
 /**
  * This exception signals a retry.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Andreas Bur (ABU)
  */

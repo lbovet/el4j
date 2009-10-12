@@ -35,7 +35,12 @@ import com.jamonapi.MonitorFactory;
 /**
  * This class is a JMX proxy for JAMon performance measurements.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Andreas Bur (ABU)
  */

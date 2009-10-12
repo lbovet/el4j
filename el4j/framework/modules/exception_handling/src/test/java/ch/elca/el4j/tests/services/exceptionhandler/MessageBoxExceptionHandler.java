@@ -18,8 +18,8 @@
 package ch.elca.el4j.tests.services.exceptionhandler;
 
 import org.aopalliance.intercept.MethodInvocation;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import ch.elca.el4j.services.exceptionhandler.AbstractExceptionHandlerInterceptor;
 import ch.elca.el4j.services.exceptionhandler.handler.AbstractExceptionHandler;
@@ -28,7 +28,12 @@ import ch.elca.el4j.services.exceptionhandler.handler.AbstractExceptionHandler;
  * This simple exception handler logs exception messages in a dialogue,
  * printed to the standard out.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Andreas Bur (ABU)
  */
@@ -37,8 +42,8 @@ public class MessageBoxExceptionHandler extends AbstractExceptionHandler {
 	/**
 	 * Logger.
 	 */
-	private static Logger s_logger
-		= LoggerFactory.getLogger(MessageBoxExceptionHandler.class);
+	private static Log s_logger
+		= LogFactory.getLog(MessageBoxExceptionHandler.class);
 	
 	/** Number of handle calls. */
 	public static int s_numberOfHandleCalls = 0;
@@ -48,7 +53,7 @@ public class MessageBoxExceptionHandler extends AbstractExceptionHandler {
 	 */
 	protected Object handleException(Throwable t,
 			AbstractExceptionHandlerInterceptor exceptionInvoker,
-			MethodInvocation invocation, Logger logger) throws Throwable {
+			MethodInvocation invocation, Log logger) throws Throwable {
 		
 		s_numberOfHandleCalls++;
 		

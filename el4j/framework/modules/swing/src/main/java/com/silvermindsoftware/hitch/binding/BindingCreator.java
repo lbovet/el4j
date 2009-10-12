@@ -23,7 +23,12 @@ import org.jdesktop.beansbinding.AutoBinding;
 /**
  * A user defined "binding template" for a specific widget.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @param <T> the type of widget to bind
  *

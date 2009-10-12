@@ -31,7 +31,12 @@ import ch.elca.el4j.core.context.ModuleApplicationContext;
 /**
  * This test tests the <code>BeanLocator</code> class.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Martin Zeltner (MZE)
  */

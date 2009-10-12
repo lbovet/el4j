@@ -20,7 +20,12 @@ package ch.elca.el4j.core.exceptions;
 /**
  * General exception used if a misconfiguration occurred.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Martin Zeltner (MZE)
  */

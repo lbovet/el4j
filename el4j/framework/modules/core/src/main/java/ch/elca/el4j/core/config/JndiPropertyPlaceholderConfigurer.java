@@ -34,7 +34,12 @@ import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
  * application more easily at deployment time through the container's admin
  * console for instance.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Sylvain Laurent (SLA)
  * @author Andreas Bur (ABU)

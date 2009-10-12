@@ -13,7 +13,7 @@
 	<parent>
 		<groupId>ch.elca.el4j.tests</groupId>
 		<artifactId>el4j-framework-tests-remoting-jaxws</artifactId>
-		<version>1.7-SNAPSHOT</version>
+		<version>1.6</version>
 	</parent>
 
 	<artifactId>module-remoting-jaxws-tests-jar-wsimport</artifactId>
@@ -30,7 +30,6 @@
 				<artifactId>maven-jaxws-plugin</artifactId>
 				<executions>
 					<execution>
-						<id>ShakespeareWsdl</id>
 						<goals>
 							<goal>wsimport</goal>
 						</goals>
@@ -39,20 +38,13 @@
 							<contextURL>${jee-web.context}</contextURL>
 							<serviceURL>*.Jaxws.Remotingtests</serviceURL>
 							
-							<!-- important: define only one wsdl per execution. see http://blog.darevay.com/2009/03/importing-multiple-wsdls-with-maven -->
 							<wsdlUrls>
 								<wsdlUrl>http://www.xmlme.com/WSShakespeare.asmx?WSDL</wsdlUrl>
+								<!-- <wsdlUrl>${basedir}/src/wsdl/WSShakespeare.asmx.xml</wsdlUrl> -->
 							</wsdlUrls>
-							
-							<!-- a wsdl file in the wsdl directory (src/wsdl by default) -->
-							<!--<wsdlFiles>
-								<wsdlFile>WSShakespeare.asmx.xml</wsdlFile>
-							</wsdlFiles>-->
-							
 							<!-- Define a (relative) runtime wsdl location (used for local wsdl), otherwise
 							the absolute path to the local wsdlUrl is taken -->
-							<!-- by default /wsdl/${wdslFile} is used-->
-							<!--<wsdlLocation>Shakespeare.wsdl</wsdlLocation>-->
+							<!-- <wsdlLocation>Shakespeare.wsdl</wsdlLocation> -->
 						</configuration>
 					</execution>
 				</executions>

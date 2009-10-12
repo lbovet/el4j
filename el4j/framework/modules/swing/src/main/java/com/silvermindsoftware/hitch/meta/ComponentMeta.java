@@ -21,9 +21,6 @@ import com.silvermindsoftware.hitch.ReadOnly;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
-/**
- * @svnLink $Revision$;$Date$;$Author$;$URL$
- */
 public class ComponentMeta {
 
 	private Class modelPropertyType;

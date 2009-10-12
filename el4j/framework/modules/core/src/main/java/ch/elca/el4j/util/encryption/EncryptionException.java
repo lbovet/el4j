@@ -22,7 +22,12 @@ import ch.elca.el4j.core.exceptions.BaseException;
 /**
  * Exception that is thrown when an encryption or decryption exception occured.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Andreas Pfenninger (APR)
  */

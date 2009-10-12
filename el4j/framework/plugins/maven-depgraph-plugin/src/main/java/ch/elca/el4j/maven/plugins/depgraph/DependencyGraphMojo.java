@@ -27,7 +27,12 @@ import ch.elca.el4j.maven.depgraph.DependencyGraph;
  * dependencies (including transitive ones) below it. For a POM with
  * submodules, goes into each leaf POM and generates a separate graph for it.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Philippe Jacot (PJA)
  * @goal depgraph

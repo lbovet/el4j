@@ -96,7 +96,12 @@ import java.util.Hashtable;
  * The pattern for the implementation of this class was inspired by the book
  * "Effective Java" by Joshua Bloch.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @see <a href="http://www.javaworld.com/javaworld/javatips/jw-javatip122.html">
  *          Typesafe Enum Pattern Pitfalls</a>

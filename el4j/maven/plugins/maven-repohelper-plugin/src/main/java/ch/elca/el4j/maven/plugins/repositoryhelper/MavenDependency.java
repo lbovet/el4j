@@ -19,7 +19,12 @@ package ch.elca.el4j.maven.plugins.repositoryhelper;
 /**
  * Represents a maven dependency.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Martin Zeltner (MZE)
  */

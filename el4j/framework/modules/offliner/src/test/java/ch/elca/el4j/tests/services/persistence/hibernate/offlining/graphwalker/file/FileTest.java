@@ -28,27 +28,30 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
-
-import static org.testng.Assert.assertEquals;
+import org.springframework.stereotype.Component;
 
 import ch.elca.el4j.services.persistence.hibernate.offlining.graphwalker.GraphWalker;
+import ch.elca.el4j.services.persistence.hibernate.offlining.graphwalker.GraphWalker.NodeState;
 import ch.elca.el4j.services.persistence.hibernate.offlining.graphwalker.NodeException;
 import ch.elca.el4j.services.persistence.hibernate.offlining.graphwalker.NodeVisitor;
-import ch.elca.el4j.services.persistence.hibernate.offlining.graphwalker.GraphWalker.NodeState;
 
+import junit.framework.TestCase;
 
 /**
  * Example of using graphwalker for copying files recursively. This is an analogon
  * of synchronizing two databases.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author David Bernhard (DBD)
  */
-@Test
-public class FileTest {
+@Component
+public class FileTest extends TestCase {
 
 	/** A "filesystem". */
 	private Map<String, TestFile> m_files;
@@ -56,7 +59,6 @@ public class FileTest {
 	/** 
 	 * Set up.
 	 */
-	@BeforeMethod
 	public void setUp() {
 		m_files = new HashMap<String, TestFile>();
 		

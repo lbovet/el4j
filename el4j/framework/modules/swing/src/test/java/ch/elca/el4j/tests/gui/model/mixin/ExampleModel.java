@@ -3,13 +3,6 @@ package ch.elca.el4j.tests.gui.model.mixin;
 import java.util.List;
 import java.util.Map;
 
-/**
- * An example model.
- *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
- *
- * @author Stefan Wismer (SWI)
- */
 public interface ExampleModel {
 	public String getProperty1();
 	public void setProperty1(String o);

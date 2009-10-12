@@ -19,7 +19,12 @@ import java.lang.annotation.*;
  * by the runtime, and without requiring any additional synchronization or coordination on the
  * part of the caller.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$: ",
+ *    "$Author$"
+ * );</script>
  *
  */
 @Documented

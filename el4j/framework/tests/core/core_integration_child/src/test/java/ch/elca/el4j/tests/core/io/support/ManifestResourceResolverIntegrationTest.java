@@ -23,8 +23,8 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.junit.Test;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.ResourcePatternResolver;
@@ -35,10 +35,15 @@ import ch.elca.el4j.core.io.support.ManifestOrderedConfigLocationProvider;
 
 /**
  * This integration test checks correctness of the Manifest resource resolver.
- * It works only if the <code>MANIFEST.MF</code> files with the special
+ * It works only if the <code>MANIVEST.MF</code> files with the special
  * configuration location section are available.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Andreas Bur (ABU)
  */
@@ -106,8 +111,8 @@ public class ManifestResourceResolverIntegrationTest
 	/**
 	 * Logger.
 	 */
-	private static Logger s_logger
-		= LoggerFactory.getLogger(ManifestResourceResolverIntegrationTest.class);
+	private static Log s_logger
+		= LogFactory.getLog(ManifestResourceResolverIntegrationTest.class);
 	
 	/** The resource pattern resover. */
 	private ResourcePatternResolver m_resolver;
@@ -155,13 +160,13 @@ public class ManifestResourceResolverIntegrationTest
 		Resource[] r = m_resolver.getResources(
 			"classpath*:" + resourceLocation);
 		assertEquals(r.length, 2);
-		s_logger.info(r[0].getURL().toString());
-		s_logger.info(r[1].getURL().toString());
+		s_logger.info(r[0].getURL());
+		s_logger.info(r[1].getURL());
 		Resource r2 = m_resolver.getResource(
 			"classpath:" + resourceLocation);
 		assertNotNull(r2);
 		assertEquals(r[0].getURL(), r2.getURL());
-		s_logger.info(r2.getURL().toString());
+		s_logger.info(r2.getURL());
 	}
 	
 	/**

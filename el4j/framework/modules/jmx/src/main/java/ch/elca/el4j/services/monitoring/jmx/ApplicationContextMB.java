@@ -27,8 +27,8 @@ import javax.management.MalformedObjectNameException;
 import javax.management.NotCompliantMBeanException;
 import javax.management.ObjectName;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.context.ApplicationContext;
 
@@ -42,7 +42,12 @@ import ch.elca.el4j.util.codingsupport.Reject;
 /**
  * The proxy class for an ApplicationContext.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Raphael Boog (RBO)
  */
@@ -72,7 +77,7 @@ public class ApplicationContextMB implements ApplicationContextMBMBean {
 	/**
 	 * Private logger of this class.
 	 */
-	private static Logger s_logger = LoggerFactory.getLogger(ApplicationContextMB.class);
+	private static Log s_logger = LogFactory.getLog(ApplicationContextMB.class);
 
 	/**
 	 * The reference to the real Application Context.

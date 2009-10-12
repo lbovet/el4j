@@ -29,7 +29,12 @@ import ch.elca.el4j.maven.depgraph.DependencyGraph;
  * a graph for all the modules as they are interconnected. Same as depgraph for a simple POM, but for a POM with
  * submodules, generates a combined dependency graph incorporating all modules.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Philippe Jacot (PJA)
  * @goal fullgraph

@@ -22,8 +22,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 
 import org.apache.commons.lang.ArrayUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.util.StringUtils;
 
 /**
@@ -76,7 +76,12 @@ import org.springframework.util.StringUtils;
  * arguments is not
  * verified statically and must therefore be ensured by the user.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Martin Zeltner (MZE), Adrian Moos(AMS)
  */
@@ -84,7 +89,7 @@ public final class Reject {
 	/**
 	 * Private logger of this class.
 	 */
-	private static final Logger LOG = LoggerFactory.getLogger(Reject.class);
+	private static final Log LOG = LogFactory.getLog(Reject.class);
 
 	/**
 	 * Default constructor.

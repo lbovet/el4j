@@ -28,8 +28,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.jdom.Element;
 import org.xml.sax.EntityResolver;
 import org.xml.sax.InputSource;
@@ -53,7 +53,12 @@ import ch.elca.el4j.services.xmlmerge.XmlMergeContext;
  * Copy the patch element in the output parent with the correct position
  * according to the DTD declared in doctype.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Laurent Bovet (LBO)
  * @author Alex Mathey (AMA)
@@ -69,8 +74,8 @@ public class DtdInsertAction implements Action {
 	/**
 	 * Private logger.
 	 */
-	private static Logger s_logger
-		= LoggerFactory.getLogger(DtdInsertAction.class);
+	private static Log s_logger
+		= LogFactory.getLog(DtdInsertAction.class);
 		
 	/**
 	 * {@inheritDoc}

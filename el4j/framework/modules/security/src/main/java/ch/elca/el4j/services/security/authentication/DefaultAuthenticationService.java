@@ -17,9 +17,9 @@
 package ch.elca.el4j.services.security.authentication;
 
 
-import org.springframework.security.Authentication;
-import org.springframework.security.AuthenticationManager;
-import org.springframework.security.context.SecurityContextHolder;
+import org.acegisecurity.Authentication;
+import org.acegisecurity.AuthenticationManager;
+import org.acegisecurity.context.SecurityContextHolder;
 import org.springframework.beans.factory.InitializingBean;
 
 import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
@@ -44,7 +44,12 @@ import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
  * </ul>
  * <br>
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Raphael Boog (RBO)
  * @author Andreas Pfenninger (APR)

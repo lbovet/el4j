@@ -4,13 +4,13 @@
  * Copyright (C) 2006 by ELCA Informatique SA, Av. de la Harpe 22-24,
  * 1000 Lausanne, Switzerland, http://www.elca.ch
  *
- * EL4J is published under the GNU Lesser General Public License (LGPL)
- * Version 2.1. See http://www.gnu.org/licenses/
+ * EL4J is published under the GNU General Public License (GPL) Version 2.0.
+ * http://www.gnu.org/licenses/
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU Lesser General Public License for more details.
+ * GNU General Public License for more details.
  *
  * For alternative licensing, please contact info@elca.ch
  */
@@ -29,7 +29,12 @@ import ch.elca.el4j.maven.ResourceLoader;
  * This class holds the data needed to connect to a database, namely the
  * URL, the username, the password and the JDBC driver.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author David Stefan (DST)
  */
@@ -110,7 +115,8 @@ public class ConnectionPropertiesHolder extends DatabaseNameHolder {
 	public void loadConnectionProperties(String sourceDir) {
 		if (sourceDir != null) {
 			String source = replaceDbName(sourceDir);
-			if (!source.startsWith("file:/") && !source.startsWith("classpath:") && !source.startsWith("classpath*:")) {
+			if (!source.startsWith("classpath:")
+				&& !source.startsWith("classpath*:")) {
 				source = "classpath*:" + source;
 			}
 			try {

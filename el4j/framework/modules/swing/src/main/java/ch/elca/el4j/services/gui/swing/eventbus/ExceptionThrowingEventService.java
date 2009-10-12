@@ -22,7 +22,12 @@ import org.bushe.swing.event.SwingEventService;
 /**
  * A {@link SwingEventService} that really throws occurring exceptions (in addition to logging them).
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Stefan Wismer (SWI)
  */

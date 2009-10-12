@@ -12,7 +12,7 @@
 	<parent>
 		<groupId>ch.elca.el4j.applications</groupId>
 		<artifactId>el4j-templates-common</artifactId>
-		<version>1.7-SNAPSHOT</version>
+		<version>1.6</version>
 	</parent>
 
 	<artifactId>refdb</artifactId>
@@ -179,10 +179,11 @@
 							</execution>
 						</executions>
 					</plugin>
-				</plugins>			
+				</plugins>
 			</build>
 		</profile>
 	</profiles>
+	
 	<dependencies>
 		<dependency>
 			<groupId>ch.elca.el4j.applications</groupId>

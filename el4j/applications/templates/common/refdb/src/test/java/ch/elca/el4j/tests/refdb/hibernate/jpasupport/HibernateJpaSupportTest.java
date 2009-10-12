@@ -29,7 +29,12 @@ import ch.elca.el4j.tests.person.dom.Person;
 /**
  * Test class for JpaFullSupport feature.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Andreas Rueedlinger (ARR)
  */

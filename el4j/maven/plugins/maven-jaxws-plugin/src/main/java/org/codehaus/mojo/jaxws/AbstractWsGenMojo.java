@@ -36,9 +36,8 @@ import org.apache.maven.plugin.MojoFailureException;
 
 import com.sun.tools.ws.WsGen;
 
-
 /**
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ *
  *
  * @author gnodet <gnodet@apache.org>
  * @author dantran <dantran@apache.org>

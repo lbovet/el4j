@@ -13,7 +13,7 @@
 	<parent>
 		<groupId>ch.elca.el4j.modules</groupId>
 		<artifactId>el4j-framework-modules</artifactId>
-		<version>1.7-SNAPSHOT</version>
+		<version>1.6.1</version>
 	</parent>
 
 	<artifactId>module-core</artifactId>
@@ -34,12 +34,8 @@
 			Else you will have dependencies to servlet-api and so on!!!!
 		-->
 		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>jcl-over-slf4j</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-log4j12</artifactId>
+			<groupId>commons-logging</groupId>
+			<artifactId>commons-logging</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>log4j</groupId>

@@ -18,8 +18,8 @@
 package ch.elca.el4j.services.exceptionhandler.handler;
 
 import org.aopalliance.intercept.MethodInvocation;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import ch.elca.el4j.services.exceptionhandler.AbstractExceptionHandlerInterceptor;
 
@@ -27,14 +27,19 @@ import ch.elca.el4j.services.exceptionhandler.AbstractExceptionHandlerIntercepto
  * This class provides a logging setup that allows to use the target's log
  * as well as the exception handler's.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Andreas Bur (ABU)
  */
 public abstract class AbstractExceptionHandler implements ExceptionHandler {
 
 	/** The logger. */
-	private Logger m_logger = LoggerFactory.getLogger(getClass());
+	private Log m_logger = LogFactory.getLog(getClass());
 	
 	/**
 	 * Sets whether the dynamic logger which is the one of the target class.
@@ -44,7 +49,7 @@ public abstract class AbstractExceptionHandler implements ExceptionHandler {
 	 *      the one of the concrete exception handler otherwise.
 	 */
 	public void setUseDynamicLogger(boolean useDyanmicLog) {
-		m_logger = useDyanmicLog ? null : LoggerFactory.getLogger(getClass());
+		m_logger = useDyanmicLog ? null : LogFactory.getLog(getClass());
 	}
 	
 	/**
@@ -77,7 +82,7 @@ public abstract class AbstractExceptionHandler implements ExceptionHandler {
 	 */
 	protected abstract Object handleException(Throwable t,
 		AbstractExceptionHandlerInterceptor exceptionInvoker,
-		MethodInvocation invocation, Logger logger) throws Throwable;
+		MethodInvocation invocation, Log logger) throws Throwable;
 
 	/**
 	 * Pretty-prints the invocation. This method is intended to be used for
@@ -110,8 +115,8 @@ public abstract class AbstractExceptionHandler implements ExceptionHandler {
 	 * @return Returns this class' logger, if dynamic logging is disabled and
 	 *      otherwise the method invocation target's one.
 	 */
-	private Logger getLoggerForInvocation(MethodInvocation invocation) {
+	private Log getLoggerForInvocation(MethodInvocation invocation) {
 		return (m_logger != null)
-			? m_logger : LoggerFactory.getLogger(invocation.getThis().getClass());
+			? m_logger : LogFactory.getLog(invocation.getThis().getClass());
 	}
 }

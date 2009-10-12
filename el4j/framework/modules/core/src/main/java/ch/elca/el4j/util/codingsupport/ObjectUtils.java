@@ -22,7 +22,12 @@ package ch.elca.el4j.util.codingsupport;
  * This class supports methods to handle with objects. It covers only caps of
  * class <code>org.springframework.util.ObjectUtils</code>.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Martin Zeltner (MZE)
  */

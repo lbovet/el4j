@@ -19,7 +19,12 @@ package ch.elca.el4j.services.persistence.hibernate.offlining.graphwalker;
 /**
  * Exception thrown by a node visitor in <code>visit</code> to turn the node state to ERROR.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author David Bernhard (DBD)
  */

@@ -19,7 +19,12 @@ package ch.elca.el4j.services.xmlmerge;
 /**
  * Thrown when something wrong happens in the XmlMerge configuration.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Laurent Bovet (LBO)
  * @author Alex Mathey (AMA)

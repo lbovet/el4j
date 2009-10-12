@@ -16,14 +16,19 @@
  */
 package ch.elca.el4j.demos.statistics.detailed.impl;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 /**
  *  This class is a dummy class for presentation purposes for the
  *  detailed statistics demo.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author David Stefan (DST)
  */
@@ -32,8 +37,8 @@ public class DemoC {
 	/**
 	 * Logger.
 	 */
-	private static Logger s_logger
-		= LoggerFactory.getLogger(DemoC.class);
+	private static Log s_logger
+		= LogFactory.getLog(DemoC.class);
 	
 	/**
 	 * Print "Hi" on console.

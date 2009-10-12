@@ -21,7 +21,12 @@ import javax.swing.JComponent;
 /**
  * Interface for handlers that determine how to react on valid/invalid values.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Stefan Wismer (SWI)
  */

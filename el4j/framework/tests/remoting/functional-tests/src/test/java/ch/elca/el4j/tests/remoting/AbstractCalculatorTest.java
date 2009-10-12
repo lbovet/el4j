@@ -16,8 +16,8 @@
  */
 package ch.elca.el4j.tests.remoting;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -31,7 +31,12 @@ import ch.elca.el4j.tests.remoting.service.CalculatorOperation;
 /**
  * This class is a test for the calculator.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Waraich Rashid (RWA)
  */
@@ -40,8 +45,7 @@ public abstract class AbstractCalculatorTest extends AbstractTest {
 	/**
 	 * Private logger.
 	 */
-	private static Logger s_logger = LoggerFactory.getLogger(
-		AbstractCalculatorTest.class);
+	private static Log s_logger = LogFactory.getLog(AbstractCalculatorTest.class);
 
 	/**
 	 * Instance of the calculator proxy.

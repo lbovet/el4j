@@ -24,10 +24,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.maven.artifact.repository.ArtifactRepository;
 import org.apache.maven.project.MavenProject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;
 
 import ch.elca.el4j.core.io.support.ListResourcePatternResolverDecorator;
@@ -38,7 +38,12 @@ import ch.elca.el4j.core.io.support.OrderedPathMatchingResourcePatternResolver;
  *
  * This class contains the enriched classloader as well as the Path matcher needed for resource loading.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author David Stefan (DST)
  * @author Stefan Wismer (SWI)
@@ -48,8 +53,8 @@ public class ResourceLoader {
 	/**
 	 * Logger.
 	 */
-	private static Logger s_logger
-		= LoggerFactory.getLogger(ResourceLoader.class);
+	private static Log s_logger
+		= LogFactory.getLog(ResourceLoader.class);
 	
 	/**
 	 * The classloader.

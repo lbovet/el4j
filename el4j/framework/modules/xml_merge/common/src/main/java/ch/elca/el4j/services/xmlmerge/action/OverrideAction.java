@@ -24,7 +24,12 @@ import ch.elca.el4j.services.xmlmerge.Action;
  * Copies the patch element if it exist in the original, keep the original if no
  * corresponding patch element exists.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Laurent Bovet (LBO)
  * @author Alex Mathey (AMA)

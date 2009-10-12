@@ -48,7 +48,12 @@ import net.java.dev.designgridlayout.DesignGridLayout;
  * {@link CancelableDemoForm}. It is shown how to close the window containing
  * this panel (<code>AbstractWrapperFactory.getWrapper(this).dispose()</code>).
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Stefan Wismer (SWI)
  */

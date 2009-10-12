@@ -46,7 +46,12 @@ import ch.elca.el4j.tests.refdb.AbstractTestCaseBase;
 /**
  * Checks an identity fixer's correctness by testing an identity-fixed DAO.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Adrian Moos (AMS)
  * @author Alex Mathey (AMA)

@@ -63,7 +63,12 @@ import ch.elca.el4j.util.codingsupport.annotations.ImplementationAssumption;
  * "suppressAccessChecks" if a security manager is present and an object
  * requiring fixing keeps its id in a non-public field.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Adrian Moos (AMS)
  */

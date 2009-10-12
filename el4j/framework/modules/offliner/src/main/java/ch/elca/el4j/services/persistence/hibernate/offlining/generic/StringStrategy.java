@@ -20,7 +20,12 @@ package ch.elca.el4j.services.persistence.hibernate.offlining.generic;
  * Strategy for string class. This is required to fit the strategy/chain of command pattern;
  * it does not do anything interesting.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author David Bernhard (DBD)
  */

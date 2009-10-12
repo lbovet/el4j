@@ -16,23 +16,22 @@
  */
 package ch.elca.el4j.tests.refdb.service;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
 import java.sql.Date;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.OptimisticLockingFailureException;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import ch.elca.el4j.apps.keyword.dao.KeywordDao;
 import ch.elca.el4j.apps.keyword.dom.Keyword;
@@ -43,6 +42,7 @@ import ch.elca.el4j.apps.refdb.dom.FormalPublication;
 import ch.elca.el4j.apps.refdb.dom.Link;
 import ch.elca.el4j.apps.refdb.dom.Reference;
 import ch.elca.el4j.apps.refdb.service.ReferenceService;
+import ch.elca.el4j.services.persistence.generic.dao.impl.DefaultDaoRegistry;
 import ch.elca.el4j.services.search.QueryObject;
 import ch.elca.el4j.services.search.criterias.ComparisonCriteria;
 import ch.elca.el4j.services.search.criterias.IncludeCriteria;
@@ -54,7 +54,12 @@ import ch.elca.el4j.tests.refdb.AbstractTestCaseBase;
 /**
  * Abstract test case for <code>DefaultReferenceService</code>.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Martin Zeltner (MZE)
  */
@@ -63,12 +68,18 @@ public abstract class AbstractReferenceServiceTest
 	/**
 	 * Private logger.
 	 */
-	private static Logger s_logger = LoggerFactory.getLogger(AbstractReferenceServiceTest.class);
+	private static Log s_logger = LogFactory
+			.getLog(AbstractReferenceServiceTest.class);
 
 	/**
 	 * Reference service. Created by application context.
 	 */
 	private ReferenceService m_referenceService;
+
+	/**
+	 * Keyword DAO. Created by application context.
+	 */
+	private KeywordDao m_keywordDao;
 	
 	/**
 	 * Hide default constructor.
@@ -1291,13 +1302,13 @@ public abstract class AbstractReferenceServiceTest
 			+ "with annotator 'Mister Lazy' in database.", list.size(), 0);
 	}
 	
+	@Test
 	/**
 	 * This tests generates references and related keywords. In a second
 	 * step, a service method deletes one reference and all its connected
 	 * keywords. Because another reference still is related to some of
 	 * now-deleted keywords, the service method should be rolled back.
 	 */
-	@Test
 	public void testMissingKeyword() {
 		
 		ReferenceService service = getReferenceService();
@@ -1353,60 +1364,6 @@ public abstract class AbstractReferenceServiceTest
 		keywordList = dao.getAll();
 		assertEquals("Keywords not properly removed.",
 			0, keywordList.size());
-	}
-	
-	/**
-	 * Test the getReferencesByKeywords() service method.
-	 */
-	@Test
-	public void testGetReferencesByKeywords() {
-		// add a book
-		Book book = new Book();
-		book.setName("Testbook");
-		book.setAuthorName("Mister Y");
-		book.setPageNum(22);
-		Annotation a1 = new Annotation();
-		a1.setAnnotator("arr");
-		a1.setContent("very good testbook!");
-		book.setAnnotations(new HashSet<Annotation>());
-		book.getAnnotations().add(a1);
-		a1.setReference(book);
-		Keyword k1 = new Keyword();
-		k1.setName("Java");
-		Keyword k2 = new Keyword();
-		k2.setName("XML");
-		Keyword k3 = new Keyword();
-		k3.setName("other");
-		
-		k1 = getKeywordDao().saveOrUpdate(k1);
-		k2 = getKeywordDao().saveOrUpdate(k2);
-		k3 = getKeywordDao().saveOrUpdate(k3);
-		
-		book.setKeywords(new HashSet<Keyword>());
-		book.getKeywords().add(k1);
-		book = getBookDao().saveOrUpdate(book);
-		a1 = getAnnotationDao().saveOrUpdateAndFlush(a1);
-			
-		assertEquals(1, getReferenceService().getReferencesByKeywords(Arrays.asList(k1)).size());
-		assertEquals(0, getReferenceService().getReferencesByKeywords(Arrays.asList(k2)).size());
-		assertEquals(1, getReferenceService().getReferencesByKeywords(Arrays.asList(k1, k2)).size());
-		assertEquals(0, getReferenceService().getReferencesByKeywords(Arrays.asList(k2, k3)).size());
-		assertEquals(0, getReferenceService().getReferencesByKeywords(Arrays.asList(k3)).size());
-		
-		book.getKeywords().add(k2);
-		book = getBookDao().saveOrUpdateAndFlush(book);
-		getBookDao().flush();
-		
-		assertEquals(1, getReferenceService().getReferencesByKeywords(Arrays.asList(k1)).size());
-		assertEquals(1, getReferenceService().getReferencesByKeywords(Arrays.asList(k2)).size());
-		assertEquals(1, getReferenceService().getReferencesByKeywords(Arrays.asList(k1, k2)).size());
-		assertEquals(1, getReferenceService().getReferencesByKeywords(Arrays.asList(k2, k3)).size());
-		assertEquals(0, getReferenceService().getReferencesByKeywords(Arrays.asList(k3)).size());
-		
-		book.getKeywords().add(k3);
-		book = getBookDao().saveOrUpdateAndFlush(book);
-		
-		assertEquals(1, getReferenceService().getReferencesByKeywords(Arrays.asList(k3)).size());
 	}
 	
 	/**

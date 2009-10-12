@@ -22,6 +22,7 @@ import org.apache.maven.artifact.repository.ArtifactRepository;
 import org.apache.maven.artifact.resolver.ArtifactCollector;
 import org.apache.maven.artifact.resolver.ArtifactResolver;
 import org.apache.maven.artifact.resolver.filter.ArtifactFilter;
+import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.project.MavenProject;
 import org.apache.maven.shared.dependency.tree.DependencyNode;
 import org.apache.maven.shared.dependency.tree.DependencyTreeBuilder;
@@ -29,7 +30,6 @@ import org.apache.maven.shared.dependency.tree.DependencyTreeBuilderException;
 
 import ch.elca.el4j.maven.DepGraphWalker;
 import ch.elca.el4j.maven.ResourceLoader;
-import ch.elca.el4j.maven.plugins.AbstractSlf4jEnabledMojo;
 
 /**
  * This class provides basic functionality to handle module dependency related operations.
@@ -39,11 +39,16 @@ import ch.elca.el4j.maven.plugins.AbstractSlf4jEnabledMojo;
  * It is simply copied from maven-util, because java-doc annotations are not recognized if this
  * file is located in a separate jar (namely maven-util). See also http://jira.codehaus.org/browse/MNG-3042
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Stefan Wismer (SWI)
  */
-public abstract class AbstractDependencyAwareMojo extends AbstractSlf4jEnabledMojo {
+public abstract class AbstractDependencyAwareMojo extends AbstractMojo {
 	// Checkstyle: MemberName off
 	/**
 	 * The maven project from where this plugin is called.

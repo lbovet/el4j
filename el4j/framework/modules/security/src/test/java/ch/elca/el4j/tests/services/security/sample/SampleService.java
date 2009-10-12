@@ -16,26 +16,28 @@
  */
 package ch.elca.el4j.tests.services.security.sample;
 
-import javax.annotation.security.RolesAllowed;
-
+import org.acegisecurity.annotation.Secured;
 
 /**
  * Sample service for access tests.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Andreas Pfenninger (APR)
  */
-
-
-@RolesAllowed({ "ROLE_TELLER" })
+@Secured({"ROLE_TELLER"})
 public interface SampleService  {
 
 	/**
 	 * @param i a numer.
 	 * @return i + 1
 	 */
-	@RolesAllowed({ "ROLE_PERMISSION_ADDONE" })
+	@Secured({"ROLE_PERMISSION_ADDONE"})
 	public int addOne(int i);
 
 }

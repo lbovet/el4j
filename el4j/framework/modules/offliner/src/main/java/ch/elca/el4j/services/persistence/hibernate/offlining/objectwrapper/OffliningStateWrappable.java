@@ -23,7 +23,12 @@ import ch.elca.el4j.util.objectwrapper.Wrappable;
 /**
  * Wrappable of an object being in one of several states for synchronization.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author David Bernhard (DBD)
  */

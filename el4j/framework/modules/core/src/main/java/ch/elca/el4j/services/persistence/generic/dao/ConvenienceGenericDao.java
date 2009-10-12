@@ -4,13 +4,13 @@
  * Copyright (C) 2006 by ELCA Informatique SA, Av. de la Harpe 22-24,
  * 1000 Lausanne, Switzerland, http://www.elca.ch
  *
- * EL4J is published under the GNU Lesser General Public License (LGPL)
- * Version 2.1. See http://www.gnu.org/licenses/
+ * This program is published under the GNU General Public License (GPL) license.
+ * http://www.gnu.org/licenses/gpl.txt
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU Lesser General Public License for more details.
+ * GNU General Public License for more details.
  *
  * For alternative licensing, please contact info@elca.ch
  */
@@ -23,12 +23,19 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.dao.OptimisticLockingFailureException;
 
+import ch.elca.el4j.core.transaction.annotations.RollbackConstraint;
+
 /**
  * Extends the GenericDao with a few convenience methods.
  * As EL4J only supports Hibernate as persistence framework it's more convenient to use
  * ConvenienceGenericHibernateDao directly.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @param <T>
  *            The generic type of the domain class the DAO is responsible for
@@ -80,6 +87,7 @@ public interface ConvenienceGenericDao<T, ID extends Serializable>
 	 * @deprecated Renamed to deleteById as of el4j 1.6
 	 */
 	@Deprecated
+	@RollbackConstraint
 	void delete(ID id)
 		throws OptimisticLockingFailureException, DataAccessException;
 	
@@ -94,6 +102,7 @@ public interface ConvenienceGenericDao<T, ID extends Serializable>
 	 * @throws DataAccessException
 	 *             If general data access problem occurred
 	 */
+	@RollbackConstraint
 	void deleteById(ID id)
 		throws OptimisticLockingFailureException, DataAccessException;
 	
@@ -117,6 +126,7 @@ public interface ConvenienceGenericDao<T, ID extends Serializable>
 	 * @throws DataAccessException
 	 *             If general data access problem occurred
 	 */
+	@RollbackConstraint
 	void delete(T entity)
 		throws OptimisticLockingFailureException, DataAccessException;
 	
@@ -128,6 +138,7 @@ public interface ConvenienceGenericDao<T, ID extends Serializable>
 	 * @throws DataAccessException
 	 *             If general data access problem occurred
 	 */
+	@RollbackConstraint
 	public void deleteAll()
 		throws OptimisticLockingFailureException, DataAccessException;
 	

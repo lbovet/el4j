@@ -22,9 +22,14 @@ import javax.swing.JInternalFrame;
 import ch.elca.el4j.services.gui.swing.frames.InternalApplicationFrame;
 
 /**
- * This factory wraps components into {@link JInternalFrame}s.
+ * This class wraps components into {@link JInternalFrame}s.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Stefan Wismer (SWI)
  */

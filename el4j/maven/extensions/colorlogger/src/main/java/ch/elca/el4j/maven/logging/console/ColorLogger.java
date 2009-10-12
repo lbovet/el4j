@@ -22,7 +22,12 @@ import ch.elca.el4j.maven.logging.AbstractFormattingLogger;
 /**
  * Logger that outputs ansi colored text.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author David Bernhard (DBD)
  */

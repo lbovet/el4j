@@ -18,8 +18,8 @@ package com.silvermindsoftware.hitch.validation;
 
 import javax.swing.JComponent;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.jdesktop.beansbinding.BeanProperty;
 import org.jdesktop.beansbinding.Binding;
 import org.jdesktop.beansbinding.Binding.SyncFailure;
@@ -32,7 +32,12 @@ import com.silvermindsoftware.hitch.validation.response.ValidationResponder;
 /**
  * This class listens to a binding and performs a validation on sync.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Stefan Wismer (SWI)
  */
@@ -41,7 +46,7 @@ public class ValidatingBindingListener implements BindingListener {
 	/**
 	 * The logger.
 	 */
-	private static Logger s_logger = LoggerFactory.getLogger(
+	private static Log s_logger = LogFactory.getLog(
 		ValidatingBindingListener.class);
 		
 	/**

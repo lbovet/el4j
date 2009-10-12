@@ -16,13 +16,6 @@
  */
 package ch.elca.el4j.maven;
 
-/**
- * An exception that can occur during the dependency graph walk.
- *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
- *
- * @author David Stefan (DST)
- */
 public class DepGraphWalkerException extends RuntimeException {
 	
 	/**

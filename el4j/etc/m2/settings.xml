@@ -27,9 +27,7 @@
 	| values (values used when the setting is not specified) are provided.
 	|
 	|-->
-<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0" 
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-	xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
+<settings>
 	<!-- localRepository
 		| The path to the local repository maven will use to store artifacts.
 		|
@@ -217,9 +215,9 @@
 
 				<!-- Tomcat6x -->
 				<tomcat6x.basedir>${el4j.project.tools}/tomcat</tomcat6x.basedir>
-				<tomcat6x.version>6.0.20</tomcat6x.version>
+				<tomcat6x.version>6.0.18</tomcat6x.version>
 				<tomcat6x.home>${tomcat6x.basedir}/apache-tomcat-${tomcat6x.version}/apache-tomcat-${tomcat6x.version}</tomcat6x.home>
-				<tomcat6x.zipDownloadUrl>http://public-el4.elca-services.ch/el4j/tools/tomcat/apache-tomcat-${tomcat6x.version}.zip</tomcat6x.zipDownloadUrl>
+				<tomcat6x.zipDownloadUrl>http://el4.elca-services.ch/el4j/tools/tomcat/apache-tomcat-${tomcat6x.version}.zip</tomcat6x.zipDownloadUrl>
 				<tomcat6x.container.log.file>${project.build.directory}/logs/tomcat6x/output.log</tomcat6x.container.log.file>
 				<tomcat6x.cargo.log.file>${project.build.directory}/logs/tomcat6x/cargo.log</tomcat6x.cargo.log.file>
 				<tomcat6x.eclipse.runtime.facet.name>Apache Tomcat v6.0</tomcat6x.eclipse.runtime.facet.name>

@@ -29,7 +29,12 @@ import ch.elca.el4j.demos.remoting.ComplexNumber;
 /**
  * This class is the implementation of the calculator.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Martin Zeltner (MZE)
  * @author Rashid Waraich (RWA)

@@ -25,8 +25,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 /**
  * This class sorts a list of unordered modules using their dependency
@@ -42,7 +42,12 @@ import org.slf4j.LoggerFactory;
  * unsatisfied dependencies, which could happen if there are cycles in the
  * dependency graph.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Andreas Bur (ABU)
  * @author Martin Zeltner (MZE)
@@ -50,7 +55,7 @@ import org.slf4j.LoggerFactory;
 public class DefaultModuleSorter implements ModuleSorter {
 	
 	/** The static logger. */
-	private static Logger s_logger = LoggerFactory.getLogger(DefaultModuleSorter.class);
+	private static Log s_logger = LogFactory.getLog(DefaultModuleSorter.class);
 	
 	/** The list with root modules. */
 	private List<Module> m_rootModules;

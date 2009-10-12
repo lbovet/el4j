@@ -23,7 +23,12 @@ import com.sun.jdmk.comm.HtmlParser;
  * This MBean marker interface is used for class
  * {@link ch.elca.el4j.services.monitoring.jmx.CssHtmlParser}.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Martin Zeltner (MZE)
  */

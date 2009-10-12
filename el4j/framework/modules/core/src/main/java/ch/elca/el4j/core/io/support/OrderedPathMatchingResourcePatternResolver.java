@@ -33,7 +33,12 @@ import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
  * This class extends PathMatchingResourcePatternResolver in the way that
  * it sorts the files in a folder alphabetically.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Stefan Wismer (SWI)
  */

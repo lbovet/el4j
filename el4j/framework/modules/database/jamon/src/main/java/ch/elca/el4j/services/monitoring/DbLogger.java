@@ -16,8 +16,8 @@
  */
 package ch.elca.el4j.services.monitoring;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import com.jamonapi.Monitor;
 import com.jamonapi.MonitorFactory;
@@ -27,7 +27,12 @@ import com.jamonapi.MonitorFactory;
  * executing thread). It is a minimalistic wrapper for {@link MonitorFactory},
  * so use JAMons MonitorFactory directly if you need more control.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Stefan Wismer (SWI)
  */
@@ -35,7 +40,7 @@ public final class DbLogger {
 	/**
 	 * Private logger of this class.
 	 */
-	private static Logger s_logger = LoggerFactory.getLogger(DbLogger.class);
+	private static Log s_logger = LogFactory.getLog(DbLogger.class);
 	
 	/**
 	 * The hidden constructor.

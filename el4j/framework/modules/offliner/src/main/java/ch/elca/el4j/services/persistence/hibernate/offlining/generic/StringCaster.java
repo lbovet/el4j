@@ -23,7 +23,12 @@ import java.util.List;
  * This class uses the string strategies in a chain-of-command pattern to cast objects from/to
  * strings.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author David Bernhard (DBD)
  */

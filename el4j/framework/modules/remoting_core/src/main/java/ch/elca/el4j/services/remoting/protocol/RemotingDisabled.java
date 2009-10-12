@@ -31,7 +31,12 @@ import ch.elca.el4j.services.remoting.RemotingServiceExporter;
  * Empty protocol to simulate protocols. Just the implicit context passing will
  * be enabled. Client and server must be in same JVM.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Martin Zeltner (MZE)
  */

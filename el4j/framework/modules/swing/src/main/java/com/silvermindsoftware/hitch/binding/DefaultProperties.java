@@ -35,7 +35,12 @@ import org.jdesktop.beansbinding.Property;
 /**
  * This class holds a mapping of objects or classes to their default property.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Stefan Wismer (SWI)
  */

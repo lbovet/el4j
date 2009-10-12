@@ -16,31 +16,31 @@
  */
 package ch.elca.el4j.demos.secure.gui;
 
-import javax.annotation.security.RolesAllowed;
-
-import org.springframework.security.annotation.Secured;
-
-
+import org.acegisecurity.annotation.Secured;
 
 /**
  * This class is used to test access restriction using
  * acegi's '@Secured' annotation.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Stefan Wismer (SWI)
  */
 public class PrivateData {
 	
-
+	// @RolesAllowed will work only in acegi 2.0
 	
 	
 	/**
 	 * @return    "Access granted" if successful
 	 */
-	//
-
-	@RolesAllowed({ "ROLE_SUPERUSER" })
+	//@RolesAllowed({ "ROLE_SUPERUSER" })
+	@Secured({ "ROLE_SUPERUSER" })
 	public String getSecret() {
 		return "<html><b>Access granted</b></html>";
 	}
@@ -48,6 +48,6 @@ public class PrivateData {
 	/**
 	 * Test if user is authenticated.
 	 */
-	@RolesAllowed({ "ROLE_NORMALUSER" })
+	@Secured({ "ROLE_NORMALUSER" })
 	public void testAccess() { }
 }

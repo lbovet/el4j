@@ -20,8 +20,8 @@ package ch.elca.el4j.tests.remoting.service;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import ch.elca.el4j.core.contextpassing.ImplicitContextPasser;
 import ch.elca.el4j.core.contextpassing.ImplicitContextPassingRegistry;
@@ -29,7 +29,12 @@ import ch.elca.el4j.core.contextpassing.ImplicitContextPassingRegistry;
 /**
  * This class is used to test if the implicit context passing works.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Martin Zeltner (MZE)
  */
@@ -38,8 +43,8 @@ public class TestImplicitContextPassingRegistry implements
 	/**
 	 * Private logger.
 	 */
-	private static Logger s_logger = LoggerFactory.getLogger(
-		TestImplicitContextPassingRegistry.class);
+	private static Log s_logger = LogFactory
+			.getLog(TestImplicitContextPassingRegistry.class);
 
 	/**
 	 * {@inheritDoc}

@@ -28,7 +28,12 @@ import ch.elca.el4j.util.codingsupport.ClassUtils;
 /**
  * This class tests the class utilities.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Andreas Bur (ABU)
  */

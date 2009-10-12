@@ -38,7 +38,12 @@ import org.apache.commons.codec.binary.Base64;
  * CAVEAT: the encoding between byte[] and String was recently changed to adapt to
  *  the new Base64 encore (before it used a private method of sun).
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Andreas Pfenninger (APR)
  */

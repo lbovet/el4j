@@ -28,9 +28,6 @@ import javax.swing.JInternalFrame;
 /**
  * A simple comparator for <code>JInternalFrames</code>, based on their title.
  * <p>
- *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
- *
  * @author Gregory Kotsaftis
  * @since 1.04
  */

@@ -27,7 +27,12 @@ import java.util.PriorityQueue;
  * should be called (handle() return <code>true</code>). In case that no handlers get executed, a stack
  * trace will be printed to std err.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Stefan Wismer (SWI)
  */

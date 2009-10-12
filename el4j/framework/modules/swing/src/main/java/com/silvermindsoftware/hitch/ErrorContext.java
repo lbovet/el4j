@@ -19,9 +19,6 @@ package com.silvermindsoftware.hitch;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @svnLink $Revision$;$Date$;$Author$;$URL$
- */
 public class ErrorContext {
 
 	private static class ThreadLocalList extends ThreadLocal {

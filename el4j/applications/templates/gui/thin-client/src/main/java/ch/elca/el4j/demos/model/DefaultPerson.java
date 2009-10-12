@@ -23,13 +23,6 @@ import org.hibernate.validator.Length;
 import org.hibernate.validator.Min;
 import org.hibernate.validator.NotNull;
 
-/**
- * A simple implementation of {@link Person}.
- *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
- *
- * @author Stefan Wismer (SWI)
- */
 public class DefaultPerson implements Person {
 	protected String m_firstName;
 	protected String m_lastName;

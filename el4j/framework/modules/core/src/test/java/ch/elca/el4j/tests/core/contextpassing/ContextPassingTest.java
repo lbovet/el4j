@@ -30,7 +30,12 @@ import ch.elca.el4j.core.contextpassing.DefaultImplicitContextPassingRegistry;
 /**
  * This class tests the context passing classes.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Martin Zeltner (MZE)
  */

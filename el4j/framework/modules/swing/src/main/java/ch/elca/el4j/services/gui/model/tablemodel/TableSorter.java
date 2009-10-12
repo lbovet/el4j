@@ -56,7 +56,12 @@ import org.jdesktop.swingbinding.validation.ValidatedProperty;
  * This is a long overdue rewrite of a class of the same name that
  * first appeared in the swing table demos in 1997.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Philip Milne
  * @author Brendon McLean

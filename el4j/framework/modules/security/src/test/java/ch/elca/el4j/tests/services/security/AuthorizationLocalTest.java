@@ -19,17 +19,17 @@ package ch.elca.el4j.tests.services.security;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
-import org.springframework.security.AccessDeniedException;
-import org.springframework.security.AuthenticationCredentialsNotFoundException;
-import org.springframework.security.AuthenticationException;
-import org.springframework.security.GrantedAuthority;
-import org.springframework.security.GrantedAuthorityImpl;
-import org.springframework.security.context.SecurityContext;
-import org.springframework.security.context.SecurityContextHolder;
-import org.springframework.security.context.SecurityContextImpl;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.acegisecurity.AccessDeniedException;
+import org.acegisecurity.AuthenticationCredentialsNotFoundException;
+import org.acegisecurity.AuthenticationException;
+import org.acegisecurity.GrantedAuthority;
+import org.acegisecurity.GrantedAuthorityImpl;
+import org.acegisecurity.context.SecurityContext;
+import org.acegisecurity.context.SecurityContextHolder;
+import org.acegisecurity.context.SecurityContextImpl;
+import org.acegisecurity.providers.TestingAuthenticationToken;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 
@@ -44,15 +44,20 @@ import ch.elca.el4j.tests.services.security.sample.SampleService;
 /**
  * Tests various logins and authorization in a local environment.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Raphael Boog (RBO)
  */
 public class AuthorizationLocalTest {
 	
 	/** The static logger. */
-	private static Logger s_logger = LoggerFactory
-		.getLogger(AuthorizationLocalTest.class);
+	private static Log s_logger = LogFactory
+		.getLog(AuthorizationLocalTest.class);
 
 	/**
 	 * Method access role.
@@ -90,7 +95,7 @@ public class AuthorizationLocalTest {
 					+ "login");
 		} catch (AuthenticationCredentialsNotFoundException e) {
 			// o.k.
-		} catch (Exception e) {
+		}catch (Exception e) {
 			System.out.println(e);
 		}
 

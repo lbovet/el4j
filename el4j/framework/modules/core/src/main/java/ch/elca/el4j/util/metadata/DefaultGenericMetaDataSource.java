@@ -36,7 +36,12 @@ import ch.elca.el4j.util.codingsupport.CollectionUtils;
 /**
  * The default implementation of the GenericAttributeSource interface.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Raphael Boog (RBO)
  * @author Martin Zeltner (MZE)

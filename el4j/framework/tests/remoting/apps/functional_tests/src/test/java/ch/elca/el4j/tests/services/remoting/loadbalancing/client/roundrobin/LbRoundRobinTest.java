@@ -19,8 +19,8 @@ package ch.elca.el4j.tests.services.remoting.loadbalancing.client.roundrobin;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.junit.Test;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.context.ApplicationContext;
@@ -30,9 +30,8 @@ import ch.elca.el4j.tests.services.remoting.loadbalancing.common.BusinessObject;
 
 /**
  * This class tests the idempotent invocation interceptor that handles retrials
- * by itself.
- *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * by itself. <script type="text/javascript">printFileStatus ("$URL$",
+ * "$Revision$", "$Date$", "$Author$" );</script>
  *
  * @author Stefan Pleisch (SPL)
  */
@@ -110,7 +109,7 @@ public class LbRoundRobinTest {
 			"classpath:remoting/loadbalancing/policy/roundrobin-policy-config.xml"};
 	} // getInclusiveConfigLocations()
 
-	protected Logger getLog() {
+	protected Log getLog() {
 		return s_logger;
 	} // getLog()
 
@@ -127,8 +126,8 @@ public class LbRoundRobinTest {
 	/**
 	 * Private logger.
 	 */
-	private static Logger s_logger = LoggerFactory
-		.getLogger(LbRoundRobinTest.class);
+	private static Log s_logger = LogFactory
+		.getLog(LbRoundRobinTest.class);
 
 	private ApplicationContext m_applicationContext ;
 	

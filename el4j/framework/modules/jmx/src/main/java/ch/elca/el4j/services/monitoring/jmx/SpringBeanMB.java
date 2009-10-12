@@ -30,8 +30,8 @@ import javax.management.MalformedObjectNameException;
 import javax.management.NotCompliantMBeanException;
 import javax.management.ObjectName;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.aop.framework.Advised;
 import org.springframework.beans.MutablePropertyValues;
 import org.springframework.beans.PropertyValue;
@@ -52,7 +52,12 @@ import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
 /**
  * The proxy class for a bean loaded in the ApplicationContext.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Raphael Boog (RBO)
  * @author Rashid Waraich (RWA)
@@ -78,7 +83,7 @@ public class SpringBeanMB implements SpringBeanMBMBean {
 	/**
 	 * Private logger of this class.
 	 */
-	private static Logger s_logger = LoggerFactory.getLogger(SpringBeanMB.class);
+	private static Log s_logger = LogFactory.getLog(SpringBeanMB.class);
 
 	/**
 	 * The Application Context where this Spring Bean is registered at.

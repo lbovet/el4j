@@ -16,8 +16,8 @@
  */
 package ch.elca.el4j.services.gui.swing.cookswing.binding;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.jdesktop.beansbinding.AutoBinding;
 import org.jdesktop.beansbinding.AutoBinding.UpdateStrategy;
 import org.jdesktop.beansbinding.Property;
@@ -33,7 +33,12 @@ import cookxml.core.interfaces.Creator;
 /**
  * This class provides basic functionality for cookXML binding creators.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Stefan Wismer (SWI)
  */
@@ -47,8 +52,8 @@ public abstract class AbstractBindingCreator implements Creator {
 	/**
 	 * The logger.
 	 */
-	private static final Logger s_logger = LoggerFactory
-		.getLogger(AbstractBindingCreator.class);
+	private static final Log s_logger = LogFactory
+		.getLog(AbstractBindingCreator.class);
 	
 	/**
 	 * @param elm    the current XML element

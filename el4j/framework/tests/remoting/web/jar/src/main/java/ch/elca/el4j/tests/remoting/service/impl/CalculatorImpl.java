@@ -27,7 +27,12 @@ import ch.elca.el4j.tests.remoting.service.SpecialCalculatorException;
 /**
  * This class is the implementation of the calculator.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Martin Zeltner (MZE)
  */

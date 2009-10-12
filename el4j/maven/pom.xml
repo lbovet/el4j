@@ -12,7 +12,7 @@
 	<parent>
 		<groupId>ch.elca.el4j</groupId>
 		<artifactId>el4j</artifactId>
-		<version>1.7-SNAPSHOT</version>
+		<version>1.6.1</version>
 	</parent>
 	
 	<groupId>ch.elca.el4j.maven</groupId>
@@ -23,7 +23,6 @@
 		EL4J artifacts related to Maven.
 	</description>
 	<modules>
-		<module>extensions</module>
 		<module>plugins</module>
 		<module>helpers</module>
 	</modules>

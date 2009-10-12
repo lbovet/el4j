@@ -29,7 +29,12 @@ import ch.elca.el4j.services.gui.swing.ActionsContext;
 /**
  * This utility class helps to create menus using Sun's appFramework.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Stefan Wismer (SWI)
  */

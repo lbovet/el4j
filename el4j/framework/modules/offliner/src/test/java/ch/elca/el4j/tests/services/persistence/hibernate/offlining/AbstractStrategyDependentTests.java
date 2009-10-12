@@ -24,8 +24,6 @@ import org.hibernate.criterion.CriteriaSpecification;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 
-import static org.testng.Assert.*;
-
 import ch.elca.el4j.services.persistence.generic.dao.GenericDao;
 import ch.elca.el4j.services.persistence.hibernate.dao.ConvenienceGenericHibernateDao;
 import ch.elca.el4j.services.persistence.hibernate.offlining.Conflict;
@@ -37,7 +35,12 @@ import ch.elca.el4j.tests.services.persistence.hibernate.offlining.dom.SimplePer
 /**
  * Tests that depend on a strategy. The strategy is chosen in a subclass.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author David Bernhard (DBD)
  */

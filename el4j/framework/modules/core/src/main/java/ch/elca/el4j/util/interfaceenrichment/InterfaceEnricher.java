@@ -31,8 +31,8 @@ import org.apache.bcel.generic.ConstantPoolGen;
 import org.apache.bcel.generic.MethodGen;
 import org.apache.bcel.generic.ObjectType;
 import org.apache.bcel.generic.Type;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import net.sf.cglib.core.ReflectUtils;
 
@@ -54,7 +54,12 @@ import net.sf.cglib.core.ReflectUtils;
  *   that is slightly modified.
  *
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Martin Zeltner (MZE)
  * @see EnrichmentDecorator
@@ -69,7 +74,7 @@ public class InterfaceEnricher {
 	/**
 	 * Private logger of this class.
 	 */
-	private static Logger s_logger = LoggerFactory.getLogger(InterfaceEnricher.class);
+	private static Log s_logger = LogFactory.getLog(InterfaceEnricher.class);
 
 	/**
 	 * Creates a shadow interface and returns it as a byte array.

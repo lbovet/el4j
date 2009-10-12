@@ -21,7 +21,12 @@ package ch.elca.el4j.tests.core;
  * (outside of subclass of {@link AbstractTest}) in a standardized way.
  * @see ch.elca.el4j.core.context.ModuleTestContextCache
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Stefan Wismer (SWI)
  */

@@ -28,7 +28,12 @@ import org.springframework.jndi.JndiCallback;
  * This JNDI template completes Spring's {@link
  * org.springframework.jndi.JndiTemplate}.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Andreas Bur (ABU)
  */

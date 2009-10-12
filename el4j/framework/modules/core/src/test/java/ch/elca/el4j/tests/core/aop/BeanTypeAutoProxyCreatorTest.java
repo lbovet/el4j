@@ -29,7 +29,12 @@ import ch.elca.el4j.core.context.ModuleApplicationContext;
  * using two {@link ch.elca.el4j.tests.core.aop.ShortcutInterceptor}s that
  * intercept either one or the other method invocation of the target classes.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Andreas Bur (ABU)
  */

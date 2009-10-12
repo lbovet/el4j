@@ -36,7 +36,12 @@ import ch.elca.el4j.services.search.QueryObject;
 /**
  * Dao proxy to simulate remoting.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author David Bernhard (DBD)
  * @param <T> The entity type.

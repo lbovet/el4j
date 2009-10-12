@@ -34,7 +34,12 @@ import ch.elca.el4j.services.persistence.hibernate.offlining.generic.StringCaste
 /**
  * An entry in the keymap table.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author David Bernhard (DBD)
  */

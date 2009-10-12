@@ -52,7 +52,12 @@ import ch.elca.el4j.util.objectwrapper.interfaces.KeyedVersioned;
  * The new key the object gets is its local key, record the objects' former remote key and new local key in the
  * mapping table along with its remote version.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author David Bernhard (DBD)
  */

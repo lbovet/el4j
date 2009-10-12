@@ -29,7 +29,12 @@ import ch.elca.el4j.core.context.ModuleApplicationContext;
 /**
  * JUnit test class for the ListPropertyMergeConfigurer.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Raphael Boog (RBO)
  */

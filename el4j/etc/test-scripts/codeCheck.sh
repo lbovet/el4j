@@ -31,19 +31,28 @@ done
 
 result=0
 
-# check if all java files contain "@svnLink"
-echo "Checking for valid @svnLink..."
+# check if all java files contain "printFileStatus" and "URL: "
+echo "Checking for valid printFileStatus..."
 echo "" > java_files.tmp
 cat files.tmp | grep  ".java$" >> java_files.tmp
-for i in $(grep -v "/maven/archetypes/" java_files.tmp) ; do
+for i in $(cat java_files.tmp) ; do
 	
 	# dummy command to make it unix style
 	sed "s/ABC/ABC/" < $i > current.tmp
 	
-	egrep "@svnLink" current.tmp > /dev/null
+	egrep "printFileStatus" current.tmp > /dev/null
 	if [ $? -ne 0 ] ; then
-		echo "@svnLink missing: $i"
-		result=1
+		# test deactivated: too many matches
+		echo -n "dummy" > /dev/null
+		#echo "$i: printFileStatus missing."
+		#result=1
+	else
+		egrep "URL: http" current.tmp > /dev/null
+		if [ $? -ne 0 ] ; then
+			echo "$i: 'URL:' has to be followed by a space"
+			egrep -n "URL: http" $i
+			result=1
+		fi
 	fi
 done
 rm java_files.tmp
@@ -58,7 +67,7 @@ for i in $(cat files.tmp) ; do
 	
 	egrep "^[[:blank:]]* [^*^-]" current.tmp > /dev/null
 	if [ $? -eq 0 ] ; then
-		echo "Spaces at beginning of line found in: $i"
+		echo "$i: Spaces at beginning of line found."
 		egrep -n "^[[:blank:]]* [^*^-]" $i
 		result=1
 	fi
@@ -71,17 +80,6 @@ for i in $(cat files.tmp) ; do
 done
 echo "done"
 
-echo "Checking for headers..."
-if [ $1 == "external" ] ; then
-	# search for ELCA internal header
-	for i in $(cat files.tmp) ; do
-		grep "confidential and proprietary information" $i > /dev/null
-		if [ $? -eq 0 ] ; then
-			echo "ELCA internal header found in $i"
-			result=1
-		fi
-	done
-fi
 if [ $1 == "internal" ] ; then
 	# search for LGPL header
 	for i in $(cat files.tmp) ; do
@@ -92,15 +90,6 @@ if [ $1 == "internal" ] ; then
 		fi
 	done
 fi
-echo "done"
-
-echo "Checking for commons-logging (use slf4j instead)..."
-	mvn dependency:tree | grep "commons-logging" > /dev/null
-	if [ $? -eq 0 ] ; then
-		echo "commons-logging found! Use 'mvn dependency:tree' to find out where."
-		result=1
-	fi
-echo "done"
 
 rm current.tmp
 rm files.tmp

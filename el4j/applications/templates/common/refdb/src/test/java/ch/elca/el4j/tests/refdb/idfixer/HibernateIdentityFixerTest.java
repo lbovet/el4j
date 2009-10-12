@@ -24,7 +24,12 @@ import ch.elca.el4j.services.persistence.hibernate.HibernateProxyAwareIdentityFi
  * An AbstractIdentityFixerTest using the generic hibernate DAO and
  * the HibernateProxyAwareIdentityFixer.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Adrian Moos (AMS)
  * @author Alex Mathey (AMA)

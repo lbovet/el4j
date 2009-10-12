@@ -26,7 +26,12 @@ import java.util.Map;
  * In the client - server scenario, one registry instance on the client side and
  * another one on the server side is needed.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Andreas Pfenninger (APR)
  */

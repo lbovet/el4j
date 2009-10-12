@@ -19,8 +19,8 @@ package ch.elca.el4j.tests.services.remoting.loadbalancing.common;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import ch.elca.el4j.core.contextpassing.ImplicitContextPasser;
 import ch.elca.el4j.core.contextpassing.ImplicitContextPassingRegistry;
@@ -28,7 +28,12 @@ import ch.elca.el4j.core.contextpassing.ImplicitContextPassingRegistry;
 /**
  * Defines the context that is implicitly passed to the server.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Stefan Pleisch (SPL)
  */
@@ -75,8 +80,8 @@ public class TestImplicitContext implements ImplicitContextPassingRegistry {
 	/**
 	 * Private logger.
 	 */
-	private static Logger s_logger
-		= LoggerFactory.getLogger(TestImplicitContext.class);
+	private static Log s_logger
+		= LogFactory.getLog(TestImplicitContext.class);
  
 
 } // Class IdempotenceImplicitContext

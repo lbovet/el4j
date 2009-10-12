@@ -16,15 +16,20 @@
  */
 package ch.elca.el4j.maven.plugins.repositoryhelper;
 
+import org.apache.maven.plugin.logging.Log;
 import org.codehaus.plexus.util.cli.StreamConsumer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.util.Assert;
 
 /**
  * Stream consumer to buffer output in a string buffer and directly log it
  * on level "info".
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Martin Zeltner (MZE)
  */
@@ -43,14 +48,24 @@ public class BufferedLoggerConsumer implements StreamConsumer {
 	/**
 	 * Is the consuming logger.
 	 */
-	protected final Logger m_logger = LoggerFactory.getLogger(BufferedLoggerConsumer.class);
+	protected final Log m_log;
+	
+	/**
+	 * Constructor.
+	 *
+	 * @param log Is the logger used to consume lines.
+	 */
+	public BufferedLoggerConsumer(Log log) {
+		Assert.notNull(log);
+		m_log = log;
+	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public void consumeLine(String line) {
 		m_stringBuffer.append(line + LINE_SEPARATOR);
-		m_logger.info(line);
+		m_log.info(line);
 	}
 	
 	/**

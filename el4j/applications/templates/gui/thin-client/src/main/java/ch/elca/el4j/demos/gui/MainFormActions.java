@@ -25,7 +25,12 @@ import ch.elca.el4j.services.gui.swing.GUIApplication;
 /**
  * Base class for main forms.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Fabian Reichlin (FRE)
  * @author Stefan Wismer (SWI)

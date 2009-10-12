@@ -20,7 +20,7 @@ package ch.elca.el4j.services.exceptionhandler.handler;
 import java.util.List;
 
 import org.aopalliance.intercept.MethodInvocation;
-import org.slf4j.Logger;
+import org.apache.commons.logging.Log;
 import org.springframework.beans.factory.InitializingBean;
 
 import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
@@ -30,7 +30,12 @@ import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
  * even supports repairing targets that are not contained in the list of
  * alternative targets.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Andreas Bur (ABU)
  */
@@ -64,7 +69,7 @@ public class RoundRobinSwappableTargetExceptionHandler
 	 * {@inheritDoc}
 	 */
 	protected Object getNewTarget(Object current, Throwable t,
-			MethodInvocation invocation, Logger logger) throws Throwable {
+			MethodInvocation invocation, Log logger) throws Throwable {
 
 		// even works if 'current' isn't contained in the 'targets'-list
 		int i = (m_targets.indexOf(current) + 1) % m_targets.size();

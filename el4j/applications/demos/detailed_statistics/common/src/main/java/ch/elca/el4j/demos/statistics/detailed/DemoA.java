@@ -20,7 +20,12 @@ package ch.elca.el4j.demos.statistics.detailed;
  * This class is a dummy interface for presentation purposes for the
  * detailed statistics demo.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author David Stefan (DST)
  */

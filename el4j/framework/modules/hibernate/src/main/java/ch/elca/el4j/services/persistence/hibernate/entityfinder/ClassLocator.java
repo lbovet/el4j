@@ -14,8 +14,6 @@ import org.springframework.util.Assert;
 
 /**
  * Utility to locate classes from the classpath.
- *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
  */
 public class ClassLocator {
 	/**

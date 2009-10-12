@@ -21,8 +21,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.aopalliance.intercept.MethodInvocation;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 /**
  * This class allows to handle exceptions centrally. Realized as an interceptor,
@@ -74,7 +74,12 @@ import org.slf4j.LoggerFactory;
  * foo(); // an exception is handled by the batch policy
  * </pre>
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Andreas Bur (ABU)
  * @see ch.elca.el4j.services.exceptionhandler.ContextExceptionHandlerFactoryBean
@@ -83,8 +88,8 @@ public class ContextExceptionHandlerInterceptor
 	extends AbstractExceptionHandlerInterceptor {
 	
 	/** The static logger. */
-	private static Logger s_logger
-		= LoggerFactory.getLogger(ContextExceptionHandlerInterceptor.class);
+	private static Log s_logger
+		= LogFactory.getLog(ContextExceptionHandlerInterceptor.class);
 	
 	/** The thread specific context. */
 	private static ThreadLocal s_context = new ThreadLocal();
