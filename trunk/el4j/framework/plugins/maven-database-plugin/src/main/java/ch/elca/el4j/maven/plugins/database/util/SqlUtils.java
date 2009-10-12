@@ -105,7 +105,7 @@ public final class SqlUtils {
 						insideComment = !trimmed.endsWith("*/");
 					}
 					
-					beginStmtMatcher = beginStmtRegex.matcher(part);
+					beginStmtMatcher = beginStmtRegex.matcher(trimmed);
 					// Detect begin/end of statement sequence
 					if (beginStmtMatcher.matches()) {
 						expectedDelimiter = blockDelimiter;
