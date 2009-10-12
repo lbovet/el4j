@@ -345,6 +345,8 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
 		//add current artifact to search-list
 		if (dependencies != null) {
 			dependencies.add(getProject().getArtifact());
+		} else {
+			return null;
 		}
 
 

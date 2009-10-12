@@ -18,6 +18,7 @@ package ch.elca.el4j.maven.plugins.database.mojo;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
@@ -132,7 +133,18 @@ public class UpdateMojo extends AbstractDBExecutionMojo {
 			}
 		}
 		
-		Collections.sort(suitableScripts);
+		Collections.sort(suitableScripts, new Comparator<UpdateScript>() {
+			@Override
+			public int compare(UpdateScript u1, UpdateScript u2) {
+				// compare identifier
+				if (u1.getIdentifier().compareTo(u2.getIdentifier()) != 0) {
+					return u1.getIdentifier().compareTo(u2.getIdentifier());
+				} else {
+					// compare version if identifier is equal
+					return u1.getVersionFrom().compareTo(u2.getVersionFrom());
+				}
+			}
+		});
 		
 		// downgrade schema?
 		if (from.compareTo(to) > 0) {
