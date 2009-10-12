@@ -27,7 +27,7 @@ import org.springframework.core.io.Resource;
  *
  * @author Stefan Wismer (SWI)
  */
-final class UpdateScript implements Comparable<UpdateScript> {
+final class UpdateScript {
 	
 	/**
 	 * The version separator.
@@ -143,18 +143,6 @@ final class UpdateScript implements Comparable<UpdateScript> {
 			return false;
 		}
 		return true;
-	}
-	
-	/** {@inheritDoc} */
-	@SuppressWarnings("unchecked")
-	public int compareTo(UpdateScript o) {
-		// compare identifier
-		if (getIdentifier().compareTo(o.getIdentifier()) != 0) {
-			return getIdentifier().compareTo(o.getIdentifier());
-		} else {
-			// compare version if identifier is equal
-			return getVersionFrom().compareTo(o.getVersionFrom());
-		}
 	}
 	
 	/** {@inheritDoc} */
