@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>ch.elca.el4j.applications</groupId>
+		<artifactId>el4j-templates-swing-demo</artifactId>
+		<version>1.6</version>
+	</parent>
+
+	<artifactId>swing-demo-abbot</artifactId>
+	<version>${version.application-refdb}</version>
+	<packaging>jar</packaging>
+	<name>EL4J application swing demo abbot</name>
+	<description>Demo for testing with abbot.</description>
+
+	<dependencies>
+		<dependency>
+			<groupId>ch.elca.el4j.applications</groupId>
+			<artifactId>swing-demo-standalone-client</artifactId>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<skip>true</skip>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+	
+	<profiles>
+		<profile>
+			<id>manualtest</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-surefire-plugin</artifactId>
+						<configuration>
+							<skip>false</skip>
+						</configuration>
+					</plugin>
+					
+					<plugin>
+						<groupId>ch.elca.el4j.maven.plugins</groupId>
+						<artifactId>maven-abbot-plugin</artifactId>
+						<executions>
+							<execution>
+								<phase>integration-test</phase>
+								<goals>
+									<goal>abbot</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+					
+					<!-- EL4J Database plugin to start and fill DB automatically -->
+
+					<plugin>
+						<groupId>ch.elca.el4j.maven.plugins</groupId>
+						<artifactId>maven-database-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>prepare</id>
+								<goals>
+									<goal>prepare</goal>
+								</goals>
+								<phase>pre-integration-test</phase>
+							</execution>
+							
+							<execution>
+								<id>cleanUp</id>
+								<goals>
+									<goal>cleanUp</goal>
+								</goals>
+								<phase>post-integration-test</phase>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		
+		<profile>
+			<id>costello</id>
+			
+			<dependencies>
+				<dependency>
+					<groupId>net.sf.abbot</groupId>
+					<artifactId>costello</artifactId>
+					<version>1.0.2</version>
+				</dependency>
+			</dependencies>
+			
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>exec-maven-plugin</artifactId>
+						<configuration>
+							<mainClass>abbot.editor.Costello</mainClass>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+</project>

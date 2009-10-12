@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	
+	<!-- Version: $Revision$ -->
+	<!-- URL: $URL$ -->
+	<!-- Date: $Date$ -->
+	<!-- Author: $Author$ -->
+
+
+	<parent>
+		<groupId>ch.elca.el4j.modules</groupId>
+		<artifactId>el4j-framework-modules</artifactId>
+		<version>1.6</version>
+	</parent>
+
+	<artifactId>module-swing</artifactId>
+	<version>${version.module-swing}</version>
+	<packaging>jar</packaging>
+	<name>EL4J module swing</name>
+	<description>
+		Module swing of the EL4J framework.
+	</description>
+	<build>
+	</build>
+	<dependencies>
+		<!-- EL4J framework modules -->
+		<dependency>
+			<groupId>ch.elca.el4j.modules</groupId>
+			<artifactId>module-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>ch.elca.el4j.modules</groupId>
+			<artifactId>module-hibernate</artifactId>
+		</dependency>
+
+		<!-- Components -->
+		<dependency>
+			<groupId>org.jdesktop.application</groupId>
+			<artifactId>application</artifactId>
+			<version>1.03-patch1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.swinglabs</groupId>
+			<artifactId>swingx</artifactId>
+			<version>0.9.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.bushe.swing.event</groupId>
+			<artifactId>eventbus</artifactId>
+			<version>1.2-patch1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jdesktop.beansbinding</groupId>
+			<artifactId>beansbinding</artifactId>
+			<version>1.2.1-patch2</version>
+		</dependency>
+		<dependency>
+			<groupId>net.java.dev.designgridlayout</groupId>
+			<artifactId>designgridlayout</artifactId>
+			<version>1.0</version>
+			<exclusions>
+				<exclusion>
+					<!-- designgridlayout uses older version 1.0.2 (instead of 1.0.3) -->
+					<groupId>org.jdesktop.layout</groupId>
+					<artifactId>swing-layout</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.yuanheng.cookxml</groupId>
+			<artifactId>cookxml</artifactId>
+			<version>3.0.1-patch4</version>
+		</dependency>
+		<dependency>
+			<groupId>org.yuanheng.cookswing</groupId>
+			<artifactId>cookswing</artifactId>
+			<version>1.5-patch2</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.jgoodies.looks</groupId>
+			<artifactId>looks</artifactId>
+			<version>2.1.4</version>
+		</dependency>
+
+		<!-- Utils -->
+		<dependency>
+			<groupId>javax.help</groupId>
+			<artifactId>javahelp</artifactId>
+			<version>2.0</version>
+		</dependency>
+
+		<!-- Docking framework with its dependencies -->
+		<!--dependency>
+			<groupId>net.java.dev.flexdock</groupId>
+			<artifactId>flexdock</artifactId>
+			<version>0.4.0</version>
+		</dependency-->
+		<dependency>
+			<groupId>org.noos.xing.mydoggy</groupId>
+			<artifactId>mydoggy-api</artifactId>
+			<version>1.4.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.noos.xing.mydoggy</groupId>
+			<artifactId>mydoggy-plaf</artifactId>
+			<version>1.4.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.noos.xing.mydoggy</groupId>
+			<artifactId>mydoggy-res</artifactId>
+			<version>1.4.2</version>
+		</dependency>
+		<dependency>
+			<groupId>info.clearthought.layout</groupId>
+			<artifactId>table-layout</artifactId>
+			<version>20050920</version>
+		</dependency>
+
+		
+		<!-- Others -->
+
+	</dependencies>
+</project>

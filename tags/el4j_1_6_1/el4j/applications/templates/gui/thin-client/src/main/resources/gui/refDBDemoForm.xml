@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<panel xmlns="http://cookxml.sf.net/cookswing/"
+	xmlns:cx="http://cookxml.sf.net/"
+	xmlns:cc="http://cookxml.sf.net/common/"
+	xmlns:el4j="http://www.elca.ch/el4j/cookSwing"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+		http://cookxml.sf.net/cookswing/ http://el4.elca-services.ch/el4j/schema/swing/cookSwing.xsd
+		http://www.elca.ch/el4j/cookSwing http://el4.elca-services.ch/el4j/schema/swing/el4jSwing.xsd
+		http://cookxml.sf.net/common/ http://el4.elca-services.ch/el4j/schema/swing/cookXmlCommon.xsd
+		http://cookxml.sf.net/ http://el4.elca-services.ch/el4j/schema/swing/cookXml.xsd">
+		
+	<borderlayout>
+		<constraint location="North">
+			<el4j:create-component finish-method="setGridPanelLayout">
+				<label text="Name" />
+				<textfield cx:var="m_name" />
+				<textfield cx:var="m_authorName" />
+				<textfield cx:var="m_description" />
+				<checkbox cx:var="m_incomplete" />
+
+				<button cx:var="m_createButton" action="create" />
+				<button cx:var="m_deleteButton" action="delete" />
+			</el4j:create-component>
+		</constraint>
+		<constraint location="Center">
+			<scrollpane>
+				<table cx:var="m_references">
+					<el4j:tablebinding src="m_refList" updateStrategy="read" validation="true" cx:var="m_listBinding">
+						<el4j:column label="Name" property="name" />
+						<el4j:column label="Description" property="description" />
+						<el4j:column label="Incomplete?" property="incomplete" class="java.lang.Boolean" />
+						<el4j:column label="Version" property="version" />
+						<el4j:column label="Date" property="date" class="java.util.Date" />
+						<el4j:column label="Inserted" property="whenInserted" class="java.util.Date" />
+					</el4j:tablebinding>
+				</table>
+			</scrollpane>
+		</constraint>
+	</borderlayout>
+</panel>
