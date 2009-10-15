@@ -117,6 +117,10 @@ if  [ $performExternal == "y" ] ; then
 	
 	cd ../..
 	
+	cd skin
+	mvn deploy
+	cd ..
+	
 	cd ..
 fi
 
