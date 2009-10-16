@@ -1,3 +1,8 @@
+/**
+ * Activate the HibernateJAXBAccessorFactory in this package.
+ *
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
+ */
 @XmlAccessorFactory(HibernateJAXBAccessorFactory.class)
 package ch.elca.el4j.tests.person.dom;
 
