@@ -47,7 +47,7 @@ import ch.elca.el4j.tests.remoting.jaxws.service.SomeIntValue;
  * @author Philippe Jacot (PJA)
  * @author Stefan Wismer (SWI)
  */
-public class CalculatorJaxwsTest extends AbstractTest {
+public class CalculatorJaxwsTest extends AbstractJaxwsTest {
 	/**
 	 * Is the delta to doubles can have to be equal.
 	 */

@@ -49,6 +49,10 @@
 			<artifactId>module-remoting-jaxws-tests-jar-wsgen</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>ch.elca.el4j.tests</groupId>
+			<artifactId>module-remoting-jaxws-tests-jar-hibernate</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>ch.elca.el4j.modules</groupId>
 			<artifactId>module-web-war</artifactId>
 			<type>war</type>

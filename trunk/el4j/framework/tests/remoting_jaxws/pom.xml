@@ -26,6 +26,7 @@
 		<module>functional-tests</module>
 		<module>jar-wsgen</module>
 		<module>jar-wsimport</module>
+		<module>jar-hibernate</module>
 		<module>war</module>
 	</modules>
 	<dependencyManagement>
@@ -40,6 +41,12 @@
 			<dependency>
 				<groupId>ch.elca.el4j.tests</groupId>
 				<artifactId>module-remoting-jaxws-tests-jar-wsimport</artifactId>
+				<version>${version.module-remoting-jaxws-tests}</version>
+				<type>jar</type>
+			</dependency>
+			<dependency>
+				<groupId>ch.elca.el4j.tests</groupId>
+				<artifactId>module-remoting-jaxws-tests-jar-hibernate</artifactId>
 				<version>${version.module-remoting-jaxws-tests}</version>
 				<type>jar</type>
 			</dependency>
