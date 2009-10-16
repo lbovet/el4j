@@ -31,7 +31,7 @@ import ch.elca.el4j.tests.core.AbstractTest;
  *
  * @author Stefan Wismer (SWI)
  */
-public class ShakespeareTest extends AbstractTest {
+public class ShakespeareTest extends AbstractJaxwsTest {
 	
 	/** {@inheritDoc} */
 	@Override
