@@ -231,7 +231,7 @@
 		<module name="EmptyStatement" />
 		<module name="EqualsHashCode" />
 		<!--module name="FinalLocalVariable"/-->
-		<module name="HiddenField" />
+		<!--<module name="HiddenField" />-->
 		<module name="IllegalInstantiation">
 			<property name="classes" value="java.lang.Boolean" />
 		</module>
