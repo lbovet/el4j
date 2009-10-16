@@ -18,13 +18,22 @@ package ch.elca.el4j.tests.remoting.jaxws;
 
 import junit.framework.Assert;
 
+import org.hibernate.LazyInitializationException;
 import org.junit.Test;
 
-import ch.elca.el4j.tests.core.AbstractTest;
+import ch.elca.el4j.services.remoting.jaxb.hibernate.HibernateJAXBAccessor;
 import ch.elca.el4j.tests.person.dom.Brain;
 import ch.elca.el4j.tests.person.dom.Person;
 import ch.elca.el4j.tests.remoting.jaxws.service.LazyPerson;
 
+/**
+ * This class is a test for marshaling uninitialized entities using JAXB using the {@link HibernateJAXBAccessor}
+ * to avoid {@link LazyInitializationException}s.
+ *
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
+ *
+ * @author Stefan Wismer (SWI)
+ */
 public class LazyInitializationTest extends AbstractJaxwsTest {
 	@Override
 	protected String[] getIncludeConfigLocations() {
@@ -32,6 +41,9 @@ public class LazyInitializationTest extends AbstractJaxwsTest {
 			"scenarios/client/remotingtests-jaxws-hibernate-client-config.xml"};
 	}
 	
+	/**
+	 * Perform the test.
+	 */
 	@Test
 	public void testLazyPersonService() {
 		LazyPerson lazyPerson = getLazyPerson();
