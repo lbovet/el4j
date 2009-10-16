@@ -19,10 +19,6 @@ package ch.elca.el4j.tests.remoting.jaxws;
 //Checkstyle: EmptyBlock off
 //Checkstyle: MagicNumber off
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -31,7 +27,10 @@ import java.util.Set;
 
 import org.junit.Test;
 
-import ch.elca.el4j.tests.core.AbstractTest;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
 import ch.elca.el4j.tests.remoting.jaxws.service.Calculator;
 import ch.elca.el4j.tests.remoting.jaxws.service.CalculatorException;
 import ch.elca.el4j.tests.remoting.jaxws.service.CalculatorValueObject;

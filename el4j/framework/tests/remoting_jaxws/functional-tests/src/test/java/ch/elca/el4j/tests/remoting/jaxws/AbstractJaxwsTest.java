@@ -18,6 +18,13 @@ package ch.elca.el4j.tests.remoting.jaxws;
 
 import ch.elca.el4j.tests.core.AbstractTest;
 
+/**
+ * The abstract test base class for JAX-WS tests.
+ *
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
+ *
+ * @author Stefan Wismer (SWI)
+ */
 public abstract class AbstractJaxwsTest extends AbstractTest {
 
 	@Override
