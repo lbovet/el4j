@@ -26,6 +26,7 @@ import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.util.Assert;
 
 import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
+import ch.elca.el4j.services.monitoring.notification.PersistenceNotificationHelper;
 import ch.elca.el4j.services.search.QueryObject;
 import ch.elca.el4j.util.codingsupport.Reject;
 
@@ -81,7 +82,7 @@ public class ConvenienceHibernateTemplate extends HibernateTemplate {
 		Object result = get(entityClass, id);
 		
 		if (result == null || !(entityClass.isInstance(result))) {
-			CoreNotificationHelper.notifyObjectRetrievalFailure(entityClass, id, objectName);
+			PersistenceNotificationHelper.notifyObjectRetrievalFailure(entityClass, id, objectName);
 		}
 		return result;
 	}
@@ -99,7 +100,7 @@ public class ConvenienceHibernateTemplate extends HibernateTemplate {
 		Object result = load(entityClass, id);
 		
 		if (result == null || !(entityClass.isInstance(result))) {
-			CoreNotificationHelper.notifyObjectRetrievalFailure(entityClass, id, objectName);
+			PersistenceNotificationHelper.notifyObjectRetrievalFailure(entityClass, id, objectName);
 		}
 		return result;
 	}
@@ -146,7 +147,7 @@ public class ConvenienceHibernateTemplate extends HibernateTemplate {
 				message = "The query resulted in more than one persistent "
 					+ " instance.";
 			}
-			CoreNotificationHelper.notifyDataRetrievalFailure(message,
+			PersistenceNotificationHelper.notifyDataRetrievalFailure(message,
 				objectName);
 		}
 		return result.get(0);
@@ -179,7 +180,7 @@ public class ConvenienceHibernateTemplate extends HibernateTemplate {
 		} catch (HibernateOptimisticLockingFailureException holfe) {
 			String message = "The current " + objectName + " was modified or"
 				+ " deleted in the meantime.";
-			CoreNotificationHelper.notifyOptimisticLockingFailure(
+			PersistenceNotificationHelper.notifyOptimisticLockingFailure(
 				message, objectName, holfe);
 		}
 	}
@@ -211,7 +212,7 @@ public class ConvenienceHibernateTemplate extends HibernateTemplate {
 		} catch (DataRetrievalFailureException e) {
 			String message = "The current " + objectName + " was "
 				+ "deleted in the meantime.";
-			CoreNotificationHelper.notifyOptimisticLockingFailure(
+			PersistenceNotificationHelper.notifyOptimisticLockingFailure(
 				message, objectName, null);
 		}
 		delete(toDelete);

@@ -46,6 +46,7 @@ import ch.elca.el4j.apps.refdb.dom.Reference;
 import ch.elca.el4j.apps.refdb.service.ReferenceService;
 import ch.elca.el4j.core.context.ModuleApplicationListener;
 import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
+import ch.elca.el4j.services.monitoring.notification.PersistenceNotificationHelper;
 import ch.elca.el4j.services.search.QueryObject;
 import ch.elca.el4j.util.codingsupport.CollectionUtils;
 import ch.elca.el4j.util.codingsupport.Reject;
@@ -122,7 +123,7 @@ public class DefaultReferenceService extends DefaultKeywordService
 		} else if (getFormalPublicationDao().referenceExists(key)) {
 			reference = getFormalPublicationDao().findById(key);
 		} else {
-			CoreNotificationHelper.notifyDataRetrievalFailure(Constants.REFERENCE);
+			PersistenceNotificationHelper.notifyDataRetrievalFailure(Constants.REFERENCE);
 		}
 		return reference;
 	}
@@ -245,7 +246,7 @@ public class DefaultReferenceService extends DefaultKeywordService
 		} else if (getFormalPublicationDao().referenceExists(key)) {
 			getFormalPublicationDao().deleteById(key);
 		} else {
-			CoreNotificationHelper.notifyOptimisticLockingFailure(Constants.REFERENCE);
+			PersistenceNotificationHelper.notifyOptimisticLockingFailure(Constants.REFERENCE);
 		}
 	}
 	
@@ -276,7 +277,7 @@ public class DefaultReferenceService extends DefaultKeywordService
 				getKeywords();
 			getFormalPublicationDao().deleteById(refKey);
 		} else {
-			CoreNotificationHelper.notifyOptimisticLockingFailure(
+			PersistenceNotificationHelper.notifyOptimisticLockingFailure(
 				Constants.REFERENCE);
 		}
 		
