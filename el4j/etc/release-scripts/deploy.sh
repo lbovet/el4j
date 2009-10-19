@@ -88,6 +88,12 @@ if  [ $performExternal == "y" ] ; then
 		mvn deploy
 		cd ..
 	done
+	
+	# deploy maven utils
+	cd utils
+	mvn deploy
+	cd ..
+	
 	cd ../..
 	
 	cd maven
@@ -109,13 +115,13 @@ if  [ $performExternal == "y" ] ; then
 		mvn deploy
 		cd ..
 	done
-	
-	# deploy maven utils
-	cd utils
-	mvn deploy
 	cd ..
 	
+	cd extensions/taglet
+	mvn deploy
 	cd ../..
+	
+	cd ..
 	
 	cd skin
 	mvn deploy
