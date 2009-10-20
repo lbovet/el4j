@@ -35,7 +35,6 @@
 		<module>remoting_core</module>
 		<module>remoting_caucho</module>
 		<module>remoting_jaxws</module>
-		<!--module>remoting_ejb</module-->
 		<module>security</module>
 		<module>swing</module>
 		<module>tcp_forwarder</module>
@@ -43,7 +42,6 @@
 		<module>xml_merge</module>
 		<module>bshlauncher</module>
 		<module>cobertura-runtime</module>
-		<module>offliner</module>
 		<module>socketstatistics</module>
 	</modules>
 </project>
