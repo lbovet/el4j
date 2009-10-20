@@ -2375,9 +2375,6 @@
 		<version.module-cobertura-runtime>
 			1.2-SNAPSHOT
 		</version.module-cobertura-runtime>
-		<version.module-offliner>
-			1.4-SNAPSHOT
-		</version.module-offliner>
 		<version.module-socketstatistics>
 			1.0-SNAPSHOT
 		</version.module-socketstatistics>
