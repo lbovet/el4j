@@ -65,14 +65,14 @@ public class XMLDemoForm extends JPanel implements Bindable {
 	
 	
 	
-	private JTextField m_firstName;
-	private JodaDateTimePicker m_bornInYear;
-	private JTextField m_lastName;
-	private JLabel m_statusLabel;
-	private Person m_person;
-	private List<Person> m_persons;
-	private JTable m_table;
-	private final Binder m_binder = BinderManager.getBinder(this);
+	private JTextField firstName;
+	private JodaDateTimePicker bornInYear;
+	private JTextField lastName;
+	private JLabel statusLabel;
+	private Person person;
+	private List<Person> persons;
+	private JTable table;
+	private final Binder binder = BinderManager.getBinder(this);
 	
 	public XMLDemoForm() {
 		// Create or load data. This has to be done before creating and binding the GUI components.
@@ -89,7 +89,7 @@ public class XMLDemoForm extends JPanel implements Bindable {
 		binder.bindAll();
 		
 		// sets our own renderer for DateTime objects
-		m_table.setDefaultRenderer(org.joda.time.DateTime.class, new JodaTimeTableCellRenderer());
+		table.setDefaultRenderer(org.joda.time.DateTime.class, new JodaTimeTableCellRenderer());
 
 		
 	}

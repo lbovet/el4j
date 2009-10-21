@@ -16,22 +16,15 @@
  */
 package ch.elca.el4j.demos.gui.widgets;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.beans.PropertyVetoException;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
-import javax.swing.UIManager;
-
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
-import org.joda.time.LocalTime;
 
 import com.michaelbaranov.microba.calendar.DatePicker;
-import com.michaelbaranov.microba.calendar.ui.DatePickerUI;
-import com.michaelbaranov.microba.calendar.ui.basic.BasicDatePickerUI;
 
 
 /**
