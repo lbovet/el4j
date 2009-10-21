@@ -18,6 +18,8 @@ package ch.elca.el4j.demos.model;
 
 import java.util.List;
 
+import org.joda.time.DateTime;
+
 /**
  * A simple Person (example model).
  *
@@ -28,6 +30,7 @@ import java.util.List;
 public interface Person {
 
 	public String getFirstName();
+
 
 	public void setFirstName(String firstName);
 
@@ -50,5 +53,14 @@ public interface Person {
 	public boolean getSmart();
 	
 	public void setSmart(boolean smart);
+	
+	public void setBornOnThe(DateTime dateTime);
+	
+	/**
+	 * Date when the Person was born.
+	 * 
+	 * @return a DateTime instance representing the date on which the person was born.
+	 */
+	public DateTime getBornOnThe();
 
 }

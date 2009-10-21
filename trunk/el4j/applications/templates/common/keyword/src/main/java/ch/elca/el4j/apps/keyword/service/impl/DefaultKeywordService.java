@@ -18,6 +18,7 @@ package ch.elca.el4j.apps.keyword.service.impl;
 
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.OptimisticLockingFailureException;
@@ -66,6 +67,8 @@ public class DefaultKeywordService implements KeywordService, ModuleApplicationL
 	public void setDaoRegistry(DaoRegistry reg) {
 		m_daoRegistry = reg;
 	}
+	
+	
 	
 	/**
 	 * Returns the DAO for keywords.

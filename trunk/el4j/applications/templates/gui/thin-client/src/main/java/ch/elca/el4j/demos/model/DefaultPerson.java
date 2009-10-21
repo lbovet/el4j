@@ -22,6 +22,7 @@ import java.util.List;
 import org.hibernate.validator.Length;
 import org.hibernate.validator.Min;
 import org.hibernate.validator.NotNull;
+import org.joda.time.DateTime;
 
 /**
  * A simple implementation of {@link Person}.
@@ -33,7 +34,7 @@ import org.hibernate.validator.NotNull;
 public class DefaultPerson implements Person {
 	protected String firstName;
 	protected String lastName;
-	protected int age;
+	protected DateTime m_bornOnThe;
 	protected List<MyNumber> numbers;
 	protected List<Person> children;
 	protected boolean smart;
@@ -43,11 +44,12 @@ public class DefaultPerson implements Person {
 		children = new ArrayList<Person>();
 	}
 	
-	public DefaultPerson(String firstName, String lastName, int age) {
+	public DefaultPerson(String firstName, String lastName, int age, DateTime bornOnThe) {
 		this();
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.age = age;
+		m_bornOnThe = bornOnThe;
 	}
 
 	@Length(min = 3)
@@ -105,5 +107,16 @@ public class DefaultPerson implements Person {
 	public String toString() {
 		// TODO Auto-generated method stub
 		return firstName + " " + lastName + " (" + age + ")";
+	}
+
+	@Override
+	public DateTime getBornOnThe() {
+		return bornOnThe;
+	}
+
+	@Override
+	public void setBornOnThe(DateTime dateTime) {
+		bornOnThe = dateTime;
+		
 	}
 }

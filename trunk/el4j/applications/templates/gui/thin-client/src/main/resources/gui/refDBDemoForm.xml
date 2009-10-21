@@ -31,8 +31,8 @@
 						<el4j:column label="Description" property="description" />
 						<el4j:column label="Incomplete?" property="incomplete" class="java.lang.Boolean" />
 						<el4j:column label="Version" property="version" />
-						<el4j:column label="Date" property="date" class="java.util.Date" />
-						<el4j:column label="Inserted" property="whenInserted" class="java.util.Date" />
+						<el4j:column label="Date" property="date" class="org.joda.time.DateTime" />
+						<el4j:column label="Inserted" property="whenInserted" class="org.joda.time.DateTime" />
 					</el4j:tablebinding>
 				</table>
 			</scrollpane>

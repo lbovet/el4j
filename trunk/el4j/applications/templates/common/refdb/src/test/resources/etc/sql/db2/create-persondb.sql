@@ -38,3 +38,5 @@ CREATE TABLE tooth (
 	NOT NULL	REFERENCES person(keyId)
 );
 
+
+

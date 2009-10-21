@@ -125,6 +125,7 @@ public class MainFormActions {
 	public void throwException() {
 		throw new IllegalArgumentException();
 	}
+	
 
 	/**
 	 * Show the about dialog.

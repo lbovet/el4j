@@ -3,6 +3,7 @@ CREATE SEQUENCE brain_sequence    INCREMENT BY 1 START WITH 1;
 CREATE SEQUENCE person_sequence   INCREMENT BY 1 START WITH 1;
 CREATE SEQUENCE tooth_sequence   INCREMENT BY 1 START WITH 1;
 
+
 CREATE TABLE brain (
   keyId                     INTEGER        	NOT NULL
     PRIMARY KEY,
@@ -38,5 +39,6 @@ CREATE TABLE tooth (
    owner_keyid 				 INTEGER
 	NOT NULL	REFERENCES person(keyId)
 );
+
 
 

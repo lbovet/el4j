@@ -59,6 +59,7 @@ CREATE TABLE annotations (
   optimisticLockingVersion  INTEGER        NOT NULL
 ) engine = innoDB;
 
+
 CREATE TABLE files (
   keyId                     INTEGER        NOT NULL
     PRIMARY KEY AUTO_INCREMENT,
@@ -71,3 +72,17 @@ CREATE TABLE files (
   optimisticLockingVersion  INTEGER        NOT NULL,
   dtype						VARCHAR(100)
 ) engine = innoDB;
+
+
+
+CREATE TABLE workelements (
+  keyId                    INTEGER        NOT NULL 
+    PRIMARY KEY AUTO_INCREMENT,
+  day                      DATE            NOT NULL,
+  startOfWorkElement       TIME        	   NOT NULL,
+  finishOfWorkElement      TIME            NOT NULL,
+  optimisticLockingVersion INTEGER         NOT NULL
+) engine = innoDB;
+
+
+

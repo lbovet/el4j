@@ -18,12 +18,10 @@ package ch.elca.el4j.tests.refdb.validation;
 
 import static org.junit.Assert.assertEquals;
 
-import java.sql.Date;
-import java.sql.Timestamp;
-import java.util.Calendar;
-
 import org.hibernate.validator.ClassValidator;
 import org.hibernate.validator.InvalidValue;
+import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 import org.junit.Test;
 
 import ch.elca.el4j.apps.refdb.dom.Link;
@@ -43,30 +41,25 @@ import ch.elca.el4j.apps.refdb.dom.Reference;
 public class ReferenceValidationTest {
 
 	/**
-	 * This test creates a reference which has a document date which is a later
-	 * date than its whenInserted date, and then validates it. The validator
-	 * should return one invalid value, since the constraint about the dates has
-	 * been violated.
+	 * This test creates a reference which has a document date which is a later date than its whenInserted date, and
+	 * then validates it. The validator should return one invalid value, since the constraint about the dates has been
+	 * violated.
 	 */
 	@Test
 	public void testValidate() {
 		Reference reference = new Link();
 		reference.setName("Java");
 		reference.setDescription("Java related reference");
-		Calendar c = Calendar.getInstance();
-		c.set(2006, Calendar.JANUARY, 03);
-		reference.setWhenInserted(new Timestamp(c.getTimeInMillis()));
-		c.set(2006, Calendar.JULY, 11);
-		reference.setDate(new Date(c.getTimeInMillis()));
-		
-		ClassValidator<Reference> referenceValidator
-			= new ClassValidator<Reference>(Reference.class);
-		InvalidValue[] validationMessages = referenceValidator
-			.getInvalidValues(reference);
-		assertEquals("The number of invalid values returned by the validator"
-			+ " must me equal to 1.", 1, validationMessages.length);
+
+		reference.setWhenInserted(new DateTime(2006, 1, 3, 0, 0, 0, 0));
+		reference.setDate(new LocalDate(2006, 7, 11));
+
+		ClassValidator<Reference> referenceValidator = new ClassValidator<Reference>(Reference.class);
+		InvalidValue[] validationMessages = referenceValidator.getInvalidValues(reference);
+		assertEquals("The number of invalid values returned by the validator" + " must me equal to 1.", 1,
+			validationMessages.length);
 	}
-	
+
 }
 
-//Checkstyle: MagicNumber on
+// Checkstyle: MagicNumber on

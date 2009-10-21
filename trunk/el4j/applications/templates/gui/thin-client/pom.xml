@@ -6,6 +6,7 @@
 
 	<!-- Version: $Revision$ -->
 	<!-- URL: $URL$ -->
+	-->
 	<!-- Date: $Date$ -->
 	<!-- Author: $Author$ -->
 
@@ -26,7 +27,7 @@
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>exec-maven-plugin</artifactId>
 				<configuration>
-				<mainClass>ch.elca.el4j.demos.gui.MainFormDistributedMDI</mainClass>
+					<mainClass>ch.elca.el4j.demos.gui.MainFormDistributedMDI</mainClass>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -35,8 +36,8 @@
 				<configuration>
 					<sourceFile>
 						ch.elca.el4j.demos.gui.MainFormDistributedMDI 
-					</sourceFile> 
-				</configuration> 
+					</sourceFile>
+				</configuration>
 				<executions>
 					<execution>
 						<phase>verify</phase>
@@ -76,6 +77,12 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
+		<dependency>
+			<groupId>net.sf.microba</groupId>
+			<artifactId>microba</artifactId>
+			<version>0.4.4.3</version>
+		</dependency>
+
 		<!-- EL4J framework modules -->
 		<dependency>
 			<groupId>ch.elca.el4j.modules</groupId>
