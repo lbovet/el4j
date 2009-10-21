@@ -2396,8 +2396,9 @@
 		<javadoc.link.hibernate>http://www.hibernate.org/hib_docs/v3/api</javadoc.link.hibernate>
 		
 		<!-- Checkstyle config -->
-		<checkstyle.config.location>${el4j.external}/etc/checkstyle/checks4.xml</checkstyle.config.location>
-		<checkstyle.properties.location>${el4j.external}/etc/checkstyle/checks4.properties</checkstyle.properties.location>
+		<checkstyle.config.location>${el4j.external}/etc/checkstyle/checks5.xml</checkstyle.config.location>
+		<checkstyle.properties.location>${el4j.external}/etc/checkstyle/checks5.properties</checkstyle.properties.location>
+		<checkstyle.header.file>${el4j.external}/etc/checkstyle/el4j_java_header.regexp</checkstyle.header.file>
 		<checkstyle.enable.rss>false</checkstyle.enable.rss>
 		<checkstyle.enable.rules.summary>false</checkstyle.enable.rules.summary>
 		
@@ -2412,7 +2413,7 @@
 		
 		<!-- Maven plugin versions. Needed due to false dep mgt. -->
 		<version.maven-project-info-reports-plugin>2.1.1</version.maven-project-info-reports-plugin>
-		<version.maven-checkstyle-plugin>2.2</version.maven-checkstyle-plugin>
+		<version.maven-checkstyle-plugin>2.4-el4j_20091020_1500</version.maven-checkstyle-plugin>
 		<version.maven-surefire-report-plugin>2.4.3</version.maven-surefire-report-plugin>
 		<version.maven-javadoc-plugin>2.5</version.maven-javadoc-plugin>
 		<version.maven-jxr-plugin>2.1</version.maven-jxr-plugin>
