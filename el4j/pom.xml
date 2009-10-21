@@ -590,7 +590,7 @@
 					<artifactId>maven-checkclipse-helper-plugin</artifactId>
 					<version>${version.maven-checkclipse-helper-plugin}</version>
 					<configuration>
-						<checkstyleFile>${el4j.external}/etc/checkstyle/checks5.xml</checkstyleFile>
+						<checkstyleFile>${checkstyle.config.location}</checkstyleFile>
 					</configuration>
 					<executions>
 						<execution>
