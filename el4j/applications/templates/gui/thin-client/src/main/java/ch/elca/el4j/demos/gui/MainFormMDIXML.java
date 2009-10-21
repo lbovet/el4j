@@ -48,22 +48,22 @@ public class MainFormMDIXML extends AbstractMDIApplication {
 	/**
 	 * The desktop pane of this MDIApplication.
 	 */
-	protected JDesktopPane m_desktopPane;
+	protected JDesktopPane desktopPane;
 	
 	/**
 	 * A example popup menu.
 	 */
-	private JPopupMenu m_popup;
+	private JPopupMenu popup;
 	
 	/**
 	 * The toolbar.
 	 */
-	private JToolBar m_toolbar;
+	private JToolBar toolbar;
 	
 	/** {@inheritDoc} */
 	@Override
 	protected JDesktopPane getDesktopPane() {
-		return m_desktopPane;
+		return desktopPane;
 	}
 	
 	/**
@@ -92,16 +92,16 @@ public class MainFormMDIXML extends AbstractMDIApplication {
 	@SuppressWarnings("unchecked")
 	@Override
 	protected void startup() {
-		m_actionsContext = ActionsContext.create(this, new MainFormActions(this));
+		actionsContext = ActionsContext.create(this, new MainFormActions(this));
 		
 		CookSwing cookSwing = new CookSwing(this);
 		setMainFrame((JFrame) cookSwing.render("gui/main.xml"));
 		
-		m_desktopPane.addMouseListener(new MouseAdapter() {
+		desktopPane.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (e.getButton() == MouseEvent.BUTTON3) {
-					m_popup.show(e.getComponent(), e.getX(), e.getY());
+					popup.show(e.getComponent(), e.getX(), e.getY());
 				}
 			}
 		});
@@ -116,12 +116,12 @@ public class MainFormMDIXML extends AbstractMDIApplication {
 		for (GUIExtension extension : extensions.values()) {
 			extension.setApplication(this);
 			extension.extendMenuBar(getMainFrame().getJMenuBar());
-			extension.extendToolBar(m_toolbar);
+			extension.extendToolBar(toolbar);
 			
 			// inject properties because non-Actions don't do it automatically
 			ResourceMap map = getContext().getResourceMap(extension.getClass());
 			map.injectComponents(getMainFrame().getJMenuBar());
-			map.injectComponent(m_toolbar);
+			map.injectComponent(toolbar);
 		}
 		
 		showMain();

@@ -62,35 +62,35 @@ public class AboutDialog extends JDialog {
 	/**
 	 * The resource map.
 	 */
-	protected ResourceMap m_resourceMap;
+	protected ResourceMap resourceMap;
 	
 	/**
 	 * The applicationContext.
 	 */
-	protected ApplicationContext m_applicationContext;
+	protected ApplicationContext applicationContext;
 	
 	
 	/**
 	 * The main panel.
 	 */
-	protected JPanel m_panel;
+	protected JPanel panel;
 	
 	/**
 	 * The about text.
 	 */
-	protected JLabel m_infoLabel;
+	protected JLabel infoLabel;
 	/**
 	 * The button for closing the about dialog.
 	 */
-	protected JButton m_closeButton;
+	protected JButton closeButton;
 
 	/**
 	 * @param application   the GUI application
 	 */
 	@Autowired
 	public AboutDialog(GUIApplication application) {
-		m_applicationContext = application.getSpringContext();
-		m_resourceMap = application.getContext().getResourceMap(AboutDialog.class);
+		applicationContext = application.getSpringContext();
+		resourceMap = application.getContext().getResourceMap(AboutDialog.class);
 
 		setTitle(getRes("aboutTitle"));
 		
@@ -98,20 +98,20 @@ public class AboutDialog extends JDialog {
 
 		// assign actions
 		ApplicationActionMap actionMap = application.getContext().getActionMap(this);
-		m_closeButton.setAction(actionMap.get("close"));
+		closeButton.setAction(actionMap.get("close"));
 
-		add(m_panel);
+		add(panel);
 
 		// inject values from properties file
-		m_resourceMap.injectComponents(this);
+		resourceMap.injectComponents(this);
 
 		// little hack to make button larger
 		String space = getRes("close.space");
 		if (space != null) {
-			Insets s = m_closeButton.getMargin();
+			Insets s = closeButton.getMargin();
 			s.right = Integer.parseInt(space);
 			s.left = s.right;
-			m_closeButton.setMargin(s);
+			closeButton.setMargin(s);
 		}
 
 		// prepare to show
@@ -125,34 +125,34 @@ public class AboutDialog extends JDialog {
 	 * Create the form components.
 	 */
 	private void createComponents() {
-		m_panel = new JPanel(new BorderLayout());
+		panel = new JPanel(new BorderLayout());
 		
 		// about-text on the right
-		m_infoLabel = new JLabel(getAboutText());
-		m_infoLabel.setName("infoLabel");
+		infoLabel = new JLabel(getAboutText());
+		infoLabel.setName("infoLabel");
 		// Checkstyle: MagicNumber off
-		m_infoLabel.setBorder(new EmptyBorder(3, 6, 3, 3));
+		infoLabel.setBorder(new EmptyBorder(3, 6, 3, 3));
 		// Checkstyle: MagicNumber on
 		
 		// image on the left
 		String aboutImage = getRes("aboutImage");
 		if (aboutImage != null) {
 			ImageIcon icon = createImageIcon(aboutImage);
-			m_infoLabel.setIcon(icon);
+			infoLabel.setIcon(icon);
 		}
 		
-		m_panel.add(m_infoLabel, BorderLayout.CENTER);
+		panel.add(infoLabel, BorderLayout.CENTER);
 		
 		// button to close the dialog
-		m_closeButton = new JButton();
-		m_closeButton.setSelected(true);
-		getRootPane().setDefaultButton(m_closeButton);
+		closeButton = new JButton();
+		closeButton.setSelected(true);
+		getRootPane().setDefaultButton(closeButton);
 		
 		// make button right aligned
 		FlowLayout layout = new FlowLayout();
 		layout.setAlignment(FlowLayout.TRAILING);
 		JPanel closePanel = new JPanel(layout);
-		closePanel.add(m_closeButton);
+		closePanel.add(closeButton);
 
 		// compose button and separator
 		JPanel bottom = new JPanel();
@@ -160,7 +160,7 @@ public class AboutDialog extends JDialog {
 		bottom.add(new JSeparator(SwingConstants.HORIZONTAL));
 		bottom.add(closePanel);
 
-		m_panel.add(bottom, BorderLayout.SOUTH);
+		panel.add(bottom, BorderLayout.SOUTH);
 		
 	}
 
@@ -186,7 +186,7 @@ public class AboutDialog extends JDialog {
 	 * @return      the String associated with the given resource ID
 	 */
 	protected String getRes(String id) {
-		return m_resourceMap.getString(id);
+		return resourceMap.getString(id);
 	}
 
 	/**
@@ -195,7 +195,7 @@ public class AboutDialog extends JDialog {
 	 */
 	protected ImageIcon createImageIcon(String path) {
 		try {
-			java.net.URL imgURL = m_applicationContext.getResource(path).getURL();
+			java.net.URL imgURL = applicationContext.getResource(path).getURL();
 			return new ImageIcon(imgURL, "");
 		} catch (IOException e) {
 			s_logger.error("Couldn't find file: " + path);

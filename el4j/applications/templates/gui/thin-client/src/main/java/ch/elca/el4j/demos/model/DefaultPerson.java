@@ -31,79 +31,79 @@ import org.hibernate.validator.NotNull;
  * @author Stefan Wismer (SWI)
  */
 public class DefaultPerson implements Person {
-	protected String m_firstName;
-	protected String m_lastName;
-	protected int m_age;
-	protected List<MyNumber> m_numbers;
-	protected List<Person> m_children;
-	protected boolean m_smart;
+	protected String firstName;
+	protected String lastName;
+	protected int age;
+	protected List<MyNumber> numbers;
+	protected List<Person> children;
+	protected boolean smart;
 
 	public DefaultPerson() {
-		m_numbers = new ArrayList<MyNumber>();
-		m_children = new ArrayList<Person>();
+		numbers = new ArrayList<MyNumber>();
+		children = new ArrayList<Person>();
 	}
 	
 	public DefaultPerson(String firstName, String lastName, int age) {
 		this();
-		m_firstName = firstName;
-		m_lastName = lastName;
-		m_age = age;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.age = age;
 	}
 
 	@Length(min = 3)
 	public String getFirstName() {
-		return m_firstName;
+		return firstName;
 	}
 
 	public void setFirstName(String firstName) {
-		m_firstName = firstName;
+		this.firstName = firstName;
 	}
 
 	@NotNull
 	public String getLastName() {
-		return m_lastName;
+		return lastName;
 	}
 
 	public void setLastName(String lastName) {
-		m_lastName = lastName;
+		this.lastName = lastName;
 	}
 
 	@Min(0)
 	public int getAge() {
-		return m_age;
+		return age;
 	}
 
 	public void setAge(int age) {
-		m_age = age;
+		this.age = age;
 	}
 
 	public List<MyNumber> getNumbers() {
-		return m_numbers;
+		return numbers;
 	}
 
 	public void setNumbers(List<MyNumber> numbers) {
-		m_numbers = numbers;
+		this.numbers = numbers;
 	}
 
 	public List<Person> getChildren() {
-		return m_children;
+		return children;
 	}
 
 	public void setChildren(List<Person> children) {
-		m_children = children;
+		this.children = children;
 	}
 
 	public boolean getSmart() {
-		return m_smart;
+		return smart;
 	}
 
 	public void setSmart(boolean smart) {
-		m_smart = smart;
+		this.smart = smart;
 	}
 	
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		return m_firstName + " " + m_lastName + " (" + m_age + ")";
+		return firstName + " " + lastName + " (" + age + ")";
 	}
 }

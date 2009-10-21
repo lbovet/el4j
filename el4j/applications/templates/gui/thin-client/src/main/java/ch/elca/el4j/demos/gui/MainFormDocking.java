@@ -58,7 +58,7 @@ public class MainFormDocking extends DockingApplication {
 	 */
 	@Override
 	protected void startup() {
-		m_actionsContext = ActionsContext.create(this, new MainFormActions(this));
+		actionsContext = ActionsContext.create(this, new MainFormActions(this));
 		
 		getMainFrame().setJMenuBar(createMenuBar());
 		showMain(createMainPanel());
@@ -120,10 +120,10 @@ public class MainFormDocking extends DockingApplication {
 				"showSearch", "showRefDB", "---",
 				"showDemo5", "sendExampleEvent", "throwException");
 		List<String> helpMenuActionNames = Arrays.asList("help", "about");
-		menuBar.add(MenuUtils.createMenu(m_actionsContext, "fileMenu", fileMenuActionNames));
-		menuBar.add(MenuUtils.createMenu(m_actionsContext, "editMenu", editMenuActionNames));
-		menuBar.add(MenuUtils.createMenu(m_actionsContext, "demoMenu", demoMenuActionNames));
-		menuBar.add(MenuUtils.createMenu(m_actionsContext, "helpMenu", helpMenuActionNames));
+		menuBar.add(MenuUtils.createMenu(actionsContext, "fileMenu", fileMenuActionNames));
+		menuBar.add(MenuUtils.createMenu(actionsContext, "editMenu", editMenuActionNames));
+		menuBar.add(MenuUtils.createMenu(actionsContext, "demoMenu", demoMenuActionNames));
+		menuBar.add(MenuUtils.createMenu(actionsContext, "helpMenu", helpMenuActionNames));
 		return menuBar;
 	}
 	

@@ -14,8 +14,8 @@
 	<borderlayout>
 		<constraint location="Center">
 			<scrollpane>
-				<table cx:var="m_eventsTable">
-					<el4j:tablebinding src="m_events" updateStrategy="read write" validation="true">
+				<table cx:var="eventsTable">
+					<el4j:tablebinding src="events" updateStrategy="read write" validation="true">
 						<el4j:column label="Time" property="time" />
 						<el4j:column label="Event" property="event" />
 					</el4j:tablebinding>

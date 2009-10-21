@@ -40,11 +40,11 @@ public abstract class AbstractGUIExtension extends AbstractBean implements GUIEx
 	/**
 	 * The main application which gets extended.
 	 */
-	protected GUIApplication m_application;
+	protected GUIApplication application;
 	
 	/** {@inheritDoc} */
 	public void setApplication(GUIApplication application) {
-		m_application = application;
+		this.application = application;
 	}
 	
 	/** {@inheritDoc} */

@@ -27,46 +27,46 @@ public class SearchRefDBEvent {
 	/**
 	 * The fields where to search.
 	 */
-	private String[] m_fields;
+	private String[] fields;
 	/**
-	 * The value that the {@link #m_field} should match.
+	 * The value that the {@link #field} should match.
 	 */
-	private String m_value;
+	private String value;
 	
 	/**
 	 * @param fields    the field where to search
 	 * @param value    the value that the field should match
 	 */
 	public SearchRefDBEvent(String[] fields, String value) {
-		m_fields = fields;
-		m_value = value;
+		this.fields = fields;
+		this.value = value;
 	}
 	/**
 	 * @return    the fields where to search
 	 */
 	public String[] getFields() {
-		return m_fields;
+		return fields;
 	}
 	
 	/**
 	 * @param fields    the fields where to search
 	 */
 	public void setFields(String[] fields) {
-		this.m_fields = fields;
+		this.fields = fields;
 	}
 	
 	/**
-	 * @return    the value that the {@link #m_field} should match
+	 * @return    the value that the {@link #field} should match
 	 */
 	public String getValue() {
-		return m_value;
+		return value;
 	}
 	
 	/**
-	 * @param value    the value that the {@link #m_field} should match
+	 * @param value    the value that the {@link #field} should match
 	 */
 	public void setValue(String value) {
-		this.m_value = value;
+		this.value = value;
 	}
 
 }

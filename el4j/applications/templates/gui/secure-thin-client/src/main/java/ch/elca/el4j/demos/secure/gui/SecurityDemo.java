@@ -102,7 +102,7 @@ public class SecurityDemo extends AbstractGUIExtension {
 				SecurityContextHolder.getContext().setAuthentication(
 					new UsernamePasswordAuthenticationToken(name, new String(password)));
 				
-				PrivateData data = (PrivateData) m_application.getSpringContext().getBean("PrivateData");
+				PrivateData data = (PrivateData) application.getSpringContext().getBean("PrivateData");
 				try {
 					data.testAccess();
 				} catch (Exception e) {
@@ -123,16 +123,16 @@ public class SecurityDemo extends AbstractGUIExtension {
 		frame.addWindowListener(new WindowAdapter() {
 			public void windowClosed(WindowEvent e) {
 				JXLoginPane.Status status = frame.getStatus();
-				String oldTitle = m_application.getMainFrame().getTitle();
+				String oldTitle = application.getMainFrame().getTitle();
 				if (oldTitle.contains(" (")) {
 					oldTitle = oldTitle.substring(0, oldTitle.indexOf(" ("));
 				}
 				
 				if (status == JXLoginPane.Status.SUCCEEDED) {
-					m_application.getMainFrame().setTitle(oldTitle + " (logged in as user '"
+					application.getMainFrame().setTitle(oldTitle + " (logged in as user '"
 						+ SecurityContextHolder.getContext().getAuthentication().getName() + "')");
 				} else {
-					m_application.getMainFrame().setTitle(oldTitle + " (not logged in)");
+					application.getMainFrame().setTitle(oldTitle + " (not logged in)");
 				}
 				
 				// notify menu item
@@ -149,7 +149,7 @@ public class SecurityDemo extends AbstractGUIExtension {
 	 */
 	@Action(enabledProperty = "admin")
 	public void showSimpleDemo() {
-		m_application.show("securityDemoForm");
+		application.show("securityDemoForm");
 	}
 	
 	/**
@@ -157,7 +157,7 @@ public class SecurityDemo extends AbstractGUIExtension {
 	 */
 	@Action
 	public void showSimpleDemoForced() {
-		m_application.show("securityDemoForm");
+		application.show("securityDemoForm");
 	}
 	
 	/**
@@ -165,7 +165,7 @@ public class SecurityDemo extends AbstractGUIExtension {
 	 */
 	@Action
 	public void showSecureRefDb() {
-		m_application.show("refDBDemoForm");
+		application.show("refDBDemoForm");
 	}
 	
 	/**
@@ -189,7 +189,7 @@ public class SecurityDemo extends AbstractGUIExtension {
 			// do a manual authentication if necessary (it's not done automatically because we access the roles
 			// using authentication.getAuthorities() and not though a method interceptor)
 			if (!authentication.isAuthenticated()) {
-				AuthenticationManager manager = (AuthenticationManager) m_application.getSpringContext().getBean(
+				AuthenticationManager manager = (AuthenticationManager) application.getSpringContext().getBean(
 					"authenticationManager");
 				authentication = manager.authenticate(authentication);
 			}

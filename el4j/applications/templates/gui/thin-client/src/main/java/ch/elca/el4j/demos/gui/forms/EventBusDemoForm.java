@@ -70,21 +70,21 @@ public class EventBusDemoForm extends JPanel implements Bindable, ApplicationFra
 	/**
 	 * The list of event entries.
 	 */
-	protected List<EventEntry> m_events;
+	protected List<EventEntry> events;
 	/**
 	 * The table showing the occurred events.
 	 */
-	protected JTable m_eventsTable;
+	protected JTable eventsTable;
 	
 	/**
 	 * The frame this component is embedded.
 	 */
-	private ApplicationFrame m_applicationFrame;
+	private ApplicationFrame applicationFrame;
 	
 	/**
 	 * The binder instance variable.
 	 */
-	protected final Binder m_binder = BinderManager.getBinder(this);
+	protected final Binder binder = BinderManager.getBinder(this);
 	
 	/**
 	 * This class represents an entry in the table.
@@ -93,20 +93,20 @@ public class EventBusDemoForm extends JPanel implements Bindable, ApplicationFra
 		/**
 		 * The time when the event occurred as String.
 		 */
-		private String m_time;
+		private String time;
 		
 		/**
 		 * The event.
 		 */
-		private String m_event;
+		private String event;
 		
 		/**
 		 * @param event    The event
 		 */
 		public EventEntry(String event) {
 			SimpleDateFormat fmt = new SimpleDateFormat("HH:mm:ss");
-			m_time = fmt.format(new Date());
-			m_event = event;
+			time = fmt.format(new Date());
+			this.event = event;
 		}
 		
 		/**
@@ -114,37 +114,37 @@ public class EventBusDemoForm extends JPanel implements Bindable, ApplicationFra
 		 * @param event    The event
 		 */
 		public EventEntry(String time, String event) {
-			m_time = time;
-			m_event = event;
+			this.time = time;
+			this.event = event;
 		}
 		
 		/**
 		 * @return Returns the time.
 		 */
 		public String getTime() {
-			return m_time;
+			return time;
 		}
 		/**
 		 * @return Returns the event.
 		 */
 		public String getEvent() {
-			return m_event;
+			return event;
 		}
 	}
 	
 	public EventBusDemoForm() {
 		setLayout(new BorderLayout());
 		
-		m_events = PropertyChangeListenerMixin.addPropertyChangeMixin(new ArrayList<EventEntry>());
+		events = PropertyChangeListenerMixin.addPropertyChangeMixin(new ArrayList<EventEntry>());
 		
 		CookSwing cookSwing = new CookSwing(this);
 		cookSwing.render("gui/eventBusForm.xml");
 		
-		m_binder.bindAll();
+		binder.bindAll();
 		
 		// make first column as small as possible but not smaller than 50 pixel (a bit hacky)
-		m_eventsTable.getColumnModel().getColumn(0).setMinWidth(50);
-		m_eventsTable.getColumnModel().getColumn(1).setPreferredWidth(5000);
+		eventsTable.getColumnModel().getColumn(0).setMinWidth(50);
+		eventsTable.getColumnModel().getColumn(1).setPreferredWidth(5000);
 	}
 	
 	/**
@@ -152,7 +152,7 @@ public class EventBusDemoForm extends JPanel implements Bindable, ApplicationFra
 	 */
 	@Action
 	public void clearList() {
-		m_events.clear();
+		events.clear();
 	}
 	
 	/**
@@ -160,27 +160,27 @@ public class EventBusDemoForm extends JPanel implements Bindable, ApplicationFra
 	 */
 	@Action
 	public void close() {
-		m_applicationFrame.close();
+		applicationFrame.close();
 	}
 	
 	/** {@inheritDoc} */
 	public Binder getBinder() {
-		return m_binder;
+		return binder;
 	}
 	
 	/** {@inheritDoc} */
 	public void setApplicationFrame(ApplicationFrame applicationFrame) {
-		m_applicationFrame = applicationFrame;
+		this.applicationFrame = applicationFrame;
 	}
 	
 	@EventSubscriber
 	public void onEvent(ExampleEvent event) {
-		m_events.add(0, new EventEntry("example event: [" + event.getMessage() + "]"));
+		events.add(0, new EventEntry("example event: [" + event.getMessage() + "]"));
 	}
 	
 	@EventSubscriber
 	public void onEvent(SearchProgressEvent event) {
-		m_events.add(0, new EventEntry("search event: [" + event.getMessage() + "]"));
+		events.add(0, new EventEntry("search event: [" + event.getMessage() + "]"));
 	}
 	
 	/**
@@ -191,6 +191,6 @@ public class EventBusDemoForm extends JPanel implements Bindable, ApplicationFra
 	 */
 	@EventSubscriber(eventClass = InternalFrameEvent.class)
 	public void onEvent(InternalFrameEvent event) {
-		m_events.add(0, new EventEntry("internal frame event: [" + event + "]"));
+		events.add(0, new EventEntry("internal frame event: [" + event + "]"));
 	}
 }

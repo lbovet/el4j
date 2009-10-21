@@ -36,22 +36,22 @@ public abstract class AbstractSearchForm extends JPanel {
 	/**
 	 * The label stating something like 'Search for:'.
 	 */
-	protected JLabel m_searchFor;
+	protected JLabel searchFor;
 	
 	/**
 	 * The text field containing the search string.
 	 */
-	protected JTextField m_searchField;
+	protected JTextField searchField;
 	
 	/**
 	 * The button to start the search.
 	 */
-	protected JButton m_searchButton;
+	protected JButton searchButton;
 	
 	/**
 	 * Optional components to set search options.
 	 */
-	protected JComponent[] m_options = null;
+	protected JComponent[] options = null;
 	
 	/**
 	 * The constructor.
@@ -66,14 +66,14 @@ public abstract class AbstractSearchForm extends JPanel {
 	 * @return Returns the option components.
 	 */
 	public JComponent[] getOptions() {
-		return m_options;
+		return options;
 	}
 
 	/**
 	 * @param options Sets the option components.
 	 */
 	public void setOptions(JComponent[] options) {
-		m_options = options;
+		this.options = options;
 	}
 	
 	
@@ -81,14 +81,14 @@ public abstract class AbstractSearchForm extends JPanel {
 	 * Create the basic form components.
 	 */
 	private void createBasicComponents() {
-		m_searchFor = new JLabel();
-		m_searchFor.setName("searchFor");
+		searchFor = new JLabel();
+		searchFor.setName("searchFor");
 		
-		m_searchField = new JTextField();
-		m_searchField.setName("searchField");
+		searchField = new JTextField();
+		searchField.setName("searchField");
 		
-		m_searchButton = new JButton();
-		m_searchButton.setName("searchButton");
+		searchButton = new JButton();
+		searchButton.setName("searchButton");
 	}
 	
 	/**
@@ -104,11 +104,11 @@ public abstract class AbstractSearchForm extends JPanel {
 		DesignGridLayout layout = new DesignGridLayout(this);
 		setLayout(layout);
 
-		layout.row().left().add(m_searchFor);
-		layout.row().grid().add(m_searchField, 2);
-		layout.row().right().add(m_searchButton);
-		if (m_options != null) {
-			for (JComponent component : m_options) {
+		layout.row().left().add(searchFor);
+		layout.row().grid().add(searchField, 2);
+		layout.row().right().add(searchButton);
+		if (options != null) {
+			for (JComponent component : options) {
 				layout.row().left().add(component);
 			}
 		}

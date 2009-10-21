@@ -33,7 +33,7 @@ public class ReportViewer {
 	/**
 	 * JasperPrint document.
 	 */
-	private JasperPrint m_jasperPrint;
+	private JasperPrint jasperPrint;
 	
 	/**
 	 * Default constructor. Calls the report generator and stores
@@ -42,7 +42,7 @@ public class ReportViewer {
 	public ReportViewer() {
 		
 		ReportGenerator generator = new ReportGenerator();
-		m_jasperPrint = generator.getJasperPrint();
+		jasperPrint = generator.getJasperPrint();
 	}
 	
 	/**
@@ -51,6 +51,6 @@ public class ReportViewer {
 	 */
 	public void showViewer() {
 		
-		JasperViewer.viewReport(m_jasperPrint, false);
+		JasperViewer.viewReport(jasperPrint, false);
 	}
 }

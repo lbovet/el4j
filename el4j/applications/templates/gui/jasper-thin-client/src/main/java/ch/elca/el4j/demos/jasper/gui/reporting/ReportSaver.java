@@ -46,7 +46,7 @@ public class ReportSaver extends JFileChooser {
 	/**
 	 * JasperPrint document.
 	 */
-	private JasperPrint m_jasperPrint;
+	private JasperPrint jasperPrint;
 
 	/**
 	 * Default constructor.
@@ -90,11 +90,11 @@ public class ReportSaver extends JFileChooser {
 			}
 			
 			ReportGenerator generator = new ReportGenerator();
-			m_jasperPrint = generator.getJasperPrint();
+			jasperPrint = generator.getJasperPrint();
 			
 			try {
 				JasperExportManager.exportReportToPdfFile(
-					m_jasperPrint, fileName);
+					jasperPrint, fileName);
 			} catch (JRException e) {
 				e.printStackTrace();
 			}

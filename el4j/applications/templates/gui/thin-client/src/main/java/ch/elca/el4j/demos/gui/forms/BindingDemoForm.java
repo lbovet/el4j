@@ -53,15 +53,15 @@ import net.java.dev.designgridlayout.DesignGridLayout;
  *
  * This demo shows how form components that have the same name as properties of
  * the model (like <code>firstName</code>) get automatically bound. Binding
- * is done using <code>m_binder.addAutoBinding(this)</code>.
+ * is done using <code>binder.addAutoBinding(this)</code>.
  *
  * Non-trivial bindings like lists or tables need special information. In this
  * demo the <code>JList</code> should show the <code>value</code> property of
  * each list element. Therefore, it is necessary to specify that by
- * (<code>m_binder.addManualBinding(... new ListBinding("value") ...)</code>).
+ * (<code>binder.addManualBinding(... new ListBinding("value") ...)</code>).
  *
  * We also shown how to manually bind components: the textfield
- * <code>m_curListSelection</code> is set to always show the selected list item
+ * <code>curListSelection</code> is set to always show the selected list item
  * value.
  *
  * Another aspect shown here is the ability to provide a custom validation
@@ -78,38 +78,38 @@ import net.java.dev.designgridlayout.DesignGridLayout;
 @SuppressWarnings("serial")
 @Form(autoBind = true)
 public class BindingDemoForm extends JPanel {
-	// fields must have the same name as the property in the model to get bound (prefix "m_" gets removed)
+	// fields must have the same name as the property in the model to get bound (prefix "" gets removed)
 	
 	/**
-	 * The textfield for firstName. Bound to m_person.firstName (m_person because of @ModelObject annotation)
+	 * The textfield for firstName. Bound to person.firstName (person because of @ModelObject annotation)
 	 */
-	private JTextField m_firstName;
+	private JTextField firstName;
 	
 	/**
-	 * The textfield for lastName. Bound to m_person.lastName
+	 * The textfield for lastName. Bound to person.lastName
 	 */
-	private JTextField m_lastName;
+	private JTextField lastName;
 	
 	/**
-	 * The textfield for age. Bound to m_person.age
+	 * The textfield for age. Bound to person.age
 	 */
-	private JTextField m_age;
+	private JTextField age;
 
-	private JTextField m_curListSelection;
-	private JList m_numbers;
+	private JTextField curListSelection;
+	private JList numbers;
 	
-	private JLabel m_validationMessage;
+	private JLabel validationMessage;
 
 	/**
 	 * The binder instance variable.
 	 */
-	private final Binder m_binder = BinderManager.getBinder(this);
+	private final Binder binder = BinderManager.getBinder(this);
 
 	/**
 	 * The model to bind to this form.
 	 */
 	@ModelObject(isDefault = true)
-	private Person m_person;
+	private Person person;
 
 	public BindingDemoForm() {
 		createComponents();
@@ -117,7 +117,7 @@ public class BindingDemoForm extends JPanel {
 
 		createData();
 		createDataBinding();
-		m_binder.bindAll();
+		binder.bindAll();
 		
 		// now we can modify the model (person) and the GUI is automatically
 		// updated!
@@ -129,14 +129,14 @@ public class BindingDemoForm extends JPanel {
 	 * Create the form components.
 	 */
 	private void createComponents() {
-		m_firstName = new JTextField();
-		m_lastName = new JTextField();
-		m_age = new IntegerField();
-		m_curListSelection = new JTextField();
+		firstName = new JTextField();
+		lastName = new JTextField();
+		age = new IntegerField();
+		curListSelection = new JTextField();
 
-		m_numbers = new JList();
+		numbers = new JList();
 		
-		m_validationMessage = new JLabel();
+		validationMessage = new JLabel();
 	}
 	
 	/**
@@ -157,17 +157,17 @@ public class BindingDemoForm extends JPanel {
 		layout.row().left().add(new JLabel("These fields are bound to the underlying Person model."));
 		layout.row().left().add(new JLabel("Validation Info: Firstname must be longer than 3 charcters."));
 
-		layout.row().grid().add(new JLabel("First Name")).add(m_firstName, 2)
-			.add(new JLabel("Last Name")).add(m_lastName, 2);
-		layout.row().grid().add(new JLabel("Age")).add(m_age, 2).empty(3);
-		layout.row().grid().add(new JLabel("Current Validation Message:")).add(m_validationMessage, 3);
+		layout.row().grid().add(new JLabel("First Name")).add(firstName, 2)
+			.add(new JLabel("Last Name")).add(lastName, 2);
+		layout.row().grid().add(new JLabel("Age")).add(age, 2).empty(3);
+		layout.row().grid().add(new JLabel("Current Validation Message:")).add(validationMessage, 3);
 		
 		// add a vertical spacer
 		layout.emptyRow();
 		
 		layout.row().left().add(new JLabel("Edit list items. Negative numbers are invalid."));
-		layout.row().grid().add(new JLabel("List Selection")).add(m_curListSelection, 2)
-			.add(new JLabel("The list")).add(m_numbers, 2);
+		layout.row().grid().add(new JLabel("List Selection")).add(curListSelection, 2)
+			.add(new JLabel("The list")).add(numbers, 2);
 		
 		// Checkstyle: MagicNumber on
 	}
@@ -180,23 +180,23 @@ public class BindingDemoForm extends JPanel {
 		Person personCreatedProgrammatically = new DefaultPerson();
 		personCreatedProgrammatically = PropertyChangeListenerMixin
 				.addPropertyChangeMixin(personCreatedProgrammatically);
-		m_person = personCreatedProgrammatically;
+		person = personCreatedProgrammatically;
 
 		// initialize model
-		m_person.setFirstName("???");
-		m_person.setLastName("???");
+		person.setFirstName("???");
+		person.setLastName("???");
 
 		// add initial numbers
 		// Checkstyle: MagicNumber off
 		MyNumber aNumber = new MyNumber();
 		aNumber = PropertyChangeListenerMixin.addPropertyChangeMixin(aNumber);
 		aNumber.setValue(3);
-		m_person.getNumbers().add(aNumber);
+		person.getNumbers().add(aNumber);
 		
 		aNumber = new MyNumber();
 		aNumber = PropertyChangeListenerMixin.addPropertyChangeMixin(aNumber);
 		aNumber.setValue(2);
-		m_person.getNumbers().add(aNumber);
+		person.getNumbers().add(aNumber);
 		// Checkstyle: MagicNumber on
 	}
 	
@@ -206,24 +206,24 @@ public class BindingDemoForm extends JPanel {
 	@SuppressWarnings("unchecked")
 	private void createDataBinding() {
 		// show the "value" property in the JList
-		m_binder.addManualBinding(m_person, "numbers", m_numbers,
+		binder.addManualBinding(person, "numbers", numbers,
 			new ListBinding("value"), true);
 		
 		ValidationResponder responder
-			= new CustomValidationResponder(m_validationMessage);
+			= new CustomValidationResponder(validationMessage);
 		
 		// bind the variable "person" to "this"
 		// this interprets the @ModelObject annotation (see above)
-		BindingGroup bindings = m_binder.addAutoBinding(this);
-		m_binder.addValidationResponder(bindings, responder);
+		BindingGroup bindings = binder.addAutoBinding(this);
+		binder.addValidationResponder(bindings, responder);
 
 		// bind value of selected item in the list to a textField
 		// there is no explicit validation (invalid values are silently dropped)
 		Property selectedlistP = BeanProperty.create("selectedElement.value");
 		Property textP = BeanProperty.create("text");
-		m_binder.addManualBinding(Bindings.createAutoBinding(
-				UpdateStrategy.READ_WRITE, m_numbers, selectedlistP,
-				m_curListSelection, textP));
+		binder.addManualBinding(Bindings.createAutoBinding(
+				UpdateStrategy.READ_WRITE, numbers, selectedlistP,
+				curListSelection, textP));
 	}
 	
 	/**
@@ -232,8 +232,8 @@ public class BindingDemoForm extends JPanel {
 	private void addData() {
 		// the name is updated in the model (person) and then
 		// via our binding propagated to its associated text field)
-		m_person.setFirstName("Beans");
-		m_person.setLastName("Binding");
+		person.setFirstName("Beans");
+		person.setLastName("Binding");
 
 		// add a validated number to the list
 		MyNumber aNumber = new MyNumber();
@@ -241,7 +241,7 @@ public class BindingDemoForm extends JPanel {
 		// Checkstyle: MagicNumber off
 		aNumber.setValue(-7);
 		// Checkstyle: MagicNumber on
-		m_person.getNumbers().add(aNumber);
+		person.getNumbers().add(aNumber);
 
 		// replace the whole numbers-List
 		// not surprisingly this doesn't work (how could he know of this?)
@@ -251,7 +251,7 @@ public class BindingDemoForm extends JPanel {
 		newList.add(new MyNumber(5));
 		person.setNumbers(newList);*/
 
-		m_person.getNumbers().remove(1);
+		person.getNumbers().remove(1);
 		//person.getChildren().remove(0);
 	}
 }

@@ -46,7 +46,7 @@
 	<panel preferredsize="640,480">
 		<borderlayout>
 			<constraint location="North">
-				<el4j:flattoolbar cx:var="m_toolbar">
+				<el4j:flattoolbar cx:var="toolbar">
 					<button action="quit" />
 					<button action="cut" />
 					<button action="copy" />
@@ -55,13 +55,13 @@
 			</constraint>
 
 			<constraint location="Center">
-				<desktoppane cx:id="dp" cx:var="m_desktopPane" />
+				<desktoppane cx:id="dp" cx:var="desktopPane" />
 			</constraint>
 		</borderlayout>
 	</panel>
 
 	<cc:noadd>
-		<popupmenu cx:var="m_popup">
+		<popupmenu cx:var="popup">
 			<menuitem action="showDemo1" />
 			<menuitem action="showDemo2" />
 			<menusplit />

@@ -81,25 +81,25 @@ public abstract class GUIApplication extends SingleFrameApplication implements A
 	/**
 	 * The Spring context.
 	 */
-	protected ApplicationContext m_springContext;
+	protected ApplicationContext springContext;
 	
 	/**
 	 * The Actions context for resolving action names.
 	 */
-	protected ActionsContext m_actionsContext = ActionsContext.create(this);
+	protected ActionsContext actionsContext = ActionsContext.create(this);
 	
 	/**
 	 * The configuration. This is used to set constant parameters like colors to mark values as
 	 * invalid or default renderers.
 	 */
-	protected GenericConfig m_config;
+	protected GenericConfig config;
 	
 	
 	/**
 	 * @return      the Spring application context
 	 */
 	public ApplicationContext getSpringContext() {
-		return m_springContext;
+		return springContext;
 	}
 	
 	/**
@@ -113,21 +113,21 @@ public abstract class GUIApplication extends SingleFrameApplication implements A
 			context.getBeanFactory().registerSingleton("GUIApplication", this);
 			//context.getBeanFactory().registerSingleton("GUIApplicationConfig", getConfig());
 		}
-		m_springContext = springContext;
+		this.springContext = springContext;
 	}
 	
 	/**
 	 * @return    the current configuration
 	 */
 	public GenericConfig getConfig() {
-		return m_config;
+		return config;
 	}
 	
 	/**
 	 * @param config    the configuration to set
 	 */
 	public void setConfig(GenericConfig config) {
-		m_config = config;
+		this.config = config;
 	}
 
 	/**
@@ -207,14 +207,14 @@ public abstract class GUIApplication extends SingleFrameApplication implements A
 	 */
 	@SuppressWarnings("unchecked")
 	public void show(String beanName) throws NoSuchBeanDefinitionException {
-		if (!m_springContext.containsBean(beanName)) {
+		if (!springContext.containsBean(beanName)) {
 			throw new NoSuchBeanDefinitionException(beanName);
 		}
-		Class beanClass = m_springContext.getType(beanName);
+		Class beanClass = springContext.getType(beanName);
 		if (JComponent.class.isAssignableFrom(beanClass)) {
-			show((JComponent) m_springContext.getBean(beanName));
+			show((JComponent) springContext.getBean(beanName));
 		} else if (JDialog.class.isAssignableFrom(beanClass)) {
-			show((JDialog) m_springContext.getBean(beanName));
+			show((JDialog) springContext.getBean(beanName));
 		}
 	}
 	
@@ -260,7 +260,7 @@ public abstract class GUIApplication extends SingleFrameApplication implements A
 	
 	/** {@inheritDoc} */
 	public ActionsContext getActionsContext() {
-		return m_actionsContext;
+		return actionsContext;
 	}
 	
 	/**
@@ -297,9 +297,9 @@ public abstract class GUIApplication extends SingleFrameApplication implements A
 			s_logger.warn("Unable to unregister EventService.", e);
 		}
 		
-		if (m_springContext != null) {
-			if (m_springContext instanceof ConfigurableApplicationContext) {
-				((ConfigurableApplicationContext) m_springContext).close();
+		if (springContext != null) {
+			if (springContext instanceof ConfigurableApplicationContext) {
+				((ConfigurableApplicationContext) springContext).close();
 			}
 		}
 		super.shutdown();

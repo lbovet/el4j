@@ -35,14 +35,14 @@ public class MainFormActions {
 	/**
 	 * The GUI application of the main app.
 	 */
-	private GUIApplication m_app;
+	private GUIApplication app;
 	
 	/**
 	 * Default constructor.
 	 * @param app The GUI application of the main app.
 	 */
 	public MainFormActions(GUIApplication app) {
-		m_app = app;
+		this.app = app;
 	}
 	
 	/**
@@ -50,7 +50,7 @@ public class MainFormActions {
 	 */
 	@Action
 	public void showDemo1() {
-		m_app.show("resourceInjectionDemoForm");
+		app.show("resourceInjectionDemoForm");
 	}
 	
 	/**
@@ -58,7 +58,7 @@ public class MainFormActions {
 	 */
 	@Action
 	public void showDemo2() {
-		m_app.show("cancelableDemoForm");
+		app.show("cancelableDemoForm");
 	}
 
 	/**
@@ -66,7 +66,7 @@ public class MainFormActions {
 	 */
 	@Action
 	public void showDemo3() {
-		m_app.show("masterDetailDemoForm");
+		app.show("masterDetailDemoForm");
 	}
 	
 	/**
@@ -74,7 +74,7 @@ public class MainFormActions {
 	 */
 	@Action
 	public void showDemo4() {
-		m_app.show("bindingDemoForm");
+		app.show("bindingDemoForm");
 	}
 	
 	/**
@@ -82,7 +82,7 @@ public class MainFormActions {
 	 */
 	@Action
 	public void showDemo5() {
-		m_app.show("eventBusDemoForm");
+		app.show("eventBusDemoForm");
 	}
 	
 	/**
@@ -90,7 +90,7 @@ public class MainFormActions {
 	 */
 	@Action
 	public void showSearch() {
-		m_app.show("searchForm");
+		app.show("searchForm");
 	}
 	
 	/**
@@ -98,7 +98,7 @@ public class MainFormActions {
 	 */
 	@Action
 	public void showRefDB() {
-		m_app.show("refDBDemoForm");
+		app.show("refDBDemoForm");
 	}
 	
 
@@ -107,7 +107,7 @@ public class MainFormActions {
 	 */
 	@Action
 	public void showDemo6() {
-		m_app.show("xmlDemoForm");
+		app.show("xmlDemoForm");
 	}
 	
 	/**
@@ -131,7 +131,7 @@ public class MainFormActions {
 	 */
 	@Action
 	public void about() {
-		m_app.show("aboutDialog");
+		app.show("aboutDialog");
 	}
 	
 	/**
@@ -139,7 +139,7 @@ public class MainFormActions {
 	 */
 	@Action
 	public void help() {
-		m_app.show("helpDialog");
+		app.show("helpDialog");
 	}
 	
 }

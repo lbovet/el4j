@@ -54,7 +54,7 @@ public class MainFormMDI extends MDIApplication {
 	/**
 	 * A example popup menu.
 	 */
-	protected JPopupMenu m_popup;
+	protected JPopupMenu popup;
 
 	/**
 	 * Main definition of the GUI.
@@ -62,7 +62,7 @@ public class MainFormMDI extends MDIApplication {
 	 */
 	@Override
 	protected void startup() {
-		m_actionsContext = ActionsContext.create(this, new MainFormActions(this));
+		actionsContext = ActionsContext.create(this, new MainFormActions(this));
 		
 		getMainFrame().setJMenuBar(createMenuBar());
 		showMain(createMainPanel());
@@ -79,12 +79,12 @@ public class MainFormMDI extends MDIApplication {
 		
 		createDefaultDesktopPane();
 		
-		m_popup = MenuUtils.createPopup(m_actionsContext, Arrays.asList("showDemo1", "showDemo2", "---", "quit"));
-		m_desktopPane.addMouseListener(new MouseAdapter() {
+		popup = MenuUtils.createPopup(actionsContext, Arrays.asList("showDemo1", "showDemo2", "---", "quit"));
+		desktopPane.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (e.getButton() == MouseEvent.BUTTON3) {
-					m_popup.show(e.getComponent(), e.getX(), e.getY());
+					popup.show(e.getComponent(), e.getX(), e.getY());
 				}
 			}
 		});
@@ -112,7 +112,7 @@ public class MainFormMDI extends MDIApplication {
 		getMainFrame().getContentPane().setPreferredSize(
 			new Dimension(640, 480));
 		
-		panel.add(m_desktopPane, BorderLayout.CENTER);
+		panel.add(desktopPane, BorderLayout.CENTER);
 		return panel;
 	}
 	
@@ -128,10 +128,10 @@ public class MainFormMDI extends MDIApplication {
 				"showSearch", "showRefDB", "---",
 				"showDemo5", "sendExampleEvent", "throwException");
 		List<String> helpMenuActionNames = Arrays.asList("help", "about");
-		menuBar.add(MenuUtils.createMenu(m_actionsContext, "fileMenu", fileMenuActionNames));
-		menuBar.add(MenuUtils.createMenu(m_actionsContext, "editMenu", editMenuActionNames));
-		menuBar.add(MenuUtils.createMenu(m_actionsContext, "demoMenu", demoMenuActionNames));
-		menuBar.add(MenuUtils.createMenu(m_actionsContext, "helpMenu", helpMenuActionNames));
+		menuBar.add(MenuUtils.createMenu(actionsContext, "fileMenu", fileMenuActionNames));
+		menuBar.add(MenuUtils.createMenu(actionsContext, "editMenu", editMenuActionNames));
+		menuBar.add(MenuUtils.createMenu(actionsContext, "demoMenu", demoMenuActionNames));
+		menuBar.add(MenuUtils.createMenu(actionsContext, "helpMenu", helpMenuActionNames));
 		return menuBar;
 	}
 	

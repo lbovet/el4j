@@ -27,25 +27,25 @@ public class ExampleEvent {
 	/**
 	 * The message.
 	 */
-	private String m_message;
+	private String message;
 	
 	/**
 	 * @param message    the example event message.
 	 */
 	public ExampleEvent(String message) {
-		this.m_message = message;
+		this.message = message;
 	}
 	
 	/**
 	 * @return the meassage
 	 */
 	public String getMessage() {
-		return m_message;
+		return message;
 	}
 
 	/** {@inheritDoc} */
 	@Override
 	public String toString() {
-		return "ExampleEvent: [" + m_message + "]";
+		return "ExampleEvent: [" + message + "]";
 	}
 }

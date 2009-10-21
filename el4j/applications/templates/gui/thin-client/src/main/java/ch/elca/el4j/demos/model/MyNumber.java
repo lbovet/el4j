@@ -26,25 +26,25 @@ import org.hibernate.validator.Min;
  * @author Stefan Wismer (SWI)
  */
 public class MyNumber {
-	private int m_value;
+	private int value;
 	
 	public MyNumber() {}
 	
 	public MyNumber(int value) {
-		m_value = value;
+		this.value = value;
 	}
 	
 	@Min(0)
 	public int getValue() {
-		return m_value;
+		return value;
 	}
 	
 	public void setValue(int value) {
-		m_value = value;
+		this.value = value;
 	}
 	
 	@Override
 	public String toString() {
-		return Integer.toString(m_value);
+		return Integer.toString(value);
 	}
 }

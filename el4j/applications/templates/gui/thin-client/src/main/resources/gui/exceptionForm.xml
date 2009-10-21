@@ -15,15 +15,15 @@
 		<constraint location="Center">
 			<splitpane orientation="VERTICAL_SPLIT" resizeweight="0.3">
 				<scrollpane>
-					<table cx:var="m_exceptionsTable">
-						<el4j:tablebinding src="m_exceptions" updateStrategy="read write" validation="true">
+					<table cx:var="exceptionsTable">
+						<el4j:tablebinding src="exceptions" updateStrategy="read write" validation="true">
 							<el4j:column label="Time" property="time" />
 							<el4j:column label="Exception" property="exception" />
 						</el4j:tablebinding>
 					</table>
 				</scrollpane>
 				<scrollpane>
-					<textarea cx:var="m_stacktrace" editable="false"/>
+					<textarea cx:var="stacktrace" editable="false"/>
 				</scrollpane>
 			</splitpane>
 		</constraint>
