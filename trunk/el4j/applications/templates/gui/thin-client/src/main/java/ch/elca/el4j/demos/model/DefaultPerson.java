@@ -34,10 +34,11 @@ import org.joda.time.DateTime;
 public class DefaultPerson implements Person {
 	protected String firstName;
 	protected String lastName;
-	protected DateTime m_bornOnThe;
+	protected DateTime bornOnThe;
 	protected List<MyNumber> numbers;
 	protected List<Person> children;
 	protected boolean smart;
+	protected int age;
 
 	public DefaultPerson() {
 		numbers = new ArrayList<MyNumber>();
@@ -49,7 +50,7 @@ public class DefaultPerson implements Person {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.age = age;
-		m_bornOnThe = bornOnThe;
+		bornOnThe = bornOnThe;
 	}
 
 	@Length(min = 3)

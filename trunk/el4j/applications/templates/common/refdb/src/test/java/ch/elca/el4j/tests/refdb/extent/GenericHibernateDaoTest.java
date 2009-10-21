@@ -504,10 +504,10 @@ public class GenericHibernateDaoTest extends AbstractTestCaseBase {
 		a.setGrade(10);
 		a.setReference(b);
 		
-		 // The java.util way of creating a date:
-		 // Calendar c = Calendar.getInstance();
-		 // c.set(2004, 5, 12);
-		 // b.setDate(c.getTime());
+		// The java.util way of creating a date:
+		// Calendar c = Calendar.getInstance();
+		// c.set(2004, 5, 12);
+		// b.setDate(c.getTime());
 		
 		// The Joda-Time way of creating a date 
 		LocalDate d = new  LocalDate(2004, 5, 12);

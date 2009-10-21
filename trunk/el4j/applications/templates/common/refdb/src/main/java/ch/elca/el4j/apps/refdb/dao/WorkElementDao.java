@@ -1,5 +1,5 @@
 /*
-+ * EL4J, the Extension Library for the J2EE, adds incremental enhancements to
+ * EL4J, the Extension Library for the J2EE, adds incremental enhancements to
  * the spring framework, http://el4j.sf.net
  * Copyright (C) 2008 by ELCA Informatique SA, Av. de la Harpe 22-24,
  * 1000 Lausanne, Switzerland, http://www.elca.ch
@@ -14,17 +14,19 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.demos.gui.TableCellRenderers;
+package ch.elca.el4j.apps.refdb.dao;
 
-import javax.swing.table.DefaultTableCellRenderer;
+import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DataRetrievalFailureException;
 
-import org.joda.time.DateTime;
-
-import ch.elca.el4j.util.codingsupport.JodaTimeUtils;
+import ch.elca.el4j.apps.keyword.dom.Keyword;
+import ch.elca.el4j.apps.refdb.dom.WorkElement;
+import ch.elca.el4j.services.persistence.hibernate.dao.ConvenienceGenericHibernateDao;
 
 /**
  * 
- * This class is a TableCellRenderer that outputs JodaTime DateTimes nicely.
+ * 
+ * This interface represents a DAO for the WorkElement class.
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -36,19 +38,9 @@ import ch.elca.el4j.util.codingsupport.JodaTimeUtils;
  * @author Daniel Thomas (DTH)
  */
 
-public class JodaTimeTableCellRenderer extends DefaultTableCellRenderer {
+public interface WorkElementDao
+extends ConvenienceGenericHibernateDao<WorkElement, Integer> {
+
+
 	
-	/**
-	 * Default constructor.
-	 */
-	public JodaTimeTableCellRenderer() { super(); }
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void setValue(Object value) {
-		setText((value == null) ? "" : JodaTimeUtils.getDateTimeString((DateTime) value, "dd.MM.yy HH:mm"));
-			
-	}
 }
