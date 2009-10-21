@@ -16,16 +16,16 @@
 			<panel>
 				<borderlayout hgap="10" vgap="10">
 					<constraint location="West">
-						<label cx:var="m_errorImage" />
+						<label cx:var="errorImage" />
 					</constraint>
 					<constraint location="Center">
-						<label cx:var="m_message"/>
+						<label cx:var="message"/>
 					</constraint>
 					<constraint location="South">
 						<panel>
 							<flowlayout alignment="TRAILING">
 								<button action="close" />
-								<button action="toggleDetails" cx:var="m_detailsButton" />
+								<button action="toggleDetails" cx:var="detailsButton" />
 							</flowlayout>
 						</panel>
 					</constraint>
@@ -33,8 +33,8 @@
 			</panel>
 		</constraint>
 		<constraint location="Center">
-			<scrollpane cx:var="m_detailsScrollPane">
-				<textarea cx:var="m_details" editable="false" columns="60" rows="8"/>
+			<scrollpane cx:var="detailsScrollPane">
+				<textarea cx:var="details" editable="false" columns="60" rows="8"/>
 			</scrollpane>
 		</constraint>
 	</borderlayout>
