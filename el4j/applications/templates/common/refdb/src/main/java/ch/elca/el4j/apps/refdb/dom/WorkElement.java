@@ -30,12 +30,17 @@ import ch.elca.el4j.util.codingsupport.JodaTimeUtils;
 
 
 /**
- * An element of work performed on a day. 
- * Logical equality is defined over all fields.
+ * 
+ * This class a work element defined over a day.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
- * @author David Bernhard (DBD)
+ * @author Daniel Thomas (DTH)
  */
 @Entity
 @Table(name = "WORKELEMENTS")

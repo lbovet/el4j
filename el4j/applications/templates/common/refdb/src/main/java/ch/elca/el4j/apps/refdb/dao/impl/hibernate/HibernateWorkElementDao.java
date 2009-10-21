@@ -11,12 +11,6 @@
  */
 package ch.elca.el4j.apps.refdb.dao.impl.hibernate;
 
-import java.util.List;
-
-import org.springframework.dao.DataAccessException;
-import org.springframework.dao.DataRetrievalFailureException;
-
-import ch.elca.el4j.apps.keyword.dom.Keyword;
 import ch.elca.el4j.apps.refdb.dao.WorkElementDao;
 import ch.elca.el4j.apps.refdb.dom.WorkElement;
 import ch.elca.el4j.services.persistence.generic.dao.AutocollectedGenericDao;
@@ -24,11 +18,17 @@ import ch.elca.el4j.services.persistence.hibernate.dao.GenericHibernateDao;
 
 
 /**
- * Implementation of the WorkElementDao that is using Hibernate.
+ * 
+ * This class is a hibernate dao for the WorkElement entity.
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
- * @author David Bernhard (DBD)
+ * @author your name (???)
  */
 @AutocollectedGenericDao("workElementDao")
 public class HibernateWorkElementDao extends GenericHibernateDao<WorkElement, Integer> 

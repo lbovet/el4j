@@ -116,8 +116,8 @@ public class HibernateWorkElementDaoTest extends AbstractTestCaseBase{
 		WorkElementDao dao = getWorkElementDao();
 		WorkElement work = new WorkElement();
 		work.setDay(new LocalDate());
-		work.setFrom(new LocalTime().plusHours(10));
-		work.setTo(new LocalTime());
+		work.setFrom(new LocalTime(12, 10, 0));
+		work.setTo(new LocalTime(8, 10, 0));
 		
 		dao.saveOrUpdate(work);
 		

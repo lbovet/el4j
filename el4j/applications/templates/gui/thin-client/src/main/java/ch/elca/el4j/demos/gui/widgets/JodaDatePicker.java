@@ -47,17 +47,14 @@ public class JodaDatePicker extends DatePicker {
 	 */
 	public JodaDatePicker() {
 		super(new Date(), 2, Locale.getDefault(), TimeZone.getDefault());
-   
-		
+	
 	}
-
 	/**
 	 * Constructor taking a DateTime with which the widget will be initialized.
 	 * 
 	 * @param initialDate
 	 *            is the DateTime with which the widget will be initialized
 	 */
-
 	public JodaDatePicker(DateTime initialDate) {
 
 		super(initialDate.toDate(), 2, Locale.getDefault(), TimeZone.getDefault());
