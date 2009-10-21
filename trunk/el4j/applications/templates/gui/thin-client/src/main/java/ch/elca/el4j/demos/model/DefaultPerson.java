@@ -45,12 +45,19 @@ public class DefaultPerson implements Person {
 		children = new ArrayList<Person>();
 	}
 	
+	public DefaultPerson (String firstName, String lastName, int age) {
+		this();
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.age = age;
+	}
+	
 	public DefaultPerson(String firstName, String lastName, int age, DateTime bornOnThe) {
 		this();
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.age = age;
-		bornOnThe = bornOnThe;
+		this.bornOnThe = bornOnThe;
 	}
 
 	@Length(min = 3)
