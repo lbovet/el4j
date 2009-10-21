@@ -16,8 +16,6 @@
  */
 package ch.elca.el4j.apps.refdb.dom;
 
-import java.util.Calendar;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -31,19 +29,20 @@ import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
+import org.hibernate.annotations.Type;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Index;
 import org.hibernate.search.annotations.Store;
 import org.hibernate.validator.AssertTrue;
 import org.hibernate.validator.Length;
 import org.hibernate.validator.NotNull;
+import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 
 import ch.elca.el4j.apps.keyword.dom.Keyword;
 import ch.elca.el4j.core.metadata.ContainedClass;
@@ -62,8 +61,7 @@ import ch.elca.el4j.services.persistence.generic.dto.AbstractIntKeyIntOptimistic
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "REFERENCESTABLE")
-@SequenceGenerator(name = "keyid_generator",
-	sequenceName = "reference_sequence")
+@SequenceGenerator(name = "keyid_generator", sequenceName = "reference_sequence")
 public abstract class Reference extends AbstractIntKeyIntOptimisticLockingDto {
 	/**
 	 * Name of the reference (book title, ...).
@@ -76,8 +74,7 @@ public abstract class Reference extends AbstractIntKeyIntOptimisticLockingDto {
 	private String m_hashValue;
 
 	/**
-	 * Short description of the reference (short summary, comment on the format
-	 * of the document, ...).
+	 * Short description of the reference (short summary, comment on the format of the document, ...).
 	 */
 	private String m_description;
 
@@ -87,21 +84,19 @@ public abstract class Reference extends AbstractIntKeyIntOptimisticLockingDto {
 	private String m_version;
 
 	/**
-	 * Flag for a reference (can be interpreted as a kind of 'to be defined').
-	 * Default value is true.
+	 * Flag for a reference (can be interpreted as a kind of 'to be defined'). Default value is true.
 	 */
 	private boolean m_incomplete = true;
 
 	/**
-	 * Date when does the reference has been inserted (created
-	 * automatically).
+	 * Date when does the reference has been inserted (created automatically).
 	 */
-	private Date m_whenInserted;
+	private DateTime m_whenInserted;
 
 	/**
 	 * Date of the referenced document (publication date, last update, ...).
 	 */
-	private Date m_date;
+	private LocalDate m_date;
 
 	/**
 	 * Set of keywords for this reference.
@@ -112,25 +107,25 @@ public abstract class Reference extends AbstractIntKeyIntOptimisticLockingDto {
 	 * Set of annotations for this reference.
 	 */
 	private Set<Annotation> m_annotations;
-	
 	/**
 	 * Set of files for this reference.
 	 */
 	private Set<File> m_files;
-	
+
 	/**
 	 * The type this reference is actually of.
+	 * 
 	 * @return the type of this reference.
 	 */
 	@Transient
 	public abstract String getType();
-	
+
 	/**
 	 * @return Returns the date.
 	 */
 	@Column(name = "DOCUMENTDATE")
-	@Temporal(TemporalType.DATE)
-	public Date getDate() {
+	@Type(type = "org.joda.time.contrib.hibernate.PersistentLocalDate")
+	public LocalDate getDate() {
 		return m_date;
 	}
 
@@ -138,20 +133,8 @@ public abstract class Reference extends AbstractIntKeyIntOptimisticLockingDto {
 	 * @param date
 	 *            The date to set.
 	 */
-	public void setDate(Date date) {
-		if (date != null) {
-			Calendar c = Calendar.getInstance();
-			c.setTime(date);
-			c.set(Calendar.MILLISECOND, 0);
-			c.set(Calendar.SECOND, 0);
-			c.set(Calendar.MINUTE, 0);
-			c.set(Calendar.HOUR, 0);
-			c.set(Calendar.AM_PM, Calendar.AM);
-			date.setTime(c.getTimeInMillis());
+	public void setDate(LocalDate date) {
 			m_date = date;
-		} else {
-			m_date = null;
-		}
 	}
 
 	/**
@@ -200,8 +183,8 @@ public abstract class Reference extends AbstractIntKeyIntOptimisticLockingDto {
 		m_incomplete = incomplete;
 	}
 
-	//Checkstyle: MagicNumber off
-	
+	// Checkstyle: MagicNumber off
+
 	/**
 	 * @return Returns the name.
 	 */
@@ -213,7 +196,7 @@ public abstract class Reference extends AbstractIntKeyIntOptimisticLockingDto {
 	}
 
 	// Checkstyle: MagicNumber on
-	
+
 	/**
 	 * @param name
 	 *            The name to set.
@@ -241,10 +224,10 @@ public abstract class Reference extends AbstractIntKeyIntOptimisticLockingDto {
 	 * @return Returns the whenInserted.
 	 */
 	@NotNull
-	@Temporal(TemporalType.TIMESTAMP)
-	public Date getWhenInserted() {
+	@Type(type = "org.joda.time.contrib.hibernate.PersistentDateTime")
+	public DateTime getWhenInserted() {
 		if (m_whenInserted == null) {
-			m_whenInserted = new Date();
+			m_whenInserted = new DateTime();
 		}
 		return m_whenInserted;
 	}
@@ -253,7 +236,7 @@ public abstract class Reference extends AbstractIntKeyIntOptimisticLockingDto {
 	 * @param whenInserted
 	 *            The whenInserted to set.
 	 */
-	public void setWhenInserted(Date whenInserted) {
+	public void setWhenInserted(DateTime whenInserted) {
 		m_whenInserted = whenInserted;
 	}
 
@@ -308,7 +291,7 @@ public abstract class Reference extends AbstractIntKeyIntOptimisticLockingDto {
 	 * @return Returns the set of files for this reference (only used if
 	 *         Hibernate is used to perform ORM).
 	 */
-	@OneToMany(mappedBy = "reference", cascade = { CascadeType.ALL })
+	@OneToMany(mappedBy = "reference", cascade = {CascadeType.ALL})
 	@Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
 	@ContainedClass(File.class)
 	public Set<File> getFiles() {
@@ -328,19 +311,21 @@ public abstract class Reference extends AbstractIntKeyIntOptimisticLockingDto {
 	public String toString() {
 		return m_name;
 	}
+
 	/**
 	 * Checks whether the reference is valid. Should always be true.
+	 * 
 	 * @return true if the reference is valid, false otherwise
 	 */
 	@AssertTrue(message = "{Reference.dateInvariant}")
 	public boolean invariant() {
 		// Ensure that the creation date of the referenced document is
 		// smaller than its insertion date.
+		// For comparison we convert LocalDate m_date to a DateTime where hours, minutes, seconds etc. are 0.
 		if (getDate() != null) {
-			return (getDate().getTime() <= getWhenInserted().getTime());
+			return (getDate().toDateTimeAtStartOfDay().isBefore(getWhenInserted()));
 		}
 		return true;
 	}
-	
-}
 
+}

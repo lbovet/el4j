@@ -8,6 +8,7 @@
 CREATE SEQUENCE reference_sequence    INCREMENT BY 1 START WITH 10;
 CREATE SEQUENCE annotation_sequence   INCREMENT BY 1 START WITH 10;
 CREATE SEQUENCE file_sequence         INCREMENT BY 1 START WITH 10;
+CREATE SEQUENCE workelement_sequence     INCREMENT BY 1 START WITH 10;
 
 CREATE TABLE referencesTable (
   keyId                     INTEGER        
@@ -77,3 +78,18 @@ CREATE TABLE files (
   optimisticLockingVersion  INTEGER        NOT NULL,
   dtype						VARCHAR(100)
 );
+
+
+
+
+CREATE TABLE workelements (
+  keyId                     INTEGER        
+  	NOT NULL PRIMARY KEY,
+  day                      DATE,
+  startOfWorkElement                      TIMESTAMP        NOT NULL,
+  finishOfWorkElement                     TIMESTAMP	   NOT NULL,
+  optimisticLockingVersion INTEGER         NOT NULL
+);
+
+
+

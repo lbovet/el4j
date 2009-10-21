@@ -21,7 +21,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Clob;
 import java.sql.SQLException;
-import java.util.Date;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -32,14 +31,14 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
+import org.hibernate.Hibernate;
+import org.hibernate.annotations.Type;
+import org.hibernate.validator.NotNull;
+import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.hibernate.Hibernate;
-import org.hibernate.validator.NotNull;
 
 import ch.elca.el4j.services.persistence.generic.dto.AbstractIntKeyIntOptimisticLockingDto;
 
@@ -96,7 +95,7 @@ public class Annotation extends AbstractIntKeyIntOptimisticLockingDto {
 	 * Date when does the annotation has been inserted (created
 	 * automatically).
 	 */
-	private Date m_whenInserted;
+	private DateTime m_whenInserted;
 
 	/**
 	 * @return Returns the annotator.
@@ -225,10 +224,10 @@ public class Annotation extends AbstractIntKeyIntOptimisticLockingDto {
 	 * @return Returns the m_whenInserted.
 	 */
 	@NotNull
-	@Temporal(TemporalType.TIMESTAMP)
-	public Date getWhenInserted() {
+	@Type(type="org.joda.time.contrib.hibernate.PersistentDateTime")	
+	public DateTime getWhenInserted() {
 		if (m_whenInserted == null) {
-			m_whenInserted = new Date();
+			m_whenInserted = new DateTime();
 		}
 		return m_whenInserted;
 	}
@@ -237,7 +236,7 @@ public class Annotation extends AbstractIntKeyIntOptimisticLockingDto {
 	 * @param whenInserted
 	 *            The whenInserted to set.
 	 */
-	public void setWhenInserted(Date whenInserted) {
+	public void setWhenInserted(DateTime whenInserted) {
 		m_whenInserted = whenInserted;
 	}
 

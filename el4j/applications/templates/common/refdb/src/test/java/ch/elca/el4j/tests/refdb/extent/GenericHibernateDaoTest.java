@@ -16,22 +16,22 @@
  */
 package ch.elca.el4j.tests.refdb.extent;
 
+import static ch.elca.el4j.services.persistence.hibernate.dao.extent.ExtentCollection.collection;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
 import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.hibernate.LazyInitializationException;
+import org.joda.time.LocalDate;
+import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.hibernate.LazyInitializationException;
-import org.junit.Test;
 import org.springframework.dao.DataIntegrityViolationException;
-
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import ch.elca.el4j.apps.keyword.dom.Keyword;
 import ch.elca.el4j.apps.refdb.dao.impl.hibernate.GenericHibernateFileDaoInterface;
@@ -51,8 +51,6 @@ import ch.elca.el4j.tests.person.dom.Brain;
 import ch.elca.el4j.tests.person.dom.Person;
 import ch.elca.el4j.tests.person.dom.Tooth;
 import ch.elca.el4j.tests.refdb.AbstractTestCaseBase;
-
-import static ch.elca.el4j.services.persistence.hibernate.dao.extent.ExtentCollection.collection;
 /**
  *
  * Test case for <code>GenericHibernateDao</code> to test
@@ -505,9 +503,15 @@ public class GenericHibernateDaoTest extends AbstractTestCaseBase {
 		a.setContent("very interesting book");
 		a.setGrade(10);
 		a.setReference(b);
-		Calendar c = Calendar.getInstance();
-		c.set(2004, 5, 12);
-		b.setDate(new Date(c.getTimeInMillis()));
+		
+		 // The java.util way of creating a date:
+		 // Calendar c = Calendar.getInstance();
+		 // c.set(2004, 5, 12);
+		 // b.setDate(c.getTime());
+		
+		// The Joda-Time way of creating a date 
+		LocalDate d = new  LocalDate(2004, 5, 12);
+		b.setDate(d);
 		b.setPageNum(1683);
 		Link l = new Link();
 		l.setName("Sample Link");

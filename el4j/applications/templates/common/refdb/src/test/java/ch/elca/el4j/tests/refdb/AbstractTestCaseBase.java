@@ -22,9 +22,9 @@ import java.sql.Statement;
 
 import javax.sql.DataSource;
 
+import org.junit.Before;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.junit.Before;
 
 import ch.elca.el4j.apps.keyword.dao.KeywordDao;
 import ch.elca.el4j.apps.keyword.dom.Keyword;
@@ -87,7 +87,7 @@ public abstract class AbstractTestCaseBase extends AbstractTest {
 	 * File DAO. Created by application context.
 	 */
 	private FileDao m_fileDao;
-
+	
 	/**
 	 * Keyword DAO. Created by application context.
 	 */

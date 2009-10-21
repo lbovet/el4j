@@ -19,7 +19,7 @@
 	
 	
 	<security:global-method-security secured-annotations="enabled" jsr250-annotations="enabled"/>
-	
+
 	<bean id="authenticationProvider"
 		class="org.springframework.security.providers.dao.DaoAuthenticationProvider">
 		<property name="userDetailsService" ref="authenticationDao" />
@@ -35,5 +35,5 @@
 				el4normal=el4j,ROLE_NORMALUSER
 			</value>
 		</property>
-	</bean>
+	</bean> 
 </beans>
