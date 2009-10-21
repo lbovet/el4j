@@ -64,6 +64,6 @@ public class JasperReports extends AbstractGUIExtension {
 	@Action
 	public void showReportSaver() {
 		ReportSaver saver = new ReportSaver();
-		saver.showSaveDialog(m_application.getMainFrame());
+		saver.showSaveDialog(application.getMainFrame());
 	}
 }

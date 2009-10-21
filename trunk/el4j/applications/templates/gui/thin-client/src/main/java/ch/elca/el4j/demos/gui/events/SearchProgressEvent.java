@@ -27,25 +27,25 @@ public class SearchProgressEvent {
 	/**
 	 * The status.
 	 */
-	private String m_status;
+	private String status;
 	
 	/**
 	 * @param status    the search progess status
 	 */
 	public SearchProgressEvent(String status) {
-		this.m_status = status;
+		this.status = status;
 	}
 	
 	/**
 	 * @return the status
 	 */
 	public String getMessage() {
-		return m_status;
+		return status;
 	}
 
 	/** {@inheritDoc} */
 	@Override
 	public String toString() {
-		return "Search progress: [" + m_status + "]";
+		return "Search progress: [" + status + "]";
 	}
 }

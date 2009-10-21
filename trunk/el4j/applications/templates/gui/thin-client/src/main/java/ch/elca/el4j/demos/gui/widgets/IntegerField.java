@@ -36,12 +36,12 @@ public class IntegerField extends JTextField {
 	/**
 	 * Color to mark value as valid.
 	 */
-	protected final Color m_normalColor;
+	protected final Color normalColor;
 	
 	/**
 	 * Color to mark value as invalid.
 	 */
-	protected final Color m_invalidColor;
+	protected final Color invalidColor;
 
 	/**
 	 * The default constructor.
@@ -55,8 +55,8 @@ public class IntegerField extends JTextField {
 	 * @param invalidColor    the color to mark value as invalid
 	 */
 	public IntegerField(Color invalidColor) {
-		m_normalColor = getBackground();
-		m_invalidColor = invalidColor;
+		normalColor = getBackground();
+		this.invalidColor = invalidColor;
 		
 		addKeyListener(new KeyAdapter() {
 			@Override

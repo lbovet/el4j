@@ -36,7 +36,7 @@ public abstract class MDIApplication extends AbstractMDIApplication {
 	 * The desktop pane of this MDIApplication.
 	 *  @see #createDefaultDesktopPane()
 	 */
-	protected JDesktopPane m_desktopPane;
+	protected JDesktopPane desktopPane;
 
 	/**
 	 * Helps to manage the mdi menu and pane.
@@ -47,20 +47,20 @@ public abstract class MDIApplication extends AbstractMDIApplication {
 	/** {@inheritDoc} */
 	@Override
 	protected JDesktopPane getDesktopPane() {
-		return m_desktopPane;
+		return desktopPane;
 	}
 
 	/**
 	 * Creates a default desktop pane with a default Menu This method could be
 	 * overridden in case you would like another desktop pane. <br>
-	 * Stores the created desktop pane in the {@link #m_desktopPane}
+	 * Stores the created desktop pane in the {@link #desktopPane}
 	 */
 	protected void createDefaultDesktopPane() {
-		m_desktopPane = new JDesktopPane();
+		desktopPane = new JDesktopPane();
 
 		// create window manager and add window menu
 		WindowMenu windowMenu = new WindowMenu();
-		m_windowManager = new WindowManager(m_desktopPane, windowMenu);
+		m_windowManager = new WindowManager(desktopPane, windowMenu);
 		windowMenu.setWindowManager(m_windowManager);
 		getMainFrame().getJMenuBar().add(windowMenu,
 			getMainFrame().getJMenuBar().getMenuCount() - 1);

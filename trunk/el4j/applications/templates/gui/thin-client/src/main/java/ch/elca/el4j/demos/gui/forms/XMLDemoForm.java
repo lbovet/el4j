@@ -44,7 +44,7 @@ import cookxml.cookswing.CookSwing;
  *
  * The most important command is <code>cookSwing.render("test.xml");</code>. It
  * processes the whole XML file and initializes corresponing local variables (e.g.
- * <code>m_firstName</code>).
+ * <code>firstName</code>).
  *
  * As this class implements {@link Bindable}, cookSwing is able to set up all
  * bindings declared in the XML file.
@@ -57,12 +57,12 @@ import cookxml.cookswing.CookSwing;
 @Scope("prototype")
 @Component("xmlDemoForm")
 public class XMLDemoForm extends JPanel implements Bindable {
-	private JTextField m_firstName;
-	private JTextField m_lastName;
-	private JLabel m_statusLabel;
-	private Person m_person;
-	private List<Person> m_persons;
-	private final Binder m_binder = BinderManager.getBinder(this);
+	private JTextField firstName;
+	private JTextField lastName;
+	private JLabel statusLabel;
+	private Person person;
+	private List<Person> persons;
+	private final Binder binder = BinderManager.getBinder(this);
 	
 	public XMLDemoForm() {
 		// Create or load data. This has to be done before creating and binding the GUI components.
@@ -70,16 +70,16 @@ public class XMLDemoForm extends JPanel implements Bindable {
 		
 		// Create the GUI components from an XML description.
 		// When a component has a property cx:var the created component is assigned to the corresponding variable.
-		// As we implement Bindable, all specified bindings are registered in m_binder.
+		// As we implement Bindable, all specified bindings are registered in binder.
 		CookSwing cookSwing = new CookSwing(this);
 		cookSwing.render("gui/xmlDemoForm.xml");
 		
 		// Bind all bindings created during cookSwing.render()
-		m_binder.bindAll();
+		binder.bindAll();
 	}
 
 	private void createData() {
-		m_persons = new ArrayList<Person>();
+		persons = new ArrayList<Person>();
 		
 		Person person1 = new DefaultPerson("Test", "Last", 4);
 		// all objects that should be bound to a GUI component must have a property change capability to work corretly.
@@ -88,17 +88,17 @@ public class XMLDemoForm extends JPanel implements Bindable {
 		Person person2 = new DefaultPerson("Test2", "Last2", 88);
 		person2 = PropertyChangeListenerMixin.addPropertyChangeMixin(person2);
 		
-		m_persons.add(person1);
-		m_persons.add(person2);
+		persons.add(person1);
+		persons.add(person2);
 		
-		m_person = person1;
-		m_person.getChildren().add(person2);
+		person = person1;
+		person.getChildren().add(person2);
 	}
 	
 	/** {@inheritDoc} */
 	public Binder getBinder() {
 		// this method is called during cookSwing.render() to register the bindings specified in the XML
-		return m_binder;
+		return binder;
 	}
 	
 	/**
@@ -106,6 +106,6 @@ public class XMLDemoForm extends JPanel implements Bindable {
 	 */
 	@Action
 	public void info() {
-		m_statusLabel.setText("Person: " + m_firstName.getText() + " " + m_lastName.getText());
+		statusLabel.setText("Person: " + firstName.getText() + " " + lastName.getText());
 	}
 }

@@ -44,12 +44,12 @@ public class ReportGenerator {
 	/**
 	 * The reference service of cached references.
 	 */
-	private ReferenceService m_service;
+	private ReferenceService service;
 	
 	/**
 	 * JasperPrint document.
 	 */
-	private JasperPrint m_jasperPrint;
+	private JasperPrint jasperPrint;
 	
 	/**
 	 * Default constructor. Loads the model (database data) and
@@ -68,7 +68,7 @@ public class ReportGenerator {
 	 */
 	public JasperPrint getJasperPrint() {
 		
-		return m_jasperPrint;
+		return jasperPrint;
 	}
 	
 	/**
@@ -79,7 +79,7 @@ public class ReportGenerator {
 		GUIApplication app = GUIApplication.getInstance();
 		ServiceBroker.setApplicationContext(
 			app.getSpringContext());
-		m_service = ServiceBroker.getReferenceService();
+		service = ServiceBroker.getReferenceService();
 	}
 	
 	/**
@@ -87,7 +87,7 @@ public class ReportGenerator {
 	 */
 	private void generateReport() {
 		
-		if (m_service.getAllReferences().isEmpty()) {
+		if (service.getAllReferences().isEmpty()) {
 			generateSampleReferences();
 		}
 		
@@ -97,9 +97,9 @@ public class ReportGenerator {
 		try {
 			jasperReport = JasperCompileManager.compileReport(
 				"src/main/resources/jasper/RefDB.jrxml");
-			m_jasperPrint = JasperFillManager.fillReport(
+			jasperPrint = JasperFillManager.fillReport(
 				jasperReport, parameters,
-				new JRBeanCollectionDataSource(m_service.getAllReferences()));
+				new JRBeanCollectionDataSource(service.getAllReferences()));
 		} catch (JRException e) {
 			e.printStackTrace();
 		}
@@ -114,12 +114,12 @@ public class ReportGenerator {
 		link.setName("Boing Boing");
 		link.setDescription("A directory of wonderful things.");
 		link.setUrl("http://www.boingboing.net/");
-		m_service.saveReference(link);
+		service.saveReference(link);
 		
 		Link link2 = new Link();
 		link2.setName("Mac Rumors");
 		link2.setDescription("Apple Mac Rumors and News You Care About.");
 		link2.setUrl("http://www.macrumors.com/");
-		m_service.saveReference(link2);
+		service.saveReference(link2);
 	}
 }

@@ -70,15 +70,15 @@ import net.java.dev.designgridlayout.DesignGridLayout;
 @Form(autoBind = true)
 public class MasterDetailDemoForm extends JPanel {
 	// fields must have the same name as the property in the model to get bound
-	private JTextField m_firstName;
-	private JTextField m_lastName;
-	private JCheckBox m_smart;
-	private JTextField m_age;
+	private JTextField firstName;
+	private JTextField lastName;
+	private JCheckBox smart;
+	private JTextField age;
 	
-	private JTable m_children;
+	private JTable children;
 	
-	private JButton m_createButton;
-	private JButton m_deleteButton;
+	private JButton createButton;
+	private JButton deleteButton;
 
 	/**
 	 * The binder instance variable.
@@ -97,8 +97,8 @@ public class MasterDetailDemoForm extends JPanel {
 		createLayout();
 		
 		// assign actions
-		m_createButton.setAction(application.getAction(this, "create"));
-		m_deleteButton.setAction(application.getAction(this, "delete"));
+		createButton.setAction(application.getAction(this, "create"));
+		deleteButton.setAction(application.getAction(this, "delete"));
 		
 		addData();
 		createDataBinding();
@@ -109,8 +109,8 @@ public class MasterDetailDemoForm extends JPanel {
 		// add sorting functionality to table.
 		// this has to be done after bindAll(), otherwise tableModel gets overwritten again
 		TableSorter sorter = new TableSorter(
-			m_children.getModel(), m_children.getTableHeader());
-		m_children.setModel(sorter);
+			children.getModel(), children.getTableHeader());
+		children.setModel(sorter);
 	}
 	
 	/**
@@ -118,15 +118,15 @@ public class MasterDetailDemoForm extends JPanel {
 	 */
 	@Action
 	public void create() {
-		if (m_children.getCellEditor() != null) {
-			m_children.getCellEditor().cancelCellEditing();
+		if (children.getCellEditor() != null) {
+			children.getCellEditor().cancelCellEditing();
 		}
 		Person newChild = new DefaultPerson();
 		newChild = PropertyChangeListenerMixin.addPropertyChangeMixin(newChild);
-		newChild.setFirstName(m_firstName.getText());
-		newChild.setLastName(m_lastName.getText());
-		newChild.setSmart(m_smart.isSelected());
-		newChild.setAge(Integer.parseInt(m_age.getText()));
+		newChild.setFirstName(firstName.getText());
+		newChild.setLastName(lastName.getText());
+		newChild.setSmart(smart.isSelected());
+		newChild.setAge(Integer.parseInt(age.getText()));
 		person.getChildren().add(newChild);
 	}
 	
@@ -135,12 +135,12 @@ public class MasterDetailDemoForm extends JPanel {
 	 */
 	@Action
 	public void delete() {
-		if (m_children.getSelectedRow() >= 0) {
-			int selectedRow = m_children.getSelectedRow();
-			if (m_children.getCellEditor() != null) {
-				m_children.getCellEditor().cancelCellEditing();
+		if (children.getSelectedRow() >= 0) {
+			int selectedRow = children.getSelectedRow();
+			if (children.getCellEditor() != null) {
+				children.getCellEditor().cancelCellEditing();
 			}
-			Object o = m_children.getValueAt(selectedRow, 0);
+			Object o = children.getValueAt(selectedRow, 0);
 			if (o != null) {
 				Person selectedPerson = (Person) ((ValidatedProperty) o)
 					.getParent();
@@ -153,15 +153,15 @@ public class MasterDetailDemoForm extends JPanel {
 	 * Create the form components.
 	 */
 	private void createComponents() {
-		m_firstName = new JTextField();
-		m_lastName = new JTextField();
-		m_smart = new JCheckBox();
-		m_age = new IntegerField();
+		firstName = new JTextField();
+		lastName = new JTextField();
+		smart = new JCheckBox();
+		age = new IntegerField();
 		
-		m_children = new JTable();
+		children = new JTable();
 		
-		m_createButton = new JButton();
-		m_deleteButton = new JButton();
+		createButton = new JButton();
+		deleteButton = new JButton();
 	}
 	
 	/**
@@ -175,7 +175,7 @@ public class MasterDetailDemoForm extends JPanel {
 		
 		// add the table to the center
 		//children.setColumnControlVisible(true);
-		JScrollPane scrollPane = new JScrollPane(m_children);
+		JScrollPane scrollPane = new JScrollPane(children);
 		
 		add(scrollPane, BorderLayout.CENTER);
 		
@@ -186,9 +186,9 @@ public class MasterDetailDemoForm extends JPanel {
 		// the first two rows contains a label and a text field each
 
 		// the text fields are twice as wide as the labels
-		layout.row().grid().add(new JLabel("First Name")).add(m_firstName, 2).add(new JLabel("Smart")).add(m_smart, 2);
-		layout.row().grid().add(new JLabel("Last Name")).add(m_lastName, 2).add(new JLabel("Age")).add(m_age, 2);
-		layout.row().grid().add(m_createButton).add(m_deleteButton);
+		layout.row().grid().add(new JLabel("First Name")).add(firstName, 2).add(new JLabel("Smart")).add(smart, 2);
+		layout.row().grid().add(new JLabel("Last Name")).add(lastName, 2).add(new JLabel("Age")).add(age, 2);
+		layout.row().grid().add(createButton).add(deleteButton);
 	}
 	
 	/**
@@ -206,7 +206,7 @@ public class MasterDetailDemoForm extends JPanel {
 			String.class, String.class, Boolean.class, Integer.class};
 
 		// Add table binding
-		binder.addAutoBinding(this, m_children,
+		binder.addAutoBinding(this, children,
 			new TableBinding(propertyNames, columnLabels, columnClasses), true);
 
 		// bind the variable "person" to "this"
@@ -221,15 +221,15 @@ public class MasterDetailDemoForm extends JPanel {
 		Property textP = BeanProperty.create("text");
 
 		binder.addManualBinding(Bindings.createAutoBinding(
-				UpdateStrategy.READ_WRITE, m_children, selectedFirstNameP,
-				m_firstName, textP));
+				UpdateStrategy.READ_WRITE, children, selectedFirstNameP,
+				firstName, textP));
 		
 		// bind last name
 		Property selectedLastNameP = BeanProperty
 			.create("selectedElement.lastName");
 		binder.addManualBinding(Bindings.createAutoBinding(
 			UpdateStrategy.READ_WRITE,
-			m_children, selectedLastNameP, m_lastName, textP));
+			children, selectedLastNameP, lastName, textP));
 		
 		// bind smart property
 		Property selectedSmartP = BeanProperty.create("selectedElement.smart");
@@ -237,13 +237,13 @@ public class MasterDetailDemoForm extends JPanel {
 		
 		binder.addManualBinding(Bindings.createAutoBinding(
 			UpdateStrategy.READ_WRITE,
-			m_children, selectedSmartP, m_smart, selectedP));
+			children, selectedSmartP, smart, selectedP));
 		
 		// bind age property
 		Property selectedAgeP = BeanProperty.create("selectedElement.age");
 		binder.addManualBinding(Bindings.createAutoBinding(
 			UpdateStrategy.READ_WRITE,
-			m_children, selectedAgeP, m_age, textP));
+			children, selectedAgeP, age, textP));
 	}
 	
 	/**

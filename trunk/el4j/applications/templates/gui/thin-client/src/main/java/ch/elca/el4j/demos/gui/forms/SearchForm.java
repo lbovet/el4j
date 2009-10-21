@@ -52,18 +52,18 @@ public class SearchForm extends AbstractSearchForm {
 	/**
 	 * The appFramework application.
 	 */
-	private GUIApplication m_application;
+	private GUIApplication application;
 	
 	/**
 	 * The resource map.
 	 */
-	private ResourceMap m_resourceMap;
+	private ResourceMap resourceMap;
 	
 	/**
 	 * The background search task.
 	 */
 	@SuppressWarnings("unchecked")
-	private Task m_currentSearch = null;
+	private Task currentSearch = null;
 	
 	/**
 	 * The constructor.
@@ -72,10 +72,10 @@ public class SearchForm extends AbstractSearchForm {
 	public SearchForm(GUIApplication application) {
 		super();
 		
-		m_application = application;
-		m_resourceMap = m_application.getContext()
+		this.application = application;
+		resourceMap = application.getContext()
 			.getResourceMap(SearchForm.class);
-		m_searchButton.setAction(m_application.getAction(this, "search"));
+		searchButton.setAction(application.getAction(this, "search"));
 		
 		// Checkstyle: MagicNumber off
 		setPreferredSize(new Dimension(200, 300));
@@ -88,15 +88,15 @@ public class SearchForm extends AbstractSearchForm {
 		super.createOptionalComponents();
 		
 		// Checkstyle: MagicNumber off
-		m_options = new JComponent[4];
-		m_options[0] = new JCheckBox();
-		m_options[0].setName("option0");
-		m_options[1] = new JCheckBox();
-		m_options[1].setName("option1");
-		m_options[2] = new JLabel();
-		m_options[2].setName("info0");
-		m_options[3] = new JLabel();
-		m_options[3].setName("info1");
+		options = new JComponent[4];
+		options[0] = new JCheckBox();
+		options[0].setName("option0");
+		options[1] = new JCheckBox();
+		options[1].setName("option1");
+		options[2] = new JLabel();
+		options[2].setName("info0");
+		options[3] = new JLabel();
+		options[3].setName("info1");
 		// Checkstyle: MagicNumber on
 	}
 	
@@ -110,8 +110,8 @@ public class SearchForm extends AbstractSearchForm {
 		 * The constructor.
 		 */
 		BackgroundSearch() {
-			super(m_application);
-			m_searchButton.setText(getRes("cancel"));
+			super(application);
+			searchButton.setText(getRes("cancel"));
 		}
 
 		/** {@inheritDoc} */
@@ -119,7 +119,7 @@ public class SearchForm extends AbstractSearchForm {
 		protected Void doInBackground() throws InterruptedException {
 			// send refBD event
 			EventBus.publish(new SearchRefDBEvent(new String[]{"description"},
-				"%" + m_searchField.getText() + "%"));
+				"%" + searchField.getText() + "%"));
 			
 			// Checkstyle: MagicNumber off
 			for (int i = 0; i < 10; i++) {
@@ -136,7 +136,7 @@ public class SearchForm extends AbstractSearchForm {
 		@Override
 		protected void succeeded(Void ignored) {
 			sendEvent(getRes("done"));
-			m_searchField.setText(m_searchField.getText() + " found!");
+			searchField.setText(searchField.getText() + " found!");
 		}
 
 		/** {@inheritDoc} */
@@ -150,8 +150,8 @@ public class SearchForm extends AbstractSearchForm {
 		protected void finished() {
 			super.finished();
 			
-			m_searchButton.setText(getRes("search"));
-			m_currentSearch = null;
+			searchButton.setText(getRes("search"));
+			currentSearch = null;
 		}
 		
 		/**
@@ -173,11 +173,11 @@ public class SearchForm extends AbstractSearchForm {
 	@SuppressWarnings("unchecked")
 	@Action
 	public Task search() {
-		if (m_currentSearch == null) {
-			m_currentSearch = new BackgroundSearch();
-			return m_currentSearch;
+		if (currentSearch == null) {
+			currentSearch = new BackgroundSearch();
+			return currentSearch;
 		} else {
-			m_currentSearch.cancel(true);
+			currentSearch.cancel(true);
 			return null;
 		}
 	}
@@ -187,6 +187,6 @@ public class SearchForm extends AbstractSearchForm {
 	 * @return      the String associated with the given resource ID
 	 */
 	protected String getRes(String id) {
-		return m_resourceMap.getString(id);
+		return resourceMap.getString(id);
 	}
 }

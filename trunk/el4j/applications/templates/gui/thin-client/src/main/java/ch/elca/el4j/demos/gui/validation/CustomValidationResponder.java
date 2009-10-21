@@ -48,19 +48,19 @@ public class CustomValidationResponder extends DefaultValidationResponder {
 	/**
 	 * The text component for the validation messages.
 	 */
-	private JComponent m_messageComponent;
+	private JComponent messageComponent;
 	
 	/**
 	 * The current validation message for each component.
 	 */
-	private Map<JComponent, String> m_currentMessages;
+	private Map<JComponent, String> currentMessages;
 	
 	/**
 	 * @param messageComponent    the text component for the validation messages
 	 */
 	public CustomValidationResponder(JComponent messageComponent) {
-		m_messageComponent = messageComponent;
-		m_currentMessages = new HashMap<JComponent, String>();
+		this.messageComponent = messageComponent;
+		currentMessages = new HashMap<JComponent, String>();
 	}
 	
 	/** {@inheritDoc} */
@@ -68,7 +68,7 @@ public class CustomValidationResponder extends DefaultValidationResponder {
 	public void setValid(Object object, JComponent component) {
 		super.setValid(object, component);
 		
-		m_currentMessages.put(component, null);
+		currentMessages.put(component, null);
 		updateMessageText();
 	}
 	
@@ -99,9 +99,9 @@ public class CustomValidationResponder extends DefaultValidationResponder {
 				// get rid of last "<br>"
 				sb.setLength(sb.length() - "<br>".length());
 			}
-			m_currentMessages.put(component, sb.toString());
+			currentMessages.put(component, sb.toString());
 		} else {
-			m_currentMessages.put(component, message);
+			currentMessages.put(component, message);
 		}
 		
 		updateMessageText();
@@ -113,12 +113,12 @@ public class CustomValidationResponder extends DefaultValidationResponder {
 	protected void updateMessageText() {
 		Method setText;
 		try {
-			setText = m_messageComponent.getClass().getMethod("setText",
+			setText = messageComponent.getClass().getMethod("setText",
 				new Class[] {String.class});
 			
 			// collect all validation error messages
 			StringBuilder sb = new StringBuilder("<html>");
-			for (String msg : m_currentMessages.values()) {
+			for (String msg : currentMessages.values()) {
 				if (msg != null) {
 					sb.append(msg).append("<br>");
 				}
@@ -130,9 +130,9 @@ public class CustomValidationResponder extends DefaultValidationResponder {
 			sb.append("</html>");
 			
 			// set the message to the text component
-			setText.invoke(m_messageComponent, sb.toString());
+			setText.invoke(messageComponent, sb.toString());
 		} catch (Exception e) {
-			s_logger.warn(m_messageComponent.toString()
+			s_logger.warn(messageComponent.toString()
 				+ " has no setText method.");
 		}
 	}

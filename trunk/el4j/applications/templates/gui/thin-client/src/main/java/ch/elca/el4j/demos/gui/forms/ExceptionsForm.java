@@ -19,8 +19,6 @@ package ch.elca.el4j.demos.gui.forms;
 import java.awt.BorderLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.lang.reflect.InvocationTargetException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -38,6 +36,8 @@ import org.springframework.stereotype.Component;
 import com.silvermindsoftware.hitch.Binder;
 import com.silvermindsoftware.hitch.BinderManager;
 
+import cookxml.cookswing.CookSwing;
+
 import ch.elca.el4j.core.context.annotations.LazyInit;
 import ch.elca.el4j.services.gui.model.mixin.PropertyChangeListenerMixin;
 import ch.elca.el4j.services.gui.swing.GUIApplication;
@@ -46,8 +46,6 @@ import ch.elca.el4j.services.gui.swing.exceptions.Exceptions;
 import ch.elca.el4j.services.gui.swing.exceptions.Handler;
 import ch.elca.el4j.services.gui.swing.frames.ApplicationFrame;
 import ch.elca.el4j.services.gui.swing.frames.ApplicationFrameAware;
-
-import cookxml.cookswing.CookSwing;
 
 /**
  * This form shows all exceptions that occurred.
@@ -62,25 +60,25 @@ public class ExceptionsForm extends JPanel implements Bindable, Handler, Applica
 	/**
 	 * The list of exception entries.
 	 */
-	protected List<ExceptionEntry> m_exceptions;
+	protected List<ExceptionEntry> exceptions;
 	/**
 	 * The table showing the occurred exceptions.
 	 */
-	protected JTable m_exceptionsTable;
+	protected JTable exceptionsTable;
 	/**
 	 * A text area component to show the stacktrace of the selected exception.
 	 */
-	protected JTextArea m_stacktrace;
+	protected JTextArea stacktrace;
 	
 	/**
 	 * The binder instance variable.
 	 */
-	protected final Binder m_binder = BinderManager.getBinder(this);
+	protected final Binder binder = BinderManager.getBinder(this);
 	
 	/**
 	 * The frame this component is embedded.
 	 */
-	private ApplicationFrame m_applicationFrame;
+	private ApplicationFrame applicationFrame;
 	
 	/**
 	 * This class represents an entry in the table.
@@ -89,33 +87,33 @@ public class ExceptionsForm extends JPanel implements Bindable, Handler, Applica
 		/**
 		 * The time when the exception occurred as String.
 		 */
-		private String m_time;
+		private String time;
 		
 		/**
 		 * The exception.
 		 */
-		private Exception m_exception;
+		private Exception exception;
 		
 		/**
 		 * @param time         The time when the exception occurred as String
 		 * @param exception    The exception
 		 */
 		public ExceptionEntry(String time, Exception exception) {
-			m_time = time;
-			m_exception = exception;
+			this.time = time;
+			this.exception = exception;
 		}
 		
 		/**
 		 * @return Returns the time.
 		 */
 		public String getTime() {
-			return m_time;
+			return time;
 		}
 		/**
 		 * @return Returns the exception.
 		 */
 		public Exception getException() {
-			return m_exception;
+			return exception;
 		}
 	}
 	
@@ -127,37 +125,37 @@ public class ExceptionsForm extends JPanel implements Bindable, Handler, Applica
 		
 		setLayout(new BorderLayout());
 		
-		m_exceptions = PropertyChangeListenerMixin.addPropertyChangeMixin(new ArrayList<ExceptionEntry>());
+		exceptions = PropertyChangeListenerMixin.addPropertyChangeMixin(new ArrayList<ExceptionEntry>());
 		
 		CookSwing cookSwing = new CookSwing(this);
 		cookSwing.render("gui/exceptionForm.xml");
 		
-		m_binder.bindAll();
+		binder.bindAll();
 		
-		m_exceptionsTable.addMouseListener(new MouseAdapter() {
+		exceptionsTable.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				int index = m_exceptionsTable.rowAtPoint(e.getPoint());
+				int index = exceptionsTable.rowAtPoint(e.getPoint());
 				if (index >= 0) {
-					updateStacktrace(m_exceptions.get(index).getException());
+					updateStacktrace(exceptions.get(index).getException());
 				}
 			}
 		});
 		
 		// make first column as small as possible but not smaller than 50 pixel (a bit hacky)
-		m_exceptionsTable.getColumnModel().getColumn(0).setMinWidth(50);
-		m_exceptionsTable.getColumnModel().getColumn(1).setPreferredWidth(5000);
+		exceptionsTable.getColumnModel().getColumn(0).setMinWidth(50);
+		exceptionsTable.getColumnModel().getColumn(1).setPreferredWidth(5000);
 		
 		// adjust font size of stacktrace
-		m_stacktrace.setFont(m_stacktrace.getFont().deriveFont(12.0f));
+		stacktrace.setFont(stacktrace.getFont().deriveFont(12.0f));
 	}
 	
 	/**
 	 * @param e    the exception to display
 	 */
 	private void updateStacktrace(Exception e) {
-		m_stacktrace.setText(ExceptionUtils.getStackTrace(e));
-		m_stacktrace.setCaretPosition(0);
+		stacktrace.setText(ExceptionUtils.getStackTrace(e));
+		stacktrace.setCaretPosition(0);
 	}
 	
 	/**
@@ -165,8 +163,8 @@ public class ExceptionsForm extends JPanel implements Bindable, Handler, Applica
 	 */
 	@Action
 	public void clearList() {
-		m_exceptions.clear();
-		m_stacktrace.setText("");
+		exceptions.clear();
+		stacktrace.setText("");
 	}
 	
 	/**
@@ -174,19 +172,19 @@ public class ExceptionsForm extends JPanel implements Bindable, Handler, Applica
 	 */
 	@Action
 	public void close() {
-		m_applicationFrame.close();
+		applicationFrame.close();
 	}
 	
 	/** {@inheritDoc} */
 	public Binder getBinder() {
-		return m_binder;
+		return binder;
 	}
 	
 	/** {@inheritDoc} */
 	public void setApplicationFrame(ApplicationFrame applicationFrame) {
-		m_applicationFrame = applicationFrame;
-		m_applicationFrame.setMinimizable(true);
-		m_applicationFrame.setMaximizable(true);
+		this.applicationFrame = applicationFrame;
+		applicationFrame.setMinimizable(true);
+		applicationFrame.setMaximizable(true);
 	}
 	
 	/** {@inheritDoc} */
@@ -211,8 +209,8 @@ public class ExceptionsForm extends JPanel implements Bindable, Handler, Applica
 		GUIApplication.getInstance().show("exceptionsForm");
 		
 		SimpleDateFormat fmt = new SimpleDateFormat("HH:mm:ss");
-		m_exceptions.add(0, new ExceptionEntry(fmt.format(new Date()), actualException));
-		m_exceptionsTable.setRowSelectionInterval(m_exceptions.size() - 1, m_exceptions.size() - 1);
+		exceptions.add(0, new ExceptionEntry(fmt.format(new Date()), actualException));
+		exceptionsTable.setRowSelectionInterval(exceptions.size() - 1, exceptions.size() - 1);
 		updateStacktrace(actualException);
 		
 		return false;

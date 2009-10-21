@@ -57,20 +57,20 @@ import net.java.dev.designgridlayout.DesignGridLayout;
 @Form(autoBind = true)
 public class ReferenceEditorForm extends JPanel implements ApplicationFrameAware {
 	/**
-	 * The textfield for a reference name. Bound to m_reference.name (prefix "m_" gets removed).
+	 * The textfield for a reference name. Bound to reference.name (prefix "" gets removed).
 	 */
-	private JTextField m_name;
+	private JTextField name;
 	
 	/**
-	 * The textfield for a reference description. Bound to m_reference.description (prefix "m_" gets removed).
+	 * The textfield for a reference description. Bound to reference.description (prefix "" gets removed).
 	 */
-	private JTextField m_description;
+	private JTextField description;
 	
-	private JButton m_okButton;
-	private JButton m_cancelButton;
+	private JButton okButton;
+	private JButton cancelButton;
 	
 	@ModelObject(isDefault = true)
-	private Reference m_reference = null;
+	private Reference reference = null;
 	
 	
 	/**
@@ -78,17 +78,17 @@ public class ReferenceEditorForm extends JPanel implements ApplicationFrameAware
 	 * SaveRestoreCapability because Cglib2AopProxy is unable to proxy
 	 * final methods.
 	 */
-	private int m_key;
+	private int key;
 	
 	/**
 	 * The binder instance variable.
 	 */
-	private final Binder m_binder = BinderManager.getBinder(this);
+	private final Binder binder = BinderManager.getBinder(this);
 	
 	/**
 	 * The application frame this form is embedded.
 	 */
-	private ApplicationFrame m_applicationFrame;
+	private ApplicationFrame applicationFrame;
 	
 	public ReferenceEditorForm() {
 		GUIApplication application = GUIApplication.getInstance();
@@ -96,25 +96,25 @@ public class ReferenceEditorForm extends JPanel implements ApplicationFrameAware
 		createLayout();
 		
 		// assign actions
-		m_okButton.setAction(application.getAction(this, "applyChanges"));
-		m_cancelButton.setAction(application.getAction(this, "discardChanges"));
+		okButton.setAction(application.getAction(this, "applyChanges"));
+		cancelButton.setAction(application.getAction(this, "discardChanges"));
 	}
 	
 	/**
 	 * @param reference    the reference to be edited on the GUI
 	 */
 	public void setReference(Reference reference) {
-		m_reference = PropertyChangeListenerMixin
+		reference = PropertyChangeListenerMixin
 			.addPropertyChangeMixin(reference);
-		m_key = reference.getKey();
+		key = reference.getKey();
 		
 		// save properties
-		((SaveRestoreCapability) m_reference).save();
+		((SaveRestoreCapability) reference).save();
 		
-		// bind the variable "m_reference" to "this"
+		// bind the variable "reference" to "this"
 		// this interprets the @ModelObject annotation (see above)
-		m_binder.addAutoBinding(this);
-		m_binder.bindAll();
+		binder.addAutoBinding(this);
+		binder.bindAll();
 	}
 	
 	
@@ -123,13 +123,13 @@ public class ReferenceEditorForm extends JPanel implements ApplicationFrameAware
 	 */
 	@Action
 	public void applyChanges() {
-		((SaveRestoreCapability) m_reference).save();
-		m_reference.setKey(m_key);
-		m_binder.removeAll();
+		((SaveRestoreCapability) reference).save();
+		reference.setKey(key);
+		binder.removeAll();
 		
-		EventBus.publish(new ReferenceUpdateEvent(m_reference.getKey()));
-		m_applicationFrame.close();
-		m_reference = null;
+		EventBus.publish(new ReferenceUpdateEvent(reference.getKey()));
+		applicationFrame.close();
+		reference = null;
 	}
 	
 	/**
@@ -137,22 +137,22 @@ public class ReferenceEditorForm extends JPanel implements ApplicationFrameAware
 	 */
 	@Action
 	public void discardChanges() {
-		((SaveRestoreCapability) m_reference).restore();
-		m_reference.setKey(m_key);
-		m_binder.removeAll();
+		((SaveRestoreCapability) reference).restore();
+		reference.setKey(key);
+		binder.removeAll();
 		
-		m_applicationFrame.close();
-		m_reference = null;
+		applicationFrame.close();
+		reference = null;
 	}
 	
 	/**
 	 * Create the form components.
 	 */
 	private void createComponents() {
-		m_name = new JTextField();
-		m_description = new JTextField();
-		m_okButton = new JButton();
-		m_cancelButton = new JButton();
+		name = new JTextField();
+		description = new JTextField();
+		okButton = new JButton();
+		cancelButton = new JButton();
 	}
 	
 	/**
@@ -164,13 +164,13 @@ public class ReferenceEditorForm extends JPanel implements ApplicationFrameAware
 		setLayout(layout);
 
 		// the first two rows contains a label and a text field each
-		layout.row().grid(new JLabel("Name")).add(m_name);
-		layout.row().grid(new JLabel("Description")).add(m_description);
-		layout.row().grid().add(m_okButton).add(m_cancelButton);
+		layout.row().grid(new JLabel("Name")).add(name);
+		layout.row().grid(new JLabel("Description")).add(description);
+		layout.row().grid().add(okButton).add(cancelButton);
 	}
 	
 	/** {@inheritDoc} */
 	public void setApplicationFrame(ApplicationFrame applicationFrame) {
-		m_applicationFrame = applicationFrame;
+		this.applicationFrame = applicationFrame;
 	}
 }

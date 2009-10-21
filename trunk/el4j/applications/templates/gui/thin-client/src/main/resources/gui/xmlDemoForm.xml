@@ -21,13 +21,13 @@
 					<el4j:emptyrow />
 					<el4j:row>
 						<label name="lblFirstName" horizontalalignment="RIGHT" />
-						<textfield cx:var="m_firstName" colspan="2">
-							<el4j:binding src="m_person" property="firstName" updateStrategy="read write" validation="true" />
+						<textfield cx:var="firstName" colspan="2">
+							<el4j:binding src="person" property="firstName" updateStrategy="read write" validation="true" />
 						</textfield>
 						
 						<label name="lblLastName" horizontalalignment="RIGHT" />
-						<textfield cx:var="m_lastName" colspan="2">
-							<el4j:binding src="m_person" property="lastName" updateStrategy="read write" validation="true" />
+						<textfield cx:var="lastName" colspan="2">
+							<el4j:binding src="person" property="lastName" updateStrategy="read write" validation="true" />
 						</textfield>
 					</el4j:row>
 					<el4j:row>
@@ -35,14 +35,14 @@
 						
 						<label name="lblAge" horizontalalignment="RIGHT" />
 						<cc:object cx:ctor="ch.elca.el4j.demos.gui.widgets.IntegerField" colspan="2">
-							<el4j:binding src="m_person" property="age" updateStrategy="read write" validation="true" />
+							<el4j:binding src="person" property="age" updateStrategy="read write" validation="true" />
 						</cc:object>
 					</el4j:row>
 					<el4j:row align="center">
 						<button action="info" />
 					</el4j:row>
 					<el4j:row >
-						<label cx:var="m_statusLabel" />
+						<label cx:var="statusLabel" />
 					</el4j:row>
 				</el4j:designgridlayout>
 			</panel>
@@ -50,7 +50,7 @@
 		<constraint location="Center">
 			<scrollpane>
 				<table>
-					<el4j:tablebinding src="m_persons" updateStrategy="read write" validation="true">
+					<el4j:tablebinding src="persons" updateStrategy="read write" validation="true">
 						<el4j:column label="@FirstName" property="firstName" editable="true" />
 						<el4j:column label="@LastName" property="lastName" />
 						<el4j:column label="@Age" property="age" class="java.lang.Integer" editable="true" />
@@ -60,7 +60,7 @@
 		</constraint>
 		<constraint location="South">
 			<combobox>
-				<el4j:comboboxbinding src="m_person.children" property="firstName" />
+				<el4j:comboboxbinding src="person.children" property="firstName" />
 			</combobox>
 		</constraint>
 	</borderlayout>

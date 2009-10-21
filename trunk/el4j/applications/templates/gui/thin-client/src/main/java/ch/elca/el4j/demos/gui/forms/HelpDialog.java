@@ -43,19 +43,19 @@ public class HelpDialog extends JPanel {
 	/**
 	 * The resource map.
 	 */
-	protected ResourceMap m_resourceMap;
+	protected ResourceMap resourceMap;
 
 	/**
 	 * The text when no help is available.
 	 */
-	protected JLabel m_infoLabel;
+	protected JLabel infoLabel;
 	
 	/**
 	 * @param application   the GUI application
 	 */
 	@Autowired
 	public HelpDialog(GUIApplication application) {
-		m_resourceMap = application.getContext().getResourceMap(HelpDialog.class);
+		resourceMap = application.getContext().getResourceMap(HelpDialog.class);
 		// create the form layout
 		BorderLayout layout = new BorderLayout();
 		setLayout(layout);
@@ -63,7 +63,7 @@ public class HelpDialog extends JPanel {
 		
 
 		// inject values from properties file
-		m_resourceMap.injectComponents(this);
+		resourceMap.injectComponents(this);
 	}
 	
 	/**
@@ -71,9 +71,9 @@ public class HelpDialog extends JPanel {
 	 */
 	private void createComponents() {
 		
-		m_infoLabel = new JLabel(getNoHelpText());
-		m_infoLabel.setName("infoLabel");
-		add(m_infoLabel, BorderLayout.CENTER);
+		infoLabel = new JLabel(getNoHelpText());
+		infoLabel.setName("infoLabel");
+		add(infoLabel, BorderLayout.CENTER);
 		setBorder(new EmptyBorder(10, 10, 10, 10));
 		
 	}
@@ -90,7 +90,7 @@ public class HelpDialog extends JPanel {
 	 * @return      the String associated with the given resource ID
 	 */
 	protected String getRes(String id) {
-		return m_resourceMap.getString(id);
+		return resourceMap.getString(id);
 	}
 
 

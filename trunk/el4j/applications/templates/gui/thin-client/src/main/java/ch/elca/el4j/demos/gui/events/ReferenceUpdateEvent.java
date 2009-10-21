@@ -27,27 +27,27 @@ public class ReferenceUpdateEvent {
 	/**
 	 * The key of the reference.
 	 */
-	private int m_key;
+	private int key;
 	
 	/**
 	 * @param key    set the key of the reference
 	 */
 	public ReferenceUpdateEvent(int key) {
-		m_key = key;
+		this.key = key;
 	}
 
 	/**
 	 * @return    the key of the reference
 	 */
 	public int getKey() {
-		return m_key;
+		return key;
 	}
 
 	/**
 	 * @param key    set the key of the reference
 	 */
 	public void setKey(int key) {
-		m_key = key;
+		this.key = key;
 	}
 
 }

@@ -50,17 +50,17 @@ public abstract class DockingApplication extends GUIApplication {
 	/**
 	 * The tool window manager.
 	 */
-	protected ToolWindowManager m_toolWindowManager = null;
+	protected ToolWindowManager toolWindowManager = null;
 	
 	/**
 	 * @return    the current {@link ToolWindowManager}.
 	 */
 	public ToolWindowManager getToolWindowManager() {
-		if (m_toolWindowManager == null) {
+		if (toolWindowManager == null) {
 			// Create a new instance of MyDoggyToolWindowManager
-			m_toolWindowManager = new MyDoggyToolWindowManager();
+			toolWindowManager = new MyDoggyToolWindowManager();
 		}
-		return m_toolWindowManager;
+		return toolWindowManager;
 	}
 	
 	/** {@inheritDoc} */
@@ -85,10 +85,10 @@ public abstract class DockingApplication extends GUIApplication {
 	public void show(String beanName, String toolWindowId, ToolWindowAnchor anchor)
 		throws NoSuchBeanDefinitionException {
 		
-		if (!m_springContext.containsBean(beanName)) {
+		if (!springContext.containsBean(beanName)) {
 			throw new NoSuchBeanDefinitionException(beanName);
 		}
-		show((JPanel) m_springContext.getBean(beanName), toolWindowId, anchor);
+		show((JPanel) springContext.getBean(beanName), toolWindowId, anchor);
 	}
 	
 	/**
@@ -108,7 +108,7 @@ public abstract class DockingApplication extends GUIApplication {
 	 * @param frame    the frame to show as content
 	 */
 	public void showContent(ContentApplicationFrame frame) {
-		ContentManager contentManager = m_toolWindowManager.getContentManager();
+		ContentManager contentManager = toolWindowManager.getContentManager();
 		Content content = (Content) frame.getFrame();
 		if (content == null) {
 			ContentConfiguration config = frame.getConfiguration();
@@ -135,9 +135,9 @@ public abstract class DockingApplication extends GUIApplication {
 		if (frame.getFrame() == null) {
 			ToolWindowTab toolWindowTab = null;
 			ToolWindowTabConfiguration config = frame.getConfiguration();
-			ToolWindow toolWindow = m_toolWindowManager.getToolWindow(config.getId());
+			ToolWindow toolWindow = toolWindowManager.getToolWindow(config.getId());
 			if (toolWindow == null) {
-				toolWindow = m_toolWindowManager.registerToolWindow(config.getId(), config.getTitle(),
+				toolWindow = toolWindowManager.registerToolWindow(config.getId(), config.getTitle(),
 					config.getIcon(), config.getComponent(), config.getAnchor());
 				
 				DockedTypeDescriptor typeDescriptor = (DockedTypeDescriptor)
@@ -147,7 +147,7 @@ public abstract class DockingApplication extends GUIApplication {
 				typeDescriptor.setToolWindowActionHandler(new ToolWindowActionHandler() {
 					public void onHideButtonClick(ToolWindow toolWindow) {
 						frame.close();
-						m_toolWindowManager.unregisterToolWindow(toolWindow.getId());
+						toolWindowManager.unregisterToolWindow(toolWindow.getId());
 					}
 				});
 				toolWindowTab = toolWindow.getToolWindowTabs()[0];

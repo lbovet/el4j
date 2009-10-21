@@ -68,7 +68,7 @@ import cookxml.cookswing.CookSwing;
  * a simple editor ({@link ReferenceEditorForm}) that allows editing the
  * selected entry.
  *
- * Binding is done manually (see m_listBinding.getSpecialBinding).
+ * Binding is done manually (see listBinding.getSpecialBinding).
  * This form listens to two events:
  * <ul>
  *   <li>ReferenceUpdateEvent: The editor commits the changes: we need to
@@ -84,45 +84,45 @@ import cookxml.cookswing.CookSwing;
 @LazyInit
 @Component("refDBDemoForm")
 public class RefDBDemoForm extends JPanel implements Bindable {
-	protected JTextField m_name;
-	protected JTextField m_authorName;
-	protected JTextField m_description;
-	protected JCheckBox m_incomplete;
+	protected JTextField name;
+	protected JTextField authorName;
+	protected JTextField description;
+	protected JCheckBox incomplete;
 	
-	protected JButton m_createButton;
-	protected JButton m_deleteButton;
+	protected JButton createButton;
+	protected JButton deleteButton;
 	
-	protected boolean m_create;
+	protected boolean create;
 	
-	protected JTable m_references;
+	protected JTable references;
 	
 	/**
 	 * The list of references.
 	 */
-	protected List<Reference> m_refList;
+	protected List<Reference> refList;
 	
 	/**
 	 * The manually created list binding.
 	 */
 	@SuppressWarnings("unchecked")
-	protected AutoBinding m_listBinding;
+	protected AutoBinding listBinding;
 	
 	/**
 	 * The model to bind to this form.
 	 */
-	protected ReferenceService m_service;
+	protected ReferenceService service;
 	
 	/**
 	 * The binder instance variable.
 	 */
-	protected final Binder m_binder = BinderManager.getBinder(this);
+	protected final Binder binder = BinderManager.getBinder(this);
 	
 	public RefDBDemoForm() {
 		loadModel();
 
 		createUI();
 		
-		m_binder.bindAll();
+		binder.bindAll();
 		
 		createDataBinding();
 	}
@@ -136,7 +136,7 @@ public class RefDBDemoForm extends JPanel implements Bindable {
 	
 	/** {@inheritDoc} */
 	public Binder getBinder() {
-		return m_binder;
+		return binder;
 	}
 	
 	/**
@@ -146,17 +146,17 @@ public class RefDBDemoForm extends JPanel implements Bindable {
 	public void create() {
 		
 		Book newRef = new Book();
-		newRef.setName(m_name.getText());
-		newRef.setDescription(m_description.getText());
-		newRef.setAuthorName(m_authorName.getText());
-		newRef.setIncomplete(m_incomplete.isSelected());
+		newRef.setName(name.getText());
+		newRef.setDescription(description.getText());
+		newRef.setAuthorName(authorName.getText());
+		newRef.setIncomplete(incomplete.isSelected());
 		
-		m_refList.add(m_service.saveReference(newRef));
+		refList.add(service.saveReference(newRef));
 		
-		m_name.setText("");
-		m_authorName.setText("");
-		m_description.setText("");
-		m_incomplete.setSelected(false);
+		name.setText("");
+		authorName.setText("");
+		description.setText("");
+		incomplete.setSelected(false);
 	}
 	
 	/**
@@ -164,15 +164,15 @@ public class RefDBDemoForm extends JPanel implements Bindable {
 	 */
 	@Action
 	public void delete() {
-		if (m_references.getSelectedRow() >= 0) {
-			int selectedRow = m_references.getSelectedRow();
+		if (references.getSelectedRow() >= 0) {
+			int selectedRow = references.getSelectedRow();
 			
-			Object o = m_references.getValueAt(selectedRow, 0);
+			Object o = references.getValueAt(selectedRow, 0);
 			if (o != null) {
 				Reference selectedReference
 					= (Reference) ((ValidatedProperty) o).getParent();
-				m_service.deleteReference(selectedReference.getKey());
-				m_refList.remove(selectedReference);
+				service.deleteReference(selectedReference.getKey());
+				refList.remove(selectedReference);
 			}
 		}
 	}
@@ -182,7 +182,7 @@ public class RefDBDemoForm extends JPanel implements Bindable {
 	 * @return if the user is allowed to create.
 	 */
 	public boolean isCreate() {
-		return m_create;
+		return create;
 	}
 
 	/**
@@ -190,10 +190,10 @@ public class RefDBDemoForm extends JPanel implements Bindable {
 	 * Fires a property change.
 	 */
 	public void updateCreate() {
-		boolean oldCreate = m_create;
-		m_create = (m_name != null && m_name.getText().length() > 0 
-			&& m_authorName != null && m_authorName.getText().length() > 2);
-		firePropertyChange("create", oldCreate, m_create);
+		boolean oldCreate = create;
+		create = (name != null && name.getText().length() > 0 
+			&& authorName != null && authorName.getText().length() > 2);
+		firePropertyChange("create", oldCreate, create);
 	}
 	
 	/**
@@ -208,30 +208,30 @@ public class RefDBDemoForm extends JPanel implements Bindable {
 
 		// the first two rows contains a label and a text field each
 		
-		layout.row().grid().add(new JLabel("Name")).add(m_name);
-		layout.row().grid().add(new JLabel("Author")).add(m_authorName);
-		layout.row().grid().add(new JLabel("Description")).add(m_description);
-		layout.row().grid().add(new JLabel("Incomplete")).add(m_incomplete);
-		layout.row().grid().add(m_createButton).add(m_deleteButton);
-		m_createButton.setEnabled(false);
+		layout.row().grid().add(new JLabel("Name")).add(name);
+		layout.row().grid().add(new JLabel("Author")).add(authorName);
+		layout.row().grid().add(new JLabel("Description")).add(description);
+		layout.row().grid().add(new JLabel("Incomplete")).add(incomplete);
+		layout.row().grid().add(createButton).add(deleteButton);
+		createButton.setEnabled(false);
 	}
 
 	protected void loadModel() {
 		GUIApplication app = GUIApplication.getInstance();
 		ServiceBroker.setApplicationContext(
 			app.getSpringContext());
-		m_service = ServiceBroker.getReferenceService();
+		service = ServiceBroker.getReferenceService();
 		
 		// It would be possible to add the property change mixin directly
 		// to the service, which guarantees that all lists coming from the
 		// service automatically are observable. The problem is that this
 		// currently doesn't work if service is remote.
-		//m_service = PropertyChangeListenerMixin
-		//        .addPropertyChangeMixin(m_service);
+		//service = PropertyChangeListenerMixin
+		//        .addPropertyChangeMixin(service);
 		// So we need to add this mixin to all lists received from the service.
 		
-		m_refList = PropertyChangeListenerMixin
-			.addPropertyChangeMixin(m_service.getAllReferences());
+		refList = PropertyChangeListenerMixin
+			.addPropertyChangeMixin(service.getAllReferences());
 	}
 	/**
 	 * Bind the model to the table.
@@ -240,33 +240,33 @@ public class RefDBDemoForm extends JPanel implements Bindable {
 	protected void createDataBinding() {
 		//updateBinding();
 		
-		m_references.setRowSelectionAllowed(true);
-		m_references.setColumnSelectionAllowed(true);
+		references.setRowSelectionAllowed(true);
+		references.setColumnSelectionAllowed(true);
 		// select first entry
-		if (m_refList.size() > 0) {
-			m_references.setRowSelectionInterval(0, 0);
-			m_references.setColumnSelectionInterval(0,
-				m_references.getColumnCount() - 1);
+		if (refList.size() > 0) {
+			references.setRowSelectionInterval(0, 0);
+			references.setColumnSelectionInterval(0,
+				references.getColumnCount() - 1);
 		}
 		
-		m_references.addMouseListener(new MouseAdapter() {
+		references.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
 				// make the whole row selected.
-				int index = m_references.rowAtPoint(e.getPoint());
+				int index = references.rowAtPoint(e.getPoint());
 				
 				if (index >= 0) {
-					m_references.setRowSelectionInterval(index, index);
-					m_references.setColumnSelectionInterval(0,
-						m_references.getColumnCount() - 1);
+					references.setRowSelectionInterval(index, index);
+					references.setColumnSelectionInterval(0,
+						references.getColumnCount() - 1);
 				}
 			}
 			
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				int index = m_references.rowAtPoint(e.getPoint());
+				int index = references.rowAtPoint(e.getPoint());
 				if (index >= 0 && e.getClickCount() == 2) {
-					TableModel dlm = m_references.getModel();
+					TableModel dlm = references.getModel();
 					Object item = dlm.getValueAt(index, 0);
 					if (item instanceof ValidatedProperty) {
 						ValidatedProperty p = (ValidatedProperty) item;
@@ -283,20 +283,20 @@ public class RefDBDemoForm extends JPanel implements Bindable {
 			}
 		});
 		
-		m_listBinding.addBindingListener(new AbstractBindingListener() {
+		listBinding.addBindingListener(new AbstractBindingListener() {
 			@Override
 			public void synced(Binding binding) {
 				if (binding.getSourceObject() instanceof Reference) {
 					Reference r = (Reference) binding.getSourceObject();
 					try {
-						m_service.saveReference(r);
+						service.saveReference(r);
 					} catch (Throwable t) {
 						// reload value on optimistic locking exception
-						for (int i = 0; i < m_refList.size(); i++) {
-							if (m_refList.get(i).equals(r)) {
-								m_refList.remove(i);
-								m_refList.add(i,
-									m_service.getReferenceByKey(r.getKey()));
+						for (int i = 0; i < refList.size(); i++) {
+							if (refList.get(i).equals(r)) {
+								refList.remove(i);
+								refList.add(i,
+									service.getReferenceByKey(r.getKey()));
 								break;
 							}
 						}
@@ -305,7 +305,7 @@ public class RefDBDemoForm extends JPanel implements Bindable {
 			}
 		});
 		
-		m_name.getDocument().addDocumentListener(new DocumentListener() {
+		name.getDocument().addDocumentListener(new DocumentListener() {
 			public void changedUpdate(DocumentEvent e) {
 				updateCreate();
 			}
@@ -319,7 +319,7 @@ public class RefDBDemoForm extends JPanel implements Bindable {
 			}
 		});
 		
-		m_authorName.getDocument().addDocumentListener(new DocumentListener() {
+		authorName.getDocument().addDocumentListener(new DocumentListener() {
 			public void changedUpdate(DocumentEvent e) {
 				updateCreate();
 			}
@@ -341,18 +341,18 @@ public class RefDBDemoForm extends JPanel implements Bindable {
 	 */
 	@EventSubscriber
 	public void onEvent(ReferenceUpdateEvent event) {
-		for (int i = 0; i < m_refList.size(); i++) {
-			if (m_refList.get(i).getKey() == event.getKey()) {
-				Reference ref = m_refList.get(i);
+		for (int i = 0; i < refList.size(); i++) {
+			if (refList.get(i).getKey() == event.getKey()) {
+				Reference ref = refList.get(i);
 				try {
-					Reference r = m_service.saveReference(ref);
+					Reference r = service.saveReference(ref);
 					// update entry (version!)
-					m_refList.remove(i);
-					m_refList.add(i, r);
+					refList.remove(i);
+					refList.add(i, r);
 				} catch (Throwable t) {
 					// reload value on optimistic locking exception
-					m_refList.remove(i);
-					m_refList.add(i, m_service.getReferenceByKey(ref.getKey()));
+					refList.remove(i);
+					refList.add(i, service.getReferenceByKey(ref.getKey()));
 					break;
 				}
 				break;
@@ -371,18 +371,18 @@ public class RefDBDemoForm extends JPanel implements Bindable {
 		query.addCriteria(LikeCriteria.caseInsensitive(
 			event.getFields()[0], event.getValue()));
 		
-		// do not reassign m_refList, otherwise you need to setup the whole
+		// do not reassign refList, otherwise you need to setup the whole
 		// property change mechanism and the binding!
-		m_binder.unbindAll();
-		m_refList.clear();
-		m_refList.addAll(m_service.searchReferences(query));
-		m_binder.bindAll();
+		binder.unbindAll();
+		refList.clear();
+		refList.addAll(service.searchReferences(query));
+		binder.bindAll();
 		
 		// select first entry
-		if (m_refList.size() > 0) {
-			m_references.setRowSelectionInterval(0, 0);
-			m_references.setColumnSelectionInterval(0,
-				m_references.getColumnCount() - 1);
+		if (refList.size() > 0) {
+			references.setRowSelectionInterval(0, 0);
+			references.setColumnSelectionInterval(0,
+				references.getColumnCount() - 1);
 		}
 	}
 }

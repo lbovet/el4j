@@ -56,20 +56,20 @@ import net.java.dev.designgridlayout.DesignGridLayout;
 @Form(autoBind = true)
 public class CancelableDemoForm extends JPanel {
 	/**
-	 * The first name. Bound to the model (m_person.firstName ; prefix "m_" gets removed)
+	 * The first name. Bound to the model (person.firstName ; prefix "" gets removed)
 	 */
-	private JTextField m_firstName;
+	private JTextField firstName;
 	
-	private JButton m_okButton;
-	private JButton m_cancelButton;
+	private JButton okButton;
+	private JButton cancelButton;
 	
 	@ModelObject(isDefault = true)
-	private Person m_person;
+	private Person person;
 	
 	/**
 	 * The binder instance variable.
 	 */
-	private final Binder m_binder = BinderManager.getBinder(this);
+	private final Binder binder = BinderManager.getBinder(this);
 	
 	@Autowired
 	public CancelableDemoForm(GUIApplication application) {
@@ -77,42 +77,42 @@ public class CancelableDemoForm extends JPanel {
 		createLayout();
 		
 		// assign actions
-		m_okButton.setAction(application.getAction(this, "applyChanges"));
-		m_cancelButton.setAction(application.getAction(this, "discardChanges"));
+		okButton.setAction(application.getAction(this, "applyChanges"));
+		cancelButton.setAction(application.getAction(this, "discardChanges"));
 		
 		// creating model entirely programmatically:
-		m_person = new DefaultPerson();
-		m_person = PropertyChangeListenerMixin.addPropertyChangeMixin(m_person);
+		person = new DefaultPerson();
+		person = PropertyChangeListenerMixin.addPropertyChangeMixin(person);
 
 		// initialize model
-		m_person.setFirstName("Nobody");
+		person.setFirstName("Nobody");
 		
 		// save properties
-		((SaveRestoreCapability) m_person).save();
+		((SaveRestoreCapability) person).save();
 		
 		// bind the variable "person" to "this"
 		// this interprets the @ModelObject annotation (see above)
-		m_binder.addAutoBinding(this);
-		m_binder.bindAll();
+		binder.addAutoBinding(this);
+		binder.bindAll();
 	}
 	
 	@Action
 	public void applyChanges() {
-		((SaveRestoreCapability) m_person).save();
+		((SaveRestoreCapability) person).save();
 	}
 	
 	@Action
 	public void discardChanges() {
-		((SaveRestoreCapability) m_person).restore();
+		((SaveRestoreCapability) person).restore();
 	}
 	
 	/**
 	 * Create the form components.
 	 */
 	private void createComponents() {
-		m_firstName = new JTextField();
-		m_okButton = new JButton();
-		m_cancelButton = new JButton();
+		firstName = new JTextField();
+		okButton = new JButton();
+		cancelButton = new JButton();
 	}
 	
 	/**
@@ -124,7 +124,7 @@ public class CancelableDemoForm extends JPanel {
 		setLayout(layout);
 
 		// the first two rows contains a label and a text field each
-		layout.row().grid(new JLabel("First Name")).add(m_firstName);
-		layout.row().grid().add(m_okButton).add(m_cancelButton);
+		layout.row().grid(new JLabel("First Name")).add(firstName);
+		layout.row().grid().add(okButton).add(cancelButton);
 	}
 }
