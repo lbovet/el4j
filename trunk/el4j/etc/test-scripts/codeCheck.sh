@@ -12,7 +12,7 @@ cd $1
 #################
 types="java xml xsd wsdl html xhtml css"
 # xsl not included
-excludeFolders="\./sandbox/ \./maven/demos/svn-m2repo"
+excludeFolders="\./sandbox/ \./maven/demos/svn-m2repo \./maven/demos/smb-m2repo"
 
 
 echo "Searching for all included files ($types)..."
