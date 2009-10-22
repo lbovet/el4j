@@ -1,5 +1,5 @@
 /*
-+ * EL4J, the Extension Library for the J2EE, adds incremental enhancements to
+ * EL4J, the Extension Library for the J2EE, adds incremental enhancements to
  * the spring framework, http://el4j.sf.net
  * Copyright (C) 2008 by ELCA Informatique SA, Av. de la Harpe 22-24,
  * 1000 Lausanne, Switzerland, http://www.elca.ch
@@ -26,16 +26,10 @@ import ch.elca.el4j.util.codingsupport.JodaTimeUtils;
  * 
  * This class is a TableCellRenderer that outputs JodaTime DateTimes nicely.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Daniel Thomas (DTH)
  */
-
 public class JodaTimeTableCellRenderer extends DefaultTableCellRenderer {
 	
 	/**

@@ -33,17 +33,11 @@ import org.joda.time.LocalTime;
 import ch.elca.el4j.services.persistence.generic.dto.AbstractIntKeyIntOptimisticLockingDto;
 import ch.elca.el4j.util.codingsupport.JodaTimeUtils;
 
-
 /**
  * 
  * This class a work element defined over a day.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Daniel Thomas (DTH)
  */

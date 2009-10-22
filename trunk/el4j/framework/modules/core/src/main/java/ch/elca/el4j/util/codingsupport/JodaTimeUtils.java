@@ -21,8 +21,6 @@ import java.util.Locale;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalTime;
-import org.joda.time.MutableDateTime;
-import org.joda.time.ReadWritableInstant;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
@@ -30,16 +28,10 @@ import org.joda.time.format.DateTimeFormatter;
  * 
  * This class is a class providing static mehtods for conversion between JodaTime formats and strings.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Daniel Thomas (DTH)
  */
-
 public class JodaTimeUtils {
 	
 	
