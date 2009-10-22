@@ -100,19 +100,36 @@ public class ColorLogger extends AbstractFormattingLogger {
 
 	/** {@inheritDoc} */
 	protected String getPrefix(int level) {
-		switch(level) {
-			case LEVEL_DEBUG:
-				return Ansi.ansi(Ansi.FGCYAN);
-			case LEVEL_INFO:
-				return Ansi.ansi(Ansi.FGBLUE);
-			case LEVEL_WARN:
-				return Ansi.ansi(Ansi.FGMAGENTA);
-			case LEVEL_ERROR:
-				return Ansi.ansi(Ansi.FGRED);
-			case LEVEL_FATAL:
-				return Ansi.ansi(Ansi.BGBLACK, Ansi.FGYELLOW);
-			default:
-				throw new RuntimeException("Invalid level.");
+		if (System.getProperty("colorlogger.whiteConsole") != null) {
+			switch(level) {
+				case LEVEL_DEBUG:
+					return Ansi.ansi(Ansi.FGCYAN);
+				case LEVEL_INFO:
+					return Ansi.ansi(Ansi.FGBLUE);
+				case LEVEL_WARN:
+					return Ansi.ansi(Ansi.FGMAGENTA);
+				case LEVEL_ERROR:
+					return Ansi.ansi(Ansi.FGRED);
+				case LEVEL_FATAL:
+					return Ansi.ansi(Ansi.BGBLACK, Ansi.FGYELLOW);
+				default:
+					throw new RuntimeException("Invalid level.");
+			}
+		} else {
+			switch(level) {
+				case LEVEL_DEBUG:
+					return Ansi.ansi(Ansi.INTENSE, Ansi.FGWHITE);
+				case LEVEL_INFO:
+					return Ansi.ansi(Ansi.FGWHITE);
+				case LEVEL_WARN:
+					return Ansi.ansi(Ansi.INTENSE, Ansi.FGYELLOW);
+				case LEVEL_ERROR:
+					return Ansi.ansi(Ansi.INTENSE, Ansi.FGRED);
+				case LEVEL_FATAL:
+					return Ansi.ansi(Ansi.BGRED, Ansi.INTENSE, Ansi.FGWHITE);
+				default:
+					throw new RuntimeException("Invalid level.");
+			}
 		}
 		
 	}
