@@ -22,6 +22,7 @@ echo "" > files.tmp
 for i in $types ; do
 	cat all_files.tmp | grep "\.$i$" >> files.tmp
 done
+cat all_files.tmp | grep "pom.xml" >> pomXmlFiles.tmp
 rm all_files.tmp
 
 for i in $excludeFolders ; do
@@ -100,6 +101,25 @@ echo "Checking for commons-logging (use slf4j instead)..."
 		echo "commons-logging found! Use 'mvn dependency:tree' to find out where."
 		result=1
 	fi
+echo "done"
+
+echo "Checking for unknown repositories..."
+allowedRepoList=external/etc/test-scripts/allowedRepositories.txt
+for i in $(cat pomXmlFiles.tmp) ; do
+	xml2 < "$i" | grep "/project/repositories/repository/url" | cut -d= -f 2 > repos.tmp
+	xml2 < "$i" | grep "/project/pluginRepositories/pluginRepository/url" | cut -d= -f 2 >> repos.tmp
+	for repo in $(cat repos.tmp) ; do
+		count=$(grep $repo ../$allowedRepoList | wc -l)
+		if [ $count == "0" ] ; then
+			echo "Unknown repository found: $repo (in $i)"
+			echo "Please add this file to nexus and register it in " $allowedRepoList
+			echo ""
+			result=1
+		fi
+	done
+done
+rm repos.tmp
+rm pomXmlFiles.tmp
 echo "done"
 
 rm current.tmp
