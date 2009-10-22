@@ -75,7 +75,7 @@ public class HibernateBookDao
 			}
 			Iterator it2 = resultList.iterator();
 			currentList = (List) it2.next();
-			List nextList = new ArrayList();
+			List nextList = null;
 			while (it2.hasNext()) {
 				nextList = (List) it2.next();
 				currentList.retainAll(nextList);

@@ -60,7 +60,7 @@ import ch.elca.el4j.util.codingsupport.Reject;
  * @author Alex Mathey (AMA)
  */
 public class DefaultReferenceService extends DefaultKeywordService
-	implements ReferenceService, ModuleApplicationListener {
+	implements ReferenceService {
 	
 	/**
 	 * Constructor.

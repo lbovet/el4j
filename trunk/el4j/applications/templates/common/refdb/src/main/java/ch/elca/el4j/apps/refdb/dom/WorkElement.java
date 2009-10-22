@@ -44,7 +44,7 @@ import ch.elca.el4j.util.codingsupport.JodaTimeUtils;
 @Entity
 @Table(name = "WORKELEMENTS")
 @SequenceGenerator(name = "keyid_generator", sequenceName = "workelement_sequence")
-public class WorkElement extends AbstractIntKeyIntOptimisticLockingDto implements Serializable {
+public class WorkElement extends AbstractIntKeyIntOptimisticLockingDto {
 
 	/** The date on which the work was done. */
 	private LocalDate m_day;

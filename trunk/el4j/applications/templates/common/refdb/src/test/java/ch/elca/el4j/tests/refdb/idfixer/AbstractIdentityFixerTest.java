@@ -265,7 +265,7 @@ public abstract class AbstractIdentityFixerTest extends AbstractTestCaseBase {
 	/** Records the first change notification received. */
 	// the order of update notifications is not specified. This test depends on
 	// it only to keep the implementation simple.
-	private class UpdateRecorder implements DaoChangeListener {
+	private static class UpdateRecorder implements DaoChangeListener {
 		/** the first change recorded, or null if there wasn't any so far. */
 		Change m_change;
 		
