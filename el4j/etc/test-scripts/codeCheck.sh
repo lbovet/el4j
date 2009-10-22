@@ -109,7 +109,7 @@ for i in $(cat pomXmlFiles.tmp) ; do
 	xml2 < "$i" | grep "/project/repositories/repository/url" | cut -d= -f 2 > repos.tmp
 	xml2 < "$i" | grep "/project/pluginRepositories/pluginRepository/url" | cut -d= -f 2 >> repos.tmp
 	for repo in $(cat repos.tmp) ; do
-		count=$(grep $repo ../$allowedRepoList | wc -l)
+		count=$(grep "^$repo" ../$allowedRepoList | wc -l)
 		if [ $count == "0" ] ; then
 			echo "Unknown repository found: $repo (in $i)"
 			echo "Please add this file to nexus and register it in " $allowedRepoList
