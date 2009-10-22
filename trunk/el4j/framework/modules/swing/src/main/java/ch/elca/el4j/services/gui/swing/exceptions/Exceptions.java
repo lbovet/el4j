@@ -21,6 +21,8 @@ import java.io.StringWriter;
 import java.util.Comparator;
 import java.util.PriorityQueue;
 
+import org.apache.commons.lang.exception.ExceptionUtils;
+
 /**
  * This Exception Handler Manager allows to register Exception Handlers. If an uncaught exception occurs,
  * the handlers get executed in the order of their priority until a handler signals that no further handler
@@ -99,9 +101,7 @@ public final class Exceptions implements Thread.UncaughtExceptionHandler {
 			e.printStackTrace(System.err);
 			
 			// open exception dialog
-			StringWriter sw = new StringWriter();
-			e.printStackTrace(new PrintWriter(sw));
-			new ExceptionDialog(sw.toString()).setVisible(true);
+			new ExceptionDialog(ExceptionUtils.getFullStackTrace(e)).setVisible(true);
 		}
 	}
 	
