@@ -33,13 +33,9 @@
 					<el4j:row>
 						<label name="lblBornInYear" horizontalalignment="RIGHT" />
 						<el4j:create-component create-method="getJodaDateTimePicker"> 
-						<el4j:binding src="m_person"  property="bornOnThe"
+						<el4j:binding src="person"  property="bornOnThe"
 								updateStrategy="read write" validation="true" />
-						</el4j:create-component>		
-						<!-- <cc:object cx:var="m_bornInYear" cx:ctor="ch.elca.el4j.demos.gui.widgets.JodaTimeDatePicker"
-							colspan="1">  
-							
-						</cc:object> -->
+						</el4j:create-component>
 						<label name="lblAge" horizontalalignment="RIGHT" />
 						<cc:object cx:ctor="ch.elca.el4j.demos.gui.widgets.IntegerField" colspan="2">
 							<el4j:binding src="person" property="age" updateStrategy="read write" validation="true" />
@@ -56,7 +52,7 @@
 		</constraint>
 		<constraint location="Center">
 			<scrollpane>
-				<table>
+				<table cx:var="myTable">
 					<el4j:tablebinding src="persons" updateStrategy="read write" validation="true">
 						<el4j:column label="@FirstName" property="firstName" editable="true" />
 						<el4j:column label="@LastName" property="lastName" />

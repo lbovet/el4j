@@ -71,7 +71,7 @@ public class XMLDemoForm extends JPanel implements Bindable {
 	private JLabel statusLabel;
 	private Person person;
 	private List<Person> persons;
-	private JTable table;
+	private JTable myTable;
 	private final Binder binder = BinderManager.getBinder(this);
 	
 	public XMLDemoForm() {
@@ -89,7 +89,7 @@ public class XMLDemoForm extends JPanel implements Bindable {
 		binder.bindAll();
 		
 		// sets our own renderer for DateTime objects
-		table.setDefaultRenderer(org.joda.time.DateTime.class, new JodaTimeTableCellRenderer());
+		myTable.setDefaultRenderer(org.joda.time.DateTime.class, new JodaTimeTableCellRenderer());
 
 		
 	}
