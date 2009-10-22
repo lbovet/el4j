@@ -140,3 +140,6 @@ file_export_version=3.0
 /instance/org.eclipse.jdt.core/org.eclipse.jdt.core.compiler.problem.missingSerialVersion=ignore
 /instance/org.testng.eclipse/.outdir=/target/test-output
 /instance/org.testng.eclipse/.absolutepath=false
+/instance/org.eclipse.wst.xml.core/lineWidth=120
+/instance/org.eclipse.wst.css.core/lineWidth=120
+/instance/org.eclipse.wst.html.core/lineWidth=120
