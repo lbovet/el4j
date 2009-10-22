@@ -22,6 +22,30 @@
 	<description>
 		Maven 2 extensions of EL4J.
 	</description>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+			</plugin>
+			
+			<!-- Packaging -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+			</plugin>
+			
+			<!-- IDE -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-eclipse-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>ch.elca.el4j.maven.plugins</groupId>
+				<artifactId>maven-checkclipse-helper-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
 	<modules>
 		<module>slf4j-maven</module>
 		<module>taglet</module>
