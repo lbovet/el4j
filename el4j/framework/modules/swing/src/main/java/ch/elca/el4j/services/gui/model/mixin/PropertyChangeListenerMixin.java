@@ -17,10 +17,12 @@
 package ch.elca.el4j.services.gui.model.mixin;
 
 import java.beans.BeanInfo;
+import java.beans.IntrospectionException;
 import java.beans.Introspector;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.beans.PropertyDescriptor;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -308,7 +310,7 @@ public class PropertyChangeListenerMixin extends
 		Method getter = null;
 
 		// attempt cache retrieval.
-		getter = (Method) m_methodCache.get(setter);
+		getter = m_methodCache.get(setter);
 
 		if (getter != null) {
 			return getter;
@@ -348,7 +350,7 @@ public class PropertyChangeListenerMixin extends
 		Method setter = null;
 
 		// attempt cache retrieval.
-		setter = (Method) m_methodCache.get(getter);
+		setter = m_methodCache.get(getter);
 
 		if (setter != null) {
 			return setter;
@@ -393,7 +395,11 @@ public class PropertyChangeListenerMixin extends
 					m_backup.put(pd.getWriteMethod(), r.invoke(AopContext.currentProxy()));
 				}
 			}
-		} catch (Exception e) {
+		} catch (IntrospectionException e) {
+			m_backup.clear();
+		} catch (IllegalAccessException e) {
+			m_backup.clear();
+		} catch (InvocationTargetException e) {
 			m_backup.clear();
 		}
 	}
@@ -407,7 +413,9 @@ public class PropertyChangeListenerMixin extends
 		for (Method method : m_backup.keySet()) {
 			try {
 				method.invoke(AopContext.currentProxy(), m_backup.get(method));
-			} catch (Exception e) {
+			} catch (IllegalAccessException e) {
+				s_logger.warn("Could not restore property with setter " + method.getName());
+			} catch (InvocationTargetException e) {
 				s_logger.warn("Could not restore property with setter " + method.getName());
 			}
 		}
