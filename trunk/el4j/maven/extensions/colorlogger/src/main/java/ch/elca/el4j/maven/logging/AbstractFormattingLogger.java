@@ -18,6 +18,7 @@ package ch.elca.el4j.maven.logging;
 
 import org.codehaus.plexus.logging.AbstractLogger;
 import org.codehaus.plexus.logging.Logger;
+import org.codehaus.plexus.util.ExceptionUtils;
 
 
 /**
@@ -87,6 +88,14 @@ public abstract class AbstractFormattingLogger extends AbstractLogger {
 	}
 	
 	/**
+	 * @param message    the message
+	 * @return           the message prepared for output
+	 */
+	protected String getMessage(String message) {
+		return message;
+	}
+	
+	/**
 	 * Output a message with the correct formatting for the level. Add a
 	 * stacktrace if present.
 	 *
@@ -103,14 +112,15 @@ public abstract class AbstractFormattingLogger extends AbstractLogger {
 		String prefix = getPrefix(level);
 		String suffix = getSuffix(level);
 		String text = getText(level);
+		String msg = getMessage(message);
 
 		// Checkstyle: Using System.out is ok here
 		// because we are implementing a logger!
-		System.out.println(prefix + text + message + suffix);
+		System.out.println(prefix + text + msg + suffix);
 
 		if (throwable != null) {
 			System.out.print(prefix);
-			throwable.printStackTrace(System.out);
+			System.out.print(getMessage(ExceptionUtils.getFullStackTrace(throwable)));
 			System.out.print(suffix);
 		}
 	}

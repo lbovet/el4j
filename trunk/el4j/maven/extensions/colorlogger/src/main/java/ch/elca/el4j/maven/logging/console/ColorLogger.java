@@ -133,6 +133,16 @@ public class ColorLogger extends AbstractFormattingLogger {
 		}
 		
 	}
+	
+	@Override
+	protected String getMessage(String message) {
+		if (System.getProperty("colorlogger.cygwin") != null) {
+			// escape backslashes
+			return message.replaceAll("\\\\", "\\\\\\\\\\\\\\\\");
+		} else {
+			return message;
+		}
+	}
 
 	/** {@inheritDoc} */
 	protected String getSuffix(int level) {
