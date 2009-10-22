@@ -12,7 +12,7 @@ cd $1
 #################
 types="java xml xsd wsdl html xhtml css"
 # xsl not included
-excludeFolders="\./sandbox/ \./maven/demos/svn-m2repo/m2repository"
+excludeFolders="\./sandbox/ \./maven/demos/svn-m2repo"
 
 
 echo "Searching for all included files ($types)..."
@@ -28,6 +28,9 @@ rm all_files.tmp
 for i in $excludeFolders ; do
 	cat files.tmp | grep -v "$i" >> files.tmp2
 	mv files.tmp2 files.tmp
+	
+	cat pomXmlFiles.tmp | grep -v "$i" >> pomXmlFiles.tmp2
+	mv pomXmlFiles.tmp2 pomXmlFiles.tmp
 done
 
 result=0
@@ -111,7 +114,7 @@ for i in $(cat pomXmlFiles.tmp) ; do
 	for repo in $(cat repos.tmp) ; do
 		count=$(grep "^$repo" ../$allowedRepoList | wc -l)
 		if [ $count == "0" ] ; then
-			echo "Unknown repository found: $repo (in $i)"
+			echo "Unknown repository found in $i: $repo"
 			echo "Please add this file to nexus and register it in " $allowedRepoList
 			echo ""
 			result=1
