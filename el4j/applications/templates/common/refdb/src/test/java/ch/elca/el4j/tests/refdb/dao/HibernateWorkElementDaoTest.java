@@ -34,12 +34,7 @@ import ch.elca.el4j.tests.refdb.AbstractTestCaseBase;
  * 
  * This class is a simple class to check the implementation of the HibernateWorkElementDao.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Daniel Thomas (DTH)
  */
