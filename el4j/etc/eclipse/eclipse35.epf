@@ -60,7 +60,6 @@ file_export_version=3.0
 @org.eclipse.wst.xml.ui=1.1.0.v200905242047
 /instance/org.eclipse.jdt.core/org.eclipse.jdt.core.formatter.insert_new_line_in_empty_type_declaration=do not insert
 /instance/org.eclipse.jdt.ui/content_assist_number_of_computers=16
-/instance/org.eclipse.jdt.core/org.eclipse.jdt.core.codeComplete.fieldPrefixes=m_
 /instance/org.eclipse.jdt.core/org.eclipse.jdt.core.codeComplete.visibilityCheck=enabled
 @org.eclipse.wst.sse.core=1.1.400.v200905141750
 /instance/org.eclipse.jdt.ui/spelling_ignore_java_strings=true
