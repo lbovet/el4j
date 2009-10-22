@@ -37,16 +37,10 @@ import ch.elca.el4j.util.codingsupport.JodaTimeUtils;
  * 
  * This class is a widget that allows the input of time and shows the time with a label.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Daniel Thomas (DTH)
  */
-
 public class TimeField extends JComponent {
 	
 	/**

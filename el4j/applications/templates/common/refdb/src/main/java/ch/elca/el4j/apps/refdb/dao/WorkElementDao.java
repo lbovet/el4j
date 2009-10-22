@@ -25,19 +25,12 @@ import ch.elca.el4j.services.persistence.hibernate.dao.ConvenienceGenericHiberna
 
 /**
  * 
- * 
  * This interface represents a DAO for the WorkElement class.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Daniel Thomas (DTH)
  */
-
 public interface WorkElementDao
 extends ConvenienceGenericHibernateDao<WorkElement, Integer> {
 

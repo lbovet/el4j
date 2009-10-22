@@ -16,8 +16,6 @@
  */
 package ch.elca.el4j.demos.gui.widgets;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.beans.PropertyVetoException;
 import java.util.Date;
 import java.util.Locale;
@@ -32,8 +30,7 @@ import org.joda.time.LocalTime;
 import ch.elca.el4j.util.codingsupport.JodaTimeUtils;
 
 import com.michaelbaranov.microba.calendar.DatePicker;
-import com.michaelbaranov.microba.calendar.ui.DatePickerUI;
-import com.michaelbaranov.microba.calendar.ui.basic.BasicDatePickerUI;
+
 
 
 /**
@@ -41,16 +38,10 @@ import com.michaelbaranov.microba.calendar.ui.basic.BasicDatePickerUI;
  * This class is a small widget that lets a user choose date and time.
  * It is based on the DatePicker class.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Daniel Thomas (DTH)
  */
-
 public class JodaDateTimePicker extends DatePicker {
 
 	/**

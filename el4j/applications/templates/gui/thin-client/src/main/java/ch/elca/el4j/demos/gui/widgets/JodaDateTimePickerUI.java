@@ -36,12 +36,7 @@ import com.michaelbaranov.microba.calendar.ui.basic.BasicDatePickerUI;
  * 
  * This class is a helper class for JodaDateTimePicker.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Daniel Thomas (DTH)
  */

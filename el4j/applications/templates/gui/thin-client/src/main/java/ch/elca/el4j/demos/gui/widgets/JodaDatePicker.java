@@ -31,12 +31,7 @@ import com.michaelbaranov.microba.calendar.DatePicker;
  * 
  * This class is a thin wrapper around the DatePicker to enable working with LocalDate.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Daniel Thomas (DTH)
  */

@@ -26,14 +26,9 @@ import ch.elca.el4j.services.persistence.hibernate.dao.GenericHibernateDao;
  * 
  * This class is a hibernate dao for the WorkElement entity.
  *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
- * @author your name (???)
+ * @author Daniel Thomas (DTH)
  */
 @AutocollectedGenericDao("workElementDao")
 public class HibernateWorkElementDao extends GenericHibernateDao<WorkElement, Integer> 
