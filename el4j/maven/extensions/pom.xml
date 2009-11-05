@@ -44,6 +44,31 @@
 				<groupId>ch.elca.el4j.maven.plugins</groupId>
 				<artifactId>maven-checkclipse-helper-plugin</artifactId>
 			</plugin>
+			<plugin>
+				<groupId>ch.elca.el4j.maven.plugins</groupId>
+				<artifactId>maven-spring-ide-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-clean-plugin</artifactId>
+				<!-- 
+					Removes the .springBeans file which is generated
+					by maven-spring-ide-plugin. 
+					This configuration is not added to the root pom.xml 
+					because it would delete manually generated .springBeans 
+					in projects where the maven-spring-ide-plugin is not configured.
+				-->
+				<configuration>
+					<filesets>
+						<fileset>
+							<directory>${basedir}</directory>
+							<includes>
+								<include>.springBeans</include>
+							</includes>
+						</fileset>
+					</filesets>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 	<modules>
