@@ -39,8 +39,12 @@ import ch.elca.el4j.tests.refdb.AbstractTestCaseBase;
  * @author Daniel Thomas (DTH)
  */
 
-public class HibernateWorkElementDaoTest extends AbstractTestCaseBase{
+public class HibernateWorkElementDaoTest extends AbstractTestCaseBase {
 	
+	
+	/**
+	 * Field to store the used workElementDao.
+	 */
 	private WorkElementDao m_workElementDao;
 	
 	/**
@@ -71,9 +75,12 @@ public class HibernateWorkElementDaoTest extends AbstractTestCaseBase{
 	@Test
 	public void saveAndFindWorkElement() {
 		WorkElement work = new WorkElement();
-		work.setDay(new LocalDate());
-		work.setFrom(new LocalTime());
-		work.setTo(new LocalTime().plusHours(2));
+		// Set date to 11.5.2009
+		work.setDay(new LocalDate(2009, 11, 5));
+		// set start time to 4 am
+		work.setFrom(new LocalTime(4, 0, 0));
+		// set end time to 6 am
+		work.setTo(new LocalTime(6, 0 , 0));
 		WorkElementDao dao = getWorkElementDao();
 		dao.saveOrUpdate(work);
 		assertTrue(dao.getAll().contains(work));
@@ -88,12 +95,12 @@ public class HibernateWorkElementDaoTest extends AbstractTestCaseBase{
 		WorkElementDao dao = getWorkElementDao();
 		dao.deleteAll();
 		WorkElement work = new WorkElement();
-		// current Date
-		work.setDay(new LocalDate());
-		// current time
-		work.setFrom(new LocalTime());
-		// current time + 2h
-		work.setTo(new LocalTime().plusHours(2));
+		// Set date to 11.5.2009
+		work.setDay(new LocalDate(2009, 11, 5));
+		// set start time to 4 am
+		work.setFrom(new LocalTime(4, 0, 0));
+		// set end time to 6 am
+		work.setTo(new LocalTime(6, 0 , 0));
 		dao.saveOrUpdate(work);
 		assertTrue(dao.getAll().contains(work));
 		dao.delete(work);
@@ -106,14 +113,16 @@ public class HibernateWorkElementDaoTest extends AbstractTestCaseBase{
 	 * persist a WorkElement for which the start of the work is 
 	 * after it has finished.
 	 */
-	@Test (expected=InvalidStateException.class)
-	public void testStartBeforeFinishValidator () {
+	@Test (expected = InvalidStateException.class)
+	public void testStartBeforeFinishValidator() {
 		WorkElementDao dao = getWorkElementDao();
 		WorkElement work = new WorkElement();
-		work.setDay(new LocalDate());
-		work.setFrom(new LocalTime(12, 10, 0));
-		work.setTo(new LocalTime(8, 10, 0));
-		
+		// Set date to 11.5.2009
+		work.setDay(new LocalDate(2009, 11, 5));
+		// set start time to 6 am
+		work.setFrom(new LocalTime(6, 0, 0));
+		// set end time to 4 am, uuups, this is an invalid state
+		work.setTo(new LocalTime(4, 0 , 0));
 		dao.saveOrUpdate(work);
 		
 	}
@@ -123,13 +132,16 @@ public class HibernateWorkElementDaoTest extends AbstractTestCaseBase{
 	 * for which the date isn't set.
 	 * 
 	 */
-	@Test (expected=DataIntegrityViolationException.class)
+	@Test (expected = DataIntegrityViolationException.class)
 	public void testNotNullConstraint() {
 		WorkElementDao dao = getWorkElementDao();
 		WorkElement work = new WorkElement();
+		// make sure the day is set to null
 		work.setDay(null);
-		work.setFrom(new LocalTime().plusHours(10));
-		work.setTo(new LocalTime());
+		// set start time to 4 am
+		work.setFrom(new LocalTime(4, 0, 0));
+		// set end time to 6 am
+		work.setTo(new LocalTime(6, 0 , 0));
 		dao.saveOrUpdate(work);
 	}
 	
@@ -147,8 +159,7 @@ public class HibernateWorkElementDaoTest extends AbstractTestCaseBase{
 		}
 		
 		DefaultDaoRegistry daoRegistry
-		= (DefaultDaoRegistry) getApplicationContext()
-			.getBean("daoRegistry");
+			= (DefaultDaoRegistry) getApplicationContext().getBean("daoRegistry");
 		m_workElementDao = (WorkElementDao) daoRegistry.getFor(WorkElement.class);
 		return m_workElementDao;
 	}
