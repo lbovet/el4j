@@ -328,11 +328,6 @@
 					</executions>
 				</plugin>
 				<plugin>
-					<groupId>ch.elca.el4j.maven.plugins</groupId>
-					<artifactId>maven-spring-ide-plugin</artifactId>
-					<version>${version.maven-spring-ide-plugin}</version>
-				</plugin>
-				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-compiler-plugin</artifactId>
 					<!--
@@ -599,6 +594,20 @@
 							<goals>
 								<goal>checkclipse-config-settings</goal>
 								<goal>eclipse-cs-config</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+				<plugin>
+					<groupId>ch.elca.el4j.maven.plugins</groupId>
+					<artifactId>maven-spring-ide-plugin</artifactId>
+					<version>${version.maven-spring-ide-plugin}</version>
+					<executions>						
+						<execution>
+							<id>actualizeEclipseProjects</id>
+							<phase>test-compile</phase>
+							<goals>
+								<goal>spring-ide</goal>
 							</goals>
 						</execution>
 					</executions>
