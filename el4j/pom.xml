@@ -604,7 +604,7 @@
 					<version>${version.maven-spring-ide-plugin}</version>
 					<executions>						
 						<execution>
-							<id>actualizeEclipseProjects</id>
+							<id>createSpringIDEFile</id>
 							<phase>test-compile</phase>
 							<goals>
 								<goal>spring-ide</goal>
