@@ -43,7 +43,7 @@ alias m=less
 alias mci='mvn clean install'
 alias mciskip='mvn -DskipTests=true -P-integrationTests clean install'
 alias me='mvn eclipse:clean eclipse:eclipse'
-alias mes='mvn eclipse:clean eclipse:eclipse -DdownloadSources=true'
+alias mes='mvn eclipse:clean eclipse:eclipse -DdownloadSources=true -DdownloadJavadocs=true'
 alias mrr='mvn resources:resources'
 alias mdf='mvn depgraph:fullgraph'
 alias mep='mvn help:effective-pom'
