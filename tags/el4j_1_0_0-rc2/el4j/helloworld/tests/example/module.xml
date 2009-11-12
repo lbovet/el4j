@@ -1,9 +1,0 @@
-<?xml version="1.0"?>
-<ant:project name="helloworld-tests" xmlns="antlib:ch.elca.el4ant" 
-    xmlns:ant="antlib:org.apache.tools.ant">
-    <module name="module-example-tests">
-        <attribute name="set" value="helloworld-tests"/>
-        <attribute name="junit.runnable" value="true"/>
-        <dependency module="module-example"/>
-    </module>
-</ant:project>

@@ -1,7 +1,0 @@
-<?xml version="1.0"?>
-
-<Domain Name="domain">
-  <Server Name="server" ListenPort="@cargo.servlet.port@"
-    NativeIOEnabled="false"/>
-  @weblogic.apps@
-</Domain>

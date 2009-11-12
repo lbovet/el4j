@@ -1,3 +1,0 @@
-TODO:
-
-- j4persist in el4j mergen
