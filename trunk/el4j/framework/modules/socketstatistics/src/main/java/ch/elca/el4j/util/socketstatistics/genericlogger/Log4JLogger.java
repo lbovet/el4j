@@ -49,17 +49,7 @@ public class Log4JLogger extends GenericLogger {
 			try {
 				Method m = m_orgLogger.getClass().getMethod(level, Object.class);
 				m.invoke(m_orgLogger, msg);
-			} catch (SecurityException e) {
-				return;
-			} catch (NoSuchMethodException e) {
-				return;
-			} catch (IllegalArgumentException e) {
-				return;
-			} catch (IllegalAccessException e) {
-				return;
-			} catch (InvocationTargetException e) {
-				return;
-			}
+			} catch (Exception e) { }
 		}
 		
 	}

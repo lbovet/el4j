@@ -148,7 +148,7 @@ public class ConnectionStatistics implements Comparable<ConnectionStatistics> {
 	 * 
 	 * @return sockets remote address
 	 */
-	public String getRemoteAdress() {
+	public synchronized String getRemoteAdress() {
 		return this.m_remoteAddress == null ? "" : this.m_remoteAddress.toString();
 	}
 
@@ -167,7 +167,7 @@ public class ConnectionStatistics implements Comparable<ConnectionStatistics> {
 	 * 
 	 * @return sockets remote port
 	 */
-	public int getRemotePort() {
+	public synchronized int getRemotePort() {
 		return this.m_remotePort;
 	}
 
@@ -186,7 +186,7 @@ public class ConnectionStatistics implements Comparable<ConnectionStatistics> {
 	 * 
 	 * @return sockets local port
 	 */
-	public int getLocalPort() {
+	public synchronized int getLocalPort() {
 		return this.m_localPort;
 	}
 
@@ -212,7 +212,7 @@ public class ConnectionStatistics implements Comparable<ConnectionStatistics> {
 	 * 
 	 * @return date when socket was destroyed / closed
 	 */
-	protected Date getDestroyedDateInt() {
+	protected synchronized Date getDestroyedDateInt() {
 		return m_destroyed;
 	}
 
@@ -259,8 +259,8 @@ public class ConnectionStatistics implements Comparable<ConnectionStatistics> {
 		StringBuilder sb = new StringBuilder("Socket ID: " + m_socketId);
 		sb.append("\n  [ created on " + getCreatedDate() + " ]");
 		if (m_destroyed != null) { sb.append("\n  [ closed on " + getDestroyedDate() + " ]"); }
-		sb.append("\n  [ Remote address / port: " + m_remoteAddress + " / " + m_remotePort + " ]");
-		sb.append("\n  [ Local port: " + m_localPort + " ]");
+		sb.append("\n  [ Remote address / port: " + getRemoteAdress() + " / " + getRemotePort() + " ]");
+		sb.append("\n  [ Local port: " + getLocalPort() + " ]");
 		sb.append("\n  [ Total bytes received on socket: " + m_totalBytesRecveived + " ]");
 		sb.append("\n  [ Total bytes sent on socket: " + m_totalBytesSent + " ]");
 		return sb.toString();
@@ -281,9 +281,9 @@ public class ConnectionStatistics implements Comparable<ConnectionStatistics> {
 		sb.append(";");
 		sb.append(getRemoteAdress());
 		sb.append(";");
-		sb.append(m_remotePort);
+		sb.append(getRemotePort());
 		sb.append(";");
-		sb.append(m_localPort);
+		sb.append(getRemoteAdress());
 		sb.append(";");
 		sb.append(m_totalBytesRecveived);
 		sb.append(";");
@@ -319,7 +319,7 @@ public class ConnectionStatistics implements Comparable<ConnectionStatistics> {
 				return 1;
 			}
 		}
-		if (this.m_destroyed.getTime() < o.getDestroyedDateInt().getTime()) {
+		if (getDestroyedDateInt().getTime() < o.getDestroyedDateInt().getTime()) {
 			return -1;
 		} else if (this.m_destroyed.getTime() == o.getDestroyedDateInt().getTime()) {
 			return this.m_socketId < o.getSocketID() ? -1 : 1;
@@ -335,6 +335,11 @@ public class ConnectionStatistics implements Comparable<ConnectionStatistics> {
 
 	@Override
 	public boolean equals(Object o) {
-		return ((ConnectionStatistics) o).getSocketID() == this.m_socketId;
+		if (o != null && o instanceof ConnectionStatistics) {
+			return ((ConnectionStatistics) o).getSocketID() == getSocketID();
+		} else {
+			return false;
+		}
+		
 	}
 }

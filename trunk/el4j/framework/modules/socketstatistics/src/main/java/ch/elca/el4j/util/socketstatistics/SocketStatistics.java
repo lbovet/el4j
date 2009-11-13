@@ -102,6 +102,16 @@ public class SocketStatistics implements SocketStatisticsMXBean {
 
 	/** {@inheritDoc} */
 	public void setKeepStats(int ks) {
+		setKeepStatsS(ks);
+	}
+	
+	/**
+	 * Internal static setter for the keepStats property which defines how many seconds 
+	 * stats of closed sockets are kept.
+	 * 
+	 * @param ks how many seconds closed sockets will be kept in statistics
+	 */
+	private static void setKeepStatsS(int ks) {
 		s_keepStats = ks;
 	}
 
