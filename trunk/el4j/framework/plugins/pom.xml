@@ -54,5 +54,6 @@
 		<module>maven-duplicatefinder-plugin</module>
 		<module>maven-env-support-plugin</module>
 		<module>maven-spring-ide-plugin</module>
+		<module>maven-eclipse-server-plugin</module>
 	</modules>
 </project>

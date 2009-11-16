@@ -560,7 +560,7 @@
 							<buildcommand>de.mvmsoft.checkclipse.CheckclipseBuilder</buildcommand>
 							<buildcommand>net.sf.eclipsecs.core.CheckstyleBuilder</buildcommand>
 						</additionalBuildcommands>
-						<workspace>${el4j.project.home}/workspace</workspace>
+						<workspace>${eclipse.workspace}</workspace>
 						<wtpversion>2.0</wtpversion>
 					</configuration>
 				
@@ -613,6 +613,14 @@
 							</goals>
 						</execution>
 					</executions>
+				</plugin>
+				<plugin>
+					<groupId>ch.elca.el4j.maven.plugins</groupId>
+					<artifactId>maven-eclipse-server-plugin</artifactId>
+					<version>${version.maven-eclipse-server-plugin}</version>
+					<configuration>
+						<workspace>${eclipse.workspace}</workspace>
+					</configuration>
 				</plugin>
 
 				<!-- Site -->
@@ -2309,6 +2317,9 @@
 		<version.maven-spring-ide-plugin>
 			1.4-SNAPSHOT
 		</version.maven-spring-ide-plugin>
+		<version.maven-eclipse-server-plugin>
+			1.0-SNAPSHOT
+		</version.maven-eclipse-server-plugin>
 		<version.maven-extension-colorlogger>
 			1.4-SNAPSHOT
 		</version.maven-extension-colorlogger>
@@ -2434,10 +2445,11 @@
 		<checkstyle.enable.rss>false</checkstyle.enable.rss>
 		<checkstyle.enable.rules.summary>false</checkstyle.enable.rules.summary>
 		
+		<!-- Eclipse IDE config -->
+		<eclipse.workspace>${el4j.project.home}/workspace</eclipse.workspace>
 		
 		<!-- FindBugs config -->
-		<findbugs.config.locations>${el4j.external}/etc/findbugs/findbugs-excludes.xml				
-		</findbugs.config.locations>
+		<findbugs.config.locations>${el4j.external}/etc/findbugs/findbugs-excludes.xml</findbugs.config.locations>
 		
 		
 		<!-- Spring -->
