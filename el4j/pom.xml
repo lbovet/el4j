@@ -222,6 +222,14 @@
 				<filtering>false</filtering>
 			</resource>
 			
+			<!-- Used for eclipse folder structure, excluding all files to avoid inclusion in packaging -->
+			<resource>
+				<directory>src/main/webapp</directory>
+				<excludes>
+					<exclude>**/*</exclude>
+				</excludes>
+			</resource>
+			
 			<!--
 			<resource>
 				<directory>src/main/env</directory>
