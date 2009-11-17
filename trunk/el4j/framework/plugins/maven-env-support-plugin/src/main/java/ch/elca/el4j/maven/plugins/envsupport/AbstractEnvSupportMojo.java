@@ -28,7 +28,10 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.Reader;
 import java.io.Writer;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
@@ -38,12 +41,12 @@ import javax.xml.parsers.SAXParserFactory;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.maven.artifact.Artifact;
 import org.apache.maven.plugin.MojoExecutionException;
-import org.apache.maven.plugin.resources.PropertyUtils;
 import org.apache.maven.plugin.resources.ReflectionProperties;
-import org.apache.maven.plugin.resources.util.InterpolationFilterReader;
+import org.apache.maven.shared.filtering.PropertyUtils;
 import org.codehaus.plexus.util.DirectoryScanner;
 import org.codehaus.plexus.util.FileUtils;
 import org.codehaus.plexus.util.IOUtil;
+import org.codehaus.plexus.util.InterpolationFilterReader;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.util.StringUtils;
@@ -71,7 +74,6 @@ public abstract class AbstractEnvSupportMojo extends AbstractDependencyAwareMojo
 	 */
 	public static final String[] DEFAULT_INCLUDES = {"**/**"};
 	
-	// Checkstyle: MemberName off
 	/**
 	 * The character encoding scheme to be applied.
 	 *
@@ -86,7 +88,6 @@ public abstract class AbstractEnvSupportMojo extends AbstractDependencyAwareMojo
 	 * @parameter expression="${project.build.filters}"
 	 */
 	protected List<String> filters;
-	// Checkstyle: MemberName on
 	
 	/**
 	 * Properties used for filtering.
@@ -168,9 +169,6 @@ public abstract class AbstractEnvSupportMojo extends AbstractDependencyAwareMojo
 	protected void initializeFiltering() throws MojoExecutionException {
 		m_filterProperties = new ErrorTracingProperties();
 	
-		// System properties
-		m_filterProperties.putAll(System.getProperties());
-	
 		// Project properties
 		m_filterProperties.putAll(getProject().getProperties());
 		
@@ -186,6 +184,14 @@ public abstract class AbstractEnvSupportMojo extends AbstractDependencyAwareMojo
 			}
 		}
 		
+		// CHANGE BY MZE ELJ-103
+		// System properties applied as last
+		// Due to issue http://jira.codehaus.org/browse/MNG-1992 system properties
+		// do now override properties defined in settings or pom files.
+		m_filterProperties.putAll(System.getProperties());
+		
+		// CHANGE BY MZE ELJ-103
+		// For backward compatibility reason we leave the lines below...
 		// Now, apply overridden system properties (on the command line).
 		// Copied from our patched resources-plugin.
 		final String prefix = "override.";
@@ -196,9 +202,22 @@ public abstract class AbstractEnvSupportMojo extends AbstractDependencyAwareMojo
 				String trueKey = currentKey.substring(prefix.length());
 				m_filterProperties.put(trueKey, overrides.get(currentKey));
 				getLog().info(
-					"Property " + trueKey + " overridden, is now: " + overrides.get(currentKey));
+					"DEPRECATED: Use of 'override.' no more needed since EL4J 1.7: Property "
+					+ trueKey + " overridden, is now: " + overrides.get(currentKey));
 			}
-
+		}
+		
+		if (getLog().isDebugEnabled()) {
+			// Print all available properties for debug reason
+			List<String> messageLines = new ArrayList<String>();
+			for (Map.Entry<Object, Object> entry : m_filterProperties.entrySet()) {
+				messageLines.add("    " + entry.getKey() + "=" + entry.getValue());
+			}
+			Collections.sort(messageLines);
+			getLog().debug("Used filter properties:");
+			for (String messageLine : messageLines) {
+				getLog().debug(messageLine);
+			}
 		}
 	}
 
