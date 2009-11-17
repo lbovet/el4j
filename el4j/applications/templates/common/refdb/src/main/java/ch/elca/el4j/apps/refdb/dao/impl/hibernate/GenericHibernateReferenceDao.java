@@ -2,6 +2,8 @@ package ch.elca.el4j.apps.refdb.dao.impl.hibernate;
 
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.hibernate.criterion.DetachedCriteria;
@@ -10,6 +12,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 
 import ch.elca.el4j.apps.refdb.dao.GenericReferenceDao;
 import ch.elca.el4j.apps.refdb.dom.Reference;
@@ -59,7 +62,15 @@ public class GenericHibernateReferenceDao<T extends Reference,
 //            getConvenienceHibernateTemplate().initialize(
 //                reference.getKeywords());
 //        }
+		if (result instanceof ArrayList) {
+			Assert.isInstanceOf(ArrayList.class, result);
+		
+		} else {
+			Assert.isInstanceOf(Collections.EMPTY_LIST.getClass(), result);
+		}
 		return result;
+
+
 	}
 	
 	/**
@@ -96,7 +107,15 @@ public class GenericHibernateReferenceDao<T extends Reference,
 	/** {@inheritDoc} */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<T> search(String[] fields, String critera) throws DataAccessException, DataRetrievalFailureException {
-		return getConvenienceHibernateTemplate().search(getPersistentClass(), fields, critera);
+		List<T> result = getConvenienceHibernateTemplate().search(getPersistentClass(), fields, critera);
+		if (result instanceof ArrayList) {
+			Assert.isInstanceOf(ArrayList.class, result);
+		
+		} else {
+			Assert.isInstanceOf(Collections.EMPTY_LIST.getClass(), result);
+		}
+		return result;
+
 	}
 	
 	/** {@inheritDoc} */

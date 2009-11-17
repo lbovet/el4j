@@ -2,12 +2,15 @@ package ch.elca.el4j.apps.refdb.dao.impl.hibernate;
 
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 
 import ch.elca.el4j.apps.refdb.dao.GenericFileDao;
 import ch.elca.el4j.services.persistence.hibernate.dao.extent.DataExtent;
@@ -43,7 +46,14 @@ public class GenericHibernateFileDao<T, ID extends Serializable>
 			+ domainClassName.toLowerCase() + " where name = :name";
 		List<T> result = getConvenienceHibernateTemplate()
 			.findByNamedParam(queryString, "name", name);
+		if (result instanceof ArrayList) {
+			Assert.isInstanceOf(ArrayList.class, result);
+		
+		} else {
+			Assert.isInstanceOf(Collections.EMPTY_LIST.getClass(), result);
+		}
 		return result;
+
 	}
 	
 	/**
@@ -59,6 +69,13 @@ public class GenericHibernateFileDao<T, ID extends Serializable>
 			+ domainClassName.toLowerCase() + " where name = :name";
 		List<T> result = getConvenienceHibernateTemplate()
 			.findByNamedParam(queryString, "name", name);
+		if (result instanceof ArrayList) {
+			Assert.isInstanceOf(ArrayList.class, result);
+		
+		} else {
+			Assert.isInstanceOf(Collections.EMPTY_LIST.getClass(), result);
+		}
+
 		return fetchExtent(result, extent);
 	}
 	
