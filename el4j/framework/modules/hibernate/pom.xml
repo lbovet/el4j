@@ -108,7 +108,7 @@
 		<dependency>
 			<groupId>javax.transaction</groupId>
 			<artifactId>jta</artifactId>
-			<version>1.0.1B</version>
+			<version>1.1</version>
 		</dependency>
 		<dependency>
 			<groupId>dom4j</groupId>
@@ -129,7 +129,6 @@
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-log4j12</artifactId>
-			<version>1.5.2</version>
 		</dependency>
 		<dependency>
 			<groupId>javassist</groupId>
@@ -182,12 +181,4 @@
 			</exclusions>
 		</dependency>
 	</dependencies>
-	
-	<repositories>
-		<!-- used for Hibernate Search 3.0.1.GA (in central is only 3.0.0.GA) -->
-		<repository>
-			<id>jboss</id>
-			<url>http://repository.jboss.org/maven2</url>
-		</repository>
-	</repositories>
 </project>
