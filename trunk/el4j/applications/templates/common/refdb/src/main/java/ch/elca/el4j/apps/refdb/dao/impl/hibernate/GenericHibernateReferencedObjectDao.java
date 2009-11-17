@@ -2,11 +2,14 @@ package ch.elca.el4j.apps.refdb.dao.impl.hibernate;
 
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 
 import ch.elca.el4j.apps.refdb.dao.GenericReferencedObjectDao;
 import ch.elca.el4j.services.persistence.hibernate.dao.GenericHibernateDao;
@@ -27,10 +30,9 @@ import ch.elca.el4j.services.persistence.hibernate.dao.GenericHibernateDao;
  *
  * @author Alex Mathey (AMA)
  */
-public class GenericHibernateReferencedObjectDao<T, ID extends Serializable>
-	extends GenericHibernateDao<T, ID>
+public class GenericHibernateReferencedObjectDao<T, ID extends Serializable> extends GenericHibernateDao<T, ID>
 	implements GenericReferencedObjectDao<T, ID> {
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -41,8 +43,13 @@ public class GenericHibernateReferencedObjectDao<T, ID extends Serializable>
 		String queryString = "from " + domainClassName + " "
 			+ domainClassName.toLowerCase() + " where keyToReference "
 			+ " = :key";
-		return getConvenienceHibernateTemplate().findByNamedParam(
-			queryString, "key", id);
+		List<T> result = getConvenienceHibernateTemplate().findByNamedParam(queryString, "key", id);
+		if (result instanceof ArrayList) {
+			Assert.isInstanceOf(ArrayList.class, result);
+		} else {
+			Assert.isInstanceOf(Collections.EMPTY_LIST.getClass(), result);
+		}
+		return result;
 	}
 
 }

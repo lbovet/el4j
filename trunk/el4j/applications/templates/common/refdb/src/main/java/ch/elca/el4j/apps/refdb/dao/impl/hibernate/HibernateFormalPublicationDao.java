@@ -2,6 +2,7 @@ package ch.elca.el4j.apps.refdb.dao.impl.hibernate;
 
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -15,6 +16,7 @@ import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 
 import ch.elca.el4j.apps.refdb.dao.FormalPublicationDao;
 import ch.elca.el4j.apps.refdb.dom.Book;
@@ -98,6 +100,13 @@ public class HibernateFormalPublicationDao
 		while (it3.hasNext()) {
 			currentPublication = (FormalPublication) it3.next();
 			finalResult.add(currentPublication);
+		}
+		
+		
+		if (finalResult instanceof ArrayList) {
+			Assert.isInstanceOf(ArrayList.class, finalResult);
+		} else {
+			Assert.isInstanceOf(Collections.EMPTY_LIST.getClass(), finalResult);
 		}
 		return finalResult;
 	}

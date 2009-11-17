@@ -2,6 +2,7 @@ package ch.elca.el4j.apps.refdb.dao.impl.hibernate;
 
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -10,6 +11,7 @@ import org.hibernate.criterion.Expression;
 import org.springframework.dao.DataAccessException;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 
 import ch.elca.el4j.apps.refdb.dao.LinkDao;
 import ch.elca.el4j.apps.refdb.dom.Link;
@@ -76,6 +78,14 @@ public class HibernateLinkDao
 				nextList = (List) it2.next();
 				currentList.retainAll(nextList);
 			}
+			
+			if (currentList instanceof ArrayList) {
+				Assert.isInstanceOf(ArrayList.class, currentList);
+			} else {
+				Assert.isInstanceOf(Collections.EMPTY_LIST.getClass(), currentList);
+			}
+			
+			
 			return currentList;
 
 		// Executed if the query does not include any IncludeCriteria
