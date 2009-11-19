@@ -43,6 +43,7 @@ public final class MainStandaloneDocking {
 
 			PlasticLookAndFeel.setPlasticTheme(new ExperienceBlue());
 
+			// $$ BEANS INCLUDE $$
 			String[] applicationContextPaths = {
 				"classpath*:mandatory/*.xml",
 				"classpath*:mandatory/refdb/*.xml",

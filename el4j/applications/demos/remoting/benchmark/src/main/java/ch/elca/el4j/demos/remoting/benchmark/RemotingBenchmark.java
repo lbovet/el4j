@@ -69,6 +69,7 @@ public class RemotingBenchmark {
 	/**
 	 * Paths where the config files can be found.
 	 */
+	// $$ BEANS INCLUDE $$
 	public static final String[] CONFIG_LOCATIONS
 		= {"classpath*:mandatory/*.xml",
 		"scenarios/client/benchmark-config.xml"};

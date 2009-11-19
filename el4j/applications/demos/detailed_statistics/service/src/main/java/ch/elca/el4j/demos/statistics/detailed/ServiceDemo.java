@@ -33,6 +33,7 @@ public final class ServiceDemo {
 	/**
 	 * Locations of configuration files.
 	 */
+	// $$ BEANS INCLUDE $$
 	private static final String[] CONFIG_LOCATIONS = {
 		"scenarios/demo-rmi-server-config.xml",
 		"scenarios/demo-rmi-protocol-config.xml",

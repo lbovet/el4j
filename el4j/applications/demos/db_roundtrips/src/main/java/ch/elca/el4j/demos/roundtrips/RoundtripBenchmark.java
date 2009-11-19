@@ -40,6 +40,7 @@ public final class RoundtripBenchmark {
 	/**
 	 * Locations of configuration files.
 	 */
+	// $$ BEANS INCLUDE $$
 	private static final String[] CONFIG_LOCATIONS = {
 		"classpath*:mandatory/*.xml",
 		"classpath*:mandatory/keyword/*.xml",

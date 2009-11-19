@@ -53,15 +53,6 @@
 			<groupId>ch.elca.el4j.modules</groupId>
 			<artifactId>module-cobertura-runtime</artifactId>
 		</dependency>
-	
-		<dependency>
-			<groupId>org.apache.maven</groupId>
-			<artifactId>maven-plugin-api</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.maven</groupId>
-			<artifactId>maven-project</artifactId>
-		</dependency>
 		<dependency>
 			<groupId>org.codehaus.plexus</groupId>
 			<artifactId>plexus-utils</artifactId>
