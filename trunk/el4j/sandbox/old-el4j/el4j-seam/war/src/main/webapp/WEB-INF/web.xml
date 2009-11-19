@@ -80,6 +80,7 @@
 		</description>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>
+			<!-- $$ BEANS INCLUDE $$ -->
 			classpath*:mandatory/*.xml,
 			classpath*:mandatory/keyword/*.xml,
 			classpath*:scenarios/db/raw/*.xml,

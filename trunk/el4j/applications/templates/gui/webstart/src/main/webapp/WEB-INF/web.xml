@@ -16,6 +16,7 @@
 		<init-param>
 			<param-name>inclusiveLocations</param-name>
 			<param-value>
+				<!-- $$ BEANS INCLUDE $$ -->
 				classpath*:mandatory/*.xml,
 				classpath*:scenarios/db/raw/*.xml,
 				classpath*:scenarios/dataaccess/hibernate/*.xml,

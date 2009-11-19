@@ -11,6 +11,7 @@
 	<context-param>
 		<param-name>inclusiveLocations</param-name>
 		<param-value>
+			<!-- $$ BEANS INCLUDE $$ -->
 			classpath*:mandatory/*.xml,
 			classpath:etc/template/server/web/jaxws-server-config.xml
 		</param-value>

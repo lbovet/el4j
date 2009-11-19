@@ -64,6 +64,45 @@ public class JavaReader extends AbstractReader {
 	}
 	
 	/**
+	 * STATE: We have found a starting multiline comment (/ *) marker
+	 * and are now searching for a end of multiline comment marker (* /).
+	 */
+	class CommentState implements LineReadingState {
+
+		/**
+		 * Reading state before we have found the multiline comment marker.
+		 */
+		private LineReadingState ostate;
+
+		/**
+		 * Search Pattern 1.
+		 * get lines with a * / but not followed by a " aka multiline comment start
+		 */
+		private Pattern p1 = Pattern.compile(".*\\*/[^\"]*?");
+		
+		/**
+		 * Constructor. 
+		 * Taking the previous LineReadingState as input to return to it
+		 * after we found the end of multiline comment marker.
+		 *
+		 * @param oldState the previous LineReadingState
+		 */
+		public CommentState(LineReadingState oldState) {
+			ostate = oldState;
+		}
+		
+		/** {@inheritDoc} */
+		public LineReadingState processLine(String line) {
+			Matcher m = p1.matcher(line);
+			if (m.matches()) {
+				return ostate;
+			} else {
+				return this;
+			}
+		}
+	}
+	
+	/**
 	 * STATE : We saw a "begin" marker. Now we read until the end.
 	 */
 	class ReadingState implements LineReadingState {
@@ -73,6 +112,18 @@ public class JavaReader extends AbstractReader {
 		
 		/** The data we collect. */
 		private List<String> m_data;
+		
+		/**
+		 * Search Pattern 1.
+		 * get lines, but omit commented lines with // before "
+		 */
+		private Pattern p1 = Pattern.compile("[^\"(//)]*\"(.*)\".*");
+		
+		/**
+		 * Search Pattern 2.
+		 * get lines with a /* but not after a  " aka multiline comment start
+		 */
+		private Pattern p2 = Pattern.compile("[^\"]*?/\\*.*");
 		
 		/**
 		 * @param inclusive
@@ -85,22 +136,27 @@ public class JavaReader extends AbstractReader {
 		
 		/** {@inheritDoc} */
 		public LineReadingState processLine(String line) {
-			final String regex = ".*\"(.*)\".*";
-			Pattern p = Pattern.compile(regex);
-			Matcher m = p.matcher(line);
-			if (m.matches()) {
-				m_data.add(m.group(1));
-			}
-			if (line.contains("}")) {
-				String[] result = m_data.toArray(new String[0]);
-				if (m_include) {
-					m_inclusive = result;
-				} else {
-					m_exclusive = result;
-				}
-				return new SearchingState();
+			
+			//check for multiline start
+			Matcher m1 = p2.matcher(line);
+			if (m1.matches()) {
+				return new CommentState(this);
 			} else {
-				return this;
+				Matcher m2 = p1.matcher(line);
+				if (m2.matches()) {
+					m_data.add(m2.group(1));
+				}
+				if (line.contains("}")) {
+					String[] result = m_data.toArray(new String[0]);
+					if (m_include) {
+						m_inclusive = result;
+					} else {
+						m_exclusive = result;
+					}
+					return new SearchingState();
+				} else {
+					return this;
+				}
 			}
 		}
 	}

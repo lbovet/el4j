@@ -170,8 +170,8 @@ public class SpringIDEMojo extends AbstractSlf4jEnabledMojo {
 				if (temp.exists()) {
 					source = temp;
 				} else {
-					getLog().error("Could't find sourceFile denoted by Fully Quallified Class Name:" + sourceFile);
-					getLog().error("Can't write configuration file");
+					getLog().warn("Could't find sourceFile denoted by Fully Quallified Class Name:" + sourceFile);
+					getLog().warn("Can't write configuration file");
 				}
 			}
 			/* if we just didn't find the file through the fully qualified class name */
@@ -190,8 +190,8 @@ public class SpringIDEMojo extends AbstractSlf4jEnabledMojo {
 			
 			/* small test to make sure that we really have found includes */
 			if (ex.getInclusive() == null) {
-				getLog().error("Couldn't find any included configuration files");
-				getLog().error("Make sure that comments needed for execution of this plugin exist "
+				getLog().warn("Couldn't find any included configuration files");
+				getLog().warn("Make sure that comments needed for execution of this plugin exist "
 					+ "and are at the right place");
 				return;
 			}
