@@ -22,4 +22,4 @@ SSL certificate generation helper (SSL convenience scripts)
        unique_subject  = My own Certification Authority
 
 
-	   After this has been done, just execute the shell script to start the corresponding certificate generation.
+   After this has been done, just execute the shell script to start the corresponding certificate generation.
