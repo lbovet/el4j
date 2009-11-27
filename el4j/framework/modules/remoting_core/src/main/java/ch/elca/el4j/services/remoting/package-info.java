@@ -16,6 +16,8 @@
  */
 
 /**
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * 
  * @wikiLink ModuleRemoting
  */
 package ch.elca.el4j.services.remoting;

@@ -16,6 +16,8 @@
  */
 
 /**
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * 
  * @wikiLink ModuleLightStatistics
  */
 package ch.elca.el4j.services.statistics.light;

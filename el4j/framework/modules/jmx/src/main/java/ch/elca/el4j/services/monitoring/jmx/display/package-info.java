@@ -1,7 +1,7 @@
 /*
  * EL4J, the Extension Library for the J2EE, adds incremental enhancements to
  * the spring framework, http://el4j.sf.net
- * Copyright (C) 2008 by ELCA Informatique SA, Av. de la Harpe 22-24,
+ * Copyright (C) 2006 by ELCA Informatique SA, Av. de la Harpe 22-24,
  * 1000 Lausanne, Switzerland, http://www.elca.ch
  *
  * EL4J is published under the GNU Lesser General Public License (LGPL)
@@ -15,6 +15,8 @@
  * For alternative licensing, please contact info@elca.ch
  */
 /**
- * @wikiLink ModuleSwing
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * 
+ * @wikiLink ModuleJmx
  */
-package ch.elca.el4j.services.gui.swing.exceptions;
+package ch.elca.el4j.services.monitoring.jmx.display;

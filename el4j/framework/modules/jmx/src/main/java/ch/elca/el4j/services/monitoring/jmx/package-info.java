@@ -15,6 +15,8 @@
  * For alternative licensing, please contact info@elca.ch
  */
 /**
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * 
  * @wikiLink ModuleJmx
  */
 package ch.elca.el4j.services.monitoring.jmx;

@@ -16,6 +16,8 @@
  */
 
 /**
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * 
  * @wikiLink ModuleCore
  */
 package ch.elca.el4j.services.i18n;

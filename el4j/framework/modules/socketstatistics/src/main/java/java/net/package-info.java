@@ -16,6 +16,8 @@
  */
 
 /**
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * 
  * @wikiLink ModuleSocketStatistics
  */
 package java.net;
