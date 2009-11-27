@@ -62,7 +62,10 @@
  * must include the copyright and license notice.
  * </p>
  * 
+ * 
  * @svnLink $Revision$;$Date$;$Author$;$URL$
+ *
+ * @wikiLink ModuleCore
  *
  */
 package ch.elca.el4j.util.concurrency;
