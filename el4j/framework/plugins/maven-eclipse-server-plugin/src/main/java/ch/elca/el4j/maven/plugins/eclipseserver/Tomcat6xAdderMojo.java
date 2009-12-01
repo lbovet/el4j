@@ -48,11 +48,6 @@ public class Tomcat6xAdderMojo extends AbstractServerAdderMojo {
 		= ".metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.jst.server.tomcat.core.prefs";
 	
 	/**
-	 * Runtime ID of apache tomcat server.
-	 */
-	private static final String TOMCAT_RUNTIME_ID = "Apache Tomcat v6.0";
-	
-	/**
 	 * The home / runtime directory of apache tomcat.
 	 * 
 	 * @parameter expression="${tomcat6x.home}" default-value="${tomcat6x.home}"
@@ -67,6 +62,119 @@ public class Tomcat6xAdderMojo extends AbstractServerAdderMojo {
 	 * @required
 	 */
 	protected File tomcat6xconf;
+		
+	/**
+	 * Tomcat auto-publish-setting configuration value.
+	 * 
+	 * @parameter default-value="2"
+	 * @required
+	 */
+	protected String tomcat6xAutoPublishSetting;
+
+	/**
+	 * Tomcat auto-publish-time configuration value.
+	 * 
+	 * @parameter default-value="1"
+	 * @required
+	 */
+	protected String tomcat6xAutoPublishTime;
+	
+	/**
+	 * Tomcat deployDir configuration value.
+	 * 
+	 * @parameter default-value="wtpwebapps"
+	 * @required
+	 */
+	protected String tomcat6xDeployDir;
+	
+	/**
+	 * Tomcat hostname configuration value.
+	 * 
+	 * @parameter default-value="localhost"
+	 * @required
+	 */
+	protected String tomcat6xHostname;
+
+	/**
+	 * Tomcat id configuration value.
+	 * 
+	 * @parameter default-value="Tomcat v6.0 Server at localhost"
+	 * @required
+	 */
+	protected String tomcat6xId;
+	
+	/**
+	 * Tomcat name configuration value.
+	 * 
+	 * @parameter default-value="Apache Tomcat v6.0"
+	 * @required
+	 */
+	protected String tomcat6xName;
+	
+	/**
+	 * Tomcat runtime-id configuration value.
+	 * 
+	 * @parameter default-value="Apache Tomcat v6.0"
+	 * @required
+	 */
+	protected String tomcat6xRuntimeId;	
+
+	/**
+	 * Tomcat runtime-type-id configuration value.
+	 * 
+	 * @parameter default-value="org.eclipse.jst.server.tomcat.runtime.60"
+	 * @required
+	 */
+	protected String tomcat6xRuntimeTypeId;
+	
+	/**
+	 * Tomcat server-type configuration value.
+	 * 
+	 * @parameter default-value="org.eclipse.jst.server.tomcat.60"
+	 * @required
+	 */
+	protected String tomcat6xServerType;	
+
+	/**
+	 * Tomcat server-type-id configuration value.
+	 * 
+	 * @parameter default-value="org.eclipse.jst.server.tomcat.60"
+	 * @required
+	 */
+	protected String tomcat6xServerTypeId;
+	
+	/**
+	 * Tomcat start-timeout configuration value.
+	 * 
+	 * @parameter default-value="45"
+	 * @required
+	 */
+	protected String tomcat6xStartTimeout;
+
+	/**
+	 * Tomcat stop-timeout configuration value.
+	 * 
+	 * @parameter default-value="15"
+	 * @required
+	 */
+	protected String tomcat6xStopTimeout;	
+	
+	/**
+	 * Tomcat testEnvironment configuration value.
+	 * 
+	 * @parameter default-value="true"
+	 * @required
+	 */
+	protected String tomcat6xTestEnvironment;
+	
+	/**
+	 * Tomcat timestamp configuration value.
+	 * 
+	 * @parameter default-value="0"
+	 * @required
+	 */
+	protected String tomcat6xTimestamp;	
+
 	
 	@Override
 	public void execute() throws MojoExecutionException, MojoFailureException {
@@ -75,7 +183,7 @@ public class Tomcat6xAdderMojo extends AbstractServerAdderMojo {
 		ServersXmlConfigurator serversconfig = new ServersXmlConfigurator(serversfile);
 		
 		//check if server is already configured
-		if (!serversconfig.checkForRuntimeID(TOMCAT_RUNTIME_ID)) {
+		if (!serversconfig.checkForRuntimeID(tomcat6xRuntimeId)) {
 			getLog().info("No tomcat 6x server is configured. Adding configuration...");
 			
 			//create new server project folder
@@ -84,31 +192,31 @@ public class Tomcat6xAdderMojo extends AbstractServerAdderMojo {
 		
 			//add apache to servers.xml
 			Map<String, String> tomcatconf = new HashMap<String, String>();
-			tomcatconf.put("auto-publish-setting", "2");
-			tomcatconf.put("auto-publish-time", "1");
+			tomcatconf.put("auto-publish-setting", tomcat6xAutoPublishSetting);
+			tomcatconf.put("auto-publish-time", tomcat6xAutoPublishTime);
 			tomcatconf.put("configuration-id", "/" + SERVER_PROJECT_DIR + "/tomcat6x_conf_link");
-			tomcatconf.put("deployDir", "wtpwebapps");
-			tomcatconf.put("hostname", "localhost");
-			tomcatconf.put("id", "Tomcat v6.0 Server at localhost");
-			tomcatconf.put("name", "Tomcat v6.0 Server at localhost");
-			tomcatconf.put("runtime-id", TOMCAT_RUNTIME_ID);
-			tomcatconf.put("server-type", "org.eclipse.jst.server.tomcat.60");
-			tomcatconf.put("server-type-id", "org.eclipse.jst.server.tomcat.60");
-			tomcatconf.put("start-timeout", "45");
-			tomcatconf.put("stop-timeout", "15");
-			tomcatconf.put("testEnvironment", "true");
-			tomcatconf.put("timestamp", "0");
+			tomcatconf.put("deployDir", tomcat6xDeployDir);
+			tomcatconf.put("hostname", tomcat6xHostname);
+			tomcatconf.put("id", tomcat6xId);
+			tomcatconf.put("name", tomcat6xId);
+			tomcatconf.put("runtime-id", tomcat6xRuntimeId);
+			tomcatconf.put("server-type", tomcat6xServerType);
+			tomcatconf.put("server-type-id", tomcat6xServerTypeId);
+			tomcatconf.put("start-timeout", tomcat6xStartTimeout);
+			tomcatconf.put("stop-timeout", tomcat6xStopTimeout);
+			tomcatconf.put("testEnvironment", tomcat6xTestEnvironment);
+			tomcatconf.put("timestamp", tomcat6xTimestamp);
 			serversconfig.addServerConfig(tomcatconf);
 			getLog().info("  added server to servers.xml");
 			
 
 			//add runtime
 			Map<String, String> runtimeconf = new HashMap<String, String>();
-			runtimeconf.put("id", TOMCAT_RUNTIME_ID);
+			runtimeconf.put("id", tomcat6xRuntimeId);
 			runtimeconf.put("location", tomcat6xhome.getAbsolutePath());
-			runtimeconf.put("name", "Apache Tomcat v6.0");
-			runtimeconf.put("runtime-type-id", "org.eclipse.jst.server.tomcat.runtime.60");
-			runtimeconf.put("timestamp", "0");
+			runtimeconf.put("name", tomcat6xName);
+			runtimeconf.put("runtime-type-id", tomcat6xRuntimeTypeId);
+			runtimeconf.put("timestamp", tomcat6xTimestamp);
 			addRuntime(runtimeconf);
 			getLog().info("  added runtime configuration to org.eclipse.wst.server.core.prefs");
 			
@@ -116,7 +224,7 @@ public class Tomcat6xAdderMojo extends AbstractServerAdderMojo {
 			//create TOMCAT_PREFS_FILE
 			Properties tp = new Properties();
 			tp.setProperty("locationorg.eclipse.jst.server.tomcat.runtime.60", tomcat6xhome.getAbsolutePath());
-			tp.setProperty("eclipse.preferences.version", "1");
+			tp.setProperty("eclipse.preferences.version", AbstractServerAdderMojo.ECLIPSE_PREFERENCES_VERSION);
 			File tpf = new File(workspace, TOMCAT_PREFS_FILE);
 			
 			if (!tpf.exists()) {

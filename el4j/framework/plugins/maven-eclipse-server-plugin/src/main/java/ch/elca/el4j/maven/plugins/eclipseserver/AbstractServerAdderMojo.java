@@ -71,17 +71,47 @@ public abstract class AbstractServerAdderMojo extends AbstractSlf4jEnabledMojo {
 	 * Path from eclipse workspace to the servers.xml configuration file.
 	 */
 	protected static final String SERVERS_XML_FILE = ".metadata/.plugins/org.eclipse.wst.server.core/servers.xml";
-	
+
 	/**
 	 * Path from eclipse workspace to the runtime configuration preferences file.
 	 */
 	protected static final String SERVERS_RUNTIME_PREFS_FILE
 		= ".metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.wst.server.core.prefs";
-
+	
 	/**
 	 * Name of the Servers project directory inside the eclipse workspace.
 	 */
 	protected static final String SERVER_PROJECT_DIR = "Servers";
+	
+	/**
+	 * Startup timeout to user for servers.
+	 */
+	protected static final String SERVER_START_TIMEOUT = "300000";
+	
+	/**
+	 * Value for eclipse.preferences.version to be used in generated preferences files.
+	 */
+	protected static final String ECLIPSE_PREFERENCES_VERSION = "1";
+	
+	/**
+	 * Encoding to be used for generated XML files.
+	 */
+	protected static final String XML_ENCODING = "UTF-8";
+	
+	/**
+	 * Write indent in generated XML files? (yes|no).
+	 */
+	protected static final String XML_INDENT = "yes";
+	
+	/**
+	 * Value to be used for standalone attribute in generated XML files.
+	 */
+	protected static final String XML_STANDALONE = "no";
+	
+	/**
+	 * Value to be used for version attribute in generated XML files. 
+	 */
+	protected static final String XML_VERSION = "1.0";
 	
 	/**
 	 * The eclipse workspace directory.
@@ -135,10 +165,10 @@ public abstract class AbstractServerAdderMojo extends AbstractSlf4jEnabledMojo {
 		
 		//check for required parameters
 		if (!rtc.containsKey("module-start-timeout")) {
-			rtc.put("module-start-timeout", "300000");
+			rtc.put("module-start-timeout", SERVER_START_TIMEOUT);
 		}
 		if (!rtc.containsKey("eclipse.preferences.version")) {
-			rtc.put("eclipse.preferences.version", "1");
+			rtc.put("eclipse.preferences.version", ECLIPSE_PREFERENCES_VERSION);
 		}
 		
 		//check for runtime config
@@ -203,10 +233,10 @@ public abstract class AbstractServerAdderMojo extends AbstractSlf4jEnabledMojo {
 				"XML transformer configuration error.", e);
 		}
 		
-		transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
-		transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-		transformer.setOutputProperty(OutputKeys.STANDALONE, "no");
-		transformer.setOutputProperty(OutputKeys.VERSION, "1.0");
+		transformer.setOutputProperty(OutputKeys.ENCODING, XML_ENCODING);
+		transformer.setOutputProperty(OutputKeys.INDENT, XML_INDENT);
+		transformer.setOutputProperty(OutputKeys.STANDALONE, XML_STANDALONE);
+		transformer.setOutputProperty(OutputKeys.VERSION, XML_VERSION);
 		
 		//convert dom to string
 		StringWriter sw = new StringWriter();
@@ -249,7 +279,7 @@ public abstract class AbstractServerAdderMojo extends AbstractSlf4jEnabledMojo {
 	 */
 	public void createServerProject(File tomcatConfDir) throws MojoExecutionException {
 		
-		File projectfile = new File(workspace, SERVER_PROJECT_DIR + "/.project");
+		File projectfile = new File(new File(workspace, SERVER_PROJECT_DIR), "/.project");
 		projectfile.getParentFile().mkdirs();
 		
 		//create project file with symlink
@@ -260,7 +290,7 @@ public abstract class AbstractServerAdderMojo extends AbstractSlf4jEnabledMojo {
 		applyTemplate(context, projectfile, "serverprojectfile.vm");
 		
 		//create config file in project dir
-		File settings = new File(workspace, SERVER_PROJECT_DIR + "/.settings/"
+		File settings = new File(new File(workspace, SERVER_PROJECT_DIR), "/.settings/"
 			+ SERVERS_RUNTIME_PREFS_FILE.substring(SERVERS_RUNTIME_PREFS_FILE.lastIndexOf("/")));
 		
 		settings.getParentFile().mkdirs();
@@ -276,7 +306,7 @@ public abstract class AbstractServerAdderMojo extends AbstractSlf4jEnabledMojo {
 		
 		Properties p = new Properties();
 		p.put("org.eclipse.wst.server.core.isServerProject", "true");
-		p.put("eclipse.preferences.version", "1");
+		p.put("eclipse.preferences.version", ECLIPSE_PREFERENCES_VERSION);
 		
 		OutputStream o = null;
 		try {

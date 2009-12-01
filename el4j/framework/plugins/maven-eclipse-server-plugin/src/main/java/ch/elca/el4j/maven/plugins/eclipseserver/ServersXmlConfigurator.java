@@ -150,6 +150,13 @@ public class ServersXmlConfigurator {
 				throw new MojoExecutionException(
 					"Could not access servers.xml.", e);
 			}
+			
+			//check for servers element and add if not present
+			if (xmldoc.getElementsByTagName("servers").getLength() == 0) {
+				Element servers = xmldoc.createElement("servers");
+				xmldoc.appendChild(servers);
+			}
+			
 		} else {
 			xmldoc = null;
 		}
@@ -198,10 +205,10 @@ public class ServersXmlConfigurator {
 				"XML transformer configuration error.", e);
 		}
 		
-		transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
-		transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-		transformer.setOutputProperty(OutputKeys.STANDALONE, "no");
-		transformer.setOutputProperty(OutputKeys.VERSION, "1.0");
+		transformer.setOutputProperty(OutputKeys.ENCODING, AbstractServerAdderMojo.XML_ENCODING);
+		transformer.setOutputProperty(OutputKeys.INDENT, AbstractServerAdderMojo.XML_INDENT);
+		transformer.setOutputProperty(OutputKeys.STANDALONE, AbstractServerAdderMojo.XML_STANDALONE);
+		transformer.setOutputProperty(OutputKeys.VERSION, AbstractServerAdderMojo.XML_VERSION);
 		
 		DOMSource src = new DOMSource(xmldoc);
 		Result dest = new StreamResult(serversXmlFile);
