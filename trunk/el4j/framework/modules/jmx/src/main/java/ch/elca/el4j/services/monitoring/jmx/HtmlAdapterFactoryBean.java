@@ -179,7 +179,7 @@ public class HtmlAdapterFactoryBean
 	 * class variable by 1.
 	 */
 	public void setInstanceCounter() {
-		synchronized (getClass()) {
+		synchronized (HtmlAdapterFactoryBean.class) {
 			m_instanceCounter = s_counter;
 			s_counter++;
 		}

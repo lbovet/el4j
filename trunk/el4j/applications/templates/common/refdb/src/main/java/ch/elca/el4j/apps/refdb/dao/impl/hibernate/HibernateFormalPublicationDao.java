@@ -82,7 +82,7 @@ public class HibernateFormalPublicationDao
 			}
 			Iterator it2 = resultList.iterator();
 			currentList = (List) it2.next();
-			List nextList = new ArrayList();
+			List nextList = null;
 			while (it2.hasNext()) {
 				nextList = (List) it2.next();
 				currentList.retainAll(nextList);
@@ -102,12 +102,6 @@ public class HibernateFormalPublicationDao
 			finalResult.add(currentPublication);
 		}
 		
-		
-		if (finalResult instanceof ArrayList) {
-			Assert.isInstanceOf(ArrayList.class, finalResult);
-		} else {
-			Assert.isInstanceOf(Collections.EMPTY_LIST.getClass(), finalResult);
-		}
 		return finalResult;
 	}
 

@@ -20,6 +20,7 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 
 import ch.elca.el4j.maven.plugins.database.AbstractDBExecutionMojo;
+import ch.elca.el4j.util.codingsupport.annotations.FindBugsSuppressWarnings;
 
 
 /**
@@ -63,6 +64,8 @@ public class PrepareMojo extends AbstractDBExecutionMojo {
 	/**
 	 * {@inheritDoc}
 	 */
+	@FindBugsSuppressWarnings(value = "UWF_UNWRITTEN_FIELD",
+		justification = "Fields dbUsername and dbPassword are injected by maven.")	
 	public void executeInternal() throws MojoExecutionException, MojoFailureException {
 		try {
 			getLog().info("Starting database (PrepareMojo)...");

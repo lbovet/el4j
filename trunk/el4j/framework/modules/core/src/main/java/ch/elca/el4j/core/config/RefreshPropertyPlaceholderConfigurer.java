@@ -46,7 +46,7 @@ import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
  */
 @Deprecated
 public class RefreshPropertyPlaceholderConfigurer extends
-	PropertyPlaceholderConfigurer implements BeanNameAware {
+	PropertyPlaceholderConfigurer {
 
 	/**
 	 * Flag to mark that this instance has been created by this class or a

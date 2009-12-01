@@ -38,6 +38,7 @@ import ch.elca.el4j.services.persistence.hibernate.criteria.DetachedCriteriaUtil
 import ch.elca.el4j.services.search.QueryObject;
 import ch.elca.el4j.services.search.criterias.LikeCriteria;
 import ch.elca.el4j.tests.keyword.AbstractTestCaseBase;
+import ch.elca.el4j.util.codingsupport.annotations.FindBugsSuppressWarnings;
 
 // Checkstyle: MagicNumber off
 
@@ -352,6 +353,8 @@ public abstract class AbstractKeywordDaoTest
 	 * Test reuse issues of the Criteria API.
 	 */
 	@Test
+	@FindBugsSuppressWarnings(value = "DE_MIGHT_IGNORE", 
+				justification = "Exception ignored because theres nothing we can do about it")
 	public void testReuseCriteria() {
 		KeywordDao dao = getKeywordDao();
 		

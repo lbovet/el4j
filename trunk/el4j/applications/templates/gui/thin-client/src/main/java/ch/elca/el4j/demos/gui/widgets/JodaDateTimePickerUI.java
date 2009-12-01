@@ -103,7 +103,9 @@ public class JodaDateTimePickerUI extends BasicDatePickerUI {
 	public void installUI(JComponent c) {
 		super.installUI(c);
 		// make sure that peer is a JodaTimeDatePicker
-		peer = (JodaDateTimePicker) c;
+		if (c instanceof JodaDateTimePicker) {
+			peer = (JodaDateTimePicker) c;
+		}
 	}
 	
 

@@ -17,6 +17,7 @@
 package ch.elca.el4j.maven.plugins.springide;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -25,6 +26,7 @@ import org.apache.commons.io.FileUtils;
 import org.codehaus.plexus.util.xml.Xpp3Dom;
 import org.codehaus.plexus.util.xml.Xpp3DomBuilder;
 import org.codehaus.plexus.util.xml.Xpp3DomWriter;
+import org.codehaus.plexus.util.xml.pull.XmlPullParserException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -58,25 +60,47 @@ public final class SpringNatureForcer {
 	 * @param baseDirectory    the project base directory
 	 */
 	public static void forceSpringNature(File baseDirectory) {
+		String content = null;
+		File dotProject = null;
+
 		try {
-			File dotProject = new File(baseDirectory, ".project");
-			String content = FileUtils.readFileToString(dotProject, null);
-			if (content.indexOf("<nature>org.springframework.ide.eclipse.core.springnature</nature>") < 0) {
-				s_logger.debug("Add spring nature to the eclipse .project file");
-				try {
-					Xpp3Dom dom = Xpp3DomBuilder.build(new FileReader(dotProject));
-					Xpp3Dom nature = new Xpp3Dom("nature");
-					nature.setValue("org.springframework.ide.eclipse.core.springnature");
-					dom.getChild("natures").addChild(nature);
-					FileWriter writer = new FileWriter(dotProject);
-					Xpp3DomWriter.write(writer, dom);
-					writer.close();
-				} catch (Exception e) {
-					s_logger.debug("Failed to add missing tomcat nature to the eclipse .project file");
-				}
-			}
+			dotProject = new File(baseDirectory, ".project");
+			content = FileUtils.readFileToString(dotProject, null);
 		} catch (IOException e) {
 			s_logger.debug("Failed to retrieve the Eclipse .project file");
+
 		}
+
+		if (content.indexOf("<nature>org.springframework.ide.eclipse.core.springnature</nature>") < 0) {
+			s_logger.debug("Add spring nature to the eclipse .project file");
+
+			Xpp3Dom dom = null;
+
+			try {
+				dom = Xpp3DomBuilder.build(new FileReader(dotProject));
+			} catch (XmlPullParserException e) {
+				s_logger.debug("Failed to add missing tomcat nature to the eclipse .project file");
+			} catch (FileNotFoundException e) {
+				s_logger.debug("Failed to retrieve the Eclipse .project file");
+			} catch (IOException e) {
+				s_logger.debug("Failed to retrieve the Eclipse .project file");
+
+			}
+			Xpp3Dom nature = new Xpp3Dom("nature");
+			nature.setValue("org.springframework.ide.eclipse.core.springnature");
+			dom.getChild("natures").addChild(nature);
+			FileWriter writer = null;
+			
+			try {
+				writer = new FileWriter(dotProject);
+				Xpp3DomWriter.write(writer, dom);
+				if (writer != null) {
+					writer.close();
+				}
+			} catch (IOException e) {	
+				s_logger.debug("Failed to write eclipse project file.");
+			}
+		}
+		
 	}
 }

@@ -37,6 +37,7 @@ import org.springframework.util.StringUtils;
 
 import ch.elca.el4j.core.io.support.ListResourcePatternResolverDecorator;
 import ch.elca.el4j.core.io.support.ManifestOrderedConfigLocationProvider;
+import ch.elca.el4j.util.codingsupport.annotations.FindBugsSuppressWarnings;
 
 /**
  * <p>
@@ -281,6 +282,8 @@ public class ModuleApplicationContext extends AbstractXmlApplicationContext
 	 * @param mostSpecificBeanDefinitionCounts
 	 *            Indicates that the most specific bean definition is used.
 	 */
+	@FindBugsSuppressWarnings(value = "UR_UNINIT_READ", 
+		justification = "Pattern resolver initialized by a super class.")
 	public ModuleApplicationContext(String[] inclusiveConfigLocations,
 			String[] exclusiveConfigLocations,
 			boolean allowBeanDefinitionOverriding, ApplicationContext parent,

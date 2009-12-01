@@ -142,12 +142,6 @@ public class ServiceBroker {
 		} else {
 			dao = cachedDao;
 		}
-		
-		if (allowCaching) {
-			cachedDao = dao;
-		} else {
-			cachedDao = null;
-		}
 		return dao;
 	}
 	

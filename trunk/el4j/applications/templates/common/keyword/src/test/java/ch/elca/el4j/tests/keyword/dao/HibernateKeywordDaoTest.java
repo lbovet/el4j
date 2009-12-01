@@ -23,6 +23,8 @@ import static ch.elca.el4j.services.search.criterias.CriteriaHelper.or;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import ch.elca.el4j.util.codingsupport.annotations.FindBugsSuppressWarnings;
+
 
 import java.util.List;
 
@@ -74,6 +76,7 @@ public class HibernateKeywordDaoTest
 	 *   This method is a bit long (it shares the created keywords).
 	 */
 	@Test
+	@FindBugsSuppressWarnings(value = "DLS_DEAD_LOCAL_STORE", justification="Not important in test class.")
 	public void testSearchKeywordsHibernateSpecificForNow() {
 		int dbRoundtrips = DbLogger.getRoundtripCount();
 		
@@ -153,7 +156,7 @@ public class HibernateKeywordDaoTest
 			new OrCriteria(
 				new AndCriteria(new NotCriteria(new ComparisonCriteria("name","Ghost","!=","String")),
 					(new OrCriteria(new NotCriteria(LikeCriteria.caseInsensitive("name", "%host%")),
-					LikeCriteria.caseInsensitive("name", "%host%"))))));
+						LikeCriteria.caseInsensitive("name", "%host%"))))));
 		
 //        Criteria c = query.getAndCriterias();
 //        System.out.println("");

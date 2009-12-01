@@ -180,7 +180,7 @@ public class MessageRewriter {
 	}
 	
 	/** Utility class representing a pointer into a string. */
-	static class Cursor {
+	static class Cursor implements Cloneable {
 		/**
 		 * The character that should be returned by reads beyond the end of the
 		 * string.
@@ -219,6 +219,7 @@ public class MessageRewriter {
 		public boolean eos() { return loc == string.length(); }
 		
 		/** {@inheritDoc} */
+		@Override
 		public Cursor clone() {
 			Cursor copy = new Cursor();
 			copy.string = string;
@@ -512,12 +513,12 @@ public class MessageRewriter {
 	 * A Format that looks up a value in the backing RewritingRessourceBundle,
 	 * using a key obtained by formatting the supplied object.
 	 */
-	static class LookupFormat extends Format {
+	static  class LookupFormat extends Format {
 		/** The key formatter. */
 		MessageFormat m_keyFormatter;
 		
 		/** The RewritingRessourceBundle used for look ups. */
-		MessageRewriter m_backing;
+		transient MessageRewriter m_backing;
 		
 		/** {@inheritDoc} */
 		@Override

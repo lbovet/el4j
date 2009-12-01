@@ -50,6 +50,7 @@ import ch.elca.el4j.apps.refdb.dom.File;
 import ch.elca.el4j.apps.refdb.dom.FormalPublication;
 import ch.elca.el4j.apps.refdb.dom.Reference;
 import ch.elca.el4j.tests.refdb.AbstractTestCaseBase;
+import ch.elca.el4j.util.codingsupport.annotations.FindBugsSuppressWarnings;
 
 // Checkstyle: MagicNumber off
 
@@ -558,6 +559,8 @@ public abstract class AbstractReferenceDaoTest extends AbstractTestCaseBase {
 	 * Tests the insertion of multiple keywords in several updates.
 	 */
 	@Test
+	@FindBugsSuppressWarnings(value = "DLS_DEAD_LOCAL_STORE", 
+		justification = "Not important in test method.")
 	public void testInsertMultipleKeywords() {
 		try {
 			// add a book

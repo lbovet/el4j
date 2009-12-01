@@ -66,14 +66,15 @@ public final class ClassloaderTools {
 				"The class " + mainClass
 				+ " was not loaded via an URLClassLoader.");
 		}
-		String classpath = "";
 		URL[] urls = ((URLClassLoader) cl).getURLs();
+		StringBuffer classPathBuffer =  new StringBuffer();
 		for (URL u : urls) {
-			classpath += u.toExternalForm() + ", ";
+			classPathBuffer.append(u.toExternalForm()).append(", ");
 		}
-		// Remove final ", " again.
-		classpath = classpath.substring(0, classpath.length() - 2);
-		return classpath;
+		// remove last ", "
+		classPathBuffer.delete(classPathBuffer.length() - 2, classPathBuffer.length());
+
+		return classPathBuffer.toString();
 	}
 	
 	/**

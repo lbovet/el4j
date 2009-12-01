@@ -131,7 +131,7 @@ public class Loader implements ApplicationContextAware, InitializingBean,
 
 		// Since we access the static member s_jvmMBs, this block is
 		// synchronized.
-		synchronized (getClass()) {
+		synchronized (Loader.class) {
 
 			// Get all the object names of this MBean Server in the JVM_DOMAIN.
 			ObjectName[] jvms = getObjectNames(this.m_server, JvmMB.JVM_DOMAIN,

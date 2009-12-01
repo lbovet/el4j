@@ -189,7 +189,7 @@ public class ExceptionsForm extends JPanel implements Bindable, Handler, Applica
 	
 	/** {@inheritDoc} */
 	public boolean recognize(Exception e) {
-		return (e instanceof Exception);
+		return (e != null);
 	}
 	
 	/** {@inheritDoc} */

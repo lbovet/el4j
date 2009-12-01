@@ -45,10 +45,6 @@ public class RSAEncryptionTest {
 	 */
 	private RSACipher m_cipher;
 	
-	/**
-	 * The generated key.
-	 */
-	private String m_key;
 	
 	/**
 	 * The text that will be en- and decrypted.

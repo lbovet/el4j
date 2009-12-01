@@ -32,7 +32,7 @@ import ch.elca.el4j.services.persistence.hibernate.dao.GenericHibernateDao;
  */
 @AutocollectedGenericDao("workElementDao")
 public class HibernateWorkElementDao extends GenericHibernateDao<WorkElement, Integer> 
-implements WorkElementDao{
+	implements WorkElementDao {
 
 	
 

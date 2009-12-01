@@ -48,6 +48,7 @@ import ch.elca.el4j.services.monitoring.jmx.display.HtmlTabulator;
 import ch.elca.el4j.services.monitoring.jmx.display.Section;
 import ch.elca.el4j.services.monitoring.jmx.util.PropertyReflector;
 import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
+import ch.elca.el4j.util.codingsupport.annotations.FindBugsSuppressWarnings;
 
 /**
  * The proxy class for a bean loaded in the ApplicationContext.
@@ -349,6 +350,8 @@ public class SpringBeanMB implements SpringBeanMBMBean {
 	}
 
 	/** {@inheritDoc} */
+	@FindBugsSuppressWarnings(value = "REC_CATCH_EXCEPTION",
+							justification = "A runtime exception is thrown in any case.")			
 	public String[] getProperties() {
 		Class<?> target = m_class;
 		

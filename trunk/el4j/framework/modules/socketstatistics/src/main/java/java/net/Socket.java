@@ -798,7 +798,7 @@ public class Socket {
 		throw new SocketException("Socket is not connected");
 	if (isInputShutdown())
 		throw new SocketException("Socket input is shutdown");
-	final Socket s = this;
+	// final Socket s = this;
 	InputStream is = null;
 	try {
 		is = (InputStream)
@@ -838,7 +838,7 @@ public class Socket {
 		throw new SocketException("Socket is not connected");
 	if (isOutputShutdown())
 		throw new SocketException("Socket output is shutdown");
-	final Socket s = this;
+	// final Socket s = this;
 	OutputStream os = null;
 	try {
 		os = (OutputStream)

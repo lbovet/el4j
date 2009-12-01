@@ -30,7 +30,7 @@ public class ImplicitContextPasserB extends AbstractImplicitContextPasser {
 	/**
 	 * Test data.
 	 */
-	private final double m_testData = 974366.96;
+	private static final double m_testData = 974366.96;
 
 	/**
 	 * Received data.

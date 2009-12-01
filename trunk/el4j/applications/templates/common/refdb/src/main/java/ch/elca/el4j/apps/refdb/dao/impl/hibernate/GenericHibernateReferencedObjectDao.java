@@ -43,13 +43,8 @@ public class GenericHibernateReferencedObjectDao<T, ID extends Serializable> ext
 		String queryString = "from " + domainClassName + " "
 			+ domainClassName.toLowerCase() + " where keyToReference "
 			+ " = :key";
-		List<T> result = getConvenienceHibernateTemplate().findByNamedParam(queryString, "key", id);
-		if (result instanceof ArrayList) {
-			Assert.isInstanceOf(ArrayList.class, result);
-		} else {
-			Assert.isInstanceOf(Collections.EMPTY_LIST.getClass(), result);
-		}
-		return result;
+		return getConvenienceHibernateTemplate().findByNamedParam(queryString, "key", id);
+		
 	}
 
 }

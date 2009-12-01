@@ -171,7 +171,7 @@ public class ListPropertyMergeConfigurer extends PropertyOverrideConfigurer {
 	 * @return Returns the locations.
 	 */
 	public final Resource[] getLocations() {
-		return m_locations;
+		return m_locations.clone();
 	}
 
 	/**

@@ -36,8 +36,6 @@ import org.apache.maven.project.MavenProject;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
 
-import ch.elca.el4j.maven.plugins.AbstractSlf4jEnabledMojo;
-
 /**
  * A mojo to generate the .springIDE file and to force SpringNature on Eclipse by reading the files in the
  * Module Application Context.

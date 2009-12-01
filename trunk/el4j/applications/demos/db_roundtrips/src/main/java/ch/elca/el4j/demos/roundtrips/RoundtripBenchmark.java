@@ -26,6 +26,7 @@ import ch.elca.el4j.apps.keyword.dom.Keyword;
 import ch.elca.el4j.core.context.ModuleApplicationContext;
 import ch.elca.el4j.services.monitoring.DbLogger;
 import ch.elca.el4j.services.persistence.generic.dao.impl.DefaultDaoRegistry;
+import ch.elca.el4j.util.codingsupport.annotations.FindBugsSuppressWarnings;
 
 //Checkstyle: UncommentedMain off
 /**
@@ -68,6 +69,8 @@ public final class RoundtripBenchmark {
 	/**
 	 * Run the roundtrip benchmark.
 	 */
+	@FindBugsSuppressWarnings(value = "DLS_DEAD_LOCAL_STORE", 
+			justification = "Variable keyword only saved for benchmarking purposes.")
 	public void runBenchmark() {
 		ModuleApplicationContext appContext = new ModuleApplicationContext(CONFIG_LOCATIONS, true);
 		

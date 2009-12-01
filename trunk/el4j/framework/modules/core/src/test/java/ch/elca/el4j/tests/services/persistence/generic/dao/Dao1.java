@@ -24,6 +24,6 @@ import ch.elca.el4j.services.persistence.generic.dao.GenericDao;
  * @svnLink $Revision$;$Date$;$Author$;$URL$
  */
 @AutocollectedGenericDao(value="titi")
-public class Dao1 extends DummyDao<String> implements GenericDao<String> {
+public class Dao1 extends DummyDao<String>  {
 
 }

@@ -63,7 +63,7 @@ public class ObservableFilteredListTest {
 	
 	private class EvenFilter implements Filter<Integer> {
 		public boolean accepts(Integer value) {
-			return value % 2 == 1;
+			return value % 2 != 0;
 		}
 	}
 	

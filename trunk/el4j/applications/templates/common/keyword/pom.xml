@@ -53,7 +53,6 @@
 							</execution>
 						</executions>
 					</plugin>
-
 					<!-- skip unit test run, tests to be executed during integration-test -->
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>

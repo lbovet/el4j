@@ -57,13 +57,13 @@ public class SearchForm extends AbstractSearchForm {
 	/**
 	 * The resource map.
 	 */
-	private ResourceMap resourceMap;
+	private transient ResourceMap resourceMap;
 	
 	/**
 	 * The background search task.
 	 */
 	@SuppressWarnings("unchecked")
-	private Task currentSearch = null;
+	private transient Task currentSearch = null;
 	
 	/**
 	 * The constructor.

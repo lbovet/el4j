@@ -70,14 +70,14 @@ public class DetailedStatisticsContext implements java.io.Serializable {
 	 * @return Returns the hierarchy.
 	 */
 	public int[] getHierarchy() {
-		return m_hierarchy;
+		return m_hierarchy.clone();
 	}
 	
 	/**
 	 * @param hierarchy Is the hierarchy to set.
 	 */
 	public void setHierarchy(int[] hierarchy) {
-		m_hierarchy = hierarchy;
+		m_hierarchy = hierarchy.clone();
 	}
 	
 	/**

@@ -26,6 +26,7 @@ import java.util.List;
 import org.junit.Test;
 
 import ch.elca.el4j.util.codingsupport.Reject;
+import ch.elca.el4j.util.codingsupport.annotations.FindBugsSuppressWarnings;
 
 // Checkstyle: EmptyBlock off
 
@@ -87,6 +88,8 @@ public class RejectTest {
 	 */
 	@Test
 	@SuppressWarnings("unchecked")
+	@FindBugsSuppressWarnings(value = "DE_MIGHT_IGNORE",
+						justification = "Exception handling not important as test is supposed to fail.")
 	public void testIfEmptyCollection() {
 		try {
 			Reject.ifEmpty((List) null);

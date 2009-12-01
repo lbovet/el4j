@@ -43,7 +43,7 @@ public class DaoAutocollectionTest {
 		GenericDao<?> dao = registry.getFor(String.class);
 		//System.out.println("registry: "+DataDumper.dump(((DefaultDaoRegistry)registry).getDaos()));
 		
-		dao = registry.getFor(String.class);
+		// dao = registry.getFor(String.class);
 		assertTrue(dao != null);
 		assertTrue(dao instanceof Dao1);
 		

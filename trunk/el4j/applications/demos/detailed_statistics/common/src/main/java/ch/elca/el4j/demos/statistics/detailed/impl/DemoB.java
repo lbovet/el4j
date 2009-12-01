@@ -16,6 +16,8 @@
  */
 package ch.elca.el4j.demos.statistics.detailed.impl;
 
+import ch.elca.el4j.util.codingsupport.annotations.FindBugsSuppressWarnings;
+
 /**
  *  This class is a dummy class for presentation purposes for the
  *  detailed statistics demo.
@@ -24,6 +26,9 @@ package ch.elca.el4j.demos.statistics.detailed.impl;
  *
  * @author David Stefan (DST)
  */
+
+@FindBugsSuppressWarnings(value="UWF_FIELD_NOT_INITIALIZED_IN_CONSTRUCTOR",
+						justification="Fields not initialized because this is only a dummy class")
 public class DemoB {
 
 	/** Nonsense printer. */

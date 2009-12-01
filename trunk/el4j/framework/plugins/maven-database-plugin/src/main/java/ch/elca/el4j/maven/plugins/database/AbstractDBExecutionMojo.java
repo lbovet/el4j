@@ -42,6 +42,7 @@ import ch.elca.el4j.maven.plugins.database.holder.ConnectionPropertiesHolder;
 import ch.elca.el4j.maven.plugins.database.holder.DatabaseHolderException;
 import ch.elca.el4j.maven.plugins.database.util.FindReplacePattern;
 import ch.elca.el4j.maven.plugins.database.util.SqlUtils;
+import ch.elca.el4j.util.codingsupport.annotations.FindBugsSuppressWarnings;
 import ch.elca.el4j.util.env.EnvPropertiesUtils;
 
 /**
@@ -553,6 +554,8 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
 	 * @param goal The goal to execute.
 	 * @param beSilent indicates whether we reduce log output
 	 */
+	@FindBugsSuppressWarnings(value = "SQL_NONCONSTANT_STRING_PASSED_TO_EXECUTE",
+		justification = "SQL is read dynamically out of the files, but isn't meant for production")
 	private void processResources(List<Resource> resources, String goal,
 		boolean beSilent) {
 		List<SQLException> sqlExceptions = new ArrayList<SQLException>();

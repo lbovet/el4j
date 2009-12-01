@@ -23,6 +23,8 @@ import java.security.SecureRandom;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import ch.elca.el4j.util.codingsupport.annotations.FindBugsSuppressWarnings;
+
 /**
  * This key generator generates UUIDs as described in "EJB Design Patterns", F.
  * Marinescu, pages 112-116. It is a simplified version of the algorithm
@@ -67,6 +69,8 @@ public class UuidPrimaryKeyGenerator implements PrimaryKeyGenerator {
 	/**
 	 * {@inheritDoc}
 	 */
+	@FindBugsSuppressWarnings(value = "INT_VACUOUS_BIT_OPERATION", 
+							justification = "Ensures that no rounding takes place")
 	public String getPrimaryKey() {
 		long time = System.currentTimeMillis();
 		int timeLow = (int) time & 0xFFFFFFFF;

@@ -43,7 +43,7 @@ public class HelpDialog extends JPanel {
 	/**
 	 * The resource map.
 	 */
-	protected ResourceMap resourceMap;
+	protected transient ResourceMap resourceMap;
 
 	/**
 	 * The text when no help is available.

@@ -23,13 +23,14 @@ import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.bushe.swing.event.EventServiceExistsException;
 import org.bushe.swing.event.EventServiceLocator;
 import org.jdesktop.application.Application;
 import org.jdesktop.application.SingleFrameApplication;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -45,7 +46,6 @@ import ch.elca.el4j.services.gui.swing.exceptions.Exceptions;
 import ch.elca.el4j.services.gui.swing.frames.ApplicationFrame;
 import ch.elca.el4j.services.gui.swing.wrapper.JFrameWrapperFactory;
 import ch.elca.el4j.util.config.GenericConfig;
-
 import cookxml.cookswing.CookSwing;
 
 
@@ -325,10 +325,19 @@ public abstract class GUIApplication extends SingleFrameApplication implements A
 					}
 					
 					break;
-				} catch (Exception e) {
+				} catch (ClassNotFoundException e) {
 					s_logger.info("Look and feel '" + lnf + "' is not available.");
-					// try next
 					continue;
+				} catch (InstantiationException e) {
+					s_logger.info("Look and feel '" + lnf + "' is not available.");
+					continue;
+				} catch (IllegalAccessException e) {
+					s_logger.info("Look and feel '" + lnf + "' is not available.");
+					continue;
+				} catch (UnsupportedLookAndFeelException e) {
+					s_logger.info("Look and feel '" + lnf + "' is not available.");
+					continue;
+				
 				}
 			}
 		}

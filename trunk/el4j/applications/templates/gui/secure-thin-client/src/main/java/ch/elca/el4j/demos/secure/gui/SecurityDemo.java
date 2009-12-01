@@ -33,6 +33,7 @@ import org.jdesktop.swingx.auth.LoginService;
 import org.springframework.security.AccessDeniedException;
 import org.springframework.security.Authentication;
 import org.springframework.security.AuthenticationCredentialsNotFoundException;
+import org.springframework.security.AuthenticationException;
 import org.springframework.security.AuthenticationManager;
 import org.springframework.security.GrantedAuthority;
 import org.springframework.security.context.SecurityContextHolder;
@@ -199,7 +200,7 @@ public class SecurityDemo extends AbstractGUIExtension {
 					return true;
 				}
 			}
-		} catch (Exception e) {
+		} catch (AuthenticationException e) {
 			// continue -> return false
 		}
 		return false;

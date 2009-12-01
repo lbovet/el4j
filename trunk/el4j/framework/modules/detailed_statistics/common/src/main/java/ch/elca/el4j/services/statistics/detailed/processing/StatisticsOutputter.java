@@ -135,7 +135,7 @@ public class StatisticsOutputter {
 		MeasureItem elem;
 		String hierarchy = "";
 		String oldHierarchy = "";
-		String res = "";
+		StringBuilder resBuilder = new StringBuilder();
 		
 		// Get the measure items with our id
 		for (MeasureItem m : m_measures) {
@@ -154,19 +154,19 @@ public class StatisticsOutputter {
 			hierarchy = elem.getHierarchy();
 			// Check if hierarchy increased. If so, open a new bracket
 			if (hierarchy.length() > oldHierarchy.length()) {
-				res = res + printCall(elem);
+				resBuilder.append(printCall(elem));
 			// Check if hierarchy is the same. If so, close the bracket and open
 			// another one.
 			} else if (hierarchy.length() == oldHierarchy.length()) {
-				res = res + ")" + printCall(elem);
+				resBuilder.append(")").append(printCall(elem));
 			// Check if hierarchy has decreased. If so, close brackets.
 			} else if (hierarchy.length() < oldHierarchy.length()) {
 				while (hierarchy.length() != oldHierarchy.length()) {
-					res = res + ") ";
+					resBuilder.append(") ");
 					oldHierarchy
 						= oldHierarchy.substring(0, oldHierarchy.length() - 2);
 				}
-				res = res + ")" + printCall(elem);
+				resBuilder.append(")").append(printCall(elem));
 			// hopefully we'll never get here
 			} else {
 				throw new RuntimeException("Measurements messed up");
@@ -176,12 +176,12 @@ public class StatisticsOutputter {
 		}
 		// Finally, close the remaining brackets
 		while (oldHierarchy.length() > 1) {
-			res = res + ")";
+			resBuilder.append(")");
 			oldHierarchy = oldHierarchy.substring(0, oldHierarchy.length() - 2);
 		}
 		// Close the last bracket
-		res = res + ")";
-		return res;
+		resBuilder.append(")");
+		return resBuilder.toString();
 	}
 	
 	/**

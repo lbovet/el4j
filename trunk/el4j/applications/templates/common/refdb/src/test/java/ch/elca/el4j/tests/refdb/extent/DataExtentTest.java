@@ -35,6 +35,7 @@ import ch.elca.el4j.tests.person.dom.Brain;
 import ch.elca.el4j.tests.person.dom.Person;
 import ch.elca.el4j.tests.person.dom.Tooth;
 import ch.elca.el4j.tests.refdb.AbstractTestCaseBase;
+import ch.elca.el4j.util.codingsupport.annotations.FindBugsSuppressWarnings;
 
 import static ch.elca.el4j.services.persistence.hibernate.dao.extent.ExtentCollection.collection;
 import static ch.elca.el4j.services.persistence.hibernate.dao.extent.ExtentEntity.entity;
@@ -380,6 +381,8 @@ public class DataExtentTest extends AbstractTestCaseBase {
 	 * This test checks the predefined extents in the example daos.
 	 */
 	@Test
+	@FindBugsSuppressWarnings(value = "DLS_DEAD_LOCAL_STORE", 
+		justification = "Not important in test method.")
 	public void testPredefinedExtents() {
 		DataExtent ex = HibernateFileDao.ALL;
 		

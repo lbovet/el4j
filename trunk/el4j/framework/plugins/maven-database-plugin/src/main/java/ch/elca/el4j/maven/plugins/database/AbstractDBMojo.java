@@ -22,6 +22,7 @@ import org.apache.maven.plugin.MojoFailureException;
 import ch.elca.el4j.maven.plugins.database.holder.DatabaseNameHolder;
 import ch.elca.el4j.maven.plugins.database.util.DbController;
 import ch.elca.el4j.maven.plugins.database.util.DbControllerFactory;
+import ch.elca.el4j.util.codingsupport.annotations.FindBugsSuppressWarnings;
 
 /**
  * This class holds all fields and methods commmon to all database mojos, namely
@@ -101,6 +102,8 @@ public abstract class AbstractDBMojo extends AbstractDependencyAwareMojo {
 	/**
 	 * @return    the DB controller to start and stop the DB.
 	 */
+	@FindBugsSuppressWarnings(value = "UWF_UNWRITTEN_FIELD",
+								justification = "Field toolsPath is injected by maven.")	
 	protected DbController getDbController() {
 		if (m_dbController == null) {
 			try {

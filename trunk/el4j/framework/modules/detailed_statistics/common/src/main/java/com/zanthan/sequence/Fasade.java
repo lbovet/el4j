@@ -8,6 +8,8 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import ch.elca.el4j.util.codingsupport.annotations.FindBugsSuppressWarnings;
+
 /**
  *
  * This class is a fasade for the Sequence library.
@@ -47,6 +49,8 @@ public class Fasade {
 	 * @param height
 	 *            The height of the diagram
 	 */
+	@FindBugsSuppressWarnings(value = "RV_RETURN_VALUE_IGNORED_BAD_PRACTICE",
+						justification = "It is not important if the file really was newly created")
 	public void createSequenceDiagram(String graph, String filename,
 		int width, int height) {
 		Display disp = new Display(null);

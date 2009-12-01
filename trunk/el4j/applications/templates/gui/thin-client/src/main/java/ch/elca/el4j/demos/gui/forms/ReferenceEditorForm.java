@@ -38,6 +38,7 @@ import ch.elca.el4j.services.gui.model.mixin.SaveRestoreCapability;
 import ch.elca.el4j.services.gui.swing.GUIApplication;
 import ch.elca.el4j.services.gui.swing.frames.ApplicationFrame;
 import ch.elca.el4j.services.gui.swing.frames.ApplicationFrameAware;
+import ch.elca.el4j.util.codingsupport.annotations.FindBugsSuppressWarnings;
 
 import net.java.dev.designgridlayout.DesignGridLayout;
 
@@ -55,6 +56,8 @@ import net.java.dev.designgridlayout.DesignGridLayout;
 @LazyInit
 @Component("referenceEditorForm")
 @Form(autoBind = true)
+@FindBugsSuppressWarnings(value = {"NP_UNWRITTEN_FIELD", "UWF_NULL_FIELD"}, 
+							justification = "Bug warnings due usage of form binding")
 public class ReferenceEditorForm extends JPanel implements ApplicationFrameAware {
 	/**
 	 * The textfield for a reference name. Bound to reference.name (prefix "" gets removed).

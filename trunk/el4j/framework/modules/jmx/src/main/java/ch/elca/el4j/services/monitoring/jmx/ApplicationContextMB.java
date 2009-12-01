@@ -251,7 +251,7 @@ public class ApplicationContextMB implements ApplicationContextMBMBean {
 	 */
 	public void setInstanceCounter() {
 
-		synchronized (getClass()) {
+		synchronized (ApplicationContextMB.class) {
 			m_instanceCounter = s_counter;
 			s_counter++;
 		}

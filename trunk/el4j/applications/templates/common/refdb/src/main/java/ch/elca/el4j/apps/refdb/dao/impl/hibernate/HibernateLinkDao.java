@@ -79,13 +79,6 @@ public class HibernateLinkDao
 				currentList.retainAll(nextList);
 			}
 			
-			if (currentList instanceof ArrayList) {
-				Assert.isInstanceOf(ArrayList.class, currentList);
-			} else {
-				Assert.isInstanceOf(Collections.EMPTY_LIST.getClass(), currentList);
-			}
-			
-			
 			return currentList;
 
 		// Executed if the query does not include any IncludeCriteria
