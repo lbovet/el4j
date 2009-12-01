@@ -128,22 +128,22 @@ public class ShellExecutorImpl implements ShellExecutor {
 	}
 
 	// inherited comment
-	public NameSpace getNameSpace () {
+	public synchronized NameSpace getNameSpace () {
 		return interpreter.getNameSpace();
 	}
 	
 	// inherited comment
-	public void setNameSpace (NameSpace ns){
+	public synchronized void setNameSpace (NameSpace ns){
 		interpreter.setNameSpace (ns);
 	}
 
 
-	public Interpreter getInterpreter() {
+	public synchronized Interpreter getInterpreter() {
 		return interpreter;
 	}
 
 
-	public void setInterpreter(Interpreter interpreter) {
+	public synchronized void setInterpreter(Interpreter interpreter) {
 		this.interpreter = interpreter;
 	}
 

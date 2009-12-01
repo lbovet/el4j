@@ -105,7 +105,7 @@ public class RefDBDemoForm extends JPanel implements Bindable {
 	 * The manually created list binding.
 	 */
 	@SuppressWarnings("unchecked")
-	protected AutoBinding listBinding;
+	protected transient AutoBinding listBinding;
 	
 	/**
 	 * The model to bind to this form.

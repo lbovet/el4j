@@ -64,7 +64,7 @@ public class CancelableDemoForm extends JPanel {
 	private JButton cancelButton;
 	
 	@ModelObject(isDefault = true)
-	private Person person;
+	private transient Person person;
 	
 	/**
 	 * The binder instance variable.

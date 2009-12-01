@@ -71,4 +71,20 @@ public class ExplicitClassPathResource extends ClassPathResource {
 	public InputStream getInputStream() throws IOException {
 		return m_url.openStream();
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		// just to make clear that it is intended to use the method of the superclass
+		return super.equals(obj);
+	}
+	
+	@Override
+	public int hashCode() {
+		// just to make clear that it is intended to use the method of the superclass
+		return super.hashCode();
+	}
+	
 }

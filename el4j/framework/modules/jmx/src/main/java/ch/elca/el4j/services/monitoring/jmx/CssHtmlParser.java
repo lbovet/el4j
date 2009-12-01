@@ -60,6 +60,10 @@ public class CssHtmlParser implements CssHtmlParserMBean {
 				sb.append(line);
 				line = br.readLine();
 			}
+			if (br != null) {
+				br.close();
+			}
+			
 		} else {
 			ClassLoader cl = Thread.currentThread().getContextClassLoader();
 			InputStream is = cl.getResourceAsStream(stylesheetPath);

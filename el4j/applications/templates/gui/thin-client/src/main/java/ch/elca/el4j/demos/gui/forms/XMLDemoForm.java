@@ -36,6 +36,7 @@ import ch.elca.el4j.demos.model.DefaultPerson;
 import ch.elca.el4j.demos.model.Person;
 import ch.elca.el4j.services.gui.model.mixin.PropertyChangeListenerMixin;
 import ch.elca.el4j.services.gui.swing.cookswing.binding.Bindable;
+import ch.elca.el4j.util.codingsupport.annotations.FindBugsSuppressWarnings;
 
 import com.silvermindsoftware.hitch.Binder;
 import com.silvermindsoftware.hitch.BinderManager;
@@ -61,6 +62,8 @@ import cookxml.cookswing.CookSwing;
 @LazyInit
 @Scope("prototype")
 @Component("xmlDemoForm")
+@FindBugsSuppressWarnings(value = {"NP_UNWRITTEN_FIELD", "UWF_UNWRITTEN_FIELD"}, 
+								justification = "Fields are injected by cookSwing.")
 public class XMLDemoForm extends JPanel implements Bindable {
 	
 	

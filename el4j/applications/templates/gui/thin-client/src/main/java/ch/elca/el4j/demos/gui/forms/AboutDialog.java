@@ -62,7 +62,7 @@ public class AboutDialog extends JDialog {
 	/**
 	 * The resource map.
 	 */
-	protected ResourceMap resourceMap;
+	protected transient ResourceMap resourceMap;
 	
 	/**
 	 * The applicationContext.

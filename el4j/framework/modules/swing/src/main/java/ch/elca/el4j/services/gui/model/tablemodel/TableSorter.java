@@ -11,6 +11,8 @@ import javax.swing.table.*;
 
 import org.jdesktop.swingbinding.validation.ValidatedProperty;
 
+import ch.elca.el4j.util.codingsupport.annotations.FindBugsSuppressWarnings;
+
 /**
  * TableSorter is a decorator for TableModels; adding sorting
  * functionality to a supplied TableModel. TableSorter does
@@ -434,6 +436,8 @@ public class TableSorter extends AbstractTableModel {
 			this.priority = priority;
 		}
 
+		@FindBugsSuppressWarnings(value = "ICAST_IDIV_CAST_TO_DOUBLE",
+									justification = "False positive.")	
 		public void paintIcon(Component c, Graphics g, int x, int y) {
 			Color color = c == null ? Color.GRAY : c.getBackground();
 			// In a compound sort, make each succesive triangle 20%

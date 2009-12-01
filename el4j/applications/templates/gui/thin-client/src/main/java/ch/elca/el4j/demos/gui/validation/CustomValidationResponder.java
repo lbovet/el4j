@@ -16,6 +16,7 @@
  */
 package ch.elca.el4j.demos.gui.validation;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
@@ -111,29 +112,39 @@ public class CustomValidationResponder extends DefaultValidationResponder {
 	 * Update the text component for the validation messages.
 	 */
 	protected void updateMessageText() {
-		Method setText;
+		Method setText = null;
 		try {
-			setText = messageComponent.getClass().getMethod("setText",
-				new Class[] {String.class});
-			
-			// collect all validation error messages
-			StringBuilder sb = new StringBuilder("<html>");
-			for (String msg : currentMessages.values()) {
-				if (msg != null) {
-					sb.append(msg).append("<br>");
-				}
-			}
-			if (sb.length() > "<html><br>".length()) {
-				// get rid of last "<br>"
-				sb.setLength(sb.length() - "<br>".length());
-			}
-			sb.append("</html>");
-			
-			// set the message to the text component
-			setText.invoke(messageComponent, sb.toString());
-		} catch (Exception e) {
-			s_logger.warn(messageComponent.toString()
-				+ " has no setText method.");
+			setText = messageComponent.getClass().getMethod("setText", new Class[] {String.class});
+		} catch (NoSuchMethodException e) {
+			s_logger.warn(messageComponent.toString() + " has no setText method.");
 		}
+		// collect all validation error messages
+		StringBuilder sb = new StringBuilder("<html>");
+		for (String msg : currentMessages.values()) {
+			if (msg != null) {
+				sb.append(msg).append("<br>");
+			}
+		}
+		if (sb.length() > "<html><br>".length()) {
+			// get rid of last "<br>"
+			sb.setLength(sb.length() - "<br>".length());
+		}
+		sb.append("</html>");
+
+		// set the message to the text component
+		try {
+			if (setText != null) {
+				setText.invoke(messageComponent, sb.toString());
+			}
+		} catch (IllegalArgumentException e) {
+			s_logger.warn(messageComponent.toString() + " was called with the wrong number of arguments.");
+		} catch (IllegalAccessException e) {
+			s_logger.warn("Invocation of method setText on " + messageComponent.toString()
+				+ "caused a IllegalAccessException");
+		} catch (InvocationTargetException e) {
+			s_logger.warn("Invocation of method setText on " + messageComponent.toString()
+				+ "caused a InvocationTargetException");
+		}
+
 	}
 }

@@ -17,9 +17,11 @@
 package ch.elca.el4j.util.config;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Map.Entry;
 
 /**
  * The base class for generic configurations. It is a hierarchical structure of
@@ -49,10 +51,12 @@ public class GenericConfig {
 	 *                  is inherited
 	 */
 	public void setParent(GenericConfig parent) {
-		Map<String, Object> parentMap = parent.getMap();
-		for (String key : parentMap.keySet()) {
-			if (!m_map.containsKey(key)) {
-				add(key, parentMap.get(key));
+		Iterator<Entry<String, Object>> mapIterator = parent.getMap().entrySet().iterator();
+		
+		while (mapIterator.hasNext()) {
+			Entry<String, Object> entry = mapIterator.next();
+			if (!m_map.containsKey(entry.getKey())) {
+				add(entry.getKey(), entry.getValue());
 			}
 		}
 	}
@@ -106,8 +110,10 @@ public class GenericConfig {
 	 * @param properties    the configuration entries to add
 	 */
 	public void setOverrideMap(Properties properties) {
-		for (Object key : properties.keySet()) {
-			m_map.put((String) key, properties.get(key));
+		Iterator<Entry<Object, Object>> propertiesIterator = properties.entrySet().iterator();
+		while (propertiesIterator.hasNext()) {
+			Entry<Object, Object> property = propertiesIterator.next();
+			m_map.put((String) property.getKey(), property.getValue());
 		}
 	}
 	

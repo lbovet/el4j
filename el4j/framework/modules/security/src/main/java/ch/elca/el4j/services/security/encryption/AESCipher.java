@@ -16,6 +16,8 @@
  */
 package ch.elca.el4j.services.security.encryption;
 
+import java.util.Arrays;
+
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
@@ -118,7 +120,7 @@ public class AESCipher {
 		SecretKey skey = kgen.generateKey();
 		byte[] raw = skey.getEncoded();
 
-		System.out.println("Generated AES-128 key:" + Base64.encodeBase64(raw));
+		System.out.println("Generated AES-128 key:" + Arrays.toString(Base64.encodeBase64(raw)));
 	}
 
 }

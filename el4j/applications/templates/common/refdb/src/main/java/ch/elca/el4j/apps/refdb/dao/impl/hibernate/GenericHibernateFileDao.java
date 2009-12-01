@@ -44,15 +44,9 @@ public class GenericHibernateFileDao<T, ID extends Serializable>
 		String domainClassName = getPersistentClassName();
 		String queryString = "from " + domainClassName + " "
 			+ domainClassName.toLowerCase() + " where name = :name";
-		List<T> result = getConvenienceHibernateTemplate()
-			.findByNamedParam(queryString, "name", name);
-		if (result instanceof ArrayList) {
-			Assert.isInstanceOf(ArrayList.class, result);
-		
-		} else {
-			Assert.isInstanceOf(Collections.EMPTY_LIST.getClass(), result);
-		}
-		return result;
+				
+		return  getConvenienceHibernateTemplate()
+		.findByNamedParam(queryString, "name", name);
 
 	}
 	
@@ -69,13 +63,7 @@ public class GenericHibernateFileDao<T, ID extends Serializable>
 			+ domainClassName.toLowerCase() + " where name = :name";
 		List<T> result = getConvenienceHibernateTemplate()
 			.findByNamedParam(queryString, "name", name);
-		if (result instanceof ArrayList) {
-			Assert.isInstanceOf(ArrayList.class, result);
 		
-		} else {
-			Assert.isInstanceOf(Collections.EMPTY_LIST.getClass(), result);
-		}
-
 		return fetchExtent(result, extent);
 	}
 	

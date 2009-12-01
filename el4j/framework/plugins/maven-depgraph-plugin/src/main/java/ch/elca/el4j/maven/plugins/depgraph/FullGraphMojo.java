@@ -22,6 +22,7 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.project.MavenProject;
 
 import ch.elca.el4j.maven.depgraph.DependencyGraph;
+import ch.elca.el4j.util.codingsupport.annotations.FindBugsSuppressWarnings;
 
 /**
  * Can be used to draw a dependency graph from the project, the mojo is executed
@@ -49,6 +50,8 @@ public class FullGraphMojo extends AbstractDependencyGraphMojo {
 	/**
 	 * {@inheritDoc}
 	 */
+	@FindBugsSuppressWarnings(value = "NP_UNWRITTEN_FIELD",
+					justification = "m_reactorProjects is injected by maven.")
 	public void execute() throws MojoExecutionException {
 		super.execute();
 		

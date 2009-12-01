@@ -23,14 +23,16 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.codehaus.plexus.util.FileUtils;
-import org.springframework.util.FileCopyUtils;
-import org.springframework.util.StringUtils;
-
 import net.sourceforge.cobertura.coveragedata.CoverageDataFileHandler;
 import net.sourceforge.cobertura.coveragedata.ProjectData;
 import net.sourceforge.cobertura.reporting.Main;
 import net.sourceforge.cobertura.util.ConfigurationUtil;
+
+import org.codehaus.plexus.util.FileUtils;
+import org.springframework.util.FileCopyUtils;
+import org.springframework.util.StringUtils;
+
+import ch.elca.el4j.util.codingsupport.annotations.FindBugsSuppressWarnings;
 
 /**
  * Bean to control the cobertura runtime behavior.
@@ -180,6 +182,8 @@ public class CoberturaRuntimeControllerImpl implements CoberturaRuntimeControlle
 	}
 	
 	/** {@inheritDoc} */
+	@FindBugsSuppressWarnings(value = "REC_CATCH_EXCEPTION",
+					justification = "Don't care which exception occurs, will always throw a Runtime exception.")	
 	public synchronized boolean stopRecording() {
 		if (m_isOfflineMode || !m_isRecordingData) {
 			return false;
@@ -274,10 +278,13 @@ public class CoberturaRuntimeControllerImpl implements CoberturaRuntimeControlle
 			try {
 				FileUtils.deleteDirectory(reportDirectory);
 			} catch (IOException e) {
-				new RuntimeException("Could not delete the old report directory '" + reportDirectoryPath + "'!", e);
+				throw new RuntimeException("Could not delete the old report directory '" 
+															+ reportDirectoryPath + "'!", e);
 			}
 		}
-		reportDirectory.mkdirs();
+		if (!reportDirectory.mkdirs()) {
+			throw new RuntimeException("Could not create new report directory");
+		}	
 		
 		// Copy the data file to the report dir
 		String newDataFileName = "cobertura-" + timestampString + ".ser";
@@ -285,7 +292,7 @@ public class CoberturaRuntimeControllerImpl implements CoberturaRuntimeControlle
 		try {
 			FileCopyUtils.copy(m_coberturaDataFile, dataFile);
 		} catch (IOException e) {
-			new RuntimeException("Could not copy the cobertura data file!", e);
+			throw new RuntimeException("Could not copy the cobertura data file!", e);
 		}
 		String dataFilePath = dataFile.getAbsolutePath();
 		
@@ -299,7 +306,7 @@ public class CoberturaRuntimeControllerImpl implements CoberturaRuntimeControlle
 		try {
 			Main.main(arguments.toArray(new String[arguments.size()]));
 		} catch (Exception e) {
-			new RuntimeException("Exception while generating the report!", e);
+			throw new RuntimeException("Exception while generating the report!", e);
 		}
 		
 		return reportDirectoryPath;

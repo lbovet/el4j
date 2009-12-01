@@ -24,6 +24,8 @@ import org.aopalliance.intercept.MethodInvocation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import ch.elca.el4j.util.codingsupport.annotations.FindBugsSuppressWarnings;
+
 /**
  * Interceptor that converts the cause of an Exception thrown
  * by the intercepted method into a {@link Throwable} instance.
@@ -63,6 +65,8 @@ public class ExceptionChainConversionInterceptor implements MethodInterceptor {
 	/**
 	 * {@inheritDoc}
 	 */
+	@FindBugsSuppressWarnings(value = "REC_CATCH_EXCEPTION",
+						justification = "As this is only a interceptor, we anyway pass the exception further.")
 	public Object invoke(MethodInvocation methodInvocation) throws Throwable {
 
 		try {

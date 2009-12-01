@@ -128,7 +128,7 @@ public class JodaDateTimePicker extends DatePicker {
 		}
 		DateTime oldDate = getJodaDateTime();
 		// use time settings from localTime
-		DateTime newDateTime = JodaTimeUtils.setTimeOfDateTime(new DateTime(date), m_localTime);
+		DateTime newDateTime = JodaTimeUtils.setTimeOfDateTime(new DateTime(date), getLocalTime());
 		setJodaDateTime(newDateTime);
 		firePropertyChange("jodaDateTime", oldDate, getJodaDateTime());
 	}
@@ -140,7 +140,7 @@ public class JodaDateTimePicker extends DatePicker {
 	 *            is the date to which we set
 	 */
 
-	private void setJodaDate(Date date) {
+	public void setJodaDate(Date date) {
 		// don't change anything in case we get a null as argument
 		if (date == null) {
 			return;

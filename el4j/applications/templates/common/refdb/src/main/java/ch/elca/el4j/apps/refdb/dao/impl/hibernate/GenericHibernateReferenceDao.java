@@ -54,21 +54,14 @@ public class GenericHibernateReferenceDao<T extends Reference,
 		
 		DetachedCriteria criteria = DetachedCriteria.forClass(getPersistentClass());
 		criteria.add(Restrictions.like("name", name));
-		List<T> result = getConvenienceHibernateTemplate().findByCriteria(criteria);
-		
 		// TODO MZE: Is this really needed although lazy loading is already
 		// switched off?
 //        for (T reference : result) {
 //            getConvenienceHibernateTemplate().initialize(
 //                reference.getKeywords());
 //        }
-		if (result instanceof ArrayList) {
-			Assert.isInstanceOf(ArrayList.class, result);
+		return getConvenienceHibernateTemplate().findByCriteria(criteria);
 		
-		} else {
-			Assert.isInstanceOf(Collections.EMPTY_LIST.getClass(), result);
-		}
-		return result;
 
 
 	}
@@ -107,15 +100,7 @@ public class GenericHibernateReferenceDao<T extends Reference,
 	/** {@inheritDoc} */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<T> search(String[] fields, String critera) throws DataAccessException, DataRetrievalFailureException {
-		List<T> result = getConvenienceHibernateTemplate().search(getPersistentClass(), fields, critera);
-		if (result instanceof ArrayList) {
-			Assert.isInstanceOf(ArrayList.class, result);
-		
-		} else {
-			Assert.isInstanceOf(Collections.EMPTY_LIST.getClass(), result);
-		}
-		return result;
-
+		return  getConvenienceHibernateTemplate().search(getPersistentClass(), fields, critera);
 	}
 	
 	/** {@inheritDoc} */

@@ -16,12 +16,15 @@
  */
 package ch.elca.el4j.tests.env.xml;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Map.Entry;
 
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 import ch.elca.el4j.env.xml.ResolverUtils;
 
@@ -50,9 +53,11 @@ public class ResolverUtilsTest {
 		tests.put("${", "${");
 		tests.put("${}", "${}");
 		
-		for (String input : tests.keySet()) {
-			String expected = tests.get(input);
-			assertEquals(expected, ResolverUtils.resolve(input, values));
+		Iterator<Entry<String, String>> i = tests.entrySet().iterator();
+		
+		while (i.hasNext()) {
+			Entry<String, String> pair = i.next();
+			assertEquals(pair.getValue(), ResolverUtils.resolve(pair.getKey(), values));
 		}
 	}
 }

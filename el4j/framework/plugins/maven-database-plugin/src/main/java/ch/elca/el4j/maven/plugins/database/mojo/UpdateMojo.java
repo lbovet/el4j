@@ -29,6 +29,7 @@ import org.apache.maven.plugin.MojoFailureException;
 import org.springframework.core.io.Resource;
 
 import ch.elca.el4j.maven.plugins.database.AbstractDBExecutionMojo;
+import ch.elca.el4j.util.codingsupport.annotations.FindBugsSuppressWarnings;
 
 
 
@@ -79,6 +80,8 @@ public class UpdateMojo extends AbstractDBExecutionMojo {
 	
 	/** {@inheritDoc} */
 	@Override
+	@FindBugsSuppressWarnings(value = "UWF_UNWRITTEN_FIELD",
+			justification = "Fields currentVersion and targetVersion are injected by maven.")	
 	protected List<Resource> preProcessResources(List<Resource> resources) throws MojoFailureException {
 		super.preProcessResources(resources);
 		

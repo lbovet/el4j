@@ -28,7 +28,7 @@ import ch.elca.el4j.services.gui.swing.exceptions.Handler;
 public class ExampleExceptionHandler implements Handler {
 	/** {@inheritDoc} */
 	public boolean recognize(Exception e) {
-		return (e instanceof Exception);
+		return (e != null);
 	}
 	
 	/** {@inheritDoc} */

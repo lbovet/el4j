@@ -23,6 +23,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -54,6 +55,7 @@ import ch.elca.el4j.services.xmlmerge.config.ConfigurableXmlMerge;
 import ch.elca.el4j.services.xmlmerge.config.PropertyXPathConfigurer;
 import ch.elca.el4j.services.xmlmerge.factory.XPathOperationFactory;
 import ch.elca.el4j.services.xmlmerge.merge.DefaultXmlMerge;
+import ch.elca.el4j.util.codingsupport.annotations.FindBugsSuppressWarnings;
 
 /**
  * This class tests several functionalities of the xml_merge module, using a
@@ -223,7 +225,10 @@ public class DefaultMergeTest {
 	 *             If an error occurs during the test
 	 */
 	@Test
+	@FindBugsSuppressWarnings (value = {"OS_OPEN_STREAM", "OBL_UNSATISFIED_OBLIGATION"},
+		justification = "Not important in test method.")
 	public void testPropertyXPathConfigurer() throws Exception {
+		
 		
 		String[] sources = {
 			"<root><a/><c/></root>",
@@ -337,6 +342,8 @@ public class DefaultMergeTest {
 	 *             If an error occurs during the test
 	 */
 	@Test
+	@FindBugsSuppressWarnings (value = {"OS_OPEN_STREAM", "OBL_UNSATISFIED_OBLIGATION"},
+								justification = "Not important in test method.")
 	public void testDtdMerge() throws Exception {
 		
 		InputStream[] streams
@@ -349,11 +356,20 @@ public class DefaultMergeTest {
 			= File.createTempFile("xml-merge-common-tests", "out2.xml");
 		outputFile.deleteOnExit();
 		
-		OutputStream out = new FileOutputStream(outputFile);
+		OutputStream out = null;
 		
+		
+		try {
+			out = new FileOutputStream(outputFile);
+		} catch (FileNotFoundException e)  {
+			logger.debug("Output file not found: " + e.getLocalizedMessage());
+		}
 		Properties props = new Properties();
-		props.load(this.getClass().getResourceAsStream("test-dtd.properties"));
-		
+		try {
+			props.load(this.getClass().getResourceAsStream("test-dtd.properties"));
+		} catch (IOException e) {
+			logger.debug("IOException while loading properties: " + e.getLocalizedMessage());
+		}
 	
 		ConfigurableXmlMerge xmlMerge = new ConfigurableXmlMerge(
 			new PropertyXPathConfigurer(props));
@@ -362,9 +378,17 @@ public class DefaultMergeTest {
 		InputStream in = xmlMerge.merge(streams);
 		
 		writeFromTo(in, out);
-		
-		in.close();
-		out.close();
+		try {
+			if (in != null) {
+				in.close();
+			}
+			if (out != null) {
+				out.close();
+			}	
+		} catch (IOException e) {
+			logger.debug("Exception while cloasing streams: " + e.getLocalizedMessage());
+		}
+			
 	}
 	
 	/**

@@ -215,7 +215,7 @@ public class JvmMB implements JvmMBMBean {
 	 */
 	public void setInstanceCounter() {
 
-		synchronized (getClass()) {
+		synchronized (JvmMB.class) {
 			m_instanceCounter = s_counter;
 			s_counter++;
 		}

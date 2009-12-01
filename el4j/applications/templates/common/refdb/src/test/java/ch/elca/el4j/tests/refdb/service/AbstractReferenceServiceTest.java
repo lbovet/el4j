@@ -47,6 +47,7 @@ import ch.elca.el4j.services.search.criterias.ComparisonCriteria;
 import ch.elca.el4j.services.search.criterias.IncludeCriteria;
 import ch.elca.el4j.services.search.criterias.LikeCriteria;
 import ch.elca.el4j.tests.refdb.AbstractTestCaseBase;
+import ch.elca.el4j.util.codingsupport.annotations.FindBugsSuppressWarnings;
 
 // Checkstyle: MagicNumber off
 
@@ -1218,6 +1219,8 @@ public abstract class AbstractReferenceServiceTest extends AbstractTestCaseBase 
 	 * level, because transaction attributes are defined on service layer.
 	 */
 	@Test
+	@FindBugsSuppressWarnings(value = "DLS_DEAD_LOCAL_STORE", 
+		justification = "Not important in test method.")
 	public void testIncompleteAnnotationInsertion() {
 		Reference fakeReference = addDefaultFakeReference();
 
@@ -1301,6 +1304,8 @@ public abstract class AbstractReferenceServiceTest extends AbstractTestCaseBase 
 	 * Test the getReferencesByKeywords() service method.
 	 */
 	@Test
+	@FindBugsSuppressWarnings(value = "DLS_DEAD_LOCAL_STORE", 
+									justification = "Not important in test method.")
 	public void testGetReferencesByKeywords() {
 		// add a book
 		Book book = new Book();

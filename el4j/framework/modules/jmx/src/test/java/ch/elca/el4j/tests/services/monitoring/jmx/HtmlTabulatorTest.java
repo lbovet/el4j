@@ -56,7 +56,7 @@ public class HtmlTabulatorTest {
 			table.addRow(row);
 		}
 		
-		String theTable = table.tabulate();
+		// String theTable = table.tabulate();
 		// TODO: Parse generated table here?
 	}
 }

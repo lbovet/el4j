@@ -434,7 +434,7 @@ public class Log4jConfig implements Log4jConfigMBean {
 	 */
 	public void setInstanceCounter() {
 
-		synchronized (getClass()) {
+		synchronized (Log4jConfig.class) {
 			m_instanceCounter = s_counter;
 			s_counter++;
 		}

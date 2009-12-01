@@ -753,6 +753,17 @@
 				</plugin>
 				<plugin>
 					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>findbugs-maven-plugin</artifactId>
+					<version>${version.findbugs-maven-plugin}</version>			
+					<configuration>
+						<effort>Max</effort>
+						<threshold>Low</threshold>
+						<excludeFilterFile>${findbugs.config.locations}</excludeFilterFile>
+					</configuration>
+				</plugin>
+				
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
 					<artifactId>taglist-maven-plugin</artifactId>
 					<!--
 						Version defined as property because dep mgt works not
@@ -2662,6 +2673,7 @@
 		<!-- Maven plugin versions. Needed due to false dep mgt. -->
 		<version.maven-project-info-reports-plugin>2.1.2</version.maven-project-info-reports-plugin>
 		<version.maven-checkstyle-plugin>2.4-el4j_20091020_1500</version.maven-checkstyle-plugin>
+		<version.findbugs-maven-plugin>2.0.1</version.findbugs-maven-plugin>
 		<version.maven-surefire-report-plugin>2.4.3</version.maven-surefire-report-plugin>
 		<version.maven-javadoc-plugin>2.6</version.maven-javadoc-plugin>
 		<version.maven-jxr-plugin>2.1</version.maven-jxr-plugin>

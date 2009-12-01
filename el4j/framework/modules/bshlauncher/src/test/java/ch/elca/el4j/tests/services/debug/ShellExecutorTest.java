@@ -28,6 +28,7 @@ import ch.elca.el4j.services.debug.BshCommandLineLauncher;
 import ch.elca.el4j.services.debug.ResultHolder;
 import ch.elca.el4j.services.debug.ShellExecutor;
 import ch.elca.el4j.services.debug.ShellExecutorImpl;
+import ch.elca.el4j.util.codingsupport.annotations.FindBugsSuppressWarnings;
 
 /**
  * @svnLink $Revision$;$Date$;$Author$;$URL$
@@ -58,6 +59,8 @@ public class ShellExecutorTest {
 	}
 	
 	@Test
+	@FindBugsSuppressWarnings(value = "DLS_DEAD_LOCAL_STORE",
+							justification = "Test method doesn't care for values that are never read")
 	public void testBshCommandLauncher2() {
 		Properties bkup = System.getProperties();
 		

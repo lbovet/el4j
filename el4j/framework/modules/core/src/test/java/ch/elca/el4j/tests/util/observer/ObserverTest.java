@@ -38,7 +38,7 @@ public class ObserverTest implements ValueObserver<Boolean> {
 	SettableObservableValue<Boolean> m_a, m_b, m_c;
 	
 	/** the intermediary nodes/outputs. */
-	LiveValue<Boolean> m_d, m_e, m_f, m_g;
+	LiveValue<Boolean>  m_e, m_f, m_g;
 	
 	/** the computable for {@code g}. */
 	Computable<Boolean> m_comp;
@@ -54,12 +54,12 @@ public class ObserverTest implements ValueObserver<Boolean> {
 		m_a = new SettableObservableValue<Boolean>(false);
 		m_b = new SettableObservableValue<Boolean>(false);
 		m_c = new SettableObservableValue<Boolean>(false);
-		m_d = new LiveValue<Boolean>() {
-			@Override
-			protected Boolean is() {
-				return m_a.get() != m_b.get();
-			}
-		};
+//		m_d = new LiveValue<Boolean>() {
+//			@Override
+//			protected Boolean is() {
+//				return m_a.get() != m_b.get();
+//			}
+//		};
 		m_e = new LiveValue<Boolean>() {
 			@Override
 			protected Boolean is() {

@@ -162,9 +162,12 @@ public class BinderImpl implements Binder {
 						componentMeta.getModelPropertyName(),
 						component, creator, performValidate);
 				}
-			} catch (Exception e) {
+			} catch (IllegalArgumentException e) {
+				return null;
+			} catch (IllegalAccessException e) {
 				return null;
 			}
+			
 		}
 
 		return null;
