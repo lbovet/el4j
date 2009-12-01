@@ -16,6 +16,8 @@
  */
 package ch.elca.el4j.services.persistence.hibernate.usertypes;
 
+
+
 import java.util.Map;
 import java.util.Properties;
 
@@ -23,7 +25,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.type.NullableType;
 import org.hibernate.usertype.ParameterizedType;
 import org.hibernate.usertype.UserType;
-
+import ch.elca.el4j.util.codingsupport.SerializableEnum;
 /**
  * This abstract class shares the base code of {@link GenericEnumUserType} and
  * {@link GenericEnumSetUserType}.
