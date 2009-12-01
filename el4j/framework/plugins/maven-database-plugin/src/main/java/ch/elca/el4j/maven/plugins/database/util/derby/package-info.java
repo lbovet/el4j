@@ -17,5 +17,7 @@
 
 /**
  * @wikiLink PluginDatabase
+ *
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  */
 package ch.elca.el4j.maven.plugins.database.util.derby;

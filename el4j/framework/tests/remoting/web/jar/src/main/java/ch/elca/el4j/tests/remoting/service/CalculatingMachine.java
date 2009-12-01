@@ -19,13 +19,8 @@ package ch.elca.el4j.tests.remoting.service;
 /** This interfaces sole purpose is to be extended by Calculator to 
  *  test inheritance in exported remote services.
  *  
- * <script type="text/javascript">printFileStatus
- *   ("$URL: https://el4j.svn.sourceforge.net/svnroot/el4j/trunk/el4j/framework/tests/remoting/web/jar/src/main/java/ch/elca/el4j/tests/remoting/service/Calculator.java $",
- *    "$Revision: 3106 $",
- *    "$Date: 2009-07-15 15:33:06 +0200 (Mo, 15 Jul 2009) $",
- *    "$Author: dthomas $"
- * );</script>
- * 
+ * 	@svnLink $Revision$;$Date$;$Author$;$URL$
+ *
  *  @author Daniel Thomas (DTH)
  */
 public interface CalculatingMachine {

@@ -17,5 +17,7 @@
 
 /**
  * @wikiLink PluginCoberturaRuntime
+ *
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  */
 package ch.elca.el4j.maven.plugins.coberturaruntime;
