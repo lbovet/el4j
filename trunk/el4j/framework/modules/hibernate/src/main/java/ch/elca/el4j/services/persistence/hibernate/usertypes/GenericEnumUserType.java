@@ -27,6 +27,8 @@ import org.hibernate.HibernateException;
 import org.hibernate.type.NullableType;
 import org.hibernate.type.TypeFactory;
 
+import ch.elca.el4j.util.codingsupport.SerializableEnum;
+
 /**
  * Generic user type for enumerations. Based on <a 
  * href="http://weblog.dangertree.net/2007/09/23/mapping-java-5-enums-with-hibernate/">

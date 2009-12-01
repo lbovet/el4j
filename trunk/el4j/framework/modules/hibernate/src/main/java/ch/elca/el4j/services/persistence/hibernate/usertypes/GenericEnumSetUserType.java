@@ -31,6 +31,8 @@ import org.hibernate.type.TypeFactory;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
+import ch.elca.el4j.util.codingsupport.SerializableEnum;
+
 /**
  * Generic user type for set of enumerations implementing
  * {@link SerializableEnum}.
