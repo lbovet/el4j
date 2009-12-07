@@ -16,7 +16,9 @@
  */
 /**
  * @svnLink $Revision$;$Date$;$Author$;$URL$
- * 
+ *
+ * Support for using XmlMerge to create SpringFramework resources merging XML files.
+ *
  * @wikiLink ModuleXmlMerge
  */
 package ch.elca.el4j.services.xmlmerge.springframework;

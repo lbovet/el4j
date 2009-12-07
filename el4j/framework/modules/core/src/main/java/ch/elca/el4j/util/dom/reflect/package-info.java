@@ -17,7 +17,11 @@
 
 /**
  * @svnLink $Revision$;$Date$;$Author$;$URL$
- * 
+ *
+ * Defines the api to inspect the Domain Object Model at runtime.
+ * The entry point into the inspection API is
+ * {@link ch.elca.el4j.util.dom.reflect.EntityType#get(java.lang.Class)}.
+ *
  * @wikiLink ModuleCore
  */
 package ch.elca.el4j.util.dom.reflect;

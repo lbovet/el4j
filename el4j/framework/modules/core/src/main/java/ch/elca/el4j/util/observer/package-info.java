@@ -17,7 +17,10 @@
 
 /**
  * @svnLink $Revision$;$Date$;$Author$;$URL$
- * 
+ *
+ * Generic observer pattern implementation. See
+ * {@link ch.elca.el4j.util.observer.ObservableValue} and its implementing classes.
+ *
  * @wikiLink ModuleCore
  */
 package ch.elca.el4j.util.observer;

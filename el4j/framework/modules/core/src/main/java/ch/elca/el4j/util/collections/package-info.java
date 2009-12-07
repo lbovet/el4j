@@ -18,6 +18,8 @@
 /**
  * @svnLink $Revision$;$Date$;$Author$;$URL$
  * 
+ * Defines some convenience functions for collections.
+ *
  * @wikiLink ModuleCore
  */
 package ch.elca.el4j.util.collections;
