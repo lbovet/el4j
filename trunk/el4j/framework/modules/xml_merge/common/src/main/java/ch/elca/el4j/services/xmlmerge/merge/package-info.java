@@ -16,7 +16,9 @@
  */
 /**
  * @svnLink $Revision$;$Date$;$Author$;$URL$
- * 
+ *
+ * Default implementation of XmlMerge.
+ *
  * @wikiLink ModuleXmlMerge
  */
 package ch.elca.el4j.services.xmlmerge.merge;

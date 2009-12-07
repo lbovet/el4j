@@ -17,7 +17,9 @@
 
 /**
  * @svnLink $Revision$;$Date$;$Author$;$URL$
- * 
+ *
+ * Defines the annotations used in the Domain Object Model.
+ *
  * @wikiLink ModuleCore
  */
 package ch.elca.el4j.util.dom.annotations;

@@ -17,6 +17,8 @@
 /**
  * @svnLink $Revision$;$Date$;$Author$;$URL$
  * 
+ * Interfaces and classes defining the XmlMerge API.
+ *
  * @wikiLink ModuleXmlMerge
  */
 package ch.elca.el4j.services.xmlmerge;

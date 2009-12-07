@@ -16,7 +16,9 @@
  */
 /**
  * @svnLink $Revision$;$Date$;$Author$;$URL$
- * 
+ *
+ * Implementation of built-in configuration classes.
+ *
  * @wikiLink ModuleXmlMerge
  */
 package ch.elca.el4j.services.xmlmerge.config;

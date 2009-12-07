@@ -16,7 +16,9 @@
  */
 /**
  * @svnLink $Revision$;$Date$;$Author$;$URL$
- * 
+ *
+ * XmlMerge as a command-line tool for merging XML files.
+ *
  * @wikiLink ModuleXmlMerge
  */
 package ch.elca.el4j.services.xmlmerge.tool;
