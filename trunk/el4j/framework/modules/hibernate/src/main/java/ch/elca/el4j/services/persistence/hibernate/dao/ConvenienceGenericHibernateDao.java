@@ -17,6 +17,7 @@
 package ch.elca.el4j.services.persistence.hibernate.dao;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
 
 import org.hibernate.criterion.DetachedCriteria;
@@ -54,6 +55,37 @@ public interface ConvenienceGenericHibernateDao<T, ID extends Serializable>
 	 * @throws OptimisticLockingFailureException
 	 */
 	public T saveOrUpdateAndFlush(T entity) throws DataAccessException,
+		DataIntegrityViolationException, OptimisticLockingFailureException;
+	
+	/** 
+	 * Deletes all available <code>T</code> using a HQL query.
+	 * 
+	 * This has the benefit of a significant performance improvement
+	 * in comparison to {@link deleteAll}. The tradeoff is that this
+	 * method does no cascade deletion. 
+	 *
+	 * @throws OptimisticLockingFailureException
+	 *             If domain object has been modified/deleted in the meantime
+	 * @throws DataAccessException
+	 *             If general data access problem occurred
+	 * */
+	public void deleteAllNoCascade()
+		throws OptimisticLockingFailureException, DataAccessException;
+	
+	/**
+	 * Deletes the given domain objects using a HQL query. 
+	 * 
+	 * This has the benefit of a significant performance improvement
+	 * in comparison to {@link delete}. The tradeoff is that this
+	 * method does no cascade deletion. 
+	 * 
+	 * @param entities The domain objects to delete.
+	 * @throws OptimisticLockingFailureException
+	 *             If domain object has been modified/deleted in the meantime
+	 * @throws DataAccessException
+	 *             If general data access problem occurred
+	 */
+	public void deleteNoCascade(Collection<T> entities) throws DataAccessException,
 		DataIntegrityViolationException, OptimisticLockingFailureException;
 
 	/**

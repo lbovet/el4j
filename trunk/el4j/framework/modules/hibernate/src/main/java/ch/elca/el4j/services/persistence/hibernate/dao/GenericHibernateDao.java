@@ -18,8 +18,12 @@
 package ch.elca.el4j.services.persistence.hibernate.dao;
 
 import java.io.Serializable;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.collections.map.ReferenceMap;
@@ -30,6 +34,8 @@ import org.hibernate.criterion.CriteriaSpecification;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
 import org.hibernate.proxy.HibernateProxy;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -59,10 +65,22 @@ import ch.elca.el4j.util.codingsupport.Reject;
  *
  * @author Philipp Oser (POS)
  * @author Alex Mathey (AMA)
+ * @author Jonas Hauenstein (JHN)
  */
 public class GenericHibernateDao<T, ID extends Serializable>
 	extends ConvenienceHibernateDaoSupport
 	implements ConvenienceGenericHibernateDao<T, ID>, InitializingBean {
+		
+	/**
+	 * Maximal number of entities which are deleted
+	 * with a single HQL statement.
+	 */
+	private static final int MAX_BULK_DELETE = 100;
+
+	/**
+	 * The logger.
+	 */
+	private static Logger s_logger = LoggerFactory.getLogger(GenericHibernateDao.class);
 	
 	/**
 	 * The domain class this DAO is responsible for.
@@ -413,22 +431,115 @@ public class GenericHibernateDao<T, ID extends Serializable>
 		getConvenienceHibernateTemplate().deleteStrong(getPersistentClass(),
 			id, getPersistentClassName());
 	}
-
+	
 	/** {@inheritDoc} */
-	@Transactional(propagation = Propagation.REQUIRED)
 	public void delete(Collection<T> entities) throws DataAccessException,
 			DataIntegrityViolationException, OptimisticLockingFailureException {
 		getConvenienceHibernateTemplate().deleteAll(entities);
 	}
-	
+
 	/** {@inheritDoc} */
-	@Transactional(propagation = Propagation.REQUIRED)
+	public void deleteNoCascade(Collection<T> entities) throws DataAccessException,
+			DataIntegrityViolationException, OptimisticLockingFailureException {	
+
+		//search for method with @Id annotation
+		Method[] methods = getPersistentClass().getMethods();
+		Method idMethod = null;
+		for (Method m : methods) {
+			if (m.isAnnotationPresent(javax.persistence.Id.class)) {
+				idMethod = m;
+			}
+		}
+		
+		if (idMethod != null) {
+			
+			ArrayList<Object> hqlParameter = new ArrayList<Object>();
+			StringBuilder hqlQuery = new StringBuilder("delete ");
+			hqlQuery.append(getPersistentClassName());
+			hqlQuery.append(" where ");
+			
+			Iterator<T> it = entities.iterator();
+			T entity;
+			boolean fallback;
+			int querycount = 0;
+			//creating hql bulk delete statement for all entities
+			//by calling the annotated method to get @Id value
+			while (it.hasNext()) {
+				fallback = false;
+				entity = it.next();
+				Object o = null;
+				try {
+					o = idMethod.invoke(entity);
+				} catch (IllegalArgumentException e) {
+					fallback = true;
+				} catch (IllegalAccessException e) {
+					fallback = true;
+				} catch (InvocationTargetException e) {
+					fallback = true;
+				}
+				if (o == null) {
+					fallback = true;
+				}
+				//if we encountered an error, use the given delete method for this entity object
+				if (!fallback) {
+					
+					//check if maximal query length is reached
+					if (querycount >= MAX_BULK_DELETE) {
+						//execute present query
+						getHibernateTemplate().bulkUpdate(hqlQuery.toString(), hqlParameter.toArray());
+						//reinitialize new vars
+						hqlParameter.clear();
+						hqlQuery = new StringBuilder("delete ");
+						hqlQuery.append(getPersistentClassName());
+						hqlQuery.append(" where ");
+						querycount = 0;
+					}
+					if (querycount > 0) {
+						hqlQuery.append("or ");
+					}
+					hqlQuery.append("id = ? ");
+					hqlParameter.add(o);
+					querycount++;
+				} else {
+					//something went wrong (in the reflective method call)
+					//use the given delete method to delete this entity
+					s_logger.warn(idMethod.getName() + "could not be called in " + getPersistentClassName()
+						+ ". Not using HQL bulk delete for this entity.");
+					getConvenienceHibernateTemplate().delete(entity);
+				}
+			}
+			
+			//check if there is (still) something to do
+			if (querycount > 0) {
+				getHibernateTemplate().bulkUpdate(hqlQuery.toString(), hqlParameter.toArray());
+			}
+			
+		} else {
+			//if no method with @Id annotation found, delete
+			//all entities with the given delete method
+			s_logger.warn("No @Id annotation was found in " + getPersistentClassName()
+				+ ". Not using HQL bulk delete for all entities.");
+			getConvenienceHibernateTemplate().deleteAll(entities);
+		}
+	}
+	
+
+	/** {@inheritDoc} */
 	public void deleteAll()
 		throws OptimisticLockingFailureException, DataAccessException {
 		List<T> list = getAll();
 		if (list.size() > 0) {
 			delete(list);
 		}
+	}
+	
+
+	/** {@inheritDoc} */
+	public void deleteAllNoCascade()
+		throws OptimisticLockingFailureException, DataAccessException {
+		
+		String hqlQuery = "delete " + getPersistentClassName();
+		getHibernateTemplate().bulkUpdate(hqlQuery);
 	}
 	
 	/** {@inheritDoc} */
