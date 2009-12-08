@@ -26,6 +26,7 @@ import static org.junit.Assert.fail;
 import ch.elca.el4j.util.codingsupport.annotations.FindBugsSuppressWarnings;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Test;
@@ -65,6 +66,63 @@ public class HibernateKeywordDaoTest
 			"classpath*:scenarios/dataaccess/hibernate/keyword/*.xml",
 			"classpath*:optional/keyword/test-interceptor-config.xml",
 			"classpath*:optional/interception/transactionJava5Annotations.xml"};
+	}
+	
+	
+	/**
+	 * This test checks if the delete and delteAll methods of GenericHibernateDao class
+	 * (using HQL queries) work as expected by inserting a lot of keywords and deleting 
+	 * them in different steps afterwards.  
+	 */
+	@Test
+	public void testBulkDelete() {
+		KeywordDao dao = getKeywordDao();
+		
+		//delete all keywords using the NoCascade method
+		dao.deleteAllNoCascade();
+		assertEquals("Not all keywords were deleted.", 0, dao.getAll().size());
+
+		Keyword kwtmp;
+		
+		//insert 20 keywords
+		for (int i = 1; i <= 20; i++) {
+			kwtmp = new Keyword();
+			kwtmp.setName("Keyword number " + i);
+			kwtmp.setDescription("The Keyword with the number " + i);
+			dao.saveOrUpdate(kwtmp);
+		}
+		assertEquals("Not all 20 keywords were stored.", 20, dao.getAll().size());
+		
+		//delete all keywords using the NoCascade method
+		dao.deleteAllNoCascade();
+		assertEquals("Not all keywords were deleted.", 0, dao.getAll().size());
+		
+		//insert 1000 keywords and delete them using a list of keywords
+		ArrayList<Keyword> keywordlist = new ArrayList<Keyword>();
+		for (int i = 1; i <= 1000; i++) {
+			kwtmp = new Keyword();
+			kwtmp.setName("Keyword number " + i);
+			kwtmp.setDescription("The Keyword with the number " + i);
+			dao.saveOrUpdate(kwtmp);
+			keywordlist.add(kwtmp);
+		}
+		assertEquals("Not all 1000 keywords were stored.", 1000, dao.getAll().size());
+		
+		//split the list in two (200 elements and 800 elements)
+		ArrayList<Keyword> keywordlist2 = new ArrayList<Keyword>();
+		for (int i = 0; i < 200; i++) {
+			keywordlist2.add(keywordlist.get(i * 4));
+			keywordlist.remove(i * 4);
+		}
+		assertEquals("List one does not contain 800 keywords.", 800, keywordlist.size());
+		assertEquals("List two does not contain 200 keywords.", 200, keywordlist2.size());
+		
+		//delete keywords using the NoCascade method with the two lists
+		dao.deleteNoCascade(keywordlist2);
+		assertEquals("Not all keywords from list two were deleted.", 800, dao.getAll().size());
+		dao.deleteNoCascade(keywordlist);
+		assertEquals("Not all keywords from list one were deleted.", 0, dao.getAll().size());
+		
 	}
 	
 	
@@ -168,7 +226,7 @@ public class HibernateKeywordDaoTest
 //        DataDumper.addObjectDumper("org.hibernate.Criteria",new ReflectionObjectDumper());
 //        DataDumper.addObjectDumper("extended byorg.hibernate.criterion.Restrictions",new ReflectionObjectDumper());
 //        System.out.println("Query is :"+DataDumper.dump(hibernateCriteria));
-		 
+
 		
 		
 		list = dao.findByQuery(query);
@@ -218,8 +276,6 @@ public class HibernateKeywordDaoTest
 		int count = dao.findCountByQuery(query);
 		
 		assertEquals("Search count was wrong.", 5, count);
-		
-		 
 		
 		// now we constraint them to 2
 		query.setMaxResults(2);
