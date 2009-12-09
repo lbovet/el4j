@@ -34,11 +34,14 @@ Plugins
 *----------------------------+-------------------+  
 | {{{maven-duplicatefinder-plugin/index.html}duplicatefinder}}         | Tool to find different versions of the same jar in the classpath.
 *----------------------------+-------------------+  
-| {{{maven-beans-plugin/index.html}beans}}               			   | Collects all beans files that are used in a ModuleApplicationContext.
+| {{{maven-spring-ide-plugin/index.html}spring-ide}}               	   | Collects all beans files that are used in a ModuleApplicationContext.
+*----------------------------+-------------------+  
+| {{{maven-spring-ide-plugin/index.html}beans}}             		   | Deprecated. Has been renamed to maven spring ide plugin.
 *----------------------------+-------------------+  
 | {{{maven-cobertura-runtime-plugin/index.html}cobertura-runtime}}     | Build and deploy the application nearly as normal with maven and let Cobertura measure the coverage while working on the application.
 *----------------------------+-------------------+  
-
+| {{{maven-eclipse-server-plugin/index.html}ecplipse-server}}          | Create a tomcat6x server inside your eclipse workspace.
+*----------------------------+-------------------+  
   Please refer also the plugin section of the {{{http://el4j.sourceforge.net/docs/pdf/ReferenceDoc.pdf}reference document}} and the maven cheat sheet for more information. 
 
   The plugins can also be used from outside EL4J, they are in our repository. Here's a sample config for your pom.xml file: 
