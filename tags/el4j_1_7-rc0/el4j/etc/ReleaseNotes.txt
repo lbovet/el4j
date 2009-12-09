@@ -2,11 +2,54 @@
  Date :   ?
                             EL4J version  1.7
 --------------------------------------------------------------------------------
+
+ * Core
+   = Added property ignoreInstanceAlreadyExistsException (default: false). Bean 'htmlAdapter' sets 
+     it to true to omit the throw of an InstanceAlreadyExistsException if two modules that depend 
+	 on module-JMX are deployed.
+	 
  * Security
-   = Upgrade to Sping Security 2.0.4 (formerly Acegi Security), introduced new namespace definitions of Spring Security, interchanged @Secured
-	 with @RolesAllowed (@RolesAllowed is not dependent on Spring Security)
+   = Upgrade to Sping Security 2.0.4 (formerly Acegi Security), introduced new namespace definitions 
+     of Spring Security, interchanged @Secured with @RolesAllowed (@RolesAllowed is not dependent on 
+	 Spring Security).
 
+ * Database
+   = Moved persistence related part of CoreNotificationHelper into PersistenceNotificationHelper to 
+     improve logging in GenericHibernateDao.
+   = Added deleteNoCascade(Collection<T> entities) and deleteAllNoCascade() methods to 
+     ConvenienceGenericHibernateDao / GenericHibernateDao implementing the bulk-deletion of enteties 
+	 using HQL. This brings a significant. These methods have a significant better performance when no 
+	 cascade-deletion is required. 
 
+ * Build system
+   = Upgraded to Maven 2.2.1.
+   = Added support for colored Maven output.
+   = EL4J 1.7 will require Java 6. Updated configuration of maven-enforcer-plugin accordingly.
+   = Maven plugin upgrades: maven-plugin-plugin (2.5.1), maven-jar-plugin (2.3), maven-source-plugin (2.1.1), 
+     maven-eclipse-plugin (2.7), maven-site-plugin (2.0.1), maven-project-info-reports-plugin (2.1.2), 
+	 taglist-maven-plugin (2.4)
+   = Adapted the behavior of maven-env-support-plugin to Maven 2.2.1 because since Maven 2.1.0 the normal 
+     filtering process makes system properties always the winning properties (See http://jira.codehaus.org/browse/MNG-1992).
+   = Eclipse SpringBean config file will be created and deleted using maven-spring-ide-plugin as 
+     when the Eclipse Checkstyle file is create/deleted (default lifecycle; mvn clean install).
+   = Moved to maven-eclipse-plugin version 2.7 which doesn't need a patch anymore.
+   = Allow the maven-database-plugin to load properties from the file system (not only from the classpath).
+     A prefix of "./" loads a resource from the file system
+
+* Various
+   = New module-socketstatistics that can give you statistics, logs and an inside view about the Socket 
+     connections of your (or any) java application. The information can be accessed over an M(X)Bean.
+   = New maven-eclipse-server-plugin.
+     Used to automatically create a tomcat6x server inside your eclipse workspace.
+   = Improved integration of findbugs-maven-plugin. 
+     Added a global FindBugs exclusion file to configuration and wrote a FindbugsSuppressWarnings annotation.
+   = Added support for Joda Time.
+   = Moved rarely used modules into sandbox (beanbrowser, offliner and depending demos).
+   = Created a javadoc taglet @wikiLink that adds a link to the EL4J wiki. 
+     This produces separate links to the ELCA internal wiki which is not accessible from outside the company.
+   = Added etc/openssl that includes three scripts for the creation of ssl certificates (for CA, client and server)
+     using OpenSSL.
+	 
 --------------------------------------------------------------------------------
  Date :   30.05.09
                             EL4J version  1.6
