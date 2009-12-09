@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<!--
+		Spring bean configuration file for abstractSessionFactory
+	-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+	<!-- $Revision$ -->
+	<!-- $URL: https://el4j.svn.sourceforge.net/svnroot/el4j/trunk/el4j/framework/modules/hibernate/src/main/resources/scenarios/dataaccess/hibernate/hibernateDatabase.xml$	-->
+	<!-- $Date$ -->
+	<!-- $Author$ -->
+	
+	<!-- Convenience Hibernate Session Factory Bean: it autocollects all @entity-annotated classes in
+		the Java packages given under the property autoDetectEntityPackage.
+		Use <props merge="true"> if you want to add properties to a collection -->
+	<bean id="abstractSessionFactory" abstract="true"
+		class="ch.elca.el4j.services.persistence.hibernate.entityfinder.EntityDetectorAnnotationSessionFactoryBean">
+		
+		<property name="hibernateProperties">
+			<props>
+				<!-- no 2nd level cache is used. See http://www.hibernate.org/hib_docs/reference/en/html/performance-cache.html for alternatives -->
+				<prop key="hibernate.dialect">${databaseDialect}</prop>
+				
+				<!--
+					Optional property controlling Hibernate's outer join fetch behavior
+					(default value is 1). The higher the value of this property, the more
+					outer-joined tables will be used by Hibernate in a single SQL query.
+					Recommended values for the fetch depth depend on the join performance
+					and the size of the database tables; test your applications with low values
+					(less than 4) first, and decrease or increase the number while tuning
+					your application. This property only applies for associations which have
+					the outer-join attribute set to true and which have the lazy attribute
+					set to false.
+				-->
+				<prop key="hibernate.max_fetch_depth">3</prop>
+				
+				<prop key="hibernate.search.default.directory_provider">org.hibernate.search.store.RAMDirectoryProvider</prop>
+				<!-- <prop key="hibernate.search.default.directory_provider">org.hibernate.search.store.FSDirectoryProvider</prop>
+				<prop key="hibernate.search.default.indexBase">/hibernateSearch/indexes</prop> -->
+			</props>
+		</property>
+		
+		<property name="useTransactionAwareDataSource">
+			<value>true</value>
+		</property>
+		<property name="dataSource">
+			<ref bean="dataSource"/>
+		</property>
+	</bean>
+</beans>
