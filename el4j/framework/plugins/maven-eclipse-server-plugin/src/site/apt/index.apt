@@ -37,7 +37,7 @@ Eclipse server plugin
 	<configuration>
 		...
 		<tomcat6xhome>path/to/tomcat/homedirectory</tomcat6xhome>
-		<tomcat6xconf>path/to/tomcat/confdirectory</tomcat6xconf
+		<tomcat6xconf>path/to/tomcat/confdirectory</tomcat6xconf>
 	</configuration>
 ...
 +----------------
