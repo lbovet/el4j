@@ -7,12 +7,18 @@
    = Added property ignoreInstanceAlreadyExistsException (default: false). Bean 'htmlAdapter' sets 
      it to true to omit the throw of an InstanceAlreadyExistsException if two modules that depend 
 	 on module-JMX are deployed.
+   = Joda-Time was introduced to EL4J as library for date and time related issues. 
+     Joda-Time utilities were added to module core and a JodaDateTimePicker widget was added to
+	 the GUI template.
 	 
  * Security
-   = Upgrade to Sping Security 2.0.4 (formerly Acegi Security), introduced new namespace definitions 
+   = Upgrade to Spring Security 2.0.4 (formerly Acegi Security), introduced new namespace definitions 
      of Spring Security, interchanged @Secured with @RolesAllowed (@RolesAllowed is not dependent on 
 	 Spring Security).
 
+ * Remoting
+   = Added JAXB accessor infrastructure to module jax-ws remoting to avoid LazyInitializationExceptions.
+	 
  * Database
    = Moved persistence related part of CoreNotificationHelper into PersistenceNotificationHelper to 
      improve logging in GenericHibernateDao.
@@ -23,7 +29,6 @@
 
  * Build system
    = Upgraded to Maven 2.2.1.
-   = Added support for colored Maven output.
    = EL4J 1.7 will require Java 6. Updated configuration of maven-enforcer-plugin accordingly.
    = Maven plugin upgrades: maven-plugin-plugin (2.5.1), maven-jar-plugin (2.3), maven-source-plugin (2.1.1), 
      maven-eclipse-plugin (2.7), maven-site-plugin (2.0.1), maven-project-info-reports-plugin (2.1.2), 
@@ -37,6 +42,10 @@
      A prefix of "./" loads a resource from the file system
 
 * Various
+   = Added support for colored Maven output. 
+     The EL4J convenience zip includes a maven executable that is already patched with the ColorLogger extension.
+	 The default color profile is designed for black background. For consoles with white background, use the
+	 system property 'colorlogger.whiteConsole'.
    = New module-socketstatistics that can give you statistics, logs and an inside view about the Socket 
      connections of your (or any) java application. The information can be accessed over an M(X)Bean.
    = New maven-eclipse-server-plugin.
@@ -49,6 +58,10 @@
      This produces separate links to the ELCA internal wiki which is not accessible from outside the company.
    = Added etc/openssl that includes three scripts for the creation of ssl certificates (for CA, client and server)
      using OpenSSL.
+   = A decision was made to omit the 'm_' prefix for class fields in the future. 
+     Among others because it simplifies Seam components and eclipse detects errors like 'x = x;' instead of 
+	 'this.x = x;'. Some modules, demos and the coding guidelines had been updated. 
+	 The prefix for static fields ('s_') remains. 
 	 
 --------------------------------------------------------------------------------
  Date :   30.05.09
