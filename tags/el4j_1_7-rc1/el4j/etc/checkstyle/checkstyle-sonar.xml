@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE module PUBLIC "-//Puppy Crawl//DTD Check Configuration 1.2//EN" "http://www.puppycrawl.com/dtds/configuration_1_2.dtd">
+<!-- EL4J checkstyle rules used for Sonar (there are some minor differences to the normal use) -->
+<module name="Checker">
+	<module name="TreeWalker">
+		<module name="JavadocType">
+			<property name="severity" value="error"/>
+			<property name="authorFormat" value="[A-Za-z ]+\([a-zA-Z]{3}\)"/>
+		</module>
+		<module name="JavadocMethod">
+			<property name="severity" value="error"/>
+			<property name="allowThrowsTagsForSubclasses" value="true"/>
+			<property name="allowMissingThrowsTags" value="true"/>
+		</module>
+		<module name="JavadocVariable">
+			<property name="severity" value="error"/>
+		</module>
+		<module name="JavadocStyle">
+			<property name="severity" value="error"/>
+		</module>
+		<module name="AbstractClassName">
+			<property name="severity" value="error"/>
+		</module>
+		<module name="ConstantName">
+			<property name="severity" value="error"/>
+			<property name="format" value="^([A-Z][A-Z0-9]*(_[A-Z0-9]+)*)|(s_log[a-zA-Z0-9]*)$"/>
+		</module>
+		<module name="LocalFinalVariableName">
+			<property name="severity" value="error"/>
+			<property name="format" value="^[a-z][a-zA-Z0-9]*$"/>
+		</module>
+		<module name="LocalVariableName">
+			<property name="severity" value="error"/>
+		</module>
+		<module name="MemberName">
+			<property name="severity" value="error"/>
+			<property name="format" value="^m_[a-z][a-zA-Z0-9]*$"/>
+		</module>
+		<module name="MethodName">
+			<property name="severity" value="error"/>
+		</module>
+		<module name="PackageName">
+			<property name="severity" value="error"/>
+			<property name="format" value="^[a-z]+(\.[a-z][a-z0-9]*)*$"/>
+		</module>
+		<module name="ParameterName">
+			<property name="severity" value="error"/>
+		</module>
+		<module name="StaticVariableName">
+			<property name="severity" value="error"/>
+			<property name="format" value="^s_[a-z][a-zA-Z0-9]*$"/>
+		</module>
+		<module name="TypeName">
+			<property name="severity" value="error"/>
+		</module>
+		<module name="IllegalImport">
+			<property name="severity" value="error"/>
+		</module>
+		<module name="RedundantImport">
+			<property name="severity" value="error"/>
+		</module>
+		<module name="UnusedImports">
+			<property name="severity" value="error"/>
+		</module>
+		<module name="ImportOrder">
+			<property name="severity" value="error"/>
+			<property name="groups" value="java,javax,org,com,ch,junit,net"/>
+			<property name="ordered" value="true"/>
+			<property name="separated" value="true"/>
+		</module>
+		<module name="ExecutableStatementCount">
+			<property name="severity" value="error"/>
+			<property name="max" value="30"/>
+		</module>
+		<module name="FileLength">
+			<property name="severity" value="error"/>
+			<property name="max" value="2000"/>
+		</module>
+		<module name="LineLength">
+			<property name="severity" value="error"/>
+			<property name="max" value="120"/>
+			<property name="ignorePattern" value="^( *\* *[^ ]+)$|^( \* *@svnLink .*)$|^(import [^ ]+)$|^( *\* *@[^ ]+ [^ ]+)$|^ \* \d\d.\d\d.\d{2,4}[ ]+[a-zA-Z]{3}[ ]+[a-zA-Z0-9 \./\(\)]+$|^ \* EL4J, the Enterprise Library for Java, complementing Spring http://el4j\.sf\.net$"/>
+		</module>
+		<module name="MethodLength">
+			<property name="severity" value="error"/>
+			<property name="max" value="150"/>
+		</module>
+		<module name="AnonInnerLength">
+			<property name="severity" value="error"/>
+			<property name="max" value="20"/>
+		</module>
+		<module name="ParameterNumber">
+			<property name="severity" value="error"/>
+			<property name="max" value="7"/>
+		</module>
+		<module name="EmptyForInitializerPad">
+			<property name="severity" value="error"/>
+		</module>
+		<module name="EmptyForIteratorPad">
+			<property name="severity" value="error"/>
+		</module>
+		<module name="MethodParamPad">
+			<property name="severity" value="error"/>
+			<property name="allowLineBreaks" value="true"/>
+		</module>
+		<module name="NoWhitespaceAfter">
+			<property name="severity" value="error"/>
+		</module>
+		<module name="NoWhitespaceBefore">
+			<property name="severity" value="error"/>
+		</module>
+		<module name="OperatorWrap">
+			<property name="severity" value="error"/>
+			<property name="tokens" value="ASSIGN, BAND, BAND_ASSIGN, BOR, BOR_ASSIGN, BSR, BSR_ASSIGN, BXOR, BXOR_ASSIGN, COLON, DIV, DIV_ASSIGN, EQUAL, GE, GT, LAND, LE, LITERAL_INSTANCEOF, LOR, LT, MINUS, MINUS_ASSIGN, MOD, MOD_ASSIGN, NOT_EQUAL, PLUS, PLUS_ASSIGN, QUESTION, SL, SL_ASSIGN, SR, SR_ASSIGN, STAR, STAR_ASSIGN"/>
+			<property name="option" value="nl"/>
+		</module>
+		<module name="ParenPad">
+			<property name="severity" value="error"/>
+		</module>
+		<module name="TypecastParenPad">
+			<property name="severity" value="error"/>
+		</module>
+		<module name="WhitespaceAfter">
+			<property name="severity" value="error"/>
+		</module>
+		<module name="WhitespaceAround">
+			<property name="severity" value="error"/>
+			<property name="tokens" value="ASSIGN, BAND, BAND_ASSIGN, BOR, BOR_ASSIGN, BSR, BSR_ASSIGN, BXOR, BXOR_ASSIGN, COLON, DIV, DIV_ASSIGN, EQUAL, GE, GT, LAND, LCURLY, LE, LITERAL_ASSERT, LITERAL_CATCH, LITERAL_DO, LITERAL_ELSE, LITERAL_FINALLY, LITERAL_FOR, LITERAL_IF, LITERAL_RETURN, LITERAL_SYNCHRONIZED, LITERAL_TRY, LITERAL_WHILE, LOR, LT, MINUS, MINUS_ASSIGN, MOD, MOD_ASSIGN, NOT_EQUAL, PLUS, PLUS_ASSIGN, QUESTION, RCURLY, SL, SLIST, SL_ASSIGN, SR, SR_ASSIGN, STAR, STAR_ASSIGN, TYPE_EXTENSION_AND"/>
+		</module>
+		<module name="GenericIllegalRegexp">
+			<property name="id" value="loggerNotSysout"/>
+			<property name="severity" value="error"/>
+			<property name="format" value="System\.out\.print"/>
+			<property name="message" value="Use logger instead of system.out"/>
+		</module>
+		<!-- Disable this 2 rules because sonar cannot handle multiple rules of the same module yet.
+		See http://jira.codehaus.org/browse/SONAR-236. Uncomment when fixed.
+		<module name="GenericIllegalRegexp">
+			<property name="id" value="tabsAsIndentation"/>
+			<property name="severity" value="error"/>
+			<property name="format" value="^\s* [^*^-]"/>
+			<property name="ignoreComments" value="true"/>
+			<property name="message" value="Use tabs for indentation"/>
+		</module>
+		<module name="GenericIllegalRegexp">
+			<property name="id" value="whitespaceEndLine"/>
+			<property name="severity" value="error"/>
+			<property name="format" value="\S\s\s+$"/>
+			<property name="ignoreComments" value="true"/>
+			<property name="message" value="Remove whitespaces at end of line"/>
+		</module>-->
+		<module name="ModifierOrder">
+			<property name="severity" value="error"/>
+		</module>
+		<module name="EmptyBlock">
+			<property name="severity" value="error"/>
+		</module>
+		<module name="LeftCurly">
+			<property name="severity" value="error"/>
+		</module>
+		<module name="NeedBraces">
+			<property name="severity" value="error"/>
+		</module>
+		<module name="RightCurly">
+			<property name="severity" value="error"/>
+		</module>
+		<module name="AvoidNestedBlocks">
+			<property name="severity" value="error"/>
+		</module>
+		<module name="CovariantEquals">
+			<property name="severity" value="error"/>
+		</module>
+		<module name="DoubleCheckedLocking">
+			<property name="severity" value="error"/>
+		</module>
+		<module name="EmptyStatement">
+			<property name="severity" value="error"/>
+		</module>
+		<module name="EqualsHashCode">
+			<property name="severity" value="error"/>
+		</module>
+		<module name="HiddenField">
+			<property name="severity" value="error"/>
+		</module>
+		<module name="IllegalInstantiation">
+			<property name="severity" value="error"/>
+			<property name="classes" value="java.lang.Boolean"/>
+		</module>
+		<module name="InnerAssignment">
+			<property name="severity" value="error"/>
+		</module>
+		<module name="MissingSwitchDefault">
+			<property name="severity" value="error"/>
+		</module>
+		<module name="RedundantThrows">
+			<property name="severity" value="error"/>
+			<property name="allowUnchecked" value="true"/>
+			<property name="allowSubclasses" value="true"/>
+		</module>
+		<module name="SimplifyBooleanExpression">
+			<property name="severity" value="error"/>
+		</module>
+		<module name="SimplifyBooleanReturn">
+			<property name="severity" value="error"/>
+		</module>
+		<module name="StringLiteralEquality">
+			<property name="severity" value="error"/>
+		</module>
+		<module name="NestedIfDepth">
+			<property name="severity" value="error"/>
+			<property name="max" value="4"/>
+		</module>
+		<module name="NestedTryDepth">
+			<property name="severity" value="error"/>
+			<property name="max" value="3"/>
+		</module>
+		<module name="SuperClone">
+			<property name="severity" value="error"/>
+		</module>
+		<module name="SuperFinalize">
+			<property name="severity" value="error"/>
+		</module>
+		<module name="PackageDeclaration">
+			<property name="severity" value="error"/>
+		</module>
+		<module name="ReturnCount">
+			<property name="severity" value="error"/>
+			<property name="max" value="3"/>
+		</module>
+		<module name="DeclarationOrder">
+			<property name="severity" value="error"/>
+		</module>
+		<module name="ParameterAssignment">
+			<property name="severity" value="error"/>
+		</module>
+		<module name="DefaultComesLast">
+			<property name="severity" value="error"/>
+		</module>
+		<module name="FallThrough">
+			<property name="severity" value="error"/>
+		</module>
+		<module name="MultipleVariableDeclarations">
+			<property name="severity" value="error"/>
+		</module>
+		<module name="VisibilityModifier">
+			<property name="severity" value="error"/>
+			<property name="protectedAllowed" value="true"/>
+			<property name="packageAllowed" value="true"/>
+		</module>
+		<module name="FinalClass">
+			<property name="severity" value="error"/>
+		</module>
+		<module name="InterfaceIsType">
+			<property name="severity" value="error"/>
+		</module>
+		<module name="HideUtilityClassConstructor">
+			<property name="severity" value="error"/>
+		</module>
+		<module name="ThrowsCount">
+			<property name="severity" value="error"/>
+			<property name="max" value="4"/>
+		</module>
+		<module name="BooleanExpressionComplexity">
+			<property name="severity" value="error"/>
+			<property name="max" value="3"/>
+		</module>
+		<module name="ClassDataAbstractionCoupling">
+			<property name="severity" value="error"/>
+			<property name="max" value="7"/>
+		</module>
+		<module name="ClassFanOutComplexity">
+			<property name="severity" value="error"/>
+			<property name="max" value="20"/>
+		</module>
+		<module name="CyclomaticComplexity">
+			<property name="severity" value="error"/>
+			<property name="max" value="12"/>
+		</module>
+		<module name="NPathComplexity">
+			<property name="severity" value="error"/>
+			<property name="max" value="200"/>
+		</module>
+		<module name="TodoComment">
+			<property name="severity" value="error"/>
+			<property name="format" value="TBD|TODO"/>
+		</module>
+		<module name="UncommentedMain">
+			<property name="severity" value="error"/>
+			<property name="excludedClasses" value="\.Main$"/>
+		</module>
+		<module name="UpperEll">
+			<property name="severity" value="error"/>
+		</module>
+		<module name="ArrayTypeStyle">
+			<property name="severity" value="error"/>
+		</module>
+		<!-- offset has to be 8 in order to be correct in sonar...-->
+		<module name="Indentation">
+			<property name="severity" value="error"/>
+			<property name="caseIndent" value="8"/>
+			<property name="basicOffset" value="8"/>
+		</module>
+		<module name="TrailingComment">
+			<property name="severity" value="error"/>
+		</module>
+		<module name="RequiredRegexp">
+			<property name="severity" value="error"/>
+			<property name="format" value="@svnLink"/>
+		</module>
+	</module>
+</module>

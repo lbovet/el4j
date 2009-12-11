@@ -1,0 +1,118 @@
+#set($dollar = '$')
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<!-- Version: ${dollar}Revision${dollar} -->
+	<!-- URL: ${dollar}URL${dollar} -->
+	<!-- Date: ${dollar}Date${dollar} -->
+	<!-- Author: ${dollar}Author${dollar} -->
+
+	<parent>
+		<groupId>ch.elca.el4j.internal.applications</groupId>
+		<artifactId>el4j-internal-applications</artifactId>
+		<version>1.6</version>
+	</parent>
+
+	<groupId>${groupId}</groupId>
+	<artifactId>${artifactId}</artifactId>
+	<version>${dollar}{version.${projectNameOneWord}}</version>
+	<packaging>pom</packaging>
+	<name>${projectNaturalName}</name>
+	<description>Root artifact of the ${projectNaturalName} project.</description>
+	<modules>
+		<!-- <module>service</module> -->
+	</modules>
+
+	<dependencyManagement>
+		<dependencies>
+			<!-- Project modules -->
+			<!-- <dependency>
+				<groupId>${groupId}</groupId>
+				<artifactId>${projectNameOneWord}-service</artifactId>
+				<version>${dollar}{version.${projectNameOneWord}}</version>
+				<type>jar</type>
+			</dependency> -->
+					
+			<dependency>
+				<!-- Include only Oracle dependencies -->
+				<groupId>ch.elca.el4j.modules</groupId>
+				<artifactId>module-database-oracle</artifactId>
+				<version>${dollar}{version.module-database}</version>
+			</dependency>
+			
+			<!-- TODO more dependencies -->
+		</dependencies>
+	</dependencyManagement>
+	
+	<build>
+		<pluginManagement>
+			<plugins>
+				<!-- IDE config for eclipse, TODO you can delete this if you don't modify the workspace config -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-eclipse-plugin</artifactId>
+					<!-- patched because of problems with artifact version checks and module dependencies order -->
+					<version>2.5.1-el4j_20080902_1500</version>
+					<configuration>
+						<additionalProjectnatures>
+							<projectnature>de.mvmsoft.checkclipse.CheckclipseNature</projectnature>
+							<projectnature>net.sf.eclipsecs.core.CheckstyleNature</projectnature>
+						</additionalProjectnatures>
+						<additionalBuildcommands>
+							<buildcommand>de.mvmsoft.checkclipse.CheckclipseBuilder</buildcommand>
+							<buildcommand>net.sf.eclipsecs.core.CheckstyleBuilder</buildcommand>
+						</additionalBuildcommands>
+						<workspace>${dollar}{el4j.project.home}/workspace</workspace>
+						<wtpversion>2.0</wtpversion>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+	
+	<profiles>
+		<!-- DB -->
+		<profile>
+			<id>oracle</id>
+			<properties>
+				<db.host>TODO</db.host>
+				<db.port>TODO</db.port>
+				<db.database-name>TODO</db.database-name>
+				<db.username>TODO</db.username>
+				<db.password>TODO</db.password>
+			</properties>
+		</profile>
+	</profiles>
+
+	<repositories>
+		<repository>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<id>el4jReleaseRepositoryExternal</id>
+			<name>External release repository of the EL4J project</name>
+			<url>http://el4.elca-services.ch/el4j/maven2repository</url>
+		</repository>
+		<repository>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<id>el4jReleaseRepositoryInternal</id>
+			<name>Internal release repository of the EL4J project</name>
+			<url>http://public-el4.elca-services.ch/el4j-protected/maven2repository/</url>
+		</repository>
+	</repositories>
+	
+	<properties>
+		<version.${projectNameOneWord}>${version}</version.${projectNameOneWord}>
+	</properties>
+</project>
