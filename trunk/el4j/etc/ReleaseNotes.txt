@@ -69,6 +69,7 @@
    = New maven-eclipse-server-plugin.
      Used to automatically create a tomcat6x server inside your eclipse workspace.	 
    = Update to tomcat 6.0.20
+   = el4.elca-services.ch has moved to public-el4.elca-services.ch
 
 * Database
    = Support for H2 (fast in-memory DB) added (for quick tests)
