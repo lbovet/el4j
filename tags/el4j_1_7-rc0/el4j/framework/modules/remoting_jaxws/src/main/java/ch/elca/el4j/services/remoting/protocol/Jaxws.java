@@ -17,11 +17,17 @@
 package ch.elca.el4j.services.remoting.protocol;
 
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import javax.xml.ws.BindingProvider;
 import javax.xml.ws.Service;
+import javax.xml.ws.handler.Handler;
+import javax.xml.ws.handler.HandlerResolver;
+import javax.xml.ws.handler.PortInfo;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.jvnet.jax_ws_commons.spring.SpringService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,21 +40,28 @@ import ch.elca.el4j.services.remoting.AbstractRemotingBase;
 import ch.elca.el4j.services.remoting.ProtocolSpecificConfiguration;
 import ch.elca.el4j.services.remoting.RemotingProxyFactoryBean;
 import ch.elca.el4j.services.remoting.RemotingServiceExporter;
+import ch.elca.el4j.util.codingsupport.AopHelper;
 
 /**
  * This class implements all needed things for the soap protocol using JAX-WS.
+ * Since <b>EL4J 1.7</b> it is possible to define JaxWs handlers.
  *
  * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Stefan Wismer (SWI)
+ * @author Reynald Borer (RBR)
  */
 public class Jaxws extends AbstractInetSocketAddressWebProtocol {
-	
 	/**
-	 * The logger.
+	 * Private logger.
 	 */
 	protected static final Logger s_logger = LoggerFactory.getLogger(Jaxws.class);
 
+	/**
+	 * List of JaxWs handlers.
+	 */
+	@SuppressWarnings("unchecked")
+	private List<Handler> handlers = new ArrayList<Handler>();
 	
 	/** {@inheritDoc} */
 	@SuppressWarnings("unchecked")
@@ -61,6 +74,12 @@ public class Jaxws extends AbstractInetSocketAddressWebProtocol {
 		
 		SpringService service = new SpringService();
 		service.setBean(bean);
+		
+		// JAX-WS look for web-service annotation on the target class and not the interface; in case it is a dynamic
+		// proxy, we should set the correct class in SpringService!
+		if (AopHelper.isAopProxy(bean)) {
+			service.setImpl(AopHelper.getTargetClass(bean));
+		}
 		
 		// give potential subclasses the chance to adapt the service
 		adaptExporterService(service);
@@ -171,6 +190,16 @@ public class Jaxws extends AbstractInetSocketAddressWebProtocol {
 	 * @param service The service
 	 */
 	protected void adaptProxyService(Service service) {
+		if (CollectionUtils.isNotEmpty(handlers)) {
+			service.setHandlerResolver(new HandlerResolver() {
+				@SuppressWarnings("unchecked")
+				public List<Handler> getHandlerChain(PortInfo portInfo) {
+					List<Handler> list = new ArrayList<Handler>(handlers.size());
+					list.addAll(handlers);
+					return list;
+				}
+			});
+		}
 	}
 
 	/**
@@ -178,5 +207,26 @@ public class Jaxws extends AbstractInetSocketAddressWebProtocol {
 	 * @param service The service
 	 */
 	protected void adaptExporterService(SpringService service) {
+		if (CollectionUtils.isNotEmpty(handlers)) {
+			service.setHandlers(handlers);
+		}
+	}
+	
+	/**
+	 * @return Returns the JaxWs handlers.
+	 * @since 1.7
+	 */
+	@SuppressWarnings("unchecked")
+	public List<Handler> getHandlers() {
+		return handlers;
+	}
+
+	/**
+	 * @param handlers Are the JaxWs handlers to set.
+	 * @since 1.7
+	 */
+	@SuppressWarnings("unchecked")
+	public void setHandlers(List<Handler> handlers) {
+		this.handlers = handlers;
 	}
 }

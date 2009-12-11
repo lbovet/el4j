@@ -24,6 +24,7 @@ import java.util.TimeZone;
 import javax.swing.UIManager;
 
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalTime;
 
@@ -65,16 +66,16 @@ public class JodaDateTimePicker extends DatePicker {
 	private TimeField m_timeFieldOutside;
 
 	/**
-	 * Constructor which will initialize a JodaDateTimePicker with the current date on the machine.
+	 * Constructor which will initialize a JodaDateTimePicker with the current date and time on the machine.
 	 */
 
 	public JodaDateTimePicker() {
 		super(new Date(), 2, Locale.getDefault(), TimeZone.getDefault());
-
+		m_localTime = new LocalTime();
 	}
 	
 	/**
-	 * Constructor taking a LocalDate with which the widget will be initialized.
+	 * Constructor taking a LocalDate and midnight (00:00) with which the widget will be initialized.
 	 * 
 	 * @param initialDate
 	 *            is the LocalDate with which the widget will be initialized.
@@ -82,6 +83,7 @@ public class JodaDateTimePicker extends DatePicker {
 
 	public JodaDateTimePicker(LocalDate initialDate) {
 		super(initialDate.toDateTimeAtStartOfDay().toDate(), 2, Locale.getDefault(), TimeZone.getDefault());
+		m_localTime = new LocalTime(0, 0);
 	}
 
 
@@ -93,9 +95,8 @@ public class JodaDateTimePicker extends DatePicker {
 	 */
 
 	public JodaDateTimePicker(DateTime initialDate) {
-
 		super(initialDate.toDate(), 2, Locale.getDefault(), TimeZone.getDefault());
-
+		m_localTime = initialDate.toLocalTime();
 	}
 
 	/**

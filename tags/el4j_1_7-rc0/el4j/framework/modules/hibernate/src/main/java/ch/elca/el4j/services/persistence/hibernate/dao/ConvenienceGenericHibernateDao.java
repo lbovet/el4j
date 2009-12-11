@@ -283,11 +283,6 @@ public interface ConvenienceGenericHibernateDao<T, ID extends Serializable>
 		DataRetrievalFailureException;
 	
 	/**
-	 * @return    the convenience Hibernate template
-	 */
-	public ConvenienceHibernateTemplate getConvenienceHibernateTemplate();
-	
-	/**
 	 * @return    the default {@link Order} to order the results
 	 */
 	public Order[] getDefaultOrder();
