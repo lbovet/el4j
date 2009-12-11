@@ -148,16 +148,10 @@ public class DefaultReferenceService extends DefaultKeywordService
 	}
 	
 	/** {@inheritDoc} */
-	@SuppressWarnings("unchecked")
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Reference> getReferencesByKeywords(List<Keyword> keywords) throws DataAccessException {
-		if (!CollectionUtils.isEmpty(keywords)) {
-			final String query = "select distinct r from Reference r left join r.keywords as keyword "
-				+ "where keyword in (:list)";
-			return getKeywordDao().getConvenienceHibernateTemplate().findByNamedParam(query, "list", keywords);
-		} else {
-			return new ArrayList<Reference>();
-		}
+		//use the BookDao to access all types of references
+		return getBookDao().getAllReferencesByKeywords(keywords);
 	}
 
 	/**

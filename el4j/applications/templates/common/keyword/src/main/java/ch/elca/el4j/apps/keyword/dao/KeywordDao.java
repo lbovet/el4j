@@ -47,4 +47,23 @@ public interface KeywordDao
 	 */
 	public Keyword getKeywordByName(String name)
 		throws DataAccessException, DataRetrievalFailureException;
+	
+	/**
+	 * Copy the state of the given object onto the persistent object
+	 * with the same identifier.
+	 * 
+	 * Similar to saveOrUpdate, but never associates the given
+	 * object with the current Hibernate Session. In case of a new entity,
+	 * the state will be copied over as well.
+	 * 
+	 * Note that merge will not update the identifiers
+	 * in the passed-in object graph (in contrast to TopLink)! Consider
+	 * registering Spring's IdTransferringMergeEventListener if
+	 * you would like to have newly assigned ids transferred to the original
+	 * object graph too.
+	 * 
+	 * @param entity the object to merge with the corresponding persistence instance
+	 * @return the updated, registered persistent instance
+	 */
+	public Object merge(Object entity);
 }

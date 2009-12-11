@@ -14,11 +14,13 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
+import ch.elca.el4j.apps.keyword.dom.Keyword;
 import ch.elca.el4j.apps.refdb.dao.GenericReferenceDao;
 import ch.elca.el4j.apps.refdb.dom.Reference;
 import ch.elca.el4j.services.persistence.hibernate.dao.GenericHibernateDao;
 import ch.elca.el4j.services.search.criterias.AbstractCriteria;
 import ch.elca.el4j.services.search.criterias.IncludeCriteria;
+import ch.elca.el4j.util.codingsupport.CollectionUtils;
 import ch.elca.el4j.util.codingsupport.Reject;
 
 /**
@@ -107,5 +109,16 @@ public class GenericHibernateReferenceDao<T extends Reference,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public void createHibernateSearchIndex() throws DataAccessException, DataRetrievalFailureException {
 		getConvenienceHibernateTemplate().createHibernateSearchIndex(getAll());
+	}
+	
+	/** {@inheritDoc} */
+	public List<Reference> getAllReferencesByKeywords(List<Keyword> keywords) throws DataAccessException {
+		if (!CollectionUtils.isEmpty(keywords)) {
+			final String query = "select distinct r from Reference r left join r.keywords as keyword "
+				+ "where keyword in (:list)";
+			return getConvenienceHibernateTemplate().findByNamedParam(query, "list", keywords);
+		} else {
+			return new ArrayList<Reference>();
+		}
 	}
 }

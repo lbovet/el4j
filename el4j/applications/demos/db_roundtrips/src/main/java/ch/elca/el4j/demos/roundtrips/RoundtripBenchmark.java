@@ -129,7 +129,7 @@ public final class RoundtripBenchmark {
 		transaction = transactionManager.getTransaction(new DefaultTransactionDefinition());
 		keyword.setName("Java6");
 		transactionManager.getSessionFactory().getCurrentSession().clear();
-		dao.getConvenienceHibernateTemplate().update(keyword);
+		dao.saveOrUpdate(keyword);
 		transactionManager.getSessionFactory().getCurrentSession().flush();
 		transactionManager.commit(transaction);
 		System.out.println("update (detached entity): " + (DbLogger.getRoundtripCount() - dbRoundtrips));
@@ -138,7 +138,7 @@ public final class RoundtripBenchmark {
 		transaction = transactionManager.getTransaction(new DefaultTransactionDefinition());
 		keyword.setName("Java7");
 		transactionManager.getSessionFactory().getCurrentSession().clear();
-		dao.getConvenienceHibernateTemplate().save(keyword);
+		dao.saveOrUpdate(keyword);
 		transactionManager.getSessionFactory().getCurrentSession().flush();
 		transactionManager.commit(transaction);
 		System.out.println("save (detached entity): " + (DbLogger.getRoundtripCount() - dbRoundtrips));
@@ -148,7 +148,7 @@ public final class RoundtripBenchmark {
 		transaction = transactionManager.getTransaction(new DefaultTransactionDefinition());
 		keyword.setName("Java8");
 		transactionManager.getSessionFactory().getCurrentSession().clear();
-		keyword = (Keyword) dao.getConvenienceHibernateTemplate().merge(keyword);
+		keyword = (Keyword) dao.merge(keyword);
 		transactionManager.getSessionFactory().getCurrentSession().flush();
 		transactionManager.commit(transaction);
 		System.out.println("merge (detached entity): " + (DbLogger.getRoundtripCount() - dbRoundtrips));
