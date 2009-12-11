@@ -59,4 +59,9 @@ public class HibernateKeywordDao
 			return (Keyword) keywordList.get(0);
 		}
 	}
+
+	/** {@inheritDoc} */
+	public Object merge(Object entity) {
+		return getConvenienceHibernateTemplate().merge(entity);
+	}
 }
