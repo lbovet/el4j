@@ -2,11 +2,99 @@
  Date :   ?
                             EL4J version  1.7
 --------------------------------------------------------------------------------
+
+ * Core
+   = A decision was made to omit the 'm_' prefix for instance fields in the future. 
+     Among others because it simplifies Seam components and eclipse detects errors like 'x = x;' instead of 
+	 'this.x = x;'. Some modules, demos and the coding guidelines have been updated. 
+	 The prefix for static fields ('s_') remains.  
+   = Joda-Time was added for better date and time handling. The Joda-Time library was added to 
+     module core and a JodaDateTimePicker widget was added to the GUI template.
+   = Added support for code lists (lists of values that are internationalized, can be used in UI in
+     business and in the DB). A typical example would be "single", "married", "divorced", ...
+   = Added google-collections 1.0-rc4 to module-core
+   = Moving ch.elca.el4j.services.persistence.hibernate.usertypes.SerializableEnum to 
+     ch.elca.el4j.util.codingsupport.SerializableEnumdeprecation of, deprecating the former.
+   = We no longer recommend @RollbackConstraint, we now use @Transactional only (100% the Spring way).
+     (This is conceptually not so nice (because the interface and implementation is mixed), but
+	  we now value conformance with the Spring way higher.)
+   = Added property ignoreInstanceAlreadyExistsException (default: false). Bean 'htmlAdapter' sets 
+     it to true to omit throwing an InstanceAlreadyExistsException if two modules that depend 
+	 on module-JMX are deployed.
+	  
  * Security
-   = Upgrade to Sping Security 2.0.4 (formerly Acegi Security), introduced new namespace definitions of Spring Security, interchanged @Secured
-	 with @RolesAllowed (@RolesAllowed is not dependent on Spring Security)
+   = Upgrade to Spring Security 2.0.4 (formerly Acegi Security). Introduced new namespace definitions 
+     of Spring Security, replaced @Secured with @RolesAllowed (@RolesAllowed is not dependent on 
+	 Spring Security).
 
+ * Remoting
+   = Added JAXB accessor infrastructure to module JAX-WS remoting to avoid LazyInitializationExceptions
+     (thanks PHD!).
+   = Added support for exporting beans that are proxied by Spring (via an overridden createExporterBean method), 
+     added possibility to register handlers to intercept SOAP requests and responses (thanks RBR!).
+   = JAX-WS protocol now handles serviceHost and servicePort property correctly (override values in generated proxy classes), 
+     default wsdlDirectory in jaxws-plugin reverted to original value.	 
+   
+ * Hibernate
+   = Hibernate updated to 3.3.2 (issue fixed in H2Dialect).
+   = Faster bulk deletes: Added deleteNoCascade(Collection<T> entities) and deleteAllNoCascade() methods to 
+     ConvenienceGenericHibernateDao / GenericHibernateDao implementing the bulk-deletion of entities 
+	 using HQL. These methods have a significant better performance when no cascade-deletion is required. 
+   = On ConvenienceHibernateDao: removed getConvenienceHibernateTemplate to avoid making this public (the method
+      can still be used internally).
+   = Moved persistence related part of CoreNotificationHelper into PersistenceNotificationHelper to 
+     improve logging in GenericHibernateDao.
+   = JTA version updated
+   = Suppressed logging of StaleObjectStateException
+	 
+ * Build system
+   = EL4J 1.7 requires Java 6. Updated configuration of maven-enforcer-plugin accordingly.
+   = Upgraded to Maven 2.2.1.
+   = New goal db:webUI that starts a simple generic database web ui.
+   = OrderedPathMatchingResourcePatternResolver now can be configured to use ascending or descending order. 
+     maven-database-plugin executes create scripts in alphabetic order and drop scripts in reversed order (was other way round).
+	 There is the parameter sortFilesAscending to enable emulating the old ordering of sql script files.
+   = Allow the maven-database-plugin to load properties from the file system (not only from the classpath).
+     A prefix of "./" loads a resource from the file system	 
+   = Maven plugin upgrades: maven-plugin-plugin (2.5.1), maven-jar-plugin (2.3), maven-source-plugin (2.1.1), 
+     maven-eclipse-plugin (2.7), maven-site-plugin (2.0.1), maven-project-info-reports-plugin (2.1.2), 
+	 taglist-maven-plugin (2.4)
+   = Upgrade to checkstyle 5.
+   = Moved to maven-eclipse-plugin version 2.7 which doesn't need a patch anymore.	 
+   = Adapted the behavior of maven-env-support-plugin to Maven 2.2.1 because since Maven 2.1.0 the normal 
+     filtering process makes system properties always the winning properties (See http://jira.codehaus.org/browse/MNG-1992).
+   = Convenient display of all configured Spring beans in Spring, even if your config is spread over different modules and
+     configuration files. We generate config file for the Spring IDE for eclipse in the normal maven lifecycle.
+	 (At the same time we create the checkstyle configuration file.)
+   = New maven-eclipse-server-plugin.
+     Used to automatically create a tomcat6x server inside your eclipse workspace.	 
+   = Update to tomcat 6.0.20
 
+* Database
+   = Support for H2 (fast in-memory DB) added (for quick tests)
+	 
+* Various
+   = Added support for colored Maven output. 
+     The standard EL4J convenience zip includes a maven executable that is already patched with the ColorLogger extension.
+	 The default color profile is designed for black background. For consoles with white background, use the
+	 system property 'colorlogger.whiteConsole'.
+   = New module-socketstatistics that can give you statistics, logs and an inside view about the Socket 
+     connections of your (or any) java application. The information can be accessed over JMX. 
+	 You do not need to change the code of your application for this.
+   = Improved integration of findbugs-maven-plugin. 
+     Added a global FindBugs exclusion file to configuration and wrote a @FindbugsSuppressWarnings annotation. Started using
+	 FindBugs in EL4J, dropped many of its warnings.
+   = Moved rarely used modules into sandbox (beanbrowser, offliner and depending demos).
+   = Created a javadoc taglet @wikiLink that adds a link to the EL4J wiki. 
+     This produces separate links to the ELCA internal wiki which is not accessible from outside the company. At the same
+	 time we have added many package-documentation with links to the wiki.
+   = Created a javadoc taglet @svnLink to link to svn repository.
+   = Added etc/openssl that includes three scripts for the creation of ssl certificates (for CA, client and server)
+     using OpenSSL.
+   = IPAddressFilter now supports expressions like '192.168.*' or '*.0.1'. These IP patterns can now also be provided 
+     as EL4J env properties.
+   = Example macker checks added for thin-client (they check for correct dependencies e.g. between layers).
+	 
 --------------------------------------------------------------------------------
  Date :   30.05.09
                             EL4J version  1.6
