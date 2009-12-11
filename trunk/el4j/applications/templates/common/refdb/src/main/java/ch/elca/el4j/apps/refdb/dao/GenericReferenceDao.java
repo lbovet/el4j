@@ -22,6 +22,7 @@ import java.util.List;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataRetrievalFailureException;
 
+import ch.elca.el4j.apps.keyword.dom.Keyword;
 import ch.elca.el4j.apps.refdb.dom.Reference;
 import ch.elca.el4j.services.persistence.hibernate.dao.ConvenienceGenericHibernateDao;
 
@@ -56,6 +57,16 @@ public interface GenericReferenceDao<T extends Reference,
 	 */
 	public List<T> getByName(String name)
 		throws DataAccessException, DataRetrievalFailureException;
+	
+	/**
+	 * Get all references of any type having at least one of the given keywords.
+	 *
+	 * @param keywords    a list of keywords.
+	 * @return Returns a list with references. Returns never <code>null</code>.
+	 * @throws DataAccessException
+	 *             If general data access problem occurred.
+	 */
+	public List<Reference> getAllReferencesByKeywords(List<Keyword> keywords) throws DataAccessException;
 	
 	/**
 	 * Checks whether a reference with the given id exists.
