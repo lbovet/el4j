@@ -21,6 +21,7 @@
    = Added property ignoreInstanceAlreadyExistsException (default: false). Bean 'htmlAdapter' sets 
      it to true to omit throwing an InstanceAlreadyExistsException if two modules that depend 
 	 on module-JMX are deployed.
+   = We now use TestNG instead of JUnit.
 	  
  * Security
    = Upgrade to Spring Security 2.0.4 (formerly Acegi Security). Introduced new namespace definitions 
