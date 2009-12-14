@@ -60,7 +60,9 @@ Documentation
 
     * {{{http://www.springframework.org/documentation} Spring documentation}}
 
-    * {{{http://www.exist.com/?q=node/151} Maven 2 Book}}
+    * {{{http://www.maestrodev.com/better-build-maven} Better Builds with Maven (Free book)}}
+	
+	* {{{http://www.sonatype.com/books/maven-book/reference/} Maven: The Definitive Guide (Free book)}}
 
       
 * Release notes
