@@ -42,7 +42,7 @@
      ConvenienceGenericHibernateDao / GenericHibernateDao implementing the bulk-deletion of entities 
 	 using HQL. These methods have a significant better performance when no cascade-deletion is required. 
    = On ConvenienceHibernateDao: removed getConvenienceHibernateTemplate to avoid making this public (the method
-      can still be used internally).
+     can still be used internally).
    = Moved persistence related part of CoreNotificationHelper into PersistenceNotificationHelper to 
      improve logging in GenericHibernateDao.
    = JTA version updated
