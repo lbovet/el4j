@@ -63,16 +63,16 @@
 			<timezone>+1</timezone>
 		</developer>
 		<developer>
-			<id>dbdelca</id>
-			<name>David Bernhard</name>
+			<id>niggli</id>
+			<name>Dominik Zindel</name>
 			<roles>
 				<role>Java developer</role>
 			</roles>
 			<timezone>+1</timezone>
 		</developer>
 		<developer>
-			<id>niggli</id>
-			<name>Dominik Zindel</name>
+			<id>jonasha</id>
+			<name>Jonas Hauenstein</name>
 			<roles>
 				<role>Java developer</role>
 			</roles>
@@ -178,6 +178,22 @@
 			<roles>
 				<role>Ex-Intern</role>
 				<role>Java contributor</role>
+			</roles>
+			<timezone>+1</timezone>
+		</contributor>
+		<contributor>
+			<id>dbdelca</id>
+			<name>David Bernhard</name>
+			<roles>
+				<role>Java developer</role>
+			</roles>
+			<timezone>+1</timezone>
+		</contributor>
+		<contributor>
+			<id>dajamesthomas</id>
+			<name>Daniel Thomas</name>
+			<roles>
+				<role>Java developer</role>
 			</roles>
 			<timezone>+1</timezone>
 		</contributor>
