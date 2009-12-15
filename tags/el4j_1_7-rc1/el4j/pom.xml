@@ -182,7 +182,6 @@
 			<timezone>+1</timezone>
 		</contributor>
 		<contributor>
-			<id>dbdelca</id>
 			<name>David Bernhard</name>
 			<roles>
 				<role>Java developer</role>
@@ -190,7 +189,6 @@
 			<timezone>+1</timezone>
 		</contributor>
 		<contributor>
-			<id>dajamesthomas</id>
 			<name>Daniel Thomas</name>
 			<roles>
 				<role>Java developer</role>
