@@ -2,12 +2,12 @@
  News
  -----
  -----
-15 Dec 2009
+16 Dec 2009
  -----
 
 News
 
-  * <15/12/2009> - <<EL4J 1.7 released.>>
+  * <16/12/2009> - <<EL4J 1.7 released.>>
   On time for christmas, the 1.7 release of EL4J is available. Apart from a lot of smaller improvements, the main new features are: 
   Upgrade to Maven 2.2.1, support for H2 databases, improved integration of FindBugs, upgraded to Spring Security 2.0.4, upgrade 
   to Hibernate 3.3.2, full support of Spring IDE for eclipse in the normal maven lifecycle, added support for the Joda-Time library, 
