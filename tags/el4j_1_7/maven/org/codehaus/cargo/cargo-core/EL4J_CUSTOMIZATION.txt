@@ -1,0 +1,9 @@
+SVN URL: http://svn.codehaus.org/cargo/core/trunk
+REVISION: 1548
+APPLIED PATCHES: 
+   * changed version
+   * removed unused submodules
+   * applied patch by Frank Bitzer (FBI) (EL4J_SPECIFIC_CHANGES.patch)
+CURRENTLY USED VERSION: 1.0-el4j_20080110_1000
+DEPENDENT CUSTOMIZED ARTIFACTS: 
+   * groupId=org.codehaus.cargo artifactId=cargo-parent (=parent pom)
