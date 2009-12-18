@@ -63,68 +63,83 @@ if ! [ -e external ] ; then
 	exit
 fi
 
+#define function to execute statements and check for BUILD ERROR in return
+function executewithcheck {
+	builderrorfound=0;
+	while read line
+	do
+		echo $line
+		if [[ $line == *BUILD\ ERROR* ]] ; then
+			builderrorfound=1;
+		fi
+	done < <($1)
+	if [ $builderrorfound == 1 ] ; then 
+		echo "[SCRIPT ERROR] Build Error detected - execution of script aborted";
+		exit 1;
+	fi
+}
 
 if  [ $performExternal == "y" ] ; then
 
 	cd external
-	mvn deploy -N
+	executewithcheck "mvn deploy -N"
 	
 	cd applications
-	mvn deploy -N
+	executewithcheck "mvn deploy -N"
 	cd ..
 	
 	cd framework
-	mvn deploy -N
+	executewithcheck "mvn deploy -N"
 	
 	cd modules
-	mvn deploy
+	executewithcheck "mvn deploy"
 	cd ..
 	
 	cd plugins
 	# maven-metadata.xml is not updated in 2.0.9 if mvn deploy is not called for every plugin explicitly
-	mvn deploy -N
+	executewithcheck "mvn deploy -N"
 	for i in $(ls | grep "^maven-") ; do
 		cd $i
-		mvn deploy
+		executewithcheck "mvn deploy"
 		cd ..
 	done
 	
 	# deploy maven utils
 	cd utils
-	mvn deploy
+	executewithcheck "mvn deploy"
 	cd ..
 	
 	cd ../..
 	
 	cd maven
-	mvn deploy -N
+	executewithcheck "mvn deploy -N"
 	
 	cd archetypes
 	for i in $(ls) ; do
 		cd $i
-		mvn deploy
+		executewithcheck "mvn deploy"
 		cd ..
 	done
 	cd ..
 	
 	cd plugins
 	# maven-metadata.xml is not updated in 2.0.9 if mvn deploy is not called for every plugin explicitly
-	mvn deploy -N
+	executewithcheck "mvn deploy -N"
 	for i in $(ls | grep "^maven-") ; do
 		cd $i
-		mvn deploy
+		executewithcheck "mvn deploy"
 		cd ..
 	done
 	cd ..
 	
 	cd extensions/taglet
-	mvn deploy
+	executewithcheck "mvn deploy"
 	cd ../..
 	
 	cd ..
 	
 	cd skin
-	mvn deploy
+	executewithcheck "mvn deploy"
 	cd ..
 	
 	cd ..
@@ -132,23 +147,23 @@ fi
 
 if  [ $performInternal == "y" ] ; then
 	cd internal
-	mvn deploy -N
+	executewithcheck "mvn deploy -N"
 	
 	cd applications
-	mvn deploy -N
+	executewithcheck "mvn deploy -N"
 	cd ..
 	
 	cd framework
-	mvn deploy -N
+	executewithcheck "mvn deploy -N"
 	
 	cd modules
-	mvn deploy
+	executewithcheck "mvn deploy"
 	cd ../..
 	
 	cd maven
-	mvn deploy -N
+	executewithcheck "mvn deploy -N"
 	
 	cd plugins
-	mvn deploy
+	executewithcheck "mvn deploy"
 	cd ../..
 fi
