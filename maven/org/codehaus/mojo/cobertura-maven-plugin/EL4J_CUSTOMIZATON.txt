@@ -1,6 +1,0 @@
-SVN URL: http://svn.codehaus.org/mojo/trunk/mojo/cobertura-maven-plugin
-REVISION: 8406
-APPLIED PATCHES:
-   * http://jira.codehaus.org/browse/MCOBERTURA-86 "CoberturaIntegrationReportMojo.patch"
-   * patch.diff (see http://wiki.elca.ch/twiki/el4j/bin/view/EL4J/CoberturaMavenPlugin)
-CURRENTLY USED VERSION: 2.3-el4j_20090519_1445
