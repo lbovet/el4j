@@ -155,7 +155,7 @@
 		<!-- Uncomment this block if you are inside ELCA! -->
 		<!-- <mirror>
 			<id>nexusReleases</id>
-			<mirrorOf>central,codehaus,jboss,java.net,maven2-repository.dev.java.net,el4jRepositoryInternal</mirrorOf>
+			<mirrorOf>central,codehaus,jboss,java.net,maven2-repository.dev.java.net</mirrorOf>
 			<name>Nexus mirror for releases</name>
 			<url>http://leaffy.elca.ch:8082/nexus/content/groups/releases</url>
 		</mirror> -->
@@ -174,8 +174,8 @@
 		<!-- Uncomment if you are inside ELCA but not at Lausanne! -->
 		<!-- <mirror>
 			<id>nexusEl4ElcaServices</id>
-			<mirrorOf>el4jPluginRepositoryExternal,el4jPluginRepositoryInternal</mirrorOf>
-			<name>Proxmity mirrored el4jReleaseRepositoryExternal.</name>
+			<mirrorOf>el4jRepositoryExternal,el4jRepositoryInternal,el4jPluginRepositoryExternal,el4jPluginRepositoryInternal</mirrorOf>
+			<name>Nexus mirror for releases on public-el4.elca-services.ch</name>
 			<url>http://leaffy.elca.ch:8082/nexus/content/groups/releases</url>
 		</mirror> -->
 	</mirrors>
