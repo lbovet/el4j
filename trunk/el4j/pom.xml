@@ -2694,7 +2694,7 @@
 		<version.maven-pmd-plugin>2.4</version.maven-pmd-plugin>
 		<version.taglist-maven-plugin>2.4</version.taglist-maven-plugin>
 		<version.maven-plugin-plugin>2.5.1</version.maven-plugin-plugin>
-		<version.cobertura-maven-plugin>2.3-el4j_20090519_1445</version.cobertura-maven-plugin>
+		<version.cobertura-maven-plugin>2.3-el4j_20100104_1100</version.cobertura-maven-plugin>
 		<version.sonar-maven-plugin>1.8</version.sonar-maven-plugin>
 		<version.clirr-maven-plugin>2.2.2-el4j_20080812_1330</version.clirr-maven-plugin>
 		<version.dashboard-maven-plugin>1.0.0-beta-1-el4j_20090527_0835</version.dashboard-maven-plugin>
