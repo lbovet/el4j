@@ -355,7 +355,7 @@
 					<!--
 						NEVER set expression ${maven.test.skip} to "true", else test classes will not be compiled!
 						To skip tests in surefire set expression ${skipTest} to "true":
-						    See http://maven.apache.org/plugins/maven-surefire-plugin/test-mojo.html#skipTests
+						See http://maven.apache.org/plugins/maven-surefire-plugin/test-mojo.html#skipTests
 					-->
 					<version>2.1</version>
 					<configuration>
