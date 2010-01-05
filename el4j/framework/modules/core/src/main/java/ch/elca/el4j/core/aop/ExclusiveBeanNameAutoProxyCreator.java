@@ -251,12 +251,12 @@ public class ExclusiveBeanNameAutoProxyCreator
 		if (doNotProxy) {
 			return DO_NOT_PROXY;
 		} else {
-			beanClass = IntelligentAdvisorAutoProxyCreator.
+			Class bClass = IntelligentAdvisorAutoProxyCreator.
 				deproxyBeanClass(beanClass, beanName, getBeanFactory());
 			
 			if (this.m_beanNames != null) {
 				for (String mappedName : this.m_beanNames) {
-					if (!m_proxyFactoryBeanOutput && FactoryBean.class.isAssignableFrom(beanClass)) {
+					if (!m_proxyFactoryBeanOutput && FactoryBean.class.isAssignableFrom(bClass)) {
 						if (!mappedName.startsWith(BeanFactory.FACTORY_BEAN_PREFIX)) {
 							continue;
 						}

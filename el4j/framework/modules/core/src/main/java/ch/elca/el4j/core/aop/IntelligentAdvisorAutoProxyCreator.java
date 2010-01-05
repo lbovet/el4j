@@ -17,14 +17,12 @@
 package ch.elca.el4j.core.aop;
 
 import java.lang.reflect.Proxy;
-import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.aop.TargetSource;
 import org.springframework.aop.framework.adapter.AdvisorAdapterRegistry;
 import org.springframework.aop.framework.adapter.GlobalAdvisorAdapterRegistry;
-import org.springframework.aop.framework.autoproxy.AbstractAutoProxyCreator;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.aop.support.AopUtils;
 import org.springframework.beans.factory.BeanFactory;
@@ -100,8 +98,8 @@ public class IntelligentAdvisorAutoProxyCreator
 	 */
 	@Override	
 	protected Object[] getAdvicesAndAdvisorsForBean(Class beanClass, String beanName, TargetSource targetSource) {
-		beanClass = deproxyBeanClass(beanClass, beanName, getBeanFactory());
-		return super.getAdvicesAndAdvisorsForBean(beanClass, beanName, targetSource);
+		Class bClass = deproxyBeanClass(beanClass, beanName, getBeanFactory());
+		return super.getAdvicesAndAdvisorsForBean(bClass, beanName, targetSource);
 	}
 
 	/**
@@ -113,7 +111,7 @@ public class IntelligentAdvisorAutoProxyCreator
 	 */
 	protected static Class deproxyBeanClass(Class beanClass, String beanName, BeanFactory beanFactory) {
 		if (AopUtils.isCglibProxyClass(beanClass)) {
-			beanClass = AopHelper.getClassOfCglibProxyClass(beanClass);
+			return AopHelper.getClassOfCglibProxyClass(beanClass);
 		} else if (Proxy.isProxyClass(beanClass) && (beanFactory instanceof DefaultListableBeanFactory)) {
 
 			DefaultListableBeanFactory factory = (DefaultListableBeanFactory) beanFactory;
@@ -122,7 +120,7 @@ public class IntelligentAdvisorAutoProxyCreator
 				String beanClassName = beanDefinition.getBeanClassName();
 				try {
 					// replace the beanClass (if it works - otherwise keep "old" beanClass)
-					beanClass = beanClass.getClassLoader().loadClass(beanClassName);
+					return beanClass.getClassLoader().loadClass(beanClassName);
 				} catch (ClassNotFoundException e) {
 					s_logger.debug("error deproxying beanClass:" + beanClass, e);
 				} // ignore error in loading class, just return null

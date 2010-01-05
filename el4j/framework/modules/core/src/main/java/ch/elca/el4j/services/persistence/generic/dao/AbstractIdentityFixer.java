@@ -303,23 +303,23 @@ public abstract class AbstractIdentityFixer {
 		List<Object> objectsToUpdate, IdentityHashMap<Object, Object> hintMapping) {
 		
 		// Prepare the updated object
-		updated = (T) prepareObject(updated);
+		T prepUpdated = (T) prepareObject(updated);
 		
-		if (immutableValue(updated)) {
-			trace("", updated, " is an immutable value");
-			return updated;
+		if (immutableValue(prepUpdated)) {
+			trace("", prepUpdated, " is an immutable value");
+			return prepUpdated;
 		}
 				
-		T attached = (T) reached.get(updated);
+		T attached = (T) reached.get(prepUpdated);
 		if (attached != null) {
-			trace("",  updated, " was already merged to ", attached);
+			trace("",  prepUpdated, " was already merged to ", attached);
 			return attached;
 		}
 
 		boolean isNew = true;
 		
 		// choose representative
-		Object id = id(updated);
+		Object id = id(prepUpdated);
 		if (isIdentical) {
 			// anchor is the guaranteed representative
 			attached = anchor;
@@ -338,8 +338,8 @@ public abstract class AbstractIdentityFixer {
 					isNew = (attached != null) ? false : true;
 				}
 				// we don't have to merge if attached == updated, meaning that it equals the representative
-				if (attached == updated) {
-					reached.put(updated, attached);
+				if (attached == prepUpdated) {
+					reached.put(prepUpdated, attached);
 					return attached;
 				}
 			}
@@ -347,7 +347,7 @@ public abstract class AbstractIdentityFixer {
 			
 			// if no representative found, go through graph and insert the new objects
 			if (attached == null) {
-				attached = updated;
+				attached = prepUpdated;
 			}
 		}
 		assert attached != null;
@@ -356,20 +356,20 @@ public abstract class AbstractIdentityFixer {
 		}
 		
 		// register representative
-		reached.put(updated, attached);
+		reached.put(prepUpdated, attached);
 		
-		trace("merging ", updated, " to ", attached);
+		trace("merging ", prepUpdated, " to ", attached);
 		m_traceIndentation++;
-		if (updated.getClass().isArray()) {
+		if (prepUpdated.getClass().isArray()) {
 			
-			int l = Array.getLength(updated);
-			assert Array.getLength(attached) == Array.getLength(updated);
+			int l = Array.getLength(prepUpdated);
+			assert Array.getLength(attached) == Array.getLength(prepUpdated);
 			for (int i = 0; i < l; i++) {
 				Array.set(
 					attached, i,
 					merge(
 						attached != null ? Array.get(attached, i) : null,
-						Array.get(updated, i),
+						Array.get(prepUpdated, i),
 						attached != null && isIdentical,
 						reached,
 						objectsToUpdate,
@@ -379,7 +379,7 @@ public abstract class AbstractIdentityFixer {
 			}
 		} else if (attached instanceof Collection) {
 			Collection attachedCollection = (Collection) attached;
-			Collection updatedCollection = (Collection) updated;
+			Collection updatedCollection = (Collection) prepUpdated;
 			
 			List mergedEntries = new ArrayList(attachedCollection.size());
 			
@@ -408,9 +408,9 @@ public abstract class AbstractIdentityFixer {
 			attached = (T) updatedCollection;
 		} else {
 			boolean isUpdateNeeded = objectsToUpdate == null || objectsToUpdate.contains(attached) || isNew;
-			for (Field f : fields(updated.getClass())) {
+			for (Field f : fields(prepUpdated.getClass())) {
 				try {
-					Object fieldValue = f.get(updated);
+					Object fieldValue = f.get(prepUpdated);
 					Object fieldValue2 = (attached != null) ? f.get(attached) : null;
 					boolean collectionUpdate = fieldValue2 != null && fieldValue2 instanceof Collection 
 						&& id(fieldValue2) == ANONYMOUS;

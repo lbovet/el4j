@@ -260,7 +260,9 @@
 		</module>
 		<!--module name="IllegalType"/-->
 		<module name="DeclarationOrder" />
-		<module name="ParameterAssignment" />
+		<module name="ParameterAssignment">
+			<property name="severity" value="error" />
+		</module>
 		<!--module name="ExplicitInitialization"/-->
 		<module name="DefaultComesLast" />
 		<!--module name="MissingCtor"/-->

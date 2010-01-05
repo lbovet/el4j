@@ -445,9 +445,9 @@ public class TableSorter extends AbstractTableModel {
 			int dx = (int)(size/2*Math.pow(0.8, priority));
 			int dy = descending ? dx : -dx;
 			// Align icon (roughly) with font baseline.
-			y = y + 5*size/6 + (descending ? -dy : 0);
+			int yaligned = y + 5*size/6 + (descending ? -dy : 0);
 			int shift = descending ? 1 : -1;
-			g.translate(x, y);
+			g.translate(x, yaligned);
 
 			// Right diagonal.
 			g.setColor(color.darker());
@@ -468,7 +468,7 @@ public class TableSorter extends AbstractTableModel {
 			g.drawLine(dx, 0, 0, 0);
 
 			g.setColor(color);
-			g.translate(-x, -y);
+			g.translate(-x, -yaligned);
 		}
 
 		public int getIconWidth() {

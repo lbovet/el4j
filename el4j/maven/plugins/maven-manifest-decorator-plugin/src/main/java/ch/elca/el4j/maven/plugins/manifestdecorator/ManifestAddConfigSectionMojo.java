@@ -182,26 +182,23 @@ public class ManifestAddConfigSectionMojo extends AbstractSlf4jEnabledMojo {
 	 * @param deps	the dependencies for normal executions
 	 * @param testDeps  the dependencies for tests
 	 */
-	private void logDependencies(List<Dependency> deps,
-			List<Dependency> testDeps) {
-		if (deps == null) {
-			deps = new ArrayList<Dependency>();
-		}
-		if (testDeps == null) {
-			testDeps = new ArrayList<Dependency>();
-		}
+	private void logDependencies(List<Dependency> deps, List<Dependency> testDeps) {
+		
+		List<Dependency> workingDeps = deps == null ? new ArrayList<Dependency>() : deps;
+		List<Dependency> workingTestDeps = testDeps == null ? new ArrayList<Dependency>() : testDeps;
+		
 		
 		List<Dependency> onlyInNormal = calculateDependencyOnlyInFirstList(
-				deps, testDeps);
+			workingDeps, workingTestDeps);
 		
 		List<Dependency> onlyInTests = calculateDependencyOnlyInFirstList(
-				testDeps, deps);
+			workingTestDeps, workingDeps);
 		
-		String manifestDependencies = getDependencyList(deps, true);
+		String manifestDependencies = getDependencyList(workingDeps, true);
 		
 		getLog().info("Project " + project.getGroupId() + ":"
 			+ project.getArtifactId() + " has the following "
-			+ deps.size() + " runtime dependencies: "
+			+ workingDeps.size() + " runtime dependencies: "
 			+ manifestDependencies);
 		
 		getLog().info("Delta for tests:    only in tests: " + getDependencyList(onlyInTests, true)

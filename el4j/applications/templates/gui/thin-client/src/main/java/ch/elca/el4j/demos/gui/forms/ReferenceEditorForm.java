@@ -73,7 +73,7 @@ public class ReferenceEditorForm extends JPanel implements ApplicationFrameAware
 	private JButton cancelButton;
 	
 	@ModelObject(isDefault = true)
-	private Reference reference = null;
+	private Reference mixinReference = null;
 	
 	
 	/**
@@ -107,12 +107,11 @@ public class ReferenceEditorForm extends JPanel implements ApplicationFrameAware
 	 * @param reference    the reference to be edited on the GUI
 	 */
 	public void setReference(Reference reference) {
-		reference = PropertyChangeListenerMixin
-			.addPropertyChangeMixin(reference);
-		key = reference.getKey();
+		mixinReference = PropertyChangeListenerMixin.addPropertyChangeMixin(reference);
+		key = mixinReference.getKey();
 		
 		// save properties
-		((SaveRestoreCapability) reference).save();
+		((SaveRestoreCapability) mixinReference).save();
 		
 		// bind the variable "reference" to "this"
 		// this interprets the @ModelObject annotation (see above)
@@ -126,13 +125,13 @@ public class ReferenceEditorForm extends JPanel implements ApplicationFrameAware
 	 */
 	@Action
 	public void applyChanges() {
-		((SaveRestoreCapability) reference).save();
-		reference.setKey(key);
+		((SaveRestoreCapability) mixinReference).save();
+		mixinReference.setKey(key);
 		binder.removeAll();
 		
-		EventBus.publish(new ReferenceUpdateEvent(reference.getKey()));
+		EventBus.publish(new ReferenceUpdateEvent(mixinReference.getKey()));
 		applicationFrame.close();
-		reference = null;
+		mixinReference = null;
 	}
 	
 	/**
@@ -140,12 +139,12 @@ public class ReferenceEditorForm extends JPanel implements ApplicationFrameAware
 	 */
 	@Action
 	public void discardChanges() {
-		((SaveRestoreCapability) reference).restore();
-		reference.setKey(key);
+		((SaveRestoreCapability) mixinReference).restore();
+		mixinReference.setKey(key);
 		binder.removeAll();
 		
 		applicationFrame.close();
-		reference = null;
+		mixinReference = null;
 	}
 	
 	/**
