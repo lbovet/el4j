@@ -164,9 +164,11 @@ public class FormMeta {
 
 		Field modelPropertyField = null;
 		
+		String mdlProp = modelProperty;
+		
 		// SWI: remove "m_" if necessary
-		if (modelProperty.startsWith("m_")) {
-			modelProperty = modelProperty.substring(2);
+		if (mdlProp.startsWith("m_")) {
+			mdlProp = mdlProp.substring(2);
 		}
 
 		// getter
@@ -183,9 +185,9 @@ public class FormMeta {
 			} else {
 				modelPropertyGetterMethod =
 						ClassManager.getClassInfo(modelType).getGetterMethod(
-								composeGetterName(modelProperty));
+								composeGetterName(mdlProp));
 				modelPropertyGetterMethod.setAccessible(true);
-				if ( modelPropertyGetterMethod != null ) {
+				if (modelPropertyGetterMethod != null) {
 					propertyType = modelPropertyGetterMethod.getReturnType();
 					modelPropertyGetterMethod.setAccessible(true);
 					modelPropertyGetterMethodFound = true;
@@ -198,13 +200,13 @@ public class FormMeta {
 
 		// field
 		try {
-			modelPropertyField = ClassManager.getClassInfo(modelType).getField(modelProperty);
+			modelPropertyField = ClassManager.getClassInfo(modelType).getField(mdlProp);
 			modelPropertyField.setAccessible(true);
 			if (propertyType == null) propertyType = modelPropertyField.getType();
 		} catch (NoSuchFieldException e) {
 			if (!modelPropertyGetterMethodFound)
 				throw new IllegalStateException(
-						"A getter method or a field was not found for property with name " + modelProperty);
+						"A getter method or a field was not found for property with name " + mdlProp);
 		}
 
 		// setter

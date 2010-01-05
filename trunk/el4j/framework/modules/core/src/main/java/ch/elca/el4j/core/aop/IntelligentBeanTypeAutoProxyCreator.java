@@ -123,14 +123,14 @@ public class IntelligentBeanTypeAutoProxyCreator
 	}
 
 	/**
-	 * Here we additionally de-proxy beans (to avoid that certain applications of interceptors fail)
+	 * Here we additionally de-proxy beans (to avoid that certain applications of interceptors fail).
 	 * {@inheritDoc}
 	 */
 	@Override	
 	protected Object[] getAdvicesAndAdvisorsForBean(Class beanClass, String beanName, TargetSource targetSource) {
-		beanClass = IntelligentAdvisorAutoProxyCreator.deproxyBeanClass(beanClass, beanName, getBeanFactory());
+		Class bClass = IntelligentAdvisorAutoProxyCreator.deproxyBeanClass(beanClass, beanName, getBeanFactory());
 
-		return super.getAdvicesAndAdvisorsForBean(beanClass, beanName, targetSource);
+		return super.getAdvicesAndAdvisorsForBean(bClass, beanName, targetSource);
 	}	
 	
 	/**

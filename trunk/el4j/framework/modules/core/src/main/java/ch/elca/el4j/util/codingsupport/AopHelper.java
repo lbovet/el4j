@@ -180,17 +180,19 @@ public class AopHelper {
 		//  we just want to add new interceptors?
 		Advisor[] existingAdvisors = null;
 		
-		if (object instanceof Advised) {
-			Advised advised = (Advised)object;
+		T result = object;
+		
+		if (result instanceof Advised) {
+			Advised advised = (Advised)result;
 			existingAdvisors = advised.getAdvisors();
 			
 			try { // replace object by the wrapped object
-				object = (T)advised.getTargetSource().getTarget();
+				result = (T)advised.getTargetSource().getTarget();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
-		ProxyFactory proxyFactory = new ProxyFactory (object);
+		ProxyFactory proxyFactory = new ProxyFactory (result);
 				
 		proxyFactory.setProxyTargetClass(true);
 		proxyFactory.setExposeProxy(true);
@@ -214,8 +216,8 @@ public class AopHelper {
 			}
 		}
 	
-		object = (T)proxyFactory.getProxy();
-		return object;
+		result = (T)proxyFactory.getProxy();
+		return result;
 	}
 	
 	/**
