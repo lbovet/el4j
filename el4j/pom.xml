@@ -353,16 +353,15 @@
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-compiler-plugin</artifactId>
 					<!--
-						Due to bugs fix built snapshot version is used.
-							* maven-compiler-plugin (revision 438050 + patch http://jira.codehaus.org/browse/MCOMPILER-35)
+						NEVER set expression ${maven.test.skip} to "true", else test classes will not be compiled!
+						To skip tests in surefire set expression ${skipTest} to "true":
+						    See http://maven.apache.org/plugins/maven-surefire-plugin/test-mojo.html#skipTests
 					-->
-					<!--version>2.1-20060908.102132-1</version-->
-					<version>2.1-el4j_20080110_1520</version> <!-- EL4J CUSTOMIZATION -->
+					<version>2.1</version>
 					<configuration>
 						<encoding>${project.build.sourceEncoding}</encoding>
 						<source>${el4j.java.version}</source>
 						<target>${el4j.java.version}</target>
-						<neverSkipCompiling>true</neverSkipCompiling>
 					</configuration>
 				</plugin>
 				<plugin>
@@ -489,7 +488,7 @@
 					swing-demo-standalone-client assembly with 2.2-beta-1 don't run,
 					because of changes in the META-INF directory.
 					-->
-					<version>2.1</version>
+					<version>2.2-beta-5</version>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
@@ -504,16 +503,14 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-deploy-plugin</artifactId>
-					<version>2.4</version>
+					<version>2.5</version>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-release-plugin</artifactId>
 					<version>2.0-beta-9</version>
 					<configuration>
-						<tagBase>
-							https://el4j.svn.sourceforge.net/svnroot/el4j/tags/
-						</tagBase>
+						<tagBase>https://el4j.svn.sourceforge.net/svnroot/el4j/tags/</tagBase>
 					</configuration>
 				</plugin>
 				<plugin>
@@ -643,7 +640,7 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-site-plugin</artifactId>
-					<version>2.0.1</version>
+					<version>2.1</version>
 					<!-- use twiki syntax (usable in 1.1 which requires maven 2.1
 					<dependencies>
 						<dependency>
@@ -2689,7 +2686,7 @@
 		<version.maven-checkstyle-plugin>2.4-el4j_20091020_1500</version.maven-checkstyle-plugin>
 		<version.findbugs-maven-plugin>2.0.1</version.findbugs-maven-plugin>
 		<version.maven-surefire-report-plugin>2.4.3</version.maven-surefire-report-plugin>
-		<version.maven-javadoc-plugin>2.5</version.maven-javadoc-plugin>
+		<version.maven-javadoc-plugin>2.6.1</version.maven-javadoc-plugin>
 		<version.maven-jxr-plugin>2.1</version.maven-jxr-plugin>
 		<version.maven-pmd-plugin>2.4</version.maven-pmd-plugin>
 		<version.taglist-maven-plugin>2.4</version.taglist-maven-plugin>
