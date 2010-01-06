@@ -29,8 +29,8 @@
 		<!-- Oracle driver -->
 		<dependency>
 			<groupId>com.oracle</groupId>
-			<artifactId>ojdbc14_g</artifactId>
-			<version>10.2.0.3.0</version>
+			<artifactId>ojdbc6_g</artifactId>
+			<version>11.2.0.1.0</version>
 			<scope>runtime</scope>
 		</dependency>
 	</dependencies>
