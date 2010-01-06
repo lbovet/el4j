@@ -160,7 +160,7 @@ public class HibernateWorkElementDaoTest extends AbstractTestCaseBase {
 		
 		DefaultDaoRegistry daoRegistry
 			= (DefaultDaoRegistry) getApplicationContext().getBean("daoRegistry");
-		m_workElementDao = (WorkElementDao) daoRegistry.getFor(WorkElement.class);
+		m_workElementDao = daoRegistry.getDao(WorkElementDao.class);
 		return m_workElementDao;
 	}
 }

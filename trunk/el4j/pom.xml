@@ -703,7 +703,7 @@
 						<tagletArtifact>
 							<groupId>ch.elca.el4j.maven.extensions</groupId>
 							<artifactId>taglet</artifactId>
-							<version>1.0</version>
+							<version>${version.maven-el4j-taglet}</version>
 						</tagletArtifact>
 					</configuration>
 				</plugin>
@@ -940,7 +940,7 @@
 					<tagletArtifact>
 						<groupId>ch.elca.el4j.maven.extensions</groupId>
 						<artifactId>taglet</artifactId>
-						<version>1.0</version>
+						<version>${version.maven-el4j-taglet}</version>
 					</tagletArtifact>
 				</configuration>
 				<inherited>true</inherited>
@@ -2113,7 +2113,7 @@
 				<!-- This module is built by EL4J and is placed in directory "maven/extensions/slf4j-maven"  -->
 				<groupId>org.slf4j</groupId>
 				<artifactId>slf4j-maven</artifactId>
-				<version>${version.slf4j}</version>
+				<version>${version.slf4j-maven}</version>
 			</dependency>
 			
 			<!-- get empty jar instead of commons-logging. Use SLF4J instead! -->
@@ -2548,6 +2548,11 @@
 			1.3-SNAPSHOT
 		</version.maven-cobertura-runtime-plugin>
 		
+		<!-- EL4J maven taglet(s) extension -->
+		<version.maven-el4j-taglet>
+			1.1-SNAPSHOT
+		</version.maven-el4j-taglet>
+		
 		<!-- EL4J framework module version numbers -->
 		<version.module-core>
 			1.15-SNAPSHOT
@@ -2673,10 +2678,11 @@
 		
 		<!-- SLF4J -->
 		<!--
-			IMPORTANT: Update version in "maven/extensions/slf4j-maven/pom.xml", specially the parent pom
+			IMPORTANT: Update and copy these properties to "maven/extensions/slf4j-maven/pom.xml", specially the parent pom
 			and build and deploy it separately.
 		-->
 		<version.slf4j>1.5.8</version.slf4j>
+		<version.slf4j-maven>${version.slf4j}-el4j-1.8-SNAPSHOT</version.slf4j-maven>
 		
 		<!-- Dependency versions -->
 		<version.derby>10.4.1.3</version.derby>

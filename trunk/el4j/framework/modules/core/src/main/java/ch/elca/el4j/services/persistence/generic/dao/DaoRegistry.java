@@ -25,6 +25,7 @@ import java.util.Map;
  *
  * @author Adrian Moos (AMS)
  * @author Alex Mathey (AMA)
+ * @author Jonas Hauenstein (JHN)
  */
 public interface DaoRegistry {
 	
@@ -40,6 +41,16 @@ public interface DaoRegistry {
 	 *            or null if none was found.
 	 */
 	public <T> GenericDao<T> getFor(Class<T> entityType);
+	
+	/**
+	 * Returns the DAO of a given type.
+	 * If no DAO of the given type is registered, null will be returned.
+	 * 
+	 * @param <T> The DOA class type.
+	 * @param doaType The DAO class type for which the DAO should be returned.
+	 * @return The DAO for the given type or null.
+	 */
+	public <T> T getDao(Class<T> doaType);
 	
 	/**
 	 * @return Returns the registered DAOs.
