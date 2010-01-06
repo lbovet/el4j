@@ -26,11 +26,6 @@
 			<artifactId>module-database-common</artifactId>
 		</dependency>
 		
-		<dependency>
-			<groupId>ch.elca.el4j.modules</groupId>
-			<artifactId>module-core</artifactId>
-		</dependency>
-
 		<!-- JAMon network driver -->
 		<dependency>
 			<groupId>com.jamonapi</groupId>
