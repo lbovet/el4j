@@ -17,8 +17,9 @@
 package ch.elca.el4j.util.logging.appenders;
 
 import java.io.IOException;
-
+//Checkstyle: UseLogger off
 import org.apache.log4j.DailyRollingFileAppender;
+//Checkstyle: UseLogger on
 
 /**
  * This class applies more checks on the validityo of logfile path,
