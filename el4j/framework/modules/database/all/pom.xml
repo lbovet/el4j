@@ -23,11 +23,6 @@
 	<dependencies>
 		<dependency>
 			<groupId>ch.elca.el4j.modules</groupId>
-			<artifactId>module-database-common</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>ch.elca.el4j.modules</groupId>
 			<artifactId>module-database-db2</artifactId>
 		</dependency>
 		

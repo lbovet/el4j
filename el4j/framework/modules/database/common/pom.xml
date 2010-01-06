@@ -32,14 +32,9 @@
 	</build>
 	
 	<dependencies>
-		<!-- DBCP libraries -->
 		<dependency>
-			<groupId>commons-dbcp</groupId>
-			<artifactId>commons-dbcp</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>commons-pool</groupId>
-			<artifactId>commons-pool</artifactId>
+			<groupId>ch.elca.el4j.modules</groupId>
+			<artifactId>module-core</artifactId>
 		</dependency>
 	</dependencies>
 </project>
