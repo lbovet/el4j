@@ -29,9 +29,8 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.util.PatternMatchUtils;
 
-import ch.elca.el4j.core.context.ModuleApplicationContext;
-import ch.elca.el4j.core.context.RefreshableModuleApplicationContext;
 import ch.elca.el4j.core.context.ModuleApplicationListener;
+import ch.elca.el4j.core.context.RefreshableModuleApplicationContext;
 import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
 import ch.elca.el4j.services.persistence.generic.dao.DaoRegistry;
 import ch.elca.el4j.services.persistence.generic.dao.GenericDao;
@@ -62,6 +61,7 @@ import net.sf.cglib.proxy.Enhancer;
  *
  * @author Adrian Moos (AMS)
  * @author Alex Mathey (AMA)
+ * @author Jonas Hauenstein (JHN)
  */
 public class DefaultDaoRegistry implements DaoRegistry, ApplicationContextAware, ModuleApplicationListener {
 
@@ -77,10 +77,15 @@ public class DefaultDaoRegistry implements DaoRegistry, ApplicationContextAware,
 	protected boolean m_collectDaos = true;
 	
 	/**
-	 * The map containing the registered DAOs.
+	 * The map containing the registered DAOs with the bean class as key.
 	 */
-	protected Map<Class<?>, GenericDao<?>> m_daos = new ConcurrentHashMap<Class<?>, GenericDao<?>>();
+	protected Map<Class<?>, GenericDao<?>> m_beanClassDaos = new ConcurrentHashMap<Class<?>, GenericDao<?>>();
 
+	/**
+	 * The map containing the registered DAOs with the dao class as key.
+	 */
+	protected Map<Class<?>, GenericDao<?>> m_daoClassDaos = new ConcurrentHashMap<Class<?>, GenericDao<?>>();
+	
 	/** 
 	 * The application context. 
 	 */
@@ -166,7 +171,7 @@ public class DefaultDaoRegistry implements DaoRegistry, ApplicationContextAware,
 			actualEntityType = (Class<T>) entityType.getSuperclass();
 		}
 		
-		GenericDao<T> candidateReturn = (GenericDao<T>) m_daos.get(actualEntityType);
+		GenericDao<T> candidateReturn = (GenericDao<T>) m_beanClassDaos.get(actualEntityType);
 		
 		if (candidateReturn != null) {
 			return candidateReturn;
@@ -177,7 +182,7 @@ public class DefaultDaoRegistry implements DaoRegistry, ApplicationContextAware,
 			if (otherPossibilities != null) {
 				s_logger.info("Trying to unwrap JDK proxy to get DAO for type");
 				for (Class c : otherPossibilities) {
-					candidateReturn = (GenericDao<T>) m_daos.get(c);
+					candidateReturn = (GenericDao<T>) m_beanClassDaos.get(c);
 					if (candidateReturn != null) {
 						return candidateReturn;
 					}
@@ -187,6 +192,19 @@ public class DefaultDaoRegistry implements DaoRegistry, ApplicationContextAware,
 		// we give up
 		return null;
 
+	}
+	
+	/** {@inheritDoc} */
+	@SuppressWarnings("unchecked")
+	public <T> T getDao(Class<T> doaType) {
+		
+		if ((!m_initialized) && m_collectDaos) {
+			m_initialized = true;
+			initDaosFromSpringBeans();
+		}
+		
+		T candidateReturn = (T) m_daoClassDaos.get(doaType);	
+		return candidateReturn;
 	}
 
 	/**
@@ -216,9 +234,19 @@ public class DefaultDaoRegistry implements DaoRegistry, ApplicationContextAware,
 			GenericDao<?> dao = (GenericDao<?>) m_applicationContext.getBean(name);
 			
 			// avoid adding a DAO again
-			if (!m_daos.values().contains(dao)) {
+			if (!m_beanClassDaos.values().contains(dao)) {
 				initDao(dao);
-				m_daos.put(dao.getPersistentClass(), dao);
+				m_beanClassDaos.put(dao.getPersistentClass(), dao);
+				
+				//add all implemented interfaces of the dao class since
+				//the parameter for method getDao could be any implemented interface  
+				Class<?>[] interfaceList = dao.getClass().getInterfaces();
+				for (Class<?> c : interfaceList) {
+					//only add interfaces which are at least derived from GenericDao
+					if (GenericDao.class.isAssignableFrom(c)) {
+						m_daoClassDaos.put(c, dao);
+					}
+				}
 			}
 		}
 	}
@@ -238,16 +266,20 @@ public class DefaultDaoRegistry implements DaoRegistry, ApplicationContextAware,
 			initDaosFromSpringBeans();
 		}
 		
-		return m_daos;
+		return m_beanClassDaos;
 	}
 
 	/**
 	 * @param daos Registers the DAOs.
 	 */
 	public void setDaos(Map<Class<?>, GenericDao<?>> daos) {
-		m_daos = daos;
+		m_beanClassDaos = daos;
+		//clear the second map
+		m_daoClassDaos.clear();
 		for (GenericDao<?> dao : daos.values()) {
 			initDao(dao);
+			//also initialize the second map
+			m_daoClassDaos.put(dao.getClass(), dao);
 		}
 	}
 

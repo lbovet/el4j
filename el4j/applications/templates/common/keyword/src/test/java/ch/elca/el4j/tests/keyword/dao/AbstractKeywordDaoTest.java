@@ -77,7 +77,7 @@ public abstract class AbstractKeywordDaoTest
 			DefaultDaoRegistry daoRegistry
 				= (DefaultDaoRegistry) getApplicationContext()
 					.getBean("daoRegistry");
-			m_keywordDao = (KeywordDao) daoRegistry.getFor(Keyword.class);
+			m_keywordDao = daoRegistry.getDao(KeywordDao.class);
 		}
 		return m_keywordDao;
 	}

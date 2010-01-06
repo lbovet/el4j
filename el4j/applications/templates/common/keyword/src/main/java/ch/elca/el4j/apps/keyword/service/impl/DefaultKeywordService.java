@@ -76,7 +76,7 @@ public class DefaultKeywordService implements KeywordService, ModuleApplicationL
 	 * @return The DAO for keywords
 	 */
 	protected KeywordDao getKeywordDao() {
-		return (KeywordDao) getDaoRegistry().getFor(Keyword.class);
+		return getDaoRegistry().getDao(KeywordDao.class);
 	}
 	
 	/** {@inheritDoc} */

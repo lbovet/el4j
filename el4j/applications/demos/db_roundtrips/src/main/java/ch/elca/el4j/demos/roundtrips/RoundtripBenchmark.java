@@ -75,7 +75,7 @@ public final class RoundtripBenchmark {
 		ModuleApplicationContext appContext = new ModuleApplicationContext(CONFIG_LOCATIONS, true);
 		
 		DefaultDaoRegistry daoRegistry = (DefaultDaoRegistry) appContext.getBean("daoRegistry");
-		KeywordDao dao = (KeywordDao) daoRegistry.getFor(Keyword.class);
+		KeywordDao dao = daoRegistry.getDao(KeywordDao.class);
 		HibernateTransactionManager transactionManager
 			= (HibernateTransactionManager) appContext.getBean("transactionManager");
 		
