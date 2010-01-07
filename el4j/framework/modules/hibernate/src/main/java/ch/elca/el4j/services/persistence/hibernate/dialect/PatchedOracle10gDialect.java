@@ -25,17 +25,28 @@ import org.hibernate.dialect.Oracle10gDialect;
  * accepts the type "double precision", but stores it as "float(126)". Whenever
  * hibernate validates such a column, oracle returns "float(126)" and hibernate
  * therefore reports a mismatch.
- *
+ * 
  * See http://opensource.atlassian.com/projects/hibernate/browse/HHH-1961
  * or http://opensource.atlassian.com/projects/hibernate/browse/HHH-2315
+ * 
+ * Registers type for timestamps (see http://opensource.atlassian.com/projects/hibernate/browse/HHH-3193)
  *
  * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Stefan Wismer (SWI)
  */
 public class PatchedOracle10gDialect extends Oracle10gDialect {
+	/**
+	 * Is the sql type for timestamps.
+	 */
+	private static final int TIMESTAMP_CODE = -101;
+	
+	/**
+	 * Default constructor.
+	 */
 	public PatchedOracle10gDialect() {
 		super();
 		registerColumnType(Types.DOUBLE, "float(126)");
+		registerHibernateType(TIMESTAMP_CODE, "timestamp");
 	}
 }
