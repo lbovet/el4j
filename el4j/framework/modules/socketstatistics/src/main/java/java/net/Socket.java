@@ -910,11 +910,9 @@ public class Socket {
 		if (linger < 0) {
 		throw new IllegalArgumentException("invalid value for SO_LINGER");
 		}
-			if (linger > 65535) {
-				getImpl().setOption(SocketOptions.SO_LINGER, new Integer(65535));
-			} else {
-				getImpl().setOption(SocketOptions.SO_LINGER, new Integer(linger));
-			}
+			if (linger > 65535)
+				linger = 65535;
+		getImpl().setOption(SocketOptions.SO_LINGER, new Integer(linger));
 	}
 	}
 

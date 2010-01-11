@@ -1,5 +1,8 @@
 #!/bin/bash -e
 
+#   * %box% Switch the working copy back to development branch
+#      * %box% In external =svn switch <nop>https://el4j.svn.sourceforge.net/svnroot/el4j/trunk/el4j=
+#      * %box% In internal =svn switch <nop>https://cvs.elca.ch/subversion/el4j-internal/trunk=
 #   * %box% Update the development version in the framework (e.g. from 1.1.1-SNAPSHOT to 1.1.2-SNAPSHOT)
 #   * %box% Update the version of all modules to a new development version.
 #   * %box% Update the archetype to use the new modules.
@@ -21,14 +24,35 @@ performInternal=$(cat .performInternal)
 performExternal=$(cat .performExternal)
 el4jNext=$(cat .nextVersion)
 
+echo "You are preparing version $el4jNext with the following settings: performExternal=$performExternal, performInternal=$performInternal. OK?"
+read dummy
+
 # make sure you are in right folder
 if ! [ -e external ] ; then
 	echo "Error: Folder 'external' not found. Go to its parent folder (el4j)!"
 	exit
 fi
+echo "I also have to revert all changes. Press Ctrl-C to stop."
 
-echo "You are preparing version $el4jNext with the following settings: performExternal=$performExternal, performInternal=$performInternal. OK?"
-read dummy
+	read dummy
+
+if [ $performExternal == "y" ] ; then
+	cd external
+	echo "Cleaning external..."
+	mvn clean
+	svn revert -R ./
+	svn switch https://el4j.svn.sourceforge.net/svnroot/el4j/trunk/el4j
+fi
+
+if [ $performInternal == "y" ] ; then
+	cd ../internal
+	echo "Cleaning internal..."
+	mvn clean
+	svn revert -R ./
+	svn switch https://cvs.elca.ch/subversion/el4j-internal/trunk
+	cd ..
+fi
+
 
 echo "Enter current (old) el4j version number (without -SNAPSHOT)"
 read el4jCurrent

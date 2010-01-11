@@ -11,7 +11,6 @@
 
 	<groupId>org.slf4j</groupId>
 	<artifactId>slf4j-maven</artifactId>
-	<version>${version.slf4j-maven}</version>
 	<packaging>jar</packaging>
 	<name>SLF4J Maven Binding</name>
 
@@ -25,7 +24,6 @@
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
-			<version>${version.slf4j}</version>
 		</dependency>
 
 		<dependency>
@@ -68,10 +66,4 @@
 			<url>ftp://public-el4.elca-services.ch/htdocs/el4j/maven2repository</url>
 		</repository>
 	</distributionManagement>
-	
-	<properties>
-		<!-- These properties should be updated according to the external root pom.xml configuration  -->
-		<version.slf4j>1.5.8</version.slf4j>
-		<version.slf4j-maven>${version.slf4j}-el4j-1.8-SNAPSHOT</version.slf4j-maven>
-	</properties>
 </project>

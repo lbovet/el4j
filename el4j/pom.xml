@@ -11,7 +11,7 @@
 	<artifactId>el4j</artifactId>
 	<packaging>pom</packaging>
 	<name>EL4J</name>
-	<version>1.8-SNAPSHOT</version>
+	<version>1.7-SNAPSHOT</version>
 	<description>
 		EL4J, the Extension Library for the J2EE, adds incremental improvements
 		to the Spring Java framework (http://www.springframework.org/).
@@ -353,15 +353,16 @@
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-compiler-plugin</artifactId>
 					<!--
-						NEVER set expression ${maven.test.skip} to "true", else test classes will not be compiled!
-						To skip tests in surefire set expression ${skipTest} to "true":
-						See http://maven.apache.org/plugins/maven-surefire-plugin/test-mojo.html#skipTests
+						Due to bugs fix built snapshot version is used.
+							* maven-compiler-plugin (revision 438050 + patch http://jira.codehaus.org/browse/MCOMPILER-35)
 					-->
-					<version>2.1</version>
+					<!--version>2.1-20060908.102132-1</version-->
+					<version>2.1-el4j_20080110_1520</version> <!-- EL4J CUSTOMIZATION -->
 					<configuration>
 						<encoding>${project.build.sourceEncoding}</encoding>
 						<source>${el4j.java.version}</source>
 						<target>${el4j.java.version}</target>
+						<neverSkipCompiling>true</neverSkipCompiling>
 					</configuration>
 				</plugin>
 				<plugin>
@@ -488,7 +489,7 @@
 					swing-demo-standalone-client assembly with 2.2-beta-1 don't run,
 					because of changes in the META-INF directory.
 					-->
-					<version>2.2-beta-5</version>
+					<version>2.1</version>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
@@ -503,14 +504,16 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-deploy-plugin</artifactId>
-					<version>2.5</version>
+					<version>2.4</version>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-release-plugin</artifactId>
 					<version>2.0-beta-9</version>
 					<configuration>
-						<tagBase>https://el4j.svn.sourceforge.net/svnroot/el4j/tags/</tagBase>
+						<tagBase>
+							https://el4j.svn.sourceforge.net/svnroot/el4j/tags/
+						</tagBase>
 					</configuration>
 				</plugin>
 				<plugin>
@@ -641,7 +644,14 @@
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-site-plugin</artifactId>
 					<version>2.0.1</version>
-					<!-- Do not use version 2.1 due to issue http://jira.codehaus.org/browse/MSITE-456 -->
+					<!-- use twiki syntax (usable in 1.1 which requires maven 2.1
+					<dependencies>
+						<dependency>
+							<groupId>org.apache.maven.doxia</groupId>
+							<artifactId>doxia-module-twiki</artifactId>
+							<version>1.0</version>
+						</dependency>
+					</dependencies>-->
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
@@ -696,7 +706,7 @@
 						<tagletArtifact>
 							<groupId>ch.elca.el4j.maven.extensions</groupId>
 							<artifactId>taglet</artifactId>
-							<version>${version.maven-el4j-taglet}</version>
+							<version>1.0</version>
 						</tagletArtifact>
 					</configuration>
 				</plugin>
@@ -933,7 +943,7 @@
 					<tagletArtifact>
 						<groupId>ch.elca.el4j.maven.extensions</groupId>
 						<artifactId>taglet</artifactId>
-						<version>${version.maven-el4j-taglet}</version>
+						<version>1.0</version>
 					</tagletArtifact>
 				</configuration>
 				<inherited>true</inherited>
@@ -2106,7 +2116,7 @@
 				<!-- This module is built by EL4J and is placed in directory "maven/extensions/slf4j-maven"  -->
 				<groupId>org.slf4j</groupId>
 				<artifactId>slf4j-maven</artifactId>
-				<version>${version.slf4j-maven}</version>
+				<version>${version.slf4j}</version>
 			</dependency>
 			
 			<!-- get empty jar instead of commons-logging. Use SLF4J instead! -->
@@ -2482,165 +2492,160 @@
 
 		<!-- Current version of EL4J-Framework. Must be the same as defined in the version-tag above -->
 		<version.el4j-framework.current>
-			1.8-SNAPSHOT
+			1.7-SNAPSHOT
 		</version.el4j-framework.current>
 
 		<!-- EL4J framework plugin version numbers -->
 		<version.maven-repohelper-plugin>
-			1.10-SNAPSHOT
+			1.9-SNAPSHOT
 		</version.maven-repohelper-plugin>
 		<version.maven-manifest-decorator-plugin>
-			1.10-SNAPSHOT
+			1.9-SNAPSHOT
 		</version.maven-manifest-decorator-plugin>
 		<version.maven-checkclipse-helper-plugin>
-			1.10-SNAPSHOT
+			1.9-SNAPSHOT
 		</version.maven-checkclipse-helper-plugin>
 		<version.maven-env-support-plugin>
-			1.10-SNAPSHOT
+			1.9-SNAPSHOT
 		</version.maven-env-support-plugin>
 		<version.maven-encryption-plugin>
-			1.5-SNAPSHOT
+			1.4-SNAPSHOT
 		</version.maven-encryption-plugin>
 		<version.maven-file-collector-plugin>
-			1.10-SNAPSHOT
+			1.9-SNAPSHOT
 		</version.maven-file-collector-plugin>
 		<version.maven-database-plugin>
-			1.11-SNAPSHOT
+			1.10-SNAPSHOT
 		</version.maven-database-plugin>
 		<version.maven-depgraph-plugin>
-			1.10-SNAPSHOT
+			1.9-SNAPSHOT
 		</version.maven-depgraph-plugin>
 		<version.maven-version-plugin>
-			1.10-SNAPSHOT
+			1.9-SNAPSHOT
 		</version.maven-version-plugin>
 		<version.maven-jaxws-plugin>
-			1.7-SNAPSHOT
+			1.6-SNAPSHOT
 		</version.maven-jaxws-plugin>
 		<version.maven-rec-plugin>
-			1.6-SNAPSHOT
+			1.5-SNAPSHOT
 		</version.maven-rec-plugin>
 		<version.maven-abbot-plugin>
-			1.5-SNAPSHOT
+			1.4-SNAPSHOT
 		</version.maven-abbot-plugin>
 		<version.maven-duplicatefinder-plugin>
-			1.5-SNAPSHOT
+			1.4-SNAPSHOT
 		</version.maven-duplicatefinder-plugin>
 		<version.maven-spring-ide-plugin>
-			1.5-SNAPSHOT
+			1.4-SNAPSHOT
 		</version.maven-spring-ide-plugin>
 		<version.maven-eclipse-server-plugin>
-			1.1-SNAPSHOT
+			1.0-SNAPSHOT
 		</version.maven-eclipse-server-plugin>
 		<version.maven-extension-colorlogger>
-			1.5-SNAPSHOT
+			1.4-SNAPSHOT
 		</version.maven-extension-colorlogger>
 		<version.maven-extension-findbugs-checks>
-			1.3-SNAPSHOT
+			1.2-SNAPSHOT
 		</version.maven-extension-findbugs-checks>
 		<version.maven-cobertura-runtime-plugin>
-			1.3-SNAPSHOT
+			1.2-SNAPSHOT
 		</version.maven-cobertura-runtime-plugin>
-		
-		<!-- EL4J maven taglet(s) extension -->
-		<version.maven-el4j-taglet>
-			1.1-SNAPSHOT
-		</version.maven-el4j-taglet>
 		
 		<!-- EL4J framework module version numbers -->
 		<version.module-core>
-			1.15-SNAPSHOT
+			1.14-SNAPSHOT
 		</version.module-core>
 		<version.module-database>
-			1.13-SNAPSHOT
+			1.12-SNAPSHOT
 		</version.module-database>
 		<version.module-env>
-			1.13-SNAPSHOT
+			1.12-SNAPSHOT
 		</version.module-env>
 		<version.module-encryption>
-			1.5-SNAPSHOT
+			1.4-SNAPSHOT
 		</version.module-encryption>
 		<version.module-exception_handling>
-			1.11-SNAPSHOT
+			1.10-SNAPSHOT
 		</version.module-exception_handling>
 		<version.module-hibernate>
-			1.12-SNAPSHOT
+			1.11-SNAPSHOT
 		</version.module-hibernate>
 		<version.module-jmx>
-			1.13-SNAPSHOT
+			1.12-SNAPSHOT
 		</version.module-jmx>
 		<version.module-light_statistics>
-			1.11-SNAPSHOT
+			1.10-SNAPSHOT
 		</version.module-light_statistics>
 		<version.module-detailed_statistics>
-			1.11-SNAPSHOT
+			1.10-SNAPSHOT
 		</version.module-detailed_statistics>
 		<version.module-remoting_core>
-			2.11-SNAPSHOT
+			2.10-SNAPSHOT
 		</version.module-remoting_core>
 		<version.module-remoting_caucho>
-			2.11-SNAPSHOT
+			2.10-SNAPSHOT
 		</version.module-remoting_caucho>
 		<version.module-remoting_soap>
-			2.11-SNAPSHOT
+			2.10-SNAPSHOT
 		</version.module-remoting_soap>
 		<version.module-remoting_xfire>
-			2.11-SNAPSHOT
+			2.10-SNAPSHOT
 		</version.module-remoting_xfire>
 		<version.module-remoting_jaxws>
-			1.7-SNAPSHOT
+			1.6-SNAPSHOT
 		</version.module-remoting_jaxws>
 		<version.module-remoting_ejb>
-			2.11-SNAPSHOT
+			2.10-SNAPSHOT
 		</version.module-remoting_ejb>
 		<version.module-security>
-			1.12-SNAPSHOT
+			1.11-SNAPSHOT
 		</version.module-security>
 		<version.module-swing>
-			1.7-SNAPSHOT
+			1.6-SNAPSHOT
 		</version.module-swing>
 		<version.module-tcp_forwarder>
-			1.10-SNAPSHOT
+			1.9-SNAPSHOT
 		</version.module-tcp_forwarder>
 		<version.module-web>
-			1.14-SNAPSHOT
+			1.13-SNAPSHOT
 		</version.module-web>
 		<version.module-xml_merge>
-			1.10-SNAPSHOT
+			1.9-SNAPSHOT
 		</version.module-xml_merge>
 		<version.module-bshlauncher>
-			1.7-SNAPSHOT
+			1.6-SNAPSHOT
 		</version.module-bshlauncher>
 		<version.module-remoting-tests>
-			1.10-SNAPSHOT
+			1.9-SNAPSHOT
 		</version.module-remoting-tests>
 		<version.module-remoting-jaxws-tests>
-			1.7-SNAPSHOT
+			1.6-SNAPSHOT
 		</version.module-remoting-jaxws-tests>
 		<version.module-tcp_forwarder-tests>
-			1.10-SNAPSHOT
+			1.9-SNAPSHOT
 		</version.module-tcp_forwarder-tests>
 		<version.module-remoting-demos>
-			1.10-SNAPSHOT
+			1.9-SNAPSHOT
 		</version.module-remoting-demos>
 		<version.module-remoting-jaxws-demos>
-			1.5-SNAPSHOT
+			1.4-SNAPSHOT
 		</version.module-remoting-jaxws-demos>
 		<version.application-keyword>
-			2.11-SNAPSHOT
+			2.10-SNAPSHOT
 		</version.application-keyword>
 		<version.application-refdb>
-			2.11-SNAPSHOT
+			2.10-SNAPSHOT
 		</version.application-refdb>
 		<version.module-cobertura-runtime>
-			1.3-SNAPSHOT
+			1.2-SNAPSHOT
 		</version.module-cobertura-runtime>
 		<version.module-socketstatistics>
-			1.1-SNAPSHOT
+			1.0-SNAPSHOT
 		</version.module-socketstatistics>
 		
 		<!-- Maven utils -->
 		<version.maven-utils>
-			1.5-SNAPSHOT
+			1.4-SNAPSHOT
 		</version.maven-utils>
 		
 		<!-- Maven plugins used as dependencies in other plugins -->
@@ -2671,11 +2676,10 @@
 		
 		<!-- SLF4J -->
 		<!--
-			IMPORTANT: Update and copy these properties to "maven/extensions/slf4j-maven/pom.xml", specially the parent pom
+			IMPORTANT: Update version in "maven/extensions/slf4j-maven/pom.xml", specially the parent pom
 			and build and deploy it separately.
 		-->
 		<version.slf4j>1.5.8</version.slf4j>
-		<version.slf4j-maven>${version.slf4j}-el4j-1.8-SNAPSHOT</version.slf4j-maven>
 		
 		<!-- Dependency versions -->
 		<version.derby>10.4.1.3</version.derby>
@@ -2685,12 +2689,12 @@
 		<version.maven-checkstyle-plugin>2.4-el4j_20091020_1500</version.maven-checkstyle-plugin>
 		<version.findbugs-maven-plugin>2.0.1</version.findbugs-maven-plugin>
 		<version.maven-surefire-report-plugin>2.4.3</version.maven-surefire-report-plugin>
-		<version.maven-javadoc-plugin>2.6.1</version.maven-javadoc-plugin>
+		<version.maven-javadoc-plugin>2.5</version.maven-javadoc-plugin>
 		<version.maven-jxr-plugin>2.1</version.maven-jxr-plugin>
 		<version.maven-pmd-plugin>2.4</version.maven-pmd-plugin>
 		<version.taglist-maven-plugin>2.4</version.taglist-maven-plugin>
 		<version.maven-plugin-plugin>2.5.1</version.maven-plugin-plugin>
-		<version.cobertura-maven-plugin>2.3-el4j_20100104_1100</version.cobertura-maven-plugin>
+		<version.cobertura-maven-plugin>2.3-el4j_20090519_1445</version.cobertura-maven-plugin>
 		<version.sonar-maven-plugin>1.8</version.sonar-maven-plugin>
 		<version.clirr-maven-plugin>2.2.2-el4j_20080812_1330</version.clirr-maven-plugin>
 		<version.dashboard-maven-plugin>1.0.0-beta-1-el4j_20090527_0835</version.dashboard-maven-plugin>

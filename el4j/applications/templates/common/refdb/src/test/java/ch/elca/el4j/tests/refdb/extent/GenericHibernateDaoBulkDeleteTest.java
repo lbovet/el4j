@@ -178,7 +178,8 @@ public class GenericHibernateDaoBulkDeleteTest extends AbstractTestCaseBase {
 			DefaultDaoRegistry daoRegistry
 				= (DefaultDaoRegistry) getApplicationContext()
 					.getBean("daoRegistry");
-			brainDao = daoRegistry.getDao(GenericHibernateBrainDaoInterface.class);
+			brainDao = (GenericHibernateBrainDaoInterface) daoRegistry
+				.getFor(Brain.class);
 		}
 		return brainDao;
 	}

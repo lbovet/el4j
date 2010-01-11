@@ -5,22 +5,19 @@
 #      * Remove the =-SNAPSHOT= for modules and plugins that weren't changed. E.g. 1.6-SNAPSHOT -> 1.6
 
 # make sure you are in right folder
-if ! [ -e external ] ; then
-	echo "Error: Folder 'external' not found. Go to its parent folder (el4j)!"
-	exit
-fi
 
 performInternal=$(cat .performInternal)
 performExternal=$(cat .performExternal)
 el4jNext=$(cat .nextVersion)
 
-echo "The script will sometimes ask you if something is correct."
-echo "If it is, press Enter, if it is not, press Ctrl-C."
-echo "Press Enter to continue"
-read dummy
-
 echo "You are preparing version $el4jNext with the following settings: performExternal=$performExternal, performInternal=$performInternal. OK?"
 read dummy
+
+
+if ! [ -e external ] ; then
+	echo "Error: Folder 'external' not found. Go to its parent folder (el4j)!"
+	exit
+fi
 
 echo "Update framework (external and internal)"
 el4jCurrent=$(cat external/pom.xml | grep "<version.el4j-framework.current>" -A 1 | tail -n 1 | tr -d ' \t\r\n' | sed 's/-SNAPSHOT//')
@@ -94,6 +91,7 @@ done
 echo ""
 echo "#############################################################################################"
 echo "#Work is not finished yet! Search in all pom.xml and site.xml files for the String SNAPSHOT.#"
+echo "#It's also a good practice to go through the changes this script made (use svn diff).       #"
 echo "#############################################################################################"
 echo ""
 

@@ -4,15 +4,15 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<!-- Version: $Revision$ -->
-	<!-- URL: $URL$ -->
-	<!-- Date: $Date$ -->
-	<!-- Author: $Author$ -->
+	<!-- Version: $Revision:1422 $ -->
+	<!-- URL: $URL:https://svn.sourceforge.net/svnroot/el4j/trunk/el4j/framework/modules/database/pom.xml $ -->
+	<!-- Date: $Date:2006-10-30 15:18:05 +0000 (Mo, 30 Okt 2006) $ -->
+	<!-- Author: $Author:swisswheel $ -->
 
 	<parent>
 		<groupId>ch.elca.el4j.modules</groupId>
 		<artifactId>module-databases</artifactId>
-		<version>1.8-SNAPSHOT</version>
+		<version>1.7-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>module-database-db2</artifactId>

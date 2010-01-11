@@ -12,12 +12,13 @@
 	<parent>
 		<groupId>ch.elca.el4j.maven</groupId>
 		<artifactId>el4j-maven</artifactId>
-		<version>1.8-SNAPSHOT</version>
+		<version>1.7-SNAPSHOT</version>
 	</parent>
 	
 	<groupId>ch.elca.el4j.maven.extensions</groupId>
 	<artifactId>taglet</artifactId>
-	<version>${version.maven-el4j-taglet}</version>
+	<!-- for building javadocs only, so we need no real versioning -->
+	<version>1.0</version>
 	<packaging>jar</packaging>
 	<name>EL4J @svnLink javadoc taglet</name>
 

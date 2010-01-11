@@ -33,8 +33,7 @@ import javax.xml.soap.SOAPMessage;
 import javax.xml.ws.handler.MessageContext;
 import javax.xml.ws.handler.soap.SOAPMessageContext;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
@@ -51,10 +50,12 @@ import ch.elca.el4j.core.contextpassing.ImplicitContextPassingRegistry;
  * @author Stefan Wismer (SWI)
  */
 public class JaxwsContextHandler extends AbstractJaxwsJaxbContextHandler {
+	
 	/**
-	 * Private logger.
+	 * The logger.
 	 */
-	private static Logger s_logger = LoggerFactory.getLogger(JaxwsContextHandler.class);
+	private static Logger s_logger
+		= Logger.getLogger(JaxwsContextHandler.class);
 	
 	/**
 	 * The registry to get the context from.

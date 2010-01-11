@@ -40,7 +40,7 @@ public class FallbackDaoRegistry extends DefaultDaoRegistry {
 		/* if no dao was found, try to create one automatically! */
 		if (dao == null) {
 			dao = createFor(entityType);
-			m_beanClassDaos.put(entityType, dao);
+			m_daos.put(entityType, dao);
 		}
 		
 		return dao;

@@ -270,6 +270,7 @@ public class RefDBDemoForm extends JPanel implements Bindable {
 					Object item = dlm.getValueAt(index, 0);
 					if (item instanceof ValidatedProperty) {
 						ValidatedProperty p = (ValidatedProperty) item;
+						
 						ReferenceEditorForm editor = new ReferenceEditorForm();
 						editor.setReference((Reference) p.getParent());
 						if (AbstractWrapperFactory
