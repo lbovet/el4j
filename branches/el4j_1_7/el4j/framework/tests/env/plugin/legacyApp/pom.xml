@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<project>
+	<modelVersion>4.0.0</modelVersion>
+	
+	<parent>
+		<groupId>ch.elca.el4j.tests</groupId>
+		<artifactId>plugin-env-tests</artifactId>
+		<version>1.0</version>
+	</parent>
+
+	<groupId>ch.elca.el4j.tests</groupId>
+	<artifactId>legacyApp</artifactId>
+	<packaging>jar</packaging>
+	<name>EL4J test env plugin - Reactor legacyApp</name>
+	<version>1.0</version>
+	
+	<properties>
+		<valueLegacy>legacy</valueLegacy>
+	</properties>
+	
+	<dependencies>
+		<dependency>
+			<groupId>ch.elca.el4j.tests</groupId>
+			<artifactId>C1</artifactId>
+			<version>1.0</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>ch.elca.el4j.tests</groupId>
+			<artifactId>C1</artifactId>
+			<version>1.0</version>
+			<type>test-jar</type>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+</project>

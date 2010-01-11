@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd	
+	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+	http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-2.0.2.xsd">
+
+	<!-- $Revision$ -->
+	<!-- $URL$ -->
+	<!-- $Date$ -->
+	<!-- $Author$ -->
+
+
+	<!-- 
+		Reference to the default authenticationManager that is set up when using the 
+		global-method-security tag, so that other beans can reference to it.
+	 -->
+	<security:authentication-manager alias="authenticationManager"/>
+	
+	
+	<!-- 
+		Makes sure that the $Secured annotations are automatically regarded (sets up all necessary beans).
+		Pointcut in @AspectJ syntax to protect method deleteReference from beeing used by users who aren't superusers.   
+	-->
+	<security:global-method-security secured-annotations="enabled" jsr250-annotations="enabled">
+		<security:protect-pointcut expression="execution(* ch.elca.el4j.apps.refdb.service.ReferenceService.deleteReference(..))" access="ROLE_SUPERUSER"/>
+	</security:global-method-security>
+	
+	
+	<bean id="authenticationProvider"
+		class="org.springframework.security.providers.dao.DaoAuthenticationProvider">
+		<property name="userDetailsService" ref="authenticationDao" />
+		<security:custom-authentication-provider /> 
+	</bean>
+
+	
+	<bean id="authenticationDao"
+		class="org.springframework.security.userdetails.memory.InMemoryDaoImpl">
+		<property name="userMap">
+			<value>
+				el4super=secret,ROLE_NORMALUSER,ROLE_SUPERUSER
+				el4normal=el4j,ROLE_NORMALUSER
+			</value>
+		</property>
+	</bean>
+</beans>
