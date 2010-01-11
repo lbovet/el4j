@@ -28,7 +28,7 @@ if [ $# -eq 1 ] ; then
 	el4jNext=$el4jCurrent-$1
 	auto=true
 else
-	echo "Current version (i.e. the version to be adapted) is probably $el4jCurrent-SNAPSHOT. Please type in the correct number (without -SNAPSHOT, e.g 1.6)."
+	echo "Current version on the branch (i.e. the version to be adapted) seems to be $el4jCurrent-SNAPSHOT. Please type in the correct number (without -SNAPSHOT, e.g 1.6)."
 	read el4jCurrent
 	
 	echo "Replacing '$el4jCurrent-SNAPSHOT' by '$el4jNext', OK?"
