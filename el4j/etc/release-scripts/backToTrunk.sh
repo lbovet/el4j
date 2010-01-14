@@ -6,7 +6,7 @@
 
 #configuration of SVN urls
 ExternalURL="https://el4j.svn.sourceforge.net/svnroot/el4j"
-InternalURL="https://cvs.elca.ch/subversion/el4j-internal"
+InternalURL="https://svn.elca.ch/subversion/el4j-internal"
 
 performInternal=$(cat .performInternal)
 performExternal=$(cat .performExternal)
