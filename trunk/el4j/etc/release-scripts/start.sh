@@ -14,7 +14,7 @@
 
 #configuration of SVN urls
 ExternalURL="https://el4j.svn.sourceforge.net/svnroot/el4j"
-InternalURL="https://cvs.elca.ch/subversion/el4j-internal"
+InternalURL="https://svn.elca.ch/subversion/el4j-internal"
 
 echo "The script will sometimes ask you if something is correct."
 echo "If it is, press Enter, if it is not, press Ctrl-C."
