@@ -107,8 +107,8 @@ public class OrderedPathMatchingResourcePatternResolver extends
 	@SuppressWarnings("unchecked")
 	@Override
 	protected Set doFindPathMatchingFileResources(Resource rootDirResource, String subPattern) throws IOException {
-		Set<FileSystemResource> matchingResources = super.doFindPathMatchingFileResources(rootDirResource, subPattern);
-		List<FileSystemResource> list = new ArrayList<FileSystemResource>(matchingResources);
+		Set<Resource> matchingResources = super.doFindPathMatchingFileResources(rootDirResource, subPattern);
+		List<Resource> list = new ArrayList<Resource>(matchingResources);
 		Collections.sort(list, m_resourceComparator);
 		return new LinkedHashSet<Resource>(list);
 	}

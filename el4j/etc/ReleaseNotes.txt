@@ -1,4 +1,19 @@
 --------------------------------------------------------------------------------
+ Date :   DD.MM.YY
+                            EL4J version  2.0
+--------------------------------------------------------------------------------
+
+ * Core
+   = Upgrade to Spring 3.0.
+     Upadated all namespace definitions to spring-3.0.
+     
+
+ * Security
+   = Upgrade to Spring Security 3.0.
+     Updated all namespace definitions to spring-security-3.0, changed modules
+	 to use the new / modified API and package structure.
+
+--------------------------------------------------------------------------------
  Date :   16.12.09
                             EL4J version  1.7
 --------------------------------------------------------------------------------

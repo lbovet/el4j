@@ -66,6 +66,8 @@ public final class MainStandaloneMDI {
 				"classpath*:scenarios/db/raw/*.xml",
 				"classpath*:scenarios/dataaccess/hibernate/*.xml",
 				"classpath*:scenarios/dataaccess/hibernate/refdb/*.xml",
+				//JHNS3: include trace intercpetor for tests
+				"classpath:etc/templates/interception/Interceptors.xml",
 				"classpath:optional/interception/transactionJava5Annotations.xml",
 				"classpath*:scenarios/gui/swing/*.xml"
 			};

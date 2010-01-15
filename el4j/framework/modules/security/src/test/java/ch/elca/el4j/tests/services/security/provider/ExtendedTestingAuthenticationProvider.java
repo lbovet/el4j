@@ -17,9 +17,9 @@
 
 package ch.elca.el4j.tests.services.security.provider;
 
-import org.springframework.security.Authentication;
-import org.springframework.security.AuthenticationException;
-import org.springframework.security.BadCredentialsException;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 
 import ch.elca.el4j.services.security.encryption.RSACipher;
 

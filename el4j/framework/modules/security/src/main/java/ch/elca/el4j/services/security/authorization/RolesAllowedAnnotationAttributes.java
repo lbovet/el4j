@@ -25,8 +25,9 @@ import java.util.Set;
 
 import javax.annotation.security.RolesAllowed;
 
-import org.springframework.security.SecurityConfig;
-import org.springframework.metadata.Attributes;
+import org.springframework.security.access.SecurityConfig;
+
+import ch.elca.el4j.util.metadata.Attributes;
 
 /**
  *
