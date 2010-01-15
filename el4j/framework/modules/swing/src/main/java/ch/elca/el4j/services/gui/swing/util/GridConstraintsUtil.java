@@ -19,7 +19,8 @@ package ch.elca.el4j.services.gui.swing.util;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Utility to make {@link GridBagConstraints} code nicer.
@@ -32,7 +33,7 @@ public class GridConstraintsUtil {
 
 	/** A logger for debugging purposes. */
 	private static final Logger s_log
-		= Logger.getLogger(GridConstraintsUtil.class);
+		= LoggerFactory.getLogger(GridConstraintsUtil.class);
 	
 	/** The contained GridBagConstraints element. */
 	private GridBagConstraints m_g;

@@ -77,9 +77,11 @@ public class GenericLogFactory {
 		} else if ((ret = fetchlogger("org.apache.commons.logging.LogFactory", "getLog", name)) != null) {
 			logger = new CommonsLoggingLogger(ret);
 			s_loggerMap.put(Thread.currentThread().getContextClassLoader(), logger);
+			//Checkstyle: UseLogger off		
 		} else if ((ret = fetchlogger("org.apache.log4j.Logger", "getLoggger", name)) != null) {
 			logger = new Log4JLogger(ret);
 			s_loggerMap.put(Thread.currentThread().getContextClassLoader(), logger);
+			//Checkstyle: UseLogger on
 		} else {
 			logger = new JDKLogger(name);
 			s_loggerMap.put(Thread.currentThread().getContextClassLoader(), logger);

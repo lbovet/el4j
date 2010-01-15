@@ -16,8 +16,8 @@
  */
 package ch.elca.el4j.util.socketstatistics.genericlogger;
 
-import java.util.logging.Logger;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * The facade to the JDK logger.
