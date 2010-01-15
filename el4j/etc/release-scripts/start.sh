@@ -92,6 +92,7 @@ else
 	#get minor version out of built version
 	minorScore=$(echo $tagScore | sed "s/_[0-9]*$//g")
 	echo "The release seems to be a built version."
+	echo "The last minor / major version was $minorScore."
 	echo "I'm going to checkout the branch el4j_$minorScore for external. Is this ok?"
 	read dummy
 	svn checkout $ExternalURL/branches/el4j_$minorScore/el4j external
@@ -116,7 +117,7 @@ if [ ${performInternal:0:1} == "y" ] ; then
 		#get minor version out of built version
 		minorScore=$(echo $tagScore | sed "s/_[0-9]*$//g")
 		echo "The release seems to be a built version."
-		echo "The last minor / major version was $tagScore."
+		echo "The last minor / major version was $minorScore."
 		echo "I'm going to checkout the branch el4j_$minorScore for internal. Is this ok?"
 		read dummy
 		svn checkout $InternalURL/branches/el4j_$minorScore internal
