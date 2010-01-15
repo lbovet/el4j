@@ -16,7 +16,6 @@
  */
 package ch.elca.el4j.util.socketstatistics.genericlogger;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 /**

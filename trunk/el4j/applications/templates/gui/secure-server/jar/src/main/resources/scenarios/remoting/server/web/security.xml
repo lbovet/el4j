@@ -20,8 +20,9 @@
 		Reference to the default authenticationManager that is set up when using the 
 		global-method-security tag, so that other beans can reference to it.
 	 -->
-	<security:authentication-manager alias="authenticationManager"/>
-	
+	<security:authentication-manager alias="authenticationManager">
+		<security:authentication-provider ref="authenticationProvider"/>
+	</security:authentication-manager>	
 	
 	<!-- 
 		Makes sure that the $Secured annotations are automatically regarded (sets up all necessary beans).
@@ -35,7 +36,6 @@
 	<bean id="authenticationProvider"
 		class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
 		<property name="userDetailsService" ref="authenticationDao" />
-		<security:custom-authentication-provider /> 
 	</bean>
 
 	
