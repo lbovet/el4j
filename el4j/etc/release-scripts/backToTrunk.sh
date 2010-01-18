@@ -12,6 +12,11 @@ performInternal=$(cat .performInternal)
 performExternal=$(cat .performExternal)
 el4jNext=$(cat .nextVersion)
 
+echo "The script will sometimes ask you if something is correct."
+echo "If it is, press Enter, if it is not, press Ctrl-C."
+echo "Press Enter to continue"
+read dummy
+
 # make sure you are in right folder
 if ! [ -e external ] ; then
 	echo "Error: Folder 'external' not found. Go to its parent folder (el4j)!"

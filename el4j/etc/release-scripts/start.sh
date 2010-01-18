@@ -1,6 +1,7 @@
 #!/bin/bash -e
 
 #Create a new branch on svn if the upcoming release will be a major (X.0) or minor (X.Y) version.
+#Check out the corresponding branch of the parent minor version if it will be a built release (X.Y.Z).
 #Create a clean environment to see if a freshly checked out EL4J works. I assume it's =D:/el4jFresh=
 #
 #   * %box% =cd "D:\el4jFresh"=

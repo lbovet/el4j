@@ -101,5 +101,5 @@ echo "Searching for SNAPSHOT:"
 cat pom.files.txt | xargs grep "SNAPSHOT"
 
 echo ""
-echo "Correct these files manually if necessary!"
+echo "Check and correct these files manually if necessary!"
 rm pom.files.txt

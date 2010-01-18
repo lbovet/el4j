@@ -68,4 +68,3 @@ fi
 
 echo "Switched back to branch(es)."
 echo "All versions are back to -SNAPSHOT now."
-echo "Hint: The next step is to do the bugfixes and commit them (to the branch we are now on)."
