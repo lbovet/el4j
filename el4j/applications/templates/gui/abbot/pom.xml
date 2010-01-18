@@ -7,7 +7,7 @@
 	<parent>
 		<groupId>ch.elca.el4j.applications</groupId>
 		<artifactId>el4j-templates-swing-demo</artifactId>
-		<version>1.7-SNAPSHOT</version>
+		<version>1.7.1-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>swing-demo-abbot</artifactId>

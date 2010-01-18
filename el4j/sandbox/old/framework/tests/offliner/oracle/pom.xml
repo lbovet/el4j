@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>ch.elca.el4j.tests</groupId>
 		<artifactId>module-offliner-tests</artifactId>
-		<version>1.7-SNAPSHOT</version>
+		<version>1.7.1-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>module-offliner-tests-oracle</artifactId>
