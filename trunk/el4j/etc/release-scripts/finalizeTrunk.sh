@@ -27,13 +27,26 @@ if ! [ -e external ] ; then
 	exit
 fi
 
+echo "This script will update the version of the trunk to the upcoming major / minor release (X.Y)"
+echo ""
+
 echo "You are preparing version $el4jNext with the following settings: performExternal=$performExternal, performInternal=$performInternal. OK?"
 read dummy
 
 echo "Enter current (old) el4j version number (without -SNAPSHOT)"
 read el4jCurrent
-echo "Enter next el4j snapshot version number (without -SNAPSHOT)"
+echo "Enter next / upcoming el4j snapshot version number for the trunk (without -SNAPSHOT). This is supposed to be a major / minor version (X.Y)."
 read el4jNext
+
+
+#check version
+if [[ "$el4jNext" =~ [0-9]+\.[0-9]+\.[0-9]+ ]] ; then
+	echo "You entered a built version number (X.Y.Z)."
+	echo "This implies that this step must be skipped! (See checklist on EL4J Wiki...)"
+	exit 1;
+else 
+	echo "Entered version numbers seem to be ok"
+fi
 
 el4jCurrent=$el4jCurrent-SNAPSHOT
 el4jNext=$el4jNext-SNAPSHOT
@@ -98,13 +111,3 @@ echo "... and don't forget to restore your maven settings (mv ~/.m2/settings.xml
 rm .nextVersion .performInternal .performExternal
 
 exit
-# not used yet
-
-echo "Press Enter to clean up (restore settings.xml, delete el4jFresh)"
-read dummy
-
-# restore settings
-mv settings.xml.backup ~/.m2/settings.xml
-
-cd d:
-rm -R el4jFresh
