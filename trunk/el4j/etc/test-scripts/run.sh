@@ -77,7 +77,7 @@ case $1 in
 			SVN_INTERNAL=$3
 		else
 			SVN_EXTERNAL=https://el4j.svn.sourceforge.net/svnroot/el4j/trunk/el4j
-			SVN_INTERNAL=https://cvs.elca.ch/subversion/el4j-internal/trunk
+			SVN_INTERNAL=https://svn.elca.ch/subversion/el4j-internal/trunk
 		fi
 		# Checkout the external sourcecode
 		svn co -q $SVN_EXTERNAL external
