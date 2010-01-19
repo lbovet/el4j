@@ -2004,7 +2004,7 @@
 				<scope>test</scope>
 			</dependency>
 
-			<!-- Springframework artifacts -->
+			<!-- Spring artifacts -->
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-core</artifactId>
@@ -2112,7 +2112,7 @@
 			<dependency>
 				<groupId>org.springframework.security</groupId>
 				<artifactId>spring-security-config</artifactId>
-				<version>${version.springsecurity.config}</version>
+				<version>${version.springsecurity}</version>
 				<exclusions>
 					<exclusion>
 						<groupId>commons-logging</groupId>
@@ -2746,11 +2746,7 @@
 		<version.spring>3.0.0.RELEASE</version.spring>
 		
 		<!-- Spring security -->
-		<version.springsecurity>3.0.0.RELEASE</version.springsecurity>
-		<!-- Separate version number for module spring-security-config of the 3.0.0.RELEASE since it had to be patched. --> 
-		<!-- Beans had been registered twice which lead to an error when Spring’s beans-overriding property was set to false. -->
-		<!-- The patch has been integrated to the upcoming 3.0.1 release. https://jira.springsource.org/browse/SEC-1369 -->
-		<version.springsecurity.config>3.0.0.RELEASE-el4j_20100114_1400</version.springsecurity.config>
+		<version.springsecurity>3.0.1.RELEASE</version.springsecurity>
 		
 		<!-- SLF4J -->
 		<!--
