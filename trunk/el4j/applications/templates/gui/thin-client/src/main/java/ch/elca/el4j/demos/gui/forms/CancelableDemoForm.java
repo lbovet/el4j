@@ -23,6 +23,7 @@ import javax.swing.JTextField;
 
 import org.jdesktop.application.Action;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import com.silvermindsoftware.hitch.Binder;
@@ -51,7 +52,7 @@ import net.java.dev.designgridlayout.DesignGridLayout;
  *
  * @author Stefan Wismer (SWI)
  */
-@LazyInit
+@Lazy
 @Component("cancelableDemoForm")
 @Form(autoBind = true)
 public class CancelableDemoForm extends JPanel {

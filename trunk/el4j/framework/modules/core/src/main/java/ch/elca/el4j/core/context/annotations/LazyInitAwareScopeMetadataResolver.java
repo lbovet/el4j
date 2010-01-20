@@ -19,6 +19,7 @@ package ch.elca.el4j.core.context.annotations;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.support.AbstractBeanDefinition;
 import org.springframework.context.annotation.AnnotationScopeMetadataResolver;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.ScopeMetadata;
 
 
@@ -27,11 +28,17 @@ import org.springframework.context.annotation.ScopeMetadata;
  * the bean definition according to that. This is a bit hacky because lazy initialization actually has nothing to do
  * with the scope, but no better extension point could be found in Spring 2.5.5. 
  *
+ * @deprecated As of EL4J version 2.0 (and the update to Spring 3) this AnnitationScopeMetadataResolver should 
+ * be no longer used because the corresponding annotation {@link LazyInit} has deprecated. 
+ * Use the newly added annotation {@link Lazy} of Spring 3 instead of the deprecated LazyInit annotation.
+ *
  * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Stefan Wismer (SWI)
+ * @author Jonas Hauenstein (JHN)
+ * 
  */
-public class LazyInitAwareScopeMetadataResolver extends AnnotationScopeMetadataResolver {
+@Deprecated public class LazyInitAwareScopeMetadataResolver extends AnnotationScopeMetadataResolver {
 
 	/** {@inheritDoc} */
 	public ScopeMetadata resolveScopeMetadata(BeanDefinition definition) {

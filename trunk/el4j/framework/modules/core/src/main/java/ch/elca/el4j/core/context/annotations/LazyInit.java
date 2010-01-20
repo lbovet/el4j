@@ -30,10 +30,14 @@ import org.springframework.stereotype.Component;
 		scope-resolver="ch.elca.el4j.core.context.annotations.LazyInitAwareScopeMetadataResolver" />
 		</code>
  *
- * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * @deprecated As of EL4J version 2.0 (and the update to Spring 3) this annotation should be no longer used.
+ * Use the newly added annotation {@link Lazy} of Spring 3 instead.
  *
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
+ * 
  * @author Stefan Wismer (SWI)
+ * @author Jonas Hauenstein (JHN)
  */
 @Target({ ElementType.TYPE })
 @Retention(RetentionPolicy.RUNTIME)
-public @interface LazyInit { }
+@Deprecated public @interface LazyInit { }

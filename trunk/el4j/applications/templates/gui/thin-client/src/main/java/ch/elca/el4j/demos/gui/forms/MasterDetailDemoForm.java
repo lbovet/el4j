@@ -33,6 +33,7 @@ import org.jdesktop.beansbinding.Bindings;
 import org.jdesktop.beansbinding.Property;
 import org.jdesktop.swingbinding.validation.ValidatedProperty;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import com.silvermindsoftware.hitch.Binder;
@@ -65,7 +66,7 @@ import net.java.dev.designgridlayout.DesignGridLayout;
  *
  * @author Stefan Wismer (SWI)
  */
-@LazyInit
+@Lazy
 @Component("masterDetailDemoForm")
 @Form(autoBind = true)
 public class MasterDetailDemoForm extends JPanel {

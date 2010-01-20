@@ -31,6 +31,7 @@ import javax.swing.JTextArea;
 
 import org.apache.commons.lang.exception.ExceptionUtils;
 import org.jdesktop.application.Action;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import com.silvermindsoftware.hitch.Binder;
@@ -54,7 +55,7 @@ import ch.elca.el4j.services.gui.swing.frames.ApplicationFrameAware;
  *
  * @author Stefan Wismer (SWI)
  */
-@LazyInit
+@Lazy
 @Component("exceptionsForm")
 public class ExceptionsForm extends JPanel implements Bindable, Handler, ApplicationFrameAware {
 	/**
