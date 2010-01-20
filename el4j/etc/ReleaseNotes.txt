@@ -6,6 +6,8 @@
  * Core
    = Upgrade to Spring 3.0.
      Upadated all namespace definitions to spring-3.0.
+	 
+   = The EL4J annotation @LazyInit has been deprecated. Use Spring 3 annotation @Lazy instead.
      
 
  * Security
