@@ -28,6 +28,7 @@ import javax.swing.event.InternalFrameEvent;
 
 import org.bushe.swing.event.annotation.EventSubscriber;
 import org.jdesktop.application.Action;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import ch.elca.el4j.core.context.annotations.LazyInit;
@@ -63,7 +64,7 @@ import cookxml.cookswing.CookSwing;
  *
  * @author Stefan Wismer (SWI)
  */
-@LazyInit
+@Lazy
 @Component("eventBusDemoForm")
 @SuppressWarnings("serial")
 public class EventBusDemoForm extends JPanel implements Bindable, ApplicationFrameAware {

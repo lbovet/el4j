@@ -13,9 +13,7 @@
 	<!-- Allows to register DAOs. Automatically collects all GenericDaos from the application context -->
 	<!--bean id="daoRegistry" class="ch.elca.el4j.services.persistence.generic.dao.impl.DefaultDaoRegistry" /-->
 	
-	<!-- scan for all GUI components (scope-resolver is necessary to take @LazyInit into account -->
-	<context:component-scan base-package="ch.elca.el4j.demos.gui.forms"
-		scope-resolver="ch.elca.el4j.core.context.annotations.LazyInitAwareScopeMetadataResolver" />
+	<context:component-scan base-package="ch.elca.el4j.demos.gui.forms"/>
 	
 	<!-- example how to override default configurations. See ch.elca.el4j.demos.gui.MainFormMDIXML.initialize() -->
 	<bean id="overrideConfig" class="ch.elca.el4j.util.config.GenericConfig" lazy-init="true" scope="prototype">

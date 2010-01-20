@@ -28,6 +28,7 @@ import org.jdesktop.beansbinding.BeanProperty;
 import org.jdesktop.beansbinding.BindingGroup;
 import org.jdesktop.beansbinding.Bindings;
 import org.jdesktop.beansbinding.Property;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import com.silvermindsoftware.hitch.Binder;
@@ -73,7 +74,7 @@ import net.java.dev.designgridlayout.DesignGridLayout;
  *
  * @author Stefan Wismer (SWI)
  */
-@LazyInit
+@Lazy
 @Component("bindingDemoForm")
 @SuppressWarnings("serial")
 @Form(autoBind = true)

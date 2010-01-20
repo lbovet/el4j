@@ -38,6 +38,7 @@ import org.jdesktop.application.ApplicationActionMap;
 import org.jdesktop.application.ResourceMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import ch.elca.el4j.core.context.annotations.LazyInit;
@@ -50,7 +51,7 @@ import ch.elca.el4j.services.gui.swing.GUIApplication;
  *
  * @author Stefan Wismer (SWI)
  */
-@LazyInit
+@Lazy
 @Component("aboutDialog")
 @SuppressWarnings("serial")
 public class AboutDialog extends JDialog {

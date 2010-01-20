@@ -23,6 +23,7 @@ import javax.swing.JTextField;
 
 import org.bushe.swing.event.EventBus;
 import org.jdesktop.application.Action;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import com.silvermindsoftware.hitch.Binder;
@@ -53,7 +54,7 @@ import net.java.dev.designgridlayout.DesignGridLayout;
  *
  * @author Stefan Wismer (SWI)
  */
-@LazyInit
+@Lazy
 @Component("referenceEditorForm")
 @Form(autoBind = true)
 @FindBugsSuppressWarnings(value = {"NP_UNWRITTEN_FIELD", "UWF_NULL_FIELD"}, 

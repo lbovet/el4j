@@ -21,10 +21,10 @@ import java.awt.Dimension;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import ch.elca.el4j.core.context.annotations.LazyInit;
 import ch.elca.el4j.demos.secure.gui.PrivateData;
 import ch.elca.el4j.services.gui.swing.GUIApplication;
 
@@ -35,7 +35,7 @@ import ch.elca.el4j.services.gui.swing.GUIApplication;
  *
  * @author Stefan Wismer (SWI)
  */
-@LazyInit
+@Lazy
 @Scope("prototype")
 @Component("securityDemoForm")
 public class SecurityDemoForm extends JPanel {

@@ -39,6 +39,7 @@ import org.jdesktop.beansbinding.AbstractBindingListener;
 import org.jdesktop.beansbinding.AutoBinding;
 import org.jdesktop.beansbinding.Binding;
 import org.jdesktop.swingbinding.validation.ValidatedProperty;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import ch.elca.el4j.apps.refdb.dom.Book;
@@ -81,7 +82,7 @@ import cookxml.cookswing.CookSwing;
  *
  * @author Stefan Wismer (SWI)
  */
-@LazyInit
+@Lazy
 @Component("refDBDemoForm")
 public class RefDBDemoForm extends JPanel implements Bindable {
 	protected JTextField name;
