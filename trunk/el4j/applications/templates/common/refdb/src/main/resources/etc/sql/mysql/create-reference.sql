@@ -19,7 +19,8 @@ CREATE TABLE referencesTable (
 CREATE TABLE links (
   keyToReference            INTEGER
   	NOT NULL REFERENCES referencesTable(keyId),
-  url                       VARCHAR(500)
+  url                       VARCHAR(500),
+  origin                    VARCHAR(64)
 ) engine = innoDB;
 
 CREATE TABLE formalPublications (

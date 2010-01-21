@@ -70,6 +70,7 @@ public abstract class AbstractCalculatorTest extends AbstractTest {
 		assertEquals("The area is not correctly calculated.", result, a * b, delta);
 	}
 	
+	
 	/**
 	 * This test tests the exception handling.
 	 * @throws Exception
@@ -96,4 +97,5 @@ public abstract class AbstractCalculatorTest extends AbstractTest {
 		assertEquals(-1.3, result, 0.1);
 		//Checkstyle: MagicNumber on
 	}
+
 }

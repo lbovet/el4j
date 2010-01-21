@@ -16,11 +16,16 @@
  */
 package ch.elca.el4j.apps.refdb.dom;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.hibernate.annotations.Parameter;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
+import org.hibernate.annotations.TypeDefs;
 import org.hibernate.search.annotations.Indexed;
 
 /**
@@ -35,11 +40,23 @@ import org.hibernate.search.annotations.Indexed;
 @Indexed
 @Table(name = "LINKS")
 @PrimaryKeyJoinColumn(name = "KEYTOREFERENCE")
+@TypeDefs({
+	@TypeDef(
+		typeClass = ch.elca.el4j.services.persistence.hibernate.usertypes.GenericEnumUserType.class,
+		name = "originType",
+		parameters = { @Parameter(name = "enumClassName", value = "ch.elca.el4j.apps.refdb.dom.LinkOrigin") }
+	)
+})
 public class Link extends Reference {
 	/**
 	 * Contains the url of a web page.
 	 */
 	private String m_url;
+	
+	/**
+	 * Origin of the link.
+	 */
+	private LinkOrigin m_origin;
 	
 	/** See corresponding getter for informations. */
 	private final String m_type = "Link";
@@ -57,6 +74,22 @@ public class Link extends Reference {
 	 */
 	public void setUrl(String url) {
 		this.m_url = url;
+	}
+	
+	/**
+	 * @return Returns the origin of the link.
+	 */
+	@Column(name = "ORIGIN")
+	@Type(type = "originType")	
+	public LinkOrigin getOrigin() {
+		return m_origin;
+	}
+
+	/**
+	 * @param origin The origin of the link.
+	 */
+	public void setOrigin(LinkOrigin origin) {
+		m_origin = origin;
 	}
 
 	/** {@inheritDoc} */
