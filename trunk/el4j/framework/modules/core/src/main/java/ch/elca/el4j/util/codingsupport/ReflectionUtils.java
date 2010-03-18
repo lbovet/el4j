@@ -32,7 +32,11 @@ import org.slf4j.LoggerFactory;
  * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Daniel Thomas (DTH)
+ * @deprecated This class simply throws an InvocationTargetException every time.
+ * It does not serve its purpose and is dangerous as it swallows exceptions!
+ * DO NOT USE!
  */
+@Deprecated
 public final class ReflectionUtils {
 	
 	/**
@@ -59,6 +63,7 @@ public final class ReflectionUtils {
 	 * @param e is the exception that should be thrown.
 	 */
 	public static void throwException(Exception e) {
+		s_logger.error("Deprecated and dangerous call to ReflectionUtils - do not use.");
 		Class<?> reflectionUtils = null;
 		Method thrower = null;
 		
