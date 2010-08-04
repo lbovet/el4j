@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>org.slf4j</groupId>
 		<artifactId>slf4j-parent</artifactId>
-		<version>1.5.8</version>
+		<version>1.6.1</version>
 	</parent>
 
 	<modelVersion>4.0.0</modelVersion>
@@ -71,7 +71,7 @@
 	
 	<properties>
 		<!-- These properties should be updated according to the external root pom.xml configuration  -->
-		<version.slf4j>1.5.8</version.slf4j>
-		<version.slf4j-maven>${version.slf4j}-el4j-1.8-SNAPSHOT</version.slf4j-maven>
+		<version.slf4j>1.6.1</version.slf4j>
+		<version.slf4j-maven>${version.slf4j}-el4j-3.0-SNAPSHOT</version.slf4j-maven>
 	</properties>
 </project>

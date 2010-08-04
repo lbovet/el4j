@@ -12,11 +12,10 @@
 	<parent>
 		<groupId>ch.elca.el4j.modules</groupId>
 		<artifactId>el4j-framework-modules</artifactId>
-		<version>2.0-SNAPSHOT</version>
+		<version>3.0-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>module-hibernate</artifactId>
-	<version>${version.module-hibernate}</version>
 	<packaging>jar</packaging>
 	<name>EL4J module hibernate</name>
 	<description>
@@ -42,7 +41,7 @@
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-core</artifactId>
-			<version>3.3.2.GA</version>
+			<version>3.5.4-Final</version>
 			<exclusions>
 				<!--
 					Exclude dependencies if they were taken from another
@@ -69,28 +68,28 @@
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-annotations</artifactId>
-			<version>3.4.0.GA</version>
+			<version>3.5.4-Final</version>
 		</dependency>
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-validator</artifactId>
 			<version>3.1.0.GA</version>
-		</dependency>
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-commons-annotations</artifactId>
-			<!-- version 3.3.0.ga is a deployment error. Don't use it. -->
-			<version>3.1.0.GA</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.hibernate</groupId>
+					<artifactId>hibernate-commons-annotations</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-search</artifactId>
-			<version>3.1.0.GA</version>
+			<version>3.2.1.Final</version>		
 		</dependency>
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-entitymanager</artifactId>
-			<version>3.4.0.GA</version>
+			<version>3.5.4-Final</version>
 		</dependency>
 		<!-- <dependency>
 			<groupId>org.apache.solr</groupId>
@@ -133,7 +132,7 @@
 		<dependency>
 			<groupId>javassist</groupId>
 			<artifactId>javassist</artifactId>
-			<version>3.8.0.GA</version>
+			<version>3.12.1.GA</version>
 		</dependency>
 		<dependency>
 			<groupId>c3p0</groupId>
@@ -144,39 +143,11 @@
 		<dependency>
 			<groupId>joda-time</groupId>
 			<artifactId>joda-time-hibernate</artifactId>
-			<version>1.1</version>
+			<version>1.2</version>
 			<exclusions>
-				<exclusion>
-					<groupId>antlr</groupId>
-					<artifactId>antlr</artifactId>
-				</exclusion>
 				<exclusion>
 					<groupId>org.hibernate</groupId>
 					<artifactId>hibernate</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>ehcache</groupId>
-					<artifactId>ehcache</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>commons-logging</groupId>
-					<artifactId>commons-logging-api</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>commons-collections</groupId>
-					<artifactId>commons-collections</artifactId>
-				</exclusion>
-				<exclusion>					
-					<groupId>cglib</groupId>
-					<artifactId>cglib-full</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>hsqldb</groupId>
-					<artifactId>hsqldb</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>dom4j</groupId>
-					<artifactId>dom4j</artifactId>
 				</exclusion>
 			</exclusions>
 		</dependency>

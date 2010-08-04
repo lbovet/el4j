@@ -24,7 +24,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.dialect.Dialect;
 import org.hibernate.engine.SessionImplementor;
 import org.hibernate.id.AbstractPostInsertGenerator;
-import org.hibernate.id.IdentifierGeneratorFactory;
+import org.hibernate.id.IdentifierGeneratorHelper;
 import org.hibernate.id.PostInsertIdentityPersister;
 import org.hibernate.id.SequenceIdentityGenerator.NoCommentsInsert;
 import org.hibernate.id.insert.AbstractReturningDelegate;
@@ -107,7 +107,7 @@ public class TriggerAssignedIdentityGenerator extends AbstractPostInsertGenerato
 		 */
 		protected Serializable executeAndExtract(PreparedStatement insert) throws SQLException {
 			insert.executeUpdate();
-			return IdentifierGeneratorFactory.getGeneratedIdentity(
+			return IdentifierGeneratorHelper.getGeneratedIdentity(
 				insert.getGeneratedKeys(),
 				getPersister().getIdentifierType());
 		}

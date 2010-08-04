@@ -14,11 +14,10 @@
 	<parent>
 		<groupId>ch.elca.el4j.modules</groupId>
 		<artifactId>module-web</artifactId>
-		<version>2.0-SNAPSHOT</version>
+		<version>3.0-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>module-web-jar</artifactId>
-	<version>${version.module-web}</version>
 	<packaging>jar</packaging>
 	<name>EL4J module web - jar</name>
 	<description>Jar part of module web of the EL4J framework.</description>
