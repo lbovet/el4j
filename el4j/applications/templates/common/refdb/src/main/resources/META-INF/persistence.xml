@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://java.sun.com/xml/ns/persistence
+      http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd"
+  version="1.0">
+
+    <persistence-unit name="RefdbPersistenceUnit" transaction-type="RESOURCE_LOCAL" >
+    	<class>ch.elca.el4j.apps.refdb.dom.Reference</class>
+    	<class>ch.elca.el4j.apps.refdb.dom.AbstractFile</class>
+    	<class>ch.elca.el4j.apps.refdb.dom.AbstractFormalPublication</class>
+    	<class>ch.elca.el4j.apps.refdb.dom.Annotation</class>
+    	<class>ch.elca.el4j.apps.refdb.dom.Book</class>
+    	<class>ch.elca.el4j.apps.refdb.dom.File</class>
+    	<class>ch.elca.el4j.apps.refdb.dom.FormalPublication</class>
+    	<class>ch.elca.el4j.apps.refdb.dom.Link</class>
+    	<class>ch.elca.el4j.apps.refdb.dom.LinkOrigin</class>
+    	<class>ch.elca.el4j.apps.refdb.dom.Reference</class>
+    	<class>ch.elca.el4j.apps.refdb.dom.WorkElement</class>
+    	
+    	<class>ch.elca.el4j.tests.person.dom.Person</class>
+    	<class>ch.elca.el4j.tests.person.dom.Tooth</class>
+    	<class>ch.elca.el4j.tests.person.dom.Brain</class>
+    	
+    	<class>ch.elca.el4j.apps.keyword.dom.Keyword</class>
+    	
+	</persistence-unit>
+
+</persistence>
