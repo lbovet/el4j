@@ -16,8 +16,11 @@
  */
 package ch.elca.el4j.tests.remoting;
 
+import java.lang.reflect.InvocationTargetException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.remoting.RemoteAccessException;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -76,12 +79,22 @@ public abstract class AbstractCalculatorTest extends AbstractTest {
 	 * @throws Exception
 	 */
 	@Test
-	public void testExceptionBehaviour() {
+	public void testExceptionBehaviour() throws Throwable {
 		try {
 			getCalc().throwMeAnException();
 			fail("No exception was thrown.");
-		} catch (CalculatorException e) {
-			s_logger.debug("Expected exception caught.", e);
+		} catch (Exception e) {
+			if (e.getCause() instanceof InvocationTargetException) {
+				if (((InvocationTargetException) e.getCause()).getTargetException() instanceof CalculatorException) {
+					s_logger.debug("Expected exception caught.", e);
+				} else {
+					throw e;
+				}
+			} else if (e instanceof CalculatorException) {
+				s_logger.debug("Expected exception caught.", e);
+			} else {
+				throw e;
+			}
 		}
 	}
 	

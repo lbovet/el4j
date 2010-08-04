@@ -12,11 +12,10 @@
 	<parent>
 		<groupId>ch.elca.el4j.tests</groupId>
 		<artifactId>env-tests</artifactId>
-		<version>2.0-SNAPSHOT</version>
+		<version>3.0-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>module-env-tests</artifactId>
-	<version>${version.module-env}</version>
 	<packaging>jar</packaging>
 	<name>EL4J test env module</name>
 	<description>

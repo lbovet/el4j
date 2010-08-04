@@ -13,11 +13,10 @@
 	<parent>
 		<groupId>ch.elca.el4j.tests</groupId>
 		<artifactId>el4j-framework-tests-remoting-jaxws</artifactId>
-		<version>2.0-SNAPSHOT</version>
+		<version>3.0-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>module-remoting-jaxws-tests-jar-hibernate</artifactId>
-	<version>${version.module-remoting-jaxws-tests}</version>
 	<packaging>jar</packaging>
 	<name>EL4J test remoting-jaxws jar</name>
 	<description>
@@ -58,7 +57,7 @@
 		<dependency>
 			<groupId>ch.elca.el4j.applications</groupId>
 			<artifactId>refdb</artifactId>
-			<version>${version.application-refdb}</version>
+			<version>${version.el4j-framework.current}</version>
 			<type>test-jar</type>
 		</dependency>
 		<dependency>

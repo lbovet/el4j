@@ -1,6 +1,6 @@
 package org.slf4j.impl;
 
-import org.slf4j.helpers.NOPMakerAdapter;
+import org.slf4j.helpers.NOPMDCAdapter;
 import org.slf4j.spi.MDCAdapter;
 
 /**
@@ -23,10 +23,10 @@ public class StaticMDCBinder {
 	 * Currently this method always returns an instance of {@link StaticMDCBinder}.
 	 */
 	public MDCAdapter getMDCA() {
-		return new NOPMakerAdapter();
+		return new NOPMDCAdapter();
 	}
 
 	public String getMDCAdapterClassStr() {
-		return NOPMakerAdapter.class.getName();
+		return NOPMDCAdapter.class.getName();
 	}
 }

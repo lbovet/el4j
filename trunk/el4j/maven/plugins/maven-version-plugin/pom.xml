@@ -10,12 +10,11 @@
 	<parent>
 		<groupId>ch.elca.el4j.maven.plugins</groupId>
 		<artifactId>el4j-maven-plugins</artifactId>
-		<version>2.0-SNAPSHOT</version>
+		<version>3.0-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>maven-version-plugin</artifactId>
 	<packaging>maven-plugin</packaging>
-	<version>${version.maven-version-plugin}</version>
 	<name>EL4J plugin version</name>
 	<description>A plugin to compare the version of used plugins/packages and the available ones</description>
 	<build>

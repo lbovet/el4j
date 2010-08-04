@@ -12,11 +12,10 @@
 	<parent>
 		<groupId>ch.elca.el4j.tests</groupId>
 		<artifactId>el4j-database-plugin-tests</artifactId>
-		<version>2.0-SNAPSHOT</version>
+		<version>3.0-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>el4j-database-plugin-tests-grandchild</artifactId>
-	<version>${version.maven-database-plugin}</version>
 	<packaging>jar</packaging>
 	<name>EL4J maven-database-plugin test grandchild</name>
 	
@@ -96,7 +95,7 @@
 		<dependency>
 			<groupId>ch.elca.el4j.tests</groupId>
 			<artifactId>el4j-database-plugin-tests-child</artifactId>
-			<version>${version.maven-database-plugin}</version>
+			<version>${version.el4j-framework.current}</version>
 			<type>test-jar</type>
 		</dependency>
 		

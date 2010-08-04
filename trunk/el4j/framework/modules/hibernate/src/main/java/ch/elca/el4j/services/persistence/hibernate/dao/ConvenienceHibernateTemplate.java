@@ -281,6 +281,8 @@ public class ConvenienceHibernateTemplate extends HibernateTemplate {
 			result = 0;
 		}
 		
+		if (result instanceof Long) { result = ((Long) result).intValue(); }
+		
 		return (Integer) result;
 	}
 	

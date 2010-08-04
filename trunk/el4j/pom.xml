@@ -11,7 +11,7 @@
 	<artifactId>el4j</artifactId>
 	<packaging>pom</packaging>
 	<name>EL4J</name>
-	<version>2.0-SNAPSHOT</version>
+	<version>3.0-SNAPSHOT</version>
 	<description>
 		EL4J, the Extension Library for the J2EE, adds incremental improvements
 		to the Spring Java framework (http://www.springframework.org/).
@@ -320,12 +320,12 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-help-plugin</artifactId>
-					<version>2.1</version>
+					<version>2.1.1</version>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-clean-plugin</artifactId>
-					<version>2.3</version>
+					<version>2.4.1</version>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
@@ -335,7 +335,7 @@
 				<plugin>
 					<groupId>ch.elca.el4j.maven.plugins</groupId>
 					<artifactId>maven-env-support-plugin</artifactId>
-					<version>${version.maven-env-support-plugin}</version>
+					<version>${version.el4j-framework.current}</version>
 					<executions>
 						<execution>
 							<goals>
@@ -348,7 +348,7 @@
 				<plugin>
 					<groupId>ch.elca.el4j.maven.plugins</groupId>
 					<artifactId>maven-encryption-plugin</artifactId>
-					<version>${version.maven-encryption-plugin}</version>
+					<version>${version.el4j-framework.current}</version>
 					<executions>
 						<execution>
 							<goals>
@@ -365,7 +365,7 @@
 						To skip tests in surefire set expression ${skipTest} to "true":
 						See http://maven.apache.org/plugins/maven-surefire-plugin/test-mojo.html#skipTests
 					-->
-					<version>2.1</version>
+					<version>2.3.1</version>
 					<configuration>
 						<encoding>${project.build.sourceEncoding}</encoding>
 						<source>${el4j.java.version}</source>
@@ -375,7 +375,7 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-surefire-plugin</artifactId>
-					<version>2.4.3</version>
+					<version>2.5</version>
 					<configuration>
 						<forkMode>never</forkMode>
 						<includes>
@@ -389,7 +389,7 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-antrun-plugin</artifactId>
-					<version>1.3</version>
+					<version>1.4</version>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
@@ -401,7 +401,7 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-jar-plugin</artifactId>
-					<version>2.3</version>
+					<version>2.3.1</version>
 					<configuration>
 						<archive>
 							<manifestSections>
@@ -442,7 +442,7 @@
 				<plugin>
 					<groupId>ch.elca.el4j.maven.plugins</groupId>
 					<artifactId>maven-manifest-decorator-plugin</artifactId>
-					<version>${version.maven-manifest-decorator-plugin}</version>
+					<version>${version.el4j-framework.current}</version>
 					<executions>
 						<execution>
 							<!--
@@ -461,7 +461,7 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-source-plugin</artifactId>
-					<version>2.1.1</version>
+					<version>2.1.2</version>
 					<executions>
 						<execution>
 							<id>createSourceJars</id>
@@ -501,7 +501,7 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-install-plugin</artifactId>
-					<version>2.3</version>
+					<version>2.3.1</version>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
@@ -511,7 +511,7 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-release-plugin</artifactId>
-					<version>2.0-beta-9</version>
+					<version>2.0</version>
 					<configuration>
 						<tagBase>https://el4j.svn.sourceforge.net/svnroot/el4j/tags/</tagBase>
 					</configuration>
@@ -519,7 +519,7 @@
 				<plugin>
 					<groupId>org.codehaus.mojo.webstart</groupId>
 					<artifactId>webstart-maven-plugin</artifactId>
-					<version>1.0-alpha-2</version>
+					<version>1.0-beta-1</version>
 				</plugin>
 				
 				<!-- Deployment -->
@@ -532,7 +532,7 @@
 								+ patch http://jira.codehaus.org/browse/CARGO-411
 								without patch http://jira.codehaus.org/browse/CARGO-412)
 					-->
-					<version>1.0-el4j_20090202_1150</version> <!-- EL4J CUSTOMIZATION -->
+					<version>1.0.2</version>
 					<configuration>
 						<configuration>
 							<properties>
@@ -549,13 +549,7 @@
 				<plugin>
 					<groupId>org.codehaus.mojo</groupId>
 					<artifactId>exec-maven-plugin</artifactId>
-					<!--
-						Due to bugs fix built snapshot version is used.
-							* exec-maven-plugin (revision 2586
-								+ patch http://jira.codehaus.org/browse/MEXEC-11)
-					<version>1.0.3-20061204.110918-2</version>
-			-->
-					<version>1.1.1</version>
+					<version>1.2</version>
 					<configuration>
 						<classpathScope>test</classpathScope>
 					</configuration>
@@ -565,7 +559,7 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-eclipse-plugin</artifactId>
-					<version>2.7</version>
+					<version>2.8</version>
 					
 					<configuration>
 						<additionalProjectnatures>
@@ -601,7 +595,7 @@
 				<plugin>
 					<groupId>ch.elca.el4j.maven.plugins</groupId>
 					<artifactId>maven-checkclipse-helper-plugin</artifactId>
-					<version>${version.maven-checkclipse-helper-plugin}</version>
+					<version>${version.el4j-framework.current}</version>
 					<configuration>
 						<checkstyleFile>${checkstyle.config.location}</checkstyleFile>
 					</configuration>
@@ -619,7 +613,7 @@
 				<plugin>
 					<groupId>ch.elca.el4j.maven.plugins</groupId>
 					<artifactId>maven-spring-ide-plugin</artifactId>
-					<version>${version.maven-spring-ide-plugin}</version>
+					<version>${version.el4j-framework.current}</version>
 					<executions>						
 						<execution>
 							<id>createSpringIDEFile</id>
@@ -633,7 +627,7 @@
 				<plugin>
 					<groupId>ch.elca.el4j.maven.plugins</groupId>
 					<artifactId>maven-eclipse-server-plugin</artifactId>
-					<version>${version.maven-eclipse-server-plugin}</version>
+					<version>${version.el4j-framework.current</version>
 					<configuration>
 						<workspace>${eclipse.workspace}</workspace>
 					</configuration>
@@ -643,8 +637,9 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-site-plugin</artifactId>
-					<version>2.0.1</version>
-					<!-- Do not use version 2.1 due to issue http://jira.codehaus.org/browse/MSITE-456 -->
+					<version>2.1.1</version>
+					<!-- The issue http://jira.codehaus.org/browse/MSITE-456 has been fixed in 2.1.1 -->
+					<!-- but there is a similar issue http://jira.codehaus.org/browse/MSITE-486 --> 
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
@@ -699,7 +694,7 @@
 						<tagletArtifact>
 							<groupId>ch.elca.el4j.maven.extensions</groupId>
 							<artifactId>taglet</artifactId>
-							<version>${version.maven-el4j-taglet}</version>
+							<version>${version.el4j-framework.current}</version>
 						</tagletArtifact>
 					</configuration>
 				</plugin>
@@ -814,37 +809,37 @@
 				<plugin>
 					<groupId>ch.elca.el4j.maven.plugins</groupId>
 					<artifactId>maven-abbot-plugin</artifactId>
-					<version>${version.maven-abbot-plugin}</version>
+					<version>${version.el4j-framework.current}</version>
 				</plugin>
 				<plugin>
 					<groupId>ch.elca.el4j.maven.plugins</groupId>
 					<artifactId>maven-repohelper-plugin</artifactId>
-					<version>${version.maven-repohelper-plugin}</version>
+					<version>${version.el4j-framework.current}</version>
 				</plugin>
 				<plugin>
 					<groupId>ch.elca.el4j.maven.plugins</groupId>
 					<artifactId>maven-file-collector-plugin</artifactId>
-					<version>${version.maven-file-collector-plugin}</version>
+					<version>${version.el4j-framework.current}</version>
 				</plugin>
 				<plugin>
 					<groupId>ch.elca.el4j.maven.plugins</groupId>
 					<artifactId>maven-database-plugin</artifactId>
-					<version>${version.maven-database-plugin}</version>
+					<version>${version.el4j-framework.current}</version>
 				</plugin>
 				<plugin>
 					<groupId>ch.elca.el4j.maven.plugins</groupId>
 					<artifactId>maven-depgraph-plugin</artifactId>
-					<version>${version.maven-depgraph-plugin}</version>
+					<version>${version.el4j-framework.current}</version>
 				</plugin>
 				<plugin>
 					<groupId>ch.elca.el4j.maven.plugins</groupId>
 					<artifactId>maven-jaxws-plugin</artifactId>
-					<version>${version.maven-jaxws-plugin}</version>
+					<version>${version.el4j-framework.current}</version>
 				</plugin>
 				<plugin>
 					<groupId>ch.elca.el4j.maven.plugins</groupId>
 					<artifactId>maven-rec-plugin</artifactId>
-					<version>${version.maven-rec-plugin}</version>
+					<version>${version.el4j-framework.current}</version>
 				</plugin>
 				<plugin>
 					<groupId>org.codehaus.mojo</groupId>
@@ -859,7 +854,7 @@
 				<plugin>
 					<groupId>ch.elca.el4j.maven.plugins</groupId>
 					<artifactId>maven-cobertura-runtime-plugin</artifactId>
-					<version>${version.maven-cobertura-runtime-plugin}</version>
+					<version>${version.el4j-framework.current}</version>
 					<executions>
 						<execution>
 							<id>cobertura-runtime_instrument-and-collectsources</id>
@@ -1407,7 +1402,7 @@
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-surefire-plugin</artifactId>
-						<version>2.4.3</version>
+						<version>2.5</version>
 						<configuration>
 							<forkMode>once</forkMode>
 							<includes>
@@ -1509,6 +1504,17 @@
 			<name>JBoss maven2 repository</name>
 			<url>http://repository.jboss.org/maven2</url>
 		</repository>
+		<repository>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<id>jboss new</id>
+			<name>JBoss nexus repository</name>
+			<url>https://repository.jboss.org/nexus/content/groups/public</url>
+		</repository>
 		
 		<!--
 			The internal leaffy respository is listed here for convenience.
@@ -1562,13 +1568,13 @@
 			<dependency>
 				<groupId>ch.elca.el4j.modules</groupId>
 				<artifactId>module-core</artifactId>
-				<version>${version.module-core}</version>
+				<version>${version.el4j-framework.current}</version>
 				<type>jar</type>
 			</dependency>
 			<dependency>
 				<groupId>ch.elca.el4j.modules</groupId>
 				<artifactId>module-core</artifactId>
-				<version>${version.module-core}</version>
+				<version>${version.el4j-framework.current}</version>
 				<type>test-jar</type>
 				<scope>test</scope>
 			</dependency>
@@ -1577,43 +1583,43 @@
 			<dependency>
 				<groupId>ch.elca.el4j.modules</groupId>
 				<artifactId>module-database</artifactId>
-				<version>${version.module-database}</version>
+				<version>${version.el4j-framework.current}</version>
 				<type>jar</type>
 			</dependency>
 			<dependency>
 				<groupId>ch.elca.el4j.modules</groupId>
 				<artifactId>module-database-common</artifactId>
-				<version>${version.module-database}</version>
+				<version>${version.el4j-framework.current}</version>
 				<type>jar</type>
 			</dependency>
 			<dependency>
 				<groupId>ch.elca.el4j.modules</groupId>
 				<artifactId>module-database-db2</artifactId>
-				<version>${version.module-database}</version>
+				<version>${version.el4j-framework.current}</version>
 				<type>jar</type>
 			</dependency>
 			<dependency>
 				<groupId>ch.elca.el4j.modules</groupId>
 				<artifactId>module-database-h2</artifactId>
-				<version>${version.module-database}</version>
+				<version>${version.el4j-framework.current}</version>
 				<type>jar</type>
 			</dependency>
 			<dependency>
 				<groupId>ch.elca.el4j.modules</groupId>
 				<artifactId>module-database-jamon</artifactId>
-				<version>${version.module-database}</version>
+				<version>${version.el4j-framework.current}</version>
 				<type>jar</type>
 			</dependency>
 			<dependency>
 				<groupId>ch.elca.el4j.modules</groupId>
 				<artifactId>module-database-mysql</artifactId>
-				<version>${version.module-database}</version>
+				<version>${version.el4j-framework.current}</version>
 				<type>jar</type>
 			</dependency>
 			<dependency>
 				<groupId>ch.elca.el4j.modules</groupId>
 				<artifactId>module-database-oracle</artifactId>
-				<version>${version.module-database}</version>
+				<version>${version.el4j-framework.current}</version>
 				<type>jar</type>
 			</dependency>
 			
@@ -1621,13 +1627,13 @@
 			<dependency>
 				<groupId>ch.elca.el4j.modules</groupId>
 				<artifactId>module-env</artifactId>
-				<version>${version.module-env}</version>
+				<version>${version.el4j-framework.current}</version>
 				<type>jar</type>
 			</dependency>
 			<dependency>
 				<groupId>ch.elca.el4j.modules</groupId>
 				<artifactId>module-env-tests</artifactId>
-				<version>${version.module-env}</version>
+				<version>${version.el4j-framework.current}</version>
 				<type>test-jar</type>
 				<scope>test</scope>
 			</dependency>
@@ -1636,13 +1642,13 @@
 			<dependency>
 				<groupId>ch.elca.el4j.modules</groupId>
 				<artifactId>module-exception_handling</artifactId>
-				<version>${version.module-exception_handling}</version>
+				<version>${version.el4j-framework.current}</version>
 				<type>jar</type>
 			</dependency>
 			<dependency>
 				<groupId>ch.elca.el4j.modules</groupId>
 				<artifactId>module-exception_handling</artifactId>
-				<version>${version.module-exception_handling}</version>
+				<version>${version.el4j-framework.current}</version>
 				<type>test-jar</type>
 				<scope>test</scope>
 			</dependency>
@@ -1651,13 +1657,13 @@
 			<dependency>
 				<groupId>ch.elca.el4j.modules</groupId>
 				<artifactId>module-hibernate</artifactId>
-				<version>${version.module-hibernate}</version>
+				<version>${version.el4j-framework.current}</version>
 				<type>jar</type>
 			</dependency>
 			<dependency>
 				<groupId>ch.elca.el4j.modules</groupId>
 				<artifactId>module-hibernate</artifactId>
-				<version>${version.module-hibernate}</version>
+				<version>${version.el4j-framework.current}</version>
 				<type>test-jar</type>
 				<scope>test</scope>
 			</dependency>
@@ -1666,13 +1672,13 @@
 			<dependency>
 				<groupId>ch.elca.el4j.modules</groupId>
 				<artifactId>module-jmx</artifactId>
-				<version>${version.module-jmx}</version>
+				<version>${version.el4j-framework.current}</version>
 				<type>jar</type>
 			</dependency>
 			<dependency>
 				<groupId>ch.elca.el4j.modules</groupId>
 				<artifactId>module-jmx</artifactId>
-				<version>${version.module-jmx}</version>
+				<version>${version.el4j-framework.current}</version>
 				<type>test-jar</type>
 				<scope>test</scope>
 			</dependency>
@@ -1681,20 +1687,20 @@
 			<dependency>
 				<groupId>ch.elca.el4j.modules</groupId>
 				<artifactId>module-light_statistics-jmx</artifactId>
-				<version>${version.module-light_statistics}</version>
+				<version>${version.el4j-framework.current}</version>
 				<type>jar</type>
 			</dependency>
 			<dependency>
 				<groupId>ch.elca.el4j.modules</groupId>
 				<artifactId>module-light_statistics-jmx</artifactId>
-				<version>${version.module-light_statistics}</version>
+				<version>${version.el4j-framework.current}</version>
 				<type>test-jar</type>
 				<scope>test</scope>
 			</dependency>
 			<dependency>
 				<groupId>ch.elca.el4j.modules</groupId>
 				<artifactId>module-light_statistics-web</artifactId>
-				<version>${version.module-light_statistics}</version>
+				<version>${version.el4j-framework.current}</version>
 				<type>war</type>
 				<scope>runtime</scope>
 			</dependency>
@@ -1703,13 +1709,13 @@
 			<dependency>
 				<groupId>ch.elca.el4j.modules</groupId>
 				<artifactId>module-detailed_statistics-jmx</artifactId>
-				<version>${version.module-detailed_statistics}</version>
+				<version>${version.el4j-framework.current}</version>
 				<type>jar</type>
 			</dependency>
 			<dependency>
 				<groupId>ch.elca.el4j.modules</groupId>
 				<artifactId>module-detailed_statistics-jmx</artifactId>
-				<version>${version.module-detailed_statistics}</version>
+				<version>${version.el4j-framework.current}</version>
 				<type>test-jar</type>
 				<scope>test</scope>
 			</dependency>
@@ -1718,13 +1724,13 @@
 			<dependency>
 				<groupId>ch.elca.el4j.modules</groupId>
 				<artifactId>module-remoting_core</artifactId>
-				<version>${version.module-remoting_core}</version>
+				<version>${version.el4j-framework.current}</version>
 				<type>jar</type>
 			</dependency>
 			<dependency>
 				<groupId>ch.elca.el4j.modules</groupId>
 				<artifactId>module-remoting_core</artifactId>
-				<version>${version.module-remoting_core}</version>
+				<version>${version.el4j-framework.current}</version>
 				<type>test-jar</type>
 				<scope>test</scope>
 			</dependency>
@@ -1733,13 +1739,13 @@
 			<dependency>
 				<groupId>ch.elca.el4j.modules</groupId>
 				<artifactId>module-remoting_caucho</artifactId>
-				<version>${version.module-remoting_caucho}</version>
+				<version>${version.el4j-framework.current}</version>
 				<type>jar</type>
 			</dependency>
 			<dependency>
 				<groupId>ch.elca.el4j.modules</groupId>
 				<artifactId>module-remoting_caucho</artifactId>
-				<version>${version.module-remoting_caucho}</version>
+				<version>${version.el4j-framework.current}</version>
 				<type>test-jar</type>
 				<scope>test</scope>
 			</dependency>
@@ -1748,13 +1754,13 @@
 			<dependency>
 				<groupId>ch.elca.el4j.modules</groupId>
 				<artifactId>module-remoting_jaxws</artifactId>
-				<version>${version.module-remoting_jaxws}</version>
+				<version>${version.el4j-framework.current}</version>
 				<type>jar</type>
 			</dependency>
 			<dependency>
 				<groupId>ch.elca.el4j.modules</groupId>
 				<artifactId>module-remoting_jaxws</artifactId>
-				<version>${version.module-remoting_jaxws}</version>
+				<version>${version.el4j-framework.current}</version>
 				<type>test-jar</type>
 				<scope>test</scope>
 			</dependency>
@@ -1763,13 +1769,13 @@
 			<!--dependency>
 				<groupId>ch.elca.el4j.modules</groupId>
 				<artifactId>module-remoting_ejb</artifactId>
-				<version>${version.module-remoting_ejb}</version>
+				<version>${version.el4j-framework.current}</version>
 				<type>jar</type>
 			</dependency>
 			<dependency>
 				<groupId>ch.elca.el4j.modules</groupId>
 				<artifactId>module-remoting_ejb</artifactId>
-				<version>${version.module-remoting_ejb}</version>
+				<version>${version.el4j-framework.current}</version>
 				<type>test-jar</type>
 				<scope>test</scope>
 			</dependency-->
@@ -1778,13 +1784,13 @@
 			<dependency>
 				<groupId>ch.elca.el4j.modules</groupId>
 				<artifactId>module-security</artifactId>
-				<version>${version.module-security}</version>
+				<version>${version.el4j-framework.current}</version>
 				<type>jar</type>
 			</dependency>
 			<dependency>
 				<groupId>ch.elca.el4j.modules</groupId>
 				<artifactId>module-security</artifactId>
-				<version>${version.module-security}</version>
+				<version>${version.el4j-framework.current}</version>
 				<type>test-jar</type>
 				<scope>test</scope>
 			</dependency>
@@ -1793,13 +1799,13 @@
 			<dependency>
 				<groupId>ch.elca.el4j.modules</groupId>
 				<artifactId>module-swing</artifactId>
-				<version>${version.module-swing}</version>
+				<version>${version.el4j-framework.current}</version>
 				<type>jar</type>
 			</dependency>
 			<dependency>
 				<groupId>ch.elca.el4j.modules</groupId>
 				<artifactId>module-swing</artifactId>
-				<version>${version.module-swing}</version>
+				<version>${version.el4j-framework.current}</version>
 				<type>test-jar</type>
 				<scope>test</scope>
 			</dependency>
@@ -1808,13 +1814,13 @@
 			<dependency>
 				<groupId>ch.elca.el4j.modules</groupId>
 				<artifactId>module-tcp_forwarder</artifactId>
-				<version>${version.module-tcp_forwarder}</version>
+				<version>${version.el4j-framework.current}</version>
 				<type>jar</type>
 			</dependency>
 			<dependency>
 				<groupId>ch.elca.el4j.modules</groupId>
 				<artifactId>module-tcp_forwarder</artifactId>
-				<version>${version.module-tcp_forwarder}</version>
+				<version>${version.el4j-framework.current}</version>
 				<type>test-jar</type>
 				<scope>test</scope>
 			</dependency>
@@ -1823,20 +1829,20 @@
 			<dependency>
 				<groupId>ch.elca.el4j.modules</groupId>
 				<artifactId>module-web-jar</artifactId>
-				<version>${version.module-web}</version>
+				<version>${version.el4j-framework.current}</version>
 				<type>jar</type>
 			</dependency>
 			<dependency>
 				<groupId>ch.elca.el4j.modules</groupId>
 				<artifactId>module-web-jar</artifactId>
-				<version>${version.module-web}</version>
+				<version>${version.el4j-framework.current}</version>
 				<type>test-jar</type>
 				<scope>test</scope>
 			</dependency>
 			<dependency>
 				<groupId>ch.elca.el4j.modules</groupId>
 				<artifactId>module-web-war</artifactId>
-				<version>${version.module-web}</version>
+				<version>${version.el4j-framework.current}</version>
 				<type>war</type>
 				<scope>runtime</scope>
 			</dependency>
@@ -1845,33 +1851,33 @@
 			<dependency>
 				<groupId>ch.elca.el4j.modules</groupId>
 				<artifactId>module-xml_merge-console</artifactId>
-				<version>${version.module-xml_merge}</version>
+				<version>${version.el4j-framework.current}</version>
 				<type>jar</type>
 			</dependency>
 			<dependency>
 				<groupId>ch.elca.el4j.modules</groupId>
 				<artifactId>module-xml_merge-console</artifactId>
-				<version>${version.module-xml_merge}</version>
+				<version>${version.el4j-framework.current}</version>
 				<type>test-jar</type>
 				<scope>test</scope>
 			</dependency>
 			<dependency>
 				<groupId>ch.elca.el4j.modules</groupId>
 				<artifactId>module-xml_merge-web-jar</artifactId>
-				<version>${version.module-xml_merge}</version>
+				<version>${version.el4j-framework.current}</version>
 				<type>jar</type>
 			</dependency>
 			<dependency>
 				<groupId>ch.elca.el4j.modules</groupId>
 				<artifactId>module-xml_merge-web-jar</artifactId>
-				<version>${version.module-xml_merge}</version>
+				<version>${version.el4j-framework.current}</version>
 				<type>test-jar</type>
 				<scope>test</scope>
 			</dependency>
 			<dependency>
 				<groupId>ch.elca.el4j.modules</groupId>
 				<artifactId>module-xml_merge-web-war</artifactId>
-				<version>${version.module-xml_merge}</version>
+				<version>${version.el4j-framework.current}</version>
 				<type>war</type>
 				<scope>runtime</scope>
 			</dependency>
@@ -1880,13 +1886,13 @@
 			<dependency>
 				<groupId>ch.elca.el4j.modules</groupId>
 				<artifactId>module-bshlauncher</artifactId>
-				<version>${version.module-bshlauncher}</version>
+				<version>${version.el4j-framework.current}</version>
 				<type>jar</type>
 			</dependency>
 			<dependency>
 				<groupId>ch.elca.el4j.modules</groupId>
 				<artifactId>module-bshlauncher</artifactId>
-				<version>${version.module-bshlauncher}</version>
+				<version>${version.el4j-framework.current}</version>
 				<type>test-jar</type>
 				<scope>test</scope>
 			</dependency>
@@ -1895,13 +1901,13 @@
 			<dependency>
 				<groupId>ch.elca.el4j.modules</groupId>
 				<artifactId>module-cobertura-runtime</artifactId>
-				<version>${version.module-cobertura-runtime}</version>
+				<version>${version.el4j-framework.current}</version>
 				<type>jar</type>
 			</dependency>
 			<dependency>
 				<groupId>ch.elca.el4j.modules</groupId>
 				<artifactId>module-cobertura-runtime</artifactId>
-				<version>${version.module-cobertura-runtime}</version>
+				<version>${version.el4j-framework.current}</version>
 				<type>test-jar</type>
 				<scope>test</scope>
 			</dependency>
@@ -1910,7 +1916,7 @@
 			<dependency>
 				<groupId>ch.elca.el4j.modules</groupId>
 				<artifactId>module-socketstatistics</artifactId>
-				<version>${version.module-socketstatistics}</version>
+				<version>${version.el4j-framework.current}</version>
 				<type>jar</type>
 			</dependency>
 
@@ -1922,7 +1928,7 @@
 			<dependency>
 				<groupId>ch.elca.el4j.applications</groupId>
 				<artifactId>keyword</artifactId>
-				<version>${version.application-keyword}</version>
+				<version>${version.el4j-framework.current}</version>
 				<type>jar</type>
 			</dependency>
 
@@ -1930,7 +1936,7 @@
 			<dependency>
 				<groupId>ch.elca.el4j.applications</groupId>
 				<artifactId>refdb</artifactId>
-				<version>${version.application-refdb}</version>
+				<version>${version.el4j-framework.current}</version>
 				<type>jar</type>
 			</dependency>
 
@@ -1938,43 +1944,43 @@
 			<dependency>
 				<groupId>ch.elca.el4j.applications</groupId>
 				<artifactId>swing-demo-common</artifactId>
-				<version>${version.application-refdb}</version>
+				<version>${version.el4j-framework.current}</version>
 				<type>jar</type>
 			</dependency>
 			<dependency>
 				<groupId>ch.elca.el4j.applications</groupId>
 				<artifactId>swing-demo-server-jar</artifactId>
-				<version>${version.application-refdb}</version>
+				<version>${version.el4j-framework.current}</version>
 				<type>jar</type>
 			</dependency>
 			<dependency>
 				<groupId>ch.elca.el4j.applications</groupId>
 				<artifactId>swing-demo-server-war</artifactId>
-				<version>${version.application-refdb}</version>
+				<version>${version.el4j-framework.current}</version>
 				<type>war</type>
 			</dependency>
 			<dependency>
 				<groupId>ch.elca.el4j.applications</groupId>
 				<artifactId>swing-demo-thin-client</artifactId>
-				<version>${version.application-refdb}</version>
+				<version>${version.el4j-framework.current}</version>
 				<type>jar</type>
 			</dependency>
 			<dependency>
 				<groupId>ch.elca.el4j.applications</groupId>
 				<artifactId>swing-demo-standalone-client</artifactId>
-				<version>${version.application-refdb}</version>
+				<version>${version.el4j-framework.current}</version>
 				<type>jar</type>
 			</dependency>
 			<dependency>
 				<groupId>ch.elca.el4j.applications</groupId>
 				<artifactId>swing-demo-secure-server-jar</artifactId>
-				<version>${version.application-refdb}</version>
+				<version>${version.el4j-framework.current}</version>
 				<type>jar</type>
 			</dependency>
 			<dependency>
 				<groupId>ch.elca.el4j.applications</groupId>
 				<artifactId>swing-demo-secure-thin-client</artifactId>
-				<version>${version.application-refdb}</version>
+				<version>${version.el4j-framework.current}</version>
 				<type>jar</type>
 			</dependency>
 
@@ -1987,28 +1993,28 @@
 			<dependency>
 				<groupId>junit</groupId>
 				<artifactId>junit</artifactId>
-				<version>4.4</version>
+				<version>4.8.1</version>
 				<scope>test</scope>
 			</dependency>
 			<dependency>
 				<groupId>org.testng</groupId>
 				<artifactId>testng</artifactId>
-				<version>5.8</version>
+				<version>5.12.1</version>
 				<scope>test</scope>
-				<classifier>jdk15</classifier>
+<!--				<classifier>jdk15</classifier>-->
 			</dependency>
 			
 			<!-- Easymock -->
 			<dependency>
 				<groupId>org.easymock</groupId>
 				<artifactId>easymock</artifactId>
-				<version>2.4</version>
+				<version>3.0</version>
 				<scope>test</scope>
 			</dependency>
 			<dependency>
 				<groupId>org.easymock</groupId>
 				<artifactId>easymockclassextension</artifactId>
-				<version>2.4</version>
+				<version>3.0</version>
 				<scope>test</scope>
 			</dependency>
 
@@ -2153,7 +2159,7 @@
 			<dependency>
 				<groupId>log4j</groupId>
 				<artifactId>log4j</artifactId>
-				<version>1.2.15</version>
+				<version>1.2.16</version>
 				<exclusions>
 					<exclusion>
 						<groupId>javax.mail</groupId>
@@ -2204,7 +2210,7 @@
 			<dependency>
 				<groupId>org.apache.ant</groupId>
 				<artifactId>ant</artifactId>
-				<version>1.7.0</version>
+				<version>1.8.1</version>
 			</dependency>
 			<dependency>
 				<groupId>org.apache.derby</groupId>
@@ -2232,12 +2238,12 @@
 			<dependency>
 				<groupId>commons-beanutils</groupId>
 				<artifactId>commons-beanutils</artifactId>
-				<version>1.8.0</version>
+				<version>1.8.3</version>
 			</dependency>
 			<dependency>
 				<groupId>commons-codec</groupId>
 				<artifactId>commons-codec</artifactId>
-				<version>1.3</version>
+				<version>1.4</version>
 			</dependency>
 			<dependency>
 				<groupId>commons-collections</groupId>
@@ -2277,7 +2283,7 @@
 			<dependency>
 				<groupId>commons-lang</groupId>
 				<artifactId>commons-lang</artifactId>
-				<version>2.4</version>
+				<version>2.5</version>
 			</dependency>
 			<dependency>
 				<groupId>commons-pool</groupId>
@@ -2294,7 +2300,7 @@
 			<dependency>
 				<groupId>com.google.collections</groupId>
 				<artifactId>google-collections</artifactId>
-				<version>1.0-rc4</version>
+				<version>1.0</version>
 			</dependency>
 
 			<!-- SourceForge projects -->
@@ -2311,7 +2317,7 @@
 			<dependency>
 				<groupId>net.sourceforge.htmlunit</groupId>
 				<artifactId>htmlunit</artifactId>
-				<version>2.4</version>
+				<version>2.7</version>
 				<exclusions>
 					<exclusion>
 						<groupId>commons-logging</groupId>
@@ -2464,7 +2470,7 @@
 			<dependency>
 				<groupId>org.codehaus.plexus</groupId>
 				<artifactId>plexus-utils</artifactId>
-				<version>1.5.15</version>
+				<version>2.0.5</version>
 			</dependency>
 			<dependency>
 				<groupId>org.sonatype.plexus</groupId>
@@ -2566,170 +2572,172 @@
 
 		<!-- Current version of EL4J-Framework. Must be the same as defined in the version-tag above -->
 		<version.el4j-framework.current>
-			2.0-SNAPSHOT
+			3.0-SNAPSHOT
 		</version.el4j-framework.current>
-
-		<!-- EL4J framework plugin version numbers -->
-		<version.maven-repohelper-plugin>
-			2.0-SNAPSHOT
-		</version.maven-repohelper-plugin>
-		<version.maven-manifest-decorator-plugin>
-			2.0-SNAPSHOT
-		</version.maven-manifest-decorator-plugin>
-		<version.maven-checkclipse-helper-plugin>
-			2.0-SNAPSHOT
-		</version.maven-checkclipse-helper-plugin>
-		<version.maven-env-support-plugin>
-			2.0-SNAPSHOT
-		</version.maven-env-support-plugin>
-		<version.maven-encryption-plugin>
-			2.0-SNAPSHOT
-		</version.maven-encryption-plugin>
-		<version.maven-file-collector-plugin>
-			2.0-SNAPSHOT
-		</version.maven-file-collector-plugin>
-		<version.maven-database-plugin>
-			2.0-SNAPSHOT
-		</version.maven-database-plugin>
-		<version.maven-depgraph-plugin>
-			2.0-SNAPSHOT
-		</version.maven-depgraph-plugin>
-		<version.maven-version-plugin>
-			2.0-SNAPSHOT
-		</version.maven-version-plugin>
-		<version.maven-jaxws-plugin>
-			2.0-SNAPSHOT
-		</version.maven-jaxws-plugin>
-		<version.maven-rec-plugin>
-			2.0-SNAPSHOT
-		</version.maven-rec-plugin>
-		<version.maven-abbot-plugin>
-			2.0-SNAPSHOT
-		</version.maven-abbot-plugin>
-		<version.maven-duplicatefinder-plugin>
-			2.0-SNAPSHOT
-		</version.maven-duplicatefinder-plugin>
-		<version.maven-spring-ide-plugin>
-			2.0-SNAPSHOT
-		</version.maven-spring-ide-plugin>
-		<version.maven-eclipse-server-plugin>
-			2.0-SNAPSHOT
-		</version.maven-eclipse-server-plugin>
-		<version.maven-extension-colorlogger>
-			2.0-SNAPSHOT
-		</version.maven-extension-colorlogger>
-		<version.maven-extension-findbugs-checks>
-			2.0-SNAPSHOT
-		</version.maven-extension-findbugs-checks>
-		<version.maven-cobertura-runtime-plugin>
-			2.0-SNAPSHOT
-		</version.maven-cobertura-runtime-plugin>
-		
-		<!-- EL4J maven taglet(s) extension -->
-		<version.maven-el4j-taglet>
-			2.0-SNAPSHOT
-		</version.maven-el4j-taglet>
-		
-		<!-- EL4J framework module version numbers -->
-		<version.module-core>
-			2.0-SNAPSHOT
-		</version.module-core>
-		<version.module-database>
-			2.0-SNAPSHOT
-		</version.module-database>
-		<version.module-env>
-			2.0-SNAPSHOT
-		</version.module-env>
-		<version.module-encryption>
-			2.0-SNAPSHOT
-		</version.module-encryption>
-		<version.module-exception_handling>
-			2.0-SNAPSHOT
-		</version.module-exception_handling>
-		<version.module-hibernate>
-			2.0-SNAPSHOT
-		</version.module-hibernate>
-		<version.module-jmx>
-			2.0-SNAPSHOT
-		</version.module-jmx>
-		<version.module-light_statistics>
-			2.0-SNAPSHOT
-		</version.module-light_statistics>
-		<version.module-detailed_statistics>
-			2.0-SNAPSHOT
-		</version.module-detailed_statistics>
-		<version.module-remoting_core>
-			3.0-SNAPSHOT
-		</version.module-remoting_core>
-		<version.module-remoting_caucho>
-			3.0-SNAPSHOT
-		</version.module-remoting_caucho>
-		<version.module-remoting_soap>
-			3.0-SNAPSHOT
-		</version.module-remoting_soap>
-		<version.module-remoting_xfire>
-			3.0-SNAPSHOT
-		</version.module-remoting_xfire>
-		<version.module-remoting_jaxws>
-			2.0-SNAPSHOT
-		</version.module-remoting_jaxws>
-		<version.module-remoting_ejb>
-			3.0-SNAPSHOT
-		</version.module-remoting_ejb>
-		<version.module-security>
-			2.0-SNAPSHOT
-		</version.module-security>
-		<version.module-swing>
-			2.0-SNAPSHOT
-		</version.module-swing>
-		<version.module-tcp_forwarder>
-			2.0-SNAPSHOT
-		</version.module-tcp_forwarder>
-		<version.module-web>
-			2.0-SNAPSHOT
-		</version.module-web>
-		<version.module-xml_merge>
-			2.0-SNAPSHOT
-		</version.module-xml_merge>
-		<version.module-bshlauncher>
-			2.0-SNAPSHOT
-		</version.module-bshlauncher>
-		<version.module-remoting-tests>
-			2.0-SNAPSHOT
-		</version.module-remoting-tests>
-		<version.module-remoting-jaxws-tests>
-			2.0-SNAPSHOT
-		</version.module-remoting-jaxws-tests>
-		<version.module-tcp_forwarder-tests>
-			2.0-SNAPSHOT
-		</version.module-tcp_forwarder-tests>
-		<version.module-remoting-demos>
-			2.0-SNAPSHOT
-		</version.module-remoting-demos>
-		<version.module-remoting-jaxws-demos>
-			2.0-SNAPSHOT
-		</version.module-remoting-jaxws-demos>
-		<version.application-keyword>
-			2.0-SNAPSHOT
-		</version.application-keyword>
-		<version.application-refdb>
-			2.0-SNAPSHOT
-		</version.application-refdb>
-		<version.module-cobertura-runtime>
-			2.0-SNAPSHOT
-		</version.module-cobertura-runtime>
-		<version.module-socketstatistics>
-			2.0-SNAPSHOT
-		</version.module-socketstatistics>
-		
-		<!-- Maven utils -->
-		<version.maven-utils>
-			2.0-SNAPSHOT
-		</version.maven-utils>
+		<!-- version numbers except the el4j framework version
+			 were removed with release 3.0
+			<!- EL4J framework plugin version numbers ->
+			<version.maven-repohelper-plugin>
+				3.0-SNAPSHOT
+			</version.maven-repohelper-plugin>
+			<version.maven-manifest-decorator-plugin>
+				3.0-SNAPSHOT
+			</version.maven-manifest-decorator-plugin>
+			<version.maven-checkclipse-helper-plugin>
+				3.0-SNAPSHOT
+			</version.maven-checkclipse-helper-plugin>
+			<version.maven-env-support-plugin>
+				3.0-SNAPSHOT
+			</version.maven-env-support-plugin>
+			<version.maven-encryption-plugin>
+				3.0-SNAPSHOT
+			</version.maven-encryption-plugin>
+			<version.maven-file-collector-plugin>
+				3.0-SNAPSHOT
+			</version.maven-file-collector-plugin>
+			<version.maven-database-plugin>
+				3.0-SNAPSHOT
+			</version.maven-database-plugin>
+			<version.maven-depgraph-plugin>
+				3.0-SNAPSHOT
+			</version.maven-depgraph-plugin>
+			<version.maven-version-plugin>
+				3.0-SNAPSHOT
+			</version.maven-version-plugin>
+			<version.maven-jaxws-plugin>
+				3.0-SNAPSHOT
+			</version.maven-jaxws-plugin>
+			<version.maven-rec-plugin>
+				3.0-SNAPSHOT
+			</version.maven-rec-plugin>
+			<version.maven-abbot-plugin>
+				3.0-SNAPSHOT
+			</version.maven-abbot-plugin>
+			<version.maven-duplicatefinder-plugin>
+				3.0-SNAPSHOT
+			</version.maven-duplicatefinder-plugin>
+			<version.maven-spring-ide-plugin>
+				3.0-SNAPSHOT
+			</version.maven-spring-ide-plugin>
+			<version.maven-eclipse-server-plugin>
+				3.0-SNAPSHOT
+			</version.maven-eclipse-server-plugin>
+			<version.maven-extension-colorlogger>
+				3.0-SNAPSHOT
+			</version.maven-extension-colorlogger>
+			<version.maven-extension-findbugs-checks>
+				3.0-SNAPSHOT
+			</version.maven-extension-findbugs-checks>
+			<version.maven-cobertura-runtime-plugin>
+				3.0-SNAPSHOT
+			</version.maven-cobertura-runtime-plugin>
+			
+			<!- EL4J maven taglet(s) extension ->
+			<version.maven-el4j-taglet>
+				3.0-SNAPSHOT
+			</version.maven-el4j-taglet>
+			
+			<!- EL4J framework module version numbers ->
+			<version.module-core>
+				3.0-SNAPSHOT
+			</version.module-core>
+			<version.module-database>
+				3.0-SNAPSHOT
+			</version.module-database>
+			<version.module-env>
+				3.0-SNAPSHOT
+			</version.module-env>
+			<version.module-encryption>
+				3.0-SNAPSHOT
+			</version.module-encryption>
+			<version.module-exception_handling>
+				3.0-SNAPSHOT
+			</version.module-exception_handling>
+			<version.module-hibernate>
+				3.0-SNAPSHOT
+			</version.module-hibernate>
+			<version.module-jmx>
+				3.0-SNAPSHOT
+			</version.module-jmx>
+			<version.module-light_statistics>
+				3.0-SNAPSHOT
+			</version.module-light_statistics>
+			<version.module-detailed_statistics>
+				3.0-SNAPSHOT
+			</version.module-detailed_statistics>
+			<version.module-remoting_core>
+				3.0-SNAPSHOT
+			</version.module-remoting_core>
+			<version.module-remoting_caucho>
+				3.0-SNAPSHOT
+			</version.module-remoting_caucho>
+			<version.module-remoting_soap>
+				3.0-SNAPSHOT
+			</version.module-remoting_soap>
+			<version.module-remoting_xfire>
+				3.0-SNAPSHOT
+			</version.module-remoting_xfire>
+			<version.module-remoting_jaxws>
+				3.0-SNAPSHOT
+			</version.module-remoting_jaxws>
+			<version.module-remoting_ejb>
+				3.0-SNAPSHOT
+			</version.module-remoting_ejb>
+			<version.module-security>
+				3.0-SNAPSHOT
+			</version.module-security>
+			<version.module-swing>
+				3.0-SNAPSHOT
+			</version.module-swing>
+			<version.module-tcp_forwarder>
+				3.0-SNAPSHOT
+			</version.module-tcp_forwarder>
+			<version.module-web>
+				3.0-SNAPSHOT
+			</version.module-web>
+			<version.module-xml_merge>
+				3.0-SNAPSHOT
+			</version.module-xml_merge>
+			<version.module-bshlauncher>
+				3.0-SNAPSHOT
+			</version.module-bshlauncher>
+			<version.module-remoting-tests>
+				3.0-SNAPSHOT
+			</version.module-remoting-tests>
+			<version.module-remoting-jaxws-tests>
+				3.0-SNAPSHOT
+			</version.module-remoting-jaxws-tests>
+			<version.module-tcp_forwarder-tests>
+				3.0-SNAPSHOT
+			</version.module-tcp_forwarder-tests>
+			<version.module-remoting-demos>
+				3.0-SNAPSHOT
+			</version.module-remoting-demos>
+			<version.module-remoting-jaxws-demos>
+				3.0-SNAPSHOT
+			</version.module-remoting-jaxws-demos>
+			<version.application-keyword>
+				3.0-SNAPSHOT
+			</version.application-keyword>
+			<version.application-refdb>
+				3.0-SNAPSHOT
+			</version.application-refdb>
+			<version.module-cobertura-runtime>
+				3.0-SNAPSHOT
+			</version.module-cobertura-runtime>
+			<version.module-socketstatistics>
+				3.0-SNAPSHOT
+			</version.module-socketstatistics>
+			
+			<!- Maven utils ->
+			<version.maven-utils>
+				3.0-SNAPSHOT
+			</version.maven-utils>
+		-->
 		
 		<!-- Maven plugins used as dependencies in other plugins -->
-		<version.maven-resources-plugin>2.4.1</version.maven-resources-plugin>
-		
+		<version.maven-resources-plugin>2.4.3</version.maven-resources-plugin>
+	
 		<!-- Javadoc config -->
 		<javadoc.stylesheet.path>${el4j.external}/etc/javadoc/stylesheet.css</javadoc.stylesheet.path>
 		<javadoc.link.jdk>http://java.sun.com/javase/6/docs/api/</javadoc.link.jdk>
@@ -2751,36 +2759,37 @@
 		
 		
 		<!-- Spring -->
-		<version.spring>3.0.0.RELEASE</version.spring>
+		<version.spring>3.0.3.RELEASE</version.spring>
 		
 		<!-- Spring security -->
-		<version.springsecurity>3.0.1.RELEASE</version.springsecurity>
+		<version.springsecurity>3.0.3.RELEASE</version.springsecurity>
 		
 		<!-- SLF4J -->
 		<!--
 			IMPORTANT: Update and copy these properties to "maven/extensions/slf4j-maven/pom.xml", specially the parent pom
 			and build and deploy it separately.
 		-->
-		<version.slf4j>1.5.8</version.slf4j>
-		<version.slf4j-maven>${version.slf4j}-el4j-1.8-SNAPSHOT</version.slf4j-maven>
+		<version.slf4j>1.6.1</version.slf4j>
+		<version.slf4j-maven>${version.slf4j}-el4j-3.0-SNAPSHOT</version.slf4j-maven>
 		
 		<!-- Dependency versions -->
-		<version.derby>10.4.1.3</version.derby>
+		<version.derby>10.6.1.0</version.derby>
 		
 		<!-- Maven plugin versions. Needed due to false dep mgt. -->
-		<version.maven-project-info-reports-plugin>2.1.2</version.maven-project-info-reports-plugin>
+		<version.maven-project-info-reports-plugin>2.2</version.maven-project-info-reports-plugin>
 		<version.maven-checkstyle-plugin>2.4-el4j_20091020_1500</version.maven-checkstyle-plugin>
-		<version.findbugs-maven-plugin>2.0.1</version.findbugs-maven-plugin>
-		<version.maven-surefire-report-plugin>2.4.3</version.maven-surefire-report-plugin>
+		<version.findbugs-maven-plugin>2.3.1</version.findbugs-maven-plugin>
+		<version.maven-surefire-report-plugin>2.5</version.maven-surefire-report-plugin>
 		<version.maven-javadoc-plugin>2.6.1</version.maven-javadoc-plugin>
-		<version.maven-jxr-plugin>2.1</version.maven-jxr-plugin>
-		<version.maven-pmd-plugin>2.4</version.maven-pmd-plugin>
+		<version.maven-jxr-plugin>2.2</version.maven-jxr-plugin>
+		<version.maven-pmd-plugin>2.5</version.maven-pmd-plugin>
 		<version.taglist-maven-plugin>2.4</version.taglist-maven-plugin>
-		<version.maven-plugin-plugin>2.5.1</version.maven-plugin-plugin>
+		<version.maven-plugin-plugin>2.6</version.maven-plugin-plugin>
 		<version.cobertura-maven-plugin>2.3-el4j_20100108_1400</version.cobertura-maven-plugin>
 		<version.sonar-maven-plugin>1.8</version.sonar-maven-plugin>
 		<version.clirr-maven-plugin>2.2.2-el4j_20080812_1330</version.clirr-maven-plugin>
 		<version.dashboard-maven-plugin>1.0.0-beta-1-el4j_20090527_0835</version.dashboard-maven-plugin>
+		<version.jetty-maven-plugin>7.0.0.v20091005-el4j_20091111_1300</version.jetty-maven-plugin>
 		
 		<!-- Cobertura -->
 		<cobertura-runtime.dataDirectory>${el4j.project.home}/cobertura-runtime</cobertura-runtime.dataDirectory>

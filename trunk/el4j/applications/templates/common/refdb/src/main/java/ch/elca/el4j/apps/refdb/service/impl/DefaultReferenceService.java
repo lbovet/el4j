@@ -175,15 +175,20 @@ public class DefaultReferenceService extends DefaultKeywordService
 	public List<Reference> searchReferences(QueryObject query)
 		throws DataAccessException {
 		Reject.ifNull(query);
-		
-		List<Link> listLinks = getLinkDao().findByQuery(query);
-		List<FormalPublication> listFormalPublications = getFormalPublicationDao().findByQuery(query);
-		List<Book> listBooks = getBookDao().findByQuery(query);
-		
 		List<Reference> list = new LinkedList<Reference>();
-		list.addAll(listLinks);
-		list.addAll(listFormalPublications);
-		list.addAll(listBooks);
+		Boolean all = (query.getBeanClass() == Reference.class) || (query.getBeanClass() == null);
+		if (all || (query.getBeanClass() == Link.class)) {
+			List<Link> listLinks = getLinkDao().findByQuery(query);
+			list.addAll(listLinks);
+		}
+		if (all || (query.getBeanClass() == FormalPublication.class)) {
+			List<FormalPublication> listFormalPublications = getFormalPublicationDao().findByQuery(query);
+			list.addAll(listFormalPublications);
+		}
+		if (all || (query.getBeanClass() == Book.class)) {
+			List<Book> listBooks = getBookDao().findByQuery(query);
+			list.addAll(listBooks);
+		}
 		return list;
 	}
 	

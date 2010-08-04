@@ -32,7 +32,6 @@ import javax.persistence.Transient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.hibernate.Hibernate;
-import org.hibernate.lob.BlobImpl;
 import org.hibernate.validator.NotNull;
 
 /**

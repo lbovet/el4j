@@ -1,19 +1,52 @@
 --------------------------------------------------------------------------------
- Date :   DD.MM.YY
-                            EL4J version  2.0
+ Date :   04.08.10
+                            EL4J version  3.0
 --------------------------------------------------------------------------------
+ * General
+   = Version upgrades of most dependencies, especially Spring to 3.0.3
+   = Removed all version numbers except the current el4j framework version.
+	 From now on use ${version.el4j-framework.current} in dependencies and the el4j version
+	 in the parent version tag.
+   = Tomcat upgrade to 6.0.28
+   = Changed MAVEN_OPTS to use G1 garbage collector
+     to solve the OutOfMemory problem that occurs during building the whole external,
+	 for example in the tcpforwarder tests.
+   = Added new repository (jboss nexus)
+   
+  * Core
+   = Removed 'persistence-api' in dependencies but added 'hibernate-jpa-2.0-api'
+   = Upgrade to Spring 3.0. Updated all namespace definitions to spring-3.0.
+   = The EL4J annotation @LazyInit has been deprecated. Use Spring 3 annotation @Lazy instead.   
 
- * Core
-   = Upgrade to Spring 3.0.
-     Upadated all namespace definitions to spring-3.0.
+  * Hibernate
+   = Version upgrade to Hibernate 3.5.4
+   = Kept Hibernate Validator 3.1.0.GA because of several problems with Seam, the hashCode
+	 usage before persisting and JIRA issue HHH-5322 
+   = Added Jpa config files with an EntityManager but no SessionFactory
+   = Added the JpaHelper, its implementation and some utility
+     With the helper it is possible to manage the entities using the EntityManager. It has
+	 the operations persist, detach, merge and remove. To apply complex queries the according
+	 utility class is used. An example can be found in the refdb project. More information on 
+	 the module documentation.
 	 
-   = The EL4J annotation @LazyInit has been deprecated. Use Spring 3 annotation @Lazy instead.
-     
-
- * Security
-   = Upgrade to Spring Security 3.0.
-     Updated all namespace definitions to spring-security-3.0, changed modules
-	 to use the new / modified API and package structure.
+  * Security
+   = The security in the jsf demo and template is NOT yet fixed and NOT working correctly. 
+     Please refer to the JIRA tasks ELJ-139 and ELJ-140.
+   = Upgrade to Spring Security 3.0. Updated all namespace definitions to spring-security-3.0, 
+     changed modules to use the new / modified API and package structure.
+	 
+  * Remoting
+   = The JAX-WS and JAXB dependencies were NOT updated to the newest version. The JAX-WS API 2.2
+     is not directly compatible with the JDK6, so the version will stay at 2.1. As JAX-WS depends
+	 on JAXB, JAXB version will be left at 2.1.9 as well.
+	 
+  * Various
+   = refdb: Changed the search of DefaultReferenceService to look for the specific subclass if the
+     bean class of the query is not null or Reference. This is to make it possible to search for 
+	 a subclass specific field like author.
+   = keyword: Changed DefaultKeywordService to use the getFor instead of getDao of the DaoRegistry
+     to match the usage done in refdb.
+	 
 
 --------------------------------------------------------------------------------
  Date :   16.12.09
