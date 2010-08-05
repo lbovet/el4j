@@ -16,7 +16,6 @@
 	</parent>
 
 	<artifactId>swing-demo-webstart</artifactId>
-	<version>${version.application-refdb}</version>
 	<packaging>war</packaging>
 	<name>EL4J application swing demo webstart</name>
 	<description>
@@ -57,7 +56,7 @@
 								<jarResource>
 									<groupId>ch.elca.el4j.applications</groupId>
 									<artifactId>swing-demo-standalone-client</artifactId>
-									<version>${version.application-refdb}</version>
+									<version>${version.el4j-framework.current}</version>
 									<mainClass>ch.elca.el4j.demos.gui.MainStandaloneDocking</mainClass>
 								</jarResource>
 								<!-- workaround for jdk bug 6533653 (webstarts can't handle jar with no real entries (jar of empty dir)) -->
@@ -65,7 +64,7 @@
 								<jarResource>
 									<groupId>ch.elca.el4j.modules</groupId>
 									<artifactId>module-database</artifactId>
-									<version>${version.module-database}</version>
+									<version>${version.el4j-framework.current}</version>
 									<includeInJnlp>false</includeInJnlp>
 								</jarResource>
 							</jarResources>

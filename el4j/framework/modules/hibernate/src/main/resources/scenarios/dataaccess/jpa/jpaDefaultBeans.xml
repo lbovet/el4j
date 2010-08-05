@@ -19,6 +19,6 @@
 	</bean>
 
 	<tx:annotation-driven transaction-manager="transactionManager"/>
-
+	
 	<bean id="jpaHelper" class="ch.elca.el4j.services.persistence.jpa.helper.JpaHelperImpl" />
 </beans>

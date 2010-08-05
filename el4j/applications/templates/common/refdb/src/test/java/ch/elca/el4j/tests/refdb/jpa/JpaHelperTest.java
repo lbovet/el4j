@@ -33,10 +33,8 @@ public class JpaHelperTest extends AbstractHelperTest {
 	protected String[] getIncludeConfigLocations() {
 		return new String[] {
 			"classpath*:mandatory/*.xml",
-			"classpath*:mandatory/refdb/*.xml",
 			"classpath*:scenarios/db/raw/*.xml",
 			"classpath*:scenarios/dataaccess/jpa/*.xml",
-			"classpath*:scenarios/dataaccess/hibernate/refdb/*.xml",
 			"classpath*:optional/refdb/trace-interceptor-config.xml",
 			"classpath*:optional/interception/transactionJava5Annotations.xml"};
 	}
@@ -45,7 +43,8 @@ public class JpaHelperTest extends AbstractHelperTest {
 	 * {@inheritDoc}
 	 */
 	protected String[] getExcludeConfigLocations() {
-		return null;
+		return new String[] {
+			"classpath*:mandatory/*-service-config.xml"};
 	}
 		
 }
