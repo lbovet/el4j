@@ -1513,7 +1513,7 @@
 			</releases>
 			<id>jboss new</id>
 			<name>JBoss nexus repository</name>
-			<url>https://repository.jboss.org/nexus/content/groups/public</url>
+			<url>http://repository.jboss.org/nexus/content/groups/public</url>
 		</repository>
 		
 		<!--
@@ -2575,7 +2575,7 @@
 			3.0-SNAPSHOT
 		</version.el4j-framework.current>
 		<!-- version numbers except the el4j framework version
-			 were removed with release 3.0
+			were removed with release 3.0
 			<!- EL4J framework plugin version numbers ->
 			<version.maven-repohelper-plugin>
 				3.0-SNAPSHOT
