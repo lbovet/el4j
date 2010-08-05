@@ -44,6 +44,10 @@
 					<groupId>commons-logging</groupId>
 					<artifactId>commons-logging</artifactId>
 				</exclusion>
+				<exclusion>
+					<groupId>jfree</groupId>
+					<artifactId>jcommon</artifactId>
+				</exclusion>
 			</exclusions>
 		</dependency>
 		<!-- use explicit version to prevent downloading some "brew" (=snapshot) version -->
