@@ -62,7 +62,7 @@ import ch.elca.el4j.tests.core.AbstractTest;
 /**
  * Test class testing the usage of jpa.
  *
- * @svnLink
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Sandra Weber (SWR)
  */
@@ -319,7 +319,7 @@ public abstract class AbstractHelperTest extends AbstractTest {
 				
 				s_logger.warn("Add some Annotations");
 				/* (don't forget first to persist, otherwise 
-				    the hashCode won't be fix yet)  */
+				the hashCode won't be set yet)  */
 				getHelper().persist(a1);
 				b.getAnnotations().add(a1);
 				getHelper().persist(a2);

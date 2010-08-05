@@ -1,17 +1,19 @@
 /*
- * Project: KnowHow
+ * EL4J, the Extension Library for the J2EE, adds incremental enhancements to
+ * the spring framework, http://el4j.sf.net
+ * Copyright (C) 2005 by ELCA Informatique SA, Av. de la Harpe 22-24,
+ * 1000 Lausanne, Switzerland, http://www.elca.ch
  *
- * Copyright 2008 by ELCA Informatik AG
- * Steinstrasse 21, CH-8036 Zurich
- * All rights reserved.
+ * EL4J is published under the GNU Lesser General Public License (LGPL)
+ * Version 2.1. See http://www.gnu.org/licenses/
  *
- * This software is the confidential and proprietary information
- * of ELCA Informatik AG ("Confidential Information"). You
- * shall not disclose such "Confidential Information" and shall
- * use it only in accordance with the terms of the license
- * agreement you entered into with ELCA.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Lesser General Public License for more details.
+ *
+ * For alternative licensing, please contact info@elca.ch
  */
-
 package ch.elca.el4j.services.persistence.jpa.util;
 
 import java.util.HashMap;
@@ -38,6 +40,8 @@ import ch.elca.el4j.services.persistence.jpa.util.QueryException;;
 /**
  * Query object returned by DataService.
  *	@param <T> The type parameter.
+ *
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author David Bernhard (dab)
  */
@@ -376,7 +380,7 @@ public class JpaQuery<T> {
 	/**
 	 * Execute a HQL query.
 	 *
- 	 * Warning: You must pass "distinct" yourself if desired. Due to the
+	 * Warning: You must pass "distinct" yourself if desired. Due to the
 	 * nature of HQL, this is not fully typesafe - types are checked but we
 	 * cannot prevent an invalid tpye in the "from" clause.
 	 * @param query The query string.
