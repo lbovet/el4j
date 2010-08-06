@@ -120,6 +120,11 @@
 			<groupId>org.hibernate.javax.persistence</groupId>
 			<artifactId>hibernate-jpa-2.0-api</artifactId>
 			<version>1.0.0.Final</version>		
+		</dependency>		
+		<dependency>
+			<groupId>javax.inject</groupId>
+			<artifactId>inject</artifactId>
+			<version>1.0</version>
 		</dependency>
 	</dependencies>
 </project>
