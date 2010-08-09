@@ -64,7 +64,7 @@
 								<jarResource>
 									<groupId>ch.elca.el4j.modules</groupId>
 									<artifactId>module-database</artifactId>
-									<version>${version.el4j-framework.current}</version>
+									<version>3.0-SNAPSHOT</version>
 									<includeInJnlp>false</includeInJnlp>
 								</jarResource>
 							</jarResources>
