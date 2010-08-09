@@ -276,11 +276,17 @@ public abstract class AbstractHelperTest extends AbstractTest {
 				findAndCheck(book, true);
 				
 				s_logger.info("Transition: DETACHED -> MANAGED");
+				// WRONG: getHelper().merge(book);
 				book = getHelper().merge(book);
 				
 				s_logger.info("State: MANAGED");
 				assertTrue("After merge. The book is not a managed entity.", getHelper().contains(book));
 				changeAndCheck(book, "Add an other description.", true);
+				
+				Book bookCopied = book;
+				changeAndCheck(bookCopied, "A copied managed entity is still MANAGED.", true);
+				
+				changeAndCheck(book, "The original managed entity is also MANAGED", true);
 				
 				s_logger.info("Transition: MANAGED -> MANAGED");
 				getHelper().refresh(book);
