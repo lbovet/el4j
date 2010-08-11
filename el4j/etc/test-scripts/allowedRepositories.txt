@@ -9,5 +9,4 @@ http://public-el4.elca-services.ch/el4j/maven2repository/
 http://public-el4.elca-services.ch/el4j-protected/maven2repository/
 http://repo1.maven.org/maven2/
 http://repository.codehaus.org/
-http://repository.jboss.org/maven2/
 http://repository.jboss.org/nexus/content/groups/public
