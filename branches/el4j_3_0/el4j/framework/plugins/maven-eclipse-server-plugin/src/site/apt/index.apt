@@ -1,0 +1,59 @@
+ -----
+ Eclipse server plugin
+ -----
+ -----
+ 16 Nov 2009
+ -----
+
+Eclipse server plugin
+
+  The Eclipse server plugin can be used to create a tomcat6x server inside your eclipse workspace.
+
+  Before adding a server and / or a runtime to the eclipse configuration, the plugin checks for an already 
+  configured instance of a tomcat6x server or an identical runtime configuration. If a corresponding runtime
+  and / or server is already configured inside eclipse, this one will not be overwritten.
+
+  Here is a sample configuration. The required parameter is <<workspace>> which should point to your
+  current eclipse workspace directory. 
+  
++----------------
+<plugin>
+	<groupId>ch.elca.el4j.maven.plugins</groupId>
+	<artifactId>maven-eclipse-server-plugin</artifactId>
+	<version>${version.maven-eclipse-server-plugin}</version>
+	<configuration>
+		<workspace>${eclipse.workspace}</workspace>
+	</configuration>
+</plugin>
++----------------
+
+  Per default, the path to the server runtime and configuration is taken from the corresponding settings 
+  inside your main settings.xml or pom.xml file (tomcat6x.home property). In this case, the path to the
+  configuration directory will be <<${tomcat6x.home}/conf>>. These two settings can be manually 
+  configured with the following configuration properties: 
+
++----------------
+...
+	<configuration>
+		...
+		<tomcat6xhome>path/to/tomcat/homedirectory</tomcat6xhome>
+		<tomcat6xconf>path/to/tomcat/confdirectory</tomcat6xconf>
+	</configuration>
+...
++----------------
+
+  During the execution of the goal <<eclipseserver:tomcat6x>>, a new Project named <<Servers>> will be 
+  created inside your workspace. This project is needed by eclipse to access the configuration files given 
+  by the tomcat6x.home property or the tomcat6xhome plugin configuration entry.  Therefore, the created 
+  project contains a linkedResource entry to the given configuration files named tomcat6x_conf_link.
+
+  To get the tomcat server running, you have to import the automatically created Servers project into your 
+  eclipse after the execution of the goal <<eclipseserver:tomcat6x>>. To achieve this, just go to 
+  File -> Import -> Existing Projects into Workspace. In the following dialog, browse to your workspace 
+  and select the project folder named Servers to be imported. 
+  
+  If you change the underlying settings for the 
+  plugin and re-execute the goal, you have to <<refresh>> the Servers project to make eclipse adapt 
+  the changed configuration. 
+  
+  For detailed usage {{{plugin-info.html}see the plugin info page}}.
