@@ -44,7 +44,8 @@ public class JpaHelperTest extends AbstractHelperTest {
 	 */
 	protected String[] getExcludeConfigLocations() {
 		return new String[] {
-			"classpath*:mandatory/*-service-config.xml"};
+			"classpath*:mandatory/refdb-core-config.xml",
+			"classpath*:mandatory/keyword-core-config.xml"};
 	}
 		
 }

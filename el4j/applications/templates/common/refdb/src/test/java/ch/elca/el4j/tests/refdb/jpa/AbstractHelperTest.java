@@ -235,6 +235,7 @@ public abstract class AbstractHelperTest extends AbstractTest {
 	protected void findAndCheck(Book b, Boolean expected) {
 		Book b2 = null; 
 		if ((b != null) && (!b.isKeyNew())) {
+			// Attention: b2 is after find MANAGED
 			b2 = getHelper().findByKey(Book.class, b.getKey());
 		}
 		if (expected) {
@@ -261,7 +262,8 @@ public abstract class AbstractHelperTest extends AbstractTest {
 				
 				s_logger.info("Transition: NEW -> MANAGED");
 				getHelper().persist(book);
-				//getHelper().flush();
+				// NEEDED for oracle (db2 works without)
+				getHelper().flush();
 				
 				s_logger.info("State: MANAGED");
 				assertTrue("After persist. The book is not a managed entity.", getHelper().contains(book));

@@ -16,7 +16,8 @@
  */
 package ch.elca.el4j.tests.person.dao.impl.hibernate;
 
-import ch.elca.el4j.services.persistence.generic.dao.AutocollectedGenericDao;
+import org.springframework.stereotype.Repository;
+
 import ch.elca.el4j.services.persistence.hibernate.dao.GenericHibernateDao;
 import ch.elca.el4j.services.persistence.hibernate.dao.extent.DataExtent;
 import ch.elca.el4j.tests.person.dom.Person;
@@ -29,7 +30,7 @@ import ch.elca.el4j.tests.person.dom.Person;
  *
  * @author Alex Mathey (AMA)
  */
-@AutocollectedGenericDao("personDao")
+@Repository("personDao")
 public class HibernatePersonDao
 	extends GenericHibernateDao<Person, Integer>
 	implements GenericHibernatePersonDaoInterface {

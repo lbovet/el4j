@@ -11,12 +11,15 @@
    = Changed MAVEN_OPTS to use G1 garbage collector
      to solve the OutOfMemory problem that occurs during building the whole external,
 	 for example in the tcpforwarder tests.
-   = Added new repository (jboss nexus)
+   = Added new repository (jboss nexus) and removed old jboss repository
    
   * Core
    = Removed 'persistence-api' in dependencies but added 'hibernate-jpa-2.0-api'
    = Upgrade to Spring 3.0. Updated all namespace definitions to spring-3.0.
    = The EL4J annotation @LazyInit has been deprecated. Use Spring 3 annotation @Lazy instead.   
+   = Deleted ReflectionUtils (see ELJ-130)
+   = Added a depenedency on javax.inject:inject to be able to use Dependency Injection
+	 (for an example see refdb)
 
   * Hibernate
    = Version upgrade to Hibernate 3.5.4
@@ -39,13 +42,23 @@
    = The JAX-WS and JAXB dependencies were NOT updated to the newest version. The JAX-WS API 2.2
      is not directly compatible with the JDK6, so the version will stay at 2.1. As JAX-WS depends
 	 on JAXB, JAXB version will be left at 2.1.9 as well.
+   = Adapted JAX-WS remoting tests to fit the new refdb and keyword template. There is no longer any
+	 DaoRegistry used.
 	 
-  * Various
-   = refdb: Changed the search of DefaultReferenceService to look for the specific subclass if the
+  * Common Templates
+   = Applied Dependency Injection in refdb and keyword.
+     The service and the daos are injected with the javax.inject api. There is no longer a DaoRegistry.
+	 To configure a class as Spring Bean, it is annotated with Spring Stereotypes like @Repository or
+	 @Service. To enable the scanning for Spring Annotation compent-scan with the according package configuration
+	 has been added to the xml config files. Spring Annotations can not be used in test classes (see ELJ-153)
+   = Added an JpaHelper test as an example of the usage of JPA.
+   = Changed the search of DefaultReferenceService to look for the specific subclass if the
      bean class of the query is not null or Reference. This is to make it possible to search for 
 	 a subclass specific field like author.
-   = keyword: Changed DefaultKeywordService to use the getFor instead of getDao of the DaoRegistry
+   = Changed DefaultKeywordService to use the getFor instead of getDao of the DaoRegistry
      to match the usage done in refdb.
+   = Corrected some tests containing a wrong use of the hashCode that causes an according 
+	 warning in refdb and keyword.
 	 
 
 --------------------------------------------------------------------------------

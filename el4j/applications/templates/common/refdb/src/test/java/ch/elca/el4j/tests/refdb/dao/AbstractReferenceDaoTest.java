@@ -581,23 +581,30 @@ public abstract class AbstractReferenceDaoTest extends AbstractTestCaseBase {
 			Annotation a2 = new Annotation();
 			a2.setAnnotator("arr");
 			a2.setContent("it is snowing outside");
-			book.setAnnotations(new HashSet<Annotation>());
-			book.getAnnotations().add(a1);
-			a1.setReference(book);
-			book.getAnnotations().add(a2);
-			a2.setReference(book);
 			Keyword k1 = new Keyword();
 			k1.setName("Testkeyword97");
-			book.setKeywords(new HashSet<Keyword>());
-			book.getKeywords().add(k1);
 			TransactionStatus transaction = null;
 			try {
 				transaction = getTransactionManager().getTransaction(new DefaultTransactionDefinition());
 				
-				k1 = getKeywordDao().saveOrUpdate(k1);
 				book = getBookDao().saveOrUpdate(book);
+				a1.setReference(book);
+				a2.setReference(book);
+				
+				// hashCode Problem: Save the keywords first, before adding 
+				// them to a collection (see TWiki: HibernateGuidelines > Automatic equals semantics)
+				k1 = getKeywordDao().saveOrUpdate(k1);
+				book.setKeywords(new HashSet<Keyword>());
+				book.getKeywords().add(k1);
+				// hashCode Problem: Save the annotations first, before adding 
+				// them to a collection (see TWiki: HibernateGuidelines > Automatic equals semantics)
 				a1 = getAnnotationDao().saveOrUpdate(a1);
 				a2 = getAnnotationDao().saveOrUpdate(a2);
+				book.setAnnotations(new HashSet<Annotation>());
+				book.getAnnotations().add(a1);
+				book.getAnnotations().add(a2);
+				
+				book = getBookDao().saveOrUpdate(book);
 				
 				getTransactionManager().getSessionFactory().getCurrentSession().flush();
 				getTransactionManager().commit(transaction);

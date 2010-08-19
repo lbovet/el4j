@@ -25,6 +25,8 @@ import ch.elca.el4j.services.persistence.generic.dao.DaoRegistry;
 import ch.elca.el4j.services.persistence.hibernate.dao.ConvenienceGenericHibernateDao;
 import ch.elca.el4j.services.persistence.hibernate.dao.extent.DataExtent;
 import ch.elca.el4j.services.remoting.jaxb.hibernate.JAXBContextFactoryImpl;
+import ch.elca.el4j.tests.person.dao.PersonDao;
+import ch.elca.el4j.tests.person.dao.impl.hibernate.GenericHibernatePersonDaoInterface;
 import ch.elca.el4j.tests.person.dom.Brain;
 import ch.elca.el4j.tests.person.dom.Person;
 import ch.elca.el4j.tests.remoting.jaxws.service.LazyPerson;
@@ -49,9 +51,9 @@ import ch.elca.el4j.tests.remoting.jaxws.service.LazyPerson;
 public class LazyPersonImplJaxws implements LazyPerson {
 	
 	/**
-	 * The DAO registry.
+	 * The Person Dao.
 	 */
-	private DaoRegistry daoRegistry;
+	private GenericHibernatePersonDaoInterface personDao;
 	
 	/**
 	 * The id (key) of the person.
@@ -62,7 +64,7 @@ public class LazyPersonImplJaxws implements LazyPerson {
 	@SuppressWarnings("unchecked")
 	public Person getPerson(boolean loadBrain) {
 		ConvenienceGenericHibernateDao<Person, Integer> dao
-			= (ConvenienceGenericHibernateDao<Person, Integer>) daoRegistry.getFor(Person.class);
+			= (ConvenienceGenericHibernateDao<Person, Integer>) personDao;
 		if (personId == -1) {
 			Person person = new Person("Peter Muster");
 			Brain b = new Brain();
@@ -92,24 +94,25 @@ public class LazyPersonImplJaxws implements LazyPerson {
 	@SuppressWarnings("unchecked")
 	public void setPerson(Person person) {
 		ConvenienceGenericHibernateDao<Person, Integer> dao
-			= (ConvenienceGenericHibernateDao<Person, Integer>) daoRegistry.getFor(Person.class);
+			= (ConvenienceGenericHibernateDao<Person, Integer>) personDao;
 		dao.saveOrUpdate(person);
 		personId = person.getKey();
 	}
 
 	/**
-	 * @return    the DAO registry
+	 * @return    the Person Dao
 	 */
 	@WebMethod(exclude = true)
-	public DaoRegistry getDaoRegistry() {
-		return daoRegistry;
+	public GenericHibernatePersonDaoInterface getPersonDao() {
+		return personDao;
 	}
 
 	/**
-	 * @param daoRegistry    the DAO registry
+	 * @param personDao    the Person Dao
 	 */
 	@WebMethod(exclude = true)
-	public void setDaoRegistry(DaoRegistry daoRegistry) {
-		this.daoRegistry = daoRegistry;
-	}
+	public void setPersonDao(GenericHibernatePersonDaoInterface personDao) {
+		this.personDao = personDao;
+	}	
+	
 }
