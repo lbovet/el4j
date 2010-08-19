@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+	<!-- $Revision$ -->
+	<!-- $URL$ -->
+	<!-- $Date$ -->
+	<!-- $Author$ -->
+	
+	<!-- Allows to register DAOs. Automatically collects all GenericDaos from the application context -->
+	<!--bean id="daoRegistry" class="ch.elca.el4j.services.persistence.generic.dao.impl.DefaultDaoRegistry" /-->
+	
+	<context:component-scan base-package="ch.elca.el4j.demos.gui.forms"/>
+	
+	<!-- example how to override default configurations. See ch.elca.el4j.demos.gui.MainFormMDIXML.initialize() -->
+	<bean id="overrideConfig" class="ch.elca.el4j.util.config.GenericConfig" lazy-init="true" scope="prototype">
+		<!-- parent will be set in code -->
+		<property name="overrideMap">
+			<map>
+				<entry key="invalidColor">
+					<bean class="java.awt.Color">
+						<constructor-arg type="int" value="255"/>
+						<constructor-arg type="int" value="64"/>
+						<constructor-arg type="int" value="64"/>
+					</bean>
+				</entry>
+			</map>
+		</property>
+	</bean>
+</beans>
