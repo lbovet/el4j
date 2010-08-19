@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.5.xsd">
+
+	<!-- $Revision$ -->
+	<!-- $URL$ -->
+	<!-- $Date$ -->
+	<!-- $Author$ -->
+	
+	<bean id="DefaultConfig" class="ch.elca.el4j.util.config.HierarchicalGenericConfig">
+		<property name="map">
+			<map>
+				<entry key="ch.elca.el4j" value="EL4J"/>
+				<entry key="ch.elca.el4j.default.a" value="defaultA"/>
+				<entry key="ch.elca.el4j.default.b" value="defaultB"/>
+				<entry key="ch.elca.el4j.default.c.d" value="defaultCD"/>
+				<entry key="ch.elca.el4j.default.c.e" value="defaultCE"/>
+				<entry key="ch.elca.el4j.tests.core" value="core"/>
+				<entry key="ch.elca.el4j.tests.services" value="services"/>
+				<entry key="ch.elca.el4j.tests.util" value="util"/>
+			</map>
+		</property>
+	</bean>
+	
+	<bean id="SpecificConfig" class="ch.elca.el4j.util.config.HierarchicalGenericConfig">
+		<property name="parent">
+			<ref bean="DefaultConfig" />
+		</property>
+		<property name="overrideMap">
+			<map>
+				<entry key="ch.elca" value="elca"/>
+				<entry key="ch.elca.el4j.tests.core" value="core2"/>
+			</map>
+		</property>
+	</bean>
+	
+	<bean id="configAB" class="ch.elca.el4j.util.config.HierarchicalGenericConfig">
+		<property name="map">
+			<map>
+				<entry key="ch.elca.el4j.default.a" value="defaultA"/>
+				<entry key="ch.elca.el4j.default.b" value="defaultB"/>
+			</map>
+		</property>
+	</bean>
+	<bean id="configCD" class="ch.elca.el4j.util.config.HierarchicalGenericConfig">
+		<property name="map">
+			<map>
+				<entry key="ch.elca.el4j.default.c.d" value="defaultCD"/>
+				<entry key="ch.elca.el4j.default.c.e" value="defaultCE"/>
+			</map>
+		</property>
+	</bean>
+	
+	<bean id="configABCD" class="ch.elca.el4j.util.config.HierarchicalGenericConfig">
+		<property name="parents">
+			<list>
+				<ref bean="configAB" />
+				<ref bean="configCD" />
+			</list>
+		</property>
+		<property name="overrideMap">
+			<map>
+				<entry key="ch.elca.el4j.default.b" value="defaultB2"/>
+				<entry key="ch.elca.el4j.default.c.e" value="defaultCE2"/>
+			</map>
+		</property>
+	</bean>
+</beans>

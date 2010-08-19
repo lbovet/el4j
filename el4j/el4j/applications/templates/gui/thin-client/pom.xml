@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<!-- Version: $Revision$ -->
+	<!-- URL: $URL$ -->
+	<!-- Date: $Date$ -->
+	<!-- Author: $Author$ -->
+
+	<parent>
+		<groupId>ch.elca.el4j.applications</groupId>
+		<artifactId>el4j-templates-swing-demo</artifactId>
+		<version>3.0-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>swing-demo-thin-client</artifactId>
+	<packaging>jar</packaging>
+	<name>EL4J application swing demo thin-client</name>
+	<description>Swing-demo thin-client module of the EL4J framework.</description>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<configuration>
+					<mainClass>ch.elca.el4j.demos.gui.MainFormDistributedMDI</mainClass>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>ch.elca.el4j.maven.plugins</groupId>
+				<artifactId>maven-spring-ide-plugin</artifactId>
+				<configuration>
+					<sourceFile>
+						ch.elca.el4j.demos.gui.MainFormDistributedMDI 
+					</sourceFile>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>verify</phase>
+						<goals>
+							<goal>spring-ide</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>macker-maven-plugin</artifactId>
+				<version>1.0.0-el4j_20090921_1415</version>
+				<executions>
+					<execution>
+						<phase>compile</phase>
+						<goals>
+							<goal>macker</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+	<dependencies>
+		<dependency>
+			<groupId>ch.elca.el4j.applications</groupId>
+			<artifactId>swing-demo-common</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>ch.elca.el4j.applications</groupId>
+			<artifactId>refdb</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>ch.elca.el4j.modules</groupId>
+					<artifactId>module-database</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>net.sf.microba</groupId>
+			<artifactId>microba</artifactId>
+			<version>0.4.4.3</version>
+		</dependency>
+
+		<!-- EL4J framework modules -->
+		<dependency>
+			<groupId>ch.elca.el4j.modules</groupId>
+			<artifactId>module-swing</artifactId>
+		</dependency>
+	</dependencies>
+</project>
