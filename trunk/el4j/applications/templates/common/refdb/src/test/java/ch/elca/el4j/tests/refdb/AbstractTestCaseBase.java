@@ -39,7 +39,6 @@ import ch.elca.el4j.apps.refdb.dom.File;
 import ch.elca.el4j.apps.refdb.dom.FormalPublication;
 import ch.elca.el4j.apps.refdb.dom.Link;
 import ch.elca.el4j.apps.refdb.dom.Reference;
-import ch.elca.el4j.services.persistence.generic.dao.impl.DefaultDaoRegistry;
 import ch.elca.el4j.tests.core.AbstractTest;
 
 /**
@@ -171,10 +170,7 @@ public abstract class AbstractTestCaseBase extends AbstractTest {
 	 */
 	protected LinkDao getLinkDao() {
 		if (m_linkDao == null) {
-			DefaultDaoRegistry daoRegistry
-				= (DefaultDaoRegistry) getApplicationContext()
-					.getBean("daoRegistry");
-			m_linkDao = (LinkDao) daoRegistry.getFor(Link.class);
+			m_linkDao = (LinkDao) getApplicationContext().getBean("linkDao");
 		}
 		return m_linkDao;
 	}
@@ -184,12 +180,8 @@ public abstract class AbstractTestCaseBase extends AbstractTest {
 	 */
 	protected FormalPublicationDao getFormalPublicationDao() {
 		if (m_formalPublicationDao == null) {
-			DefaultDaoRegistry daoRegistry
-				= (DefaultDaoRegistry) getApplicationContext()
-					.getBean("daoRegistry");
 			m_formalPublicationDao
-				= (FormalPublicationDao) daoRegistry.getFor(
-					FormalPublication.class);
+				= (FormalPublicationDao) getApplicationContext().getBean("formalPublicationDao");
 		}
 		return m_formalPublicationDao;
 	}
@@ -200,11 +192,7 @@ public abstract class AbstractTestCaseBase extends AbstractTest {
 	*/
 	protected BookDao getBookDao() {
 		if (m_bookDao == null) {
-			DefaultDaoRegistry daoRegistry
-				= (DefaultDaoRegistry) getApplicationContext()
-					.getBean("daoRegistry");
-			m_bookDao
-				= (BookDao) daoRegistry.getFor(Book.class);
+			m_bookDao = (BookDao) getApplicationContext().getBean("bookDao");
 		}
 		return m_bookDao;
 	}
@@ -215,11 +203,7 @@ public abstract class AbstractTestCaseBase extends AbstractTest {
 	 */
 	protected AnnotationDao getAnnotationDao() {
 		if (m_annotationDao == null) {
-			DefaultDaoRegistry daoRegistry
-				= (DefaultDaoRegistry) getApplicationContext()
-					.getBean("daoRegistry");
-			m_annotationDao = (AnnotationDao) daoRegistry
-				.getFor(Annotation.class);
+			m_annotationDao = (AnnotationDao) getApplicationContext().getBean("annotationDao");
 		}
 		return m_annotationDao;
 	}
@@ -229,11 +213,7 @@ public abstract class AbstractTestCaseBase extends AbstractTest {
 	 */
 	protected FileDao getFileDao() {
 		if (m_fileDao == null) {
-			DefaultDaoRegistry daoRegistry
-				= (DefaultDaoRegistry) getApplicationContext()
-					.getBean("daoRegistry");
-			m_fileDao = (FileDao) daoRegistry
-				.getFor(File.class);
+			m_fileDao = (FileDao) getApplicationContext().getBean("fileDao");
 		}
 		return m_fileDao;
 	}
@@ -243,11 +223,7 @@ public abstract class AbstractTestCaseBase extends AbstractTest {
 	 */
 	protected KeywordDao getKeywordDao() {
 		if (m_keywordDao == null) {
-			DefaultDaoRegistry daoRegistry
-				= (DefaultDaoRegistry) getApplicationContext()
-					.getBean("daoRegistry");
-			m_keywordDao = (KeywordDao) daoRegistry
-				.getFor(Keyword.class);
+			m_keywordDao = (KeywordDao) getApplicationContext().getBean("keywordDao");
 		}
 		return m_keywordDao;
 	}

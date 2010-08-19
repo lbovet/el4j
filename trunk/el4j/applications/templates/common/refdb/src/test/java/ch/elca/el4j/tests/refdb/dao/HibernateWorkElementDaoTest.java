@@ -26,7 +26,6 @@ import org.springframework.dao.DataIntegrityViolationException;
 
 import ch.elca.el4j.apps.refdb.dao.WorkElementDao;
 import ch.elca.el4j.apps.refdb.dom.WorkElement;
-import ch.elca.el4j.services.persistence.generic.dao.impl.DefaultDaoRegistry;
 import ch.elca.el4j.tests.refdb.AbstractTestCaseBase;
 
 
@@ -158,9 +157,7 @@ public class HibernateWorkElementDaoTest extends AbstractTestCaseBase {
 			return m_workElementDao;
 		}
 		
-		DefaultDaoRegistry daoRegistry
-			= (DefaultDaoRegistry) getApplicationContext().getBean("daoRegistry");
-		m_workElementDao = daoRegistry.getDao(WorkElementDao.class);
+		m_workElementDao = (WorkElementDao) getApplicationContext().getBean("workElementDao");
 		return m_workElementDao;
 	}
 }

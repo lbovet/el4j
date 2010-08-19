@@ -33,7 +33,6 @@ import static org.junit.Assert.fail;
 
 import ch.elca.el4j.apps.keyword.dao.KeywordDao;
 import ch.elca.el4j.apps.keyword.dom.Keyword;
-import ch.elca.el4j.services.persistence.generic.dao.impl.DefaultDaoRegistry;
 import ch.elca.el4j.services.persistence.hibernate.criteria.DetachedCriteriaUtils;
 import ch.elca.el4j.services.search.QueryObject;
 import ch.elca.el4j.services.search.criterias.LikeCriteria;
@@ -74,10 +73,7 @@ public abstract class AbstractKeywordDaoTest
 	 */
 	protected KeywordDao getKeywordDao() {
 		if (m_keywordDao == null) {
-			DefaultDaoRegistry daoRegistry
-				= (DefaultDaoRegistry) getApplicationContext()
-					.getBean("daoRegistry");
-			m_keywordDao = daoRegistry.getDao(KeywordDao.class);
+			m_keywordDao = (KeywordDao) getApplicationContext().getBean("keywordDao");
 		}
 		return m_keywordDao;
 	}

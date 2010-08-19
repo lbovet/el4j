@@ -16,7 +16,8 @@
  */
 package ch.elca.el4j.tests.person.dao.impl.hibernate;
 
-import ch.elca.el4j.services.persistence.generic.dao.AutocollectedGenericDao;
+import org.springframework.stereotype.Repository;
+
 import ch.elca.el4j.services.persistence.hibernate.dao.GenericHibernateDao;
 import ch.elca.el4j.tests.person.dom.Brain;
 
@@ -27,7 +28,7 @@ import ch.elca.el4j.tests.person.dom.Brain;
  *
  * @author Jonas Hauenstein (JHN)
  */
-@AutocollectedGenericDao("brainDao")
+@Repository("brainDao")
 public class HibernateBrainDao extends GenericHibernateDao<Brain, Integer>
 	implements GenericHibernateBrainDaoInterface {
 

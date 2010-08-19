@@ -100,12 +100,12 @@ public interface JpaHelper {
 	public <T> void refresh(T instance);
 	
 	/**
-	 * Finds an entity by its primary key.
+	 * Finds an entity by its primary key. The returned entity is <code>MANAGED</code>. 
 	 * 
 	 * @param <T> The type parameter, to allow us to return the searched object.
 	 * @param clazz The entity class.
 	 * @param key The primary key.
-	 * @return The searched entity.
+	 * @return The searched entity (<code>MANAGED</code>).
 	 */
 	public <T> T findByKey(Class<T> clazz, Integer key);
 

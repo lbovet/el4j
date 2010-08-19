@@ -16,9 +16,10 @@
  */
 package ch.elca.el4j.apps.refdb.dao.impl.hibernate;
 
+import org.springframework.stereotype.Repository;
+
 import ch.elca.el4j.apps.refdb.dao.WorkElementDao;
 import ch.elca.el4j.apps.refdb.dom.WorkElement;
-import ch.elca.el4j.services.persistence.generic.dao.AutocollectedGenericDao;
 import ch.elca.el4j.services.persistence.hibernate.dao.GenericHibernateDao;
 
 
@@ -30,7 +31,7 @@ import ch.elca.el4j.services.persistence.hibernate.dao.GenericHibernateDao;
  *
  * @author Daniel Thomas (DTH)
  */
-@AutocollectedGenericDao("workElementDao")
+@Repository("workElementDao")
 public class HibernateWorkElementDao extends GenericHibernateDao<WorkElement, Integer> 
 	implements WorkElementDao {
 

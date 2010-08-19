@@ -83,18 +83,8 @@ public abstract class AbstractCalculatorTest extends AbstractTest {
 		try {
 			getCalc().throwMeAnException();
 			fail("No exception was thrown.");
-		} catch (Exception e) {
-			if (e.getCause() instanceof InvocationTargetException) {
-				if (((InvocationTargetException) e.getCause()).getTargetException() instanceof CalculatorException) {
-					s_logger.debug("Expected exception caught.", e);
-				} else {
-					throw e;
-				}
-			} else if (e instanceof CalculatorException) {
-				s_logger.debug("Expected exception caught.", e);
-			} else {
-				throw e;
-			}
+		} catch (CalculatorException e) {
+			s_logger.debug("Expected exception caught.", e);
 		}
 	}
 	

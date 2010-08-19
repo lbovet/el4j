@@ -23,10 +23,13 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
+import javax.inject.Inject;
+
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.dao.OptimisticLockingFailureException;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -59,8 +62,34 @@ import ch.elca.el4j.util.codingsupport.Reject;
  * @author Martin Zeltner (MZE)
  * @author Alex Mathey (AMA)
  */
+@Service("referenceService")
 public class DefaultReferenceService extends DefaultKeywordService
 	implements ReferenceService {
+	
+	/**
+	 * The DAO for books.
+	 */
+	@Inject
+	protected BookDao m_bookDao;
+	
+	
+	/**
+	 * The DAO for files.
+	 */
+	@Inject
+	protected FileDao m_fileDao;
+	
+	/**
+	 * The DAO for formal publications.
+	 */
+	@Inject
+	protected FormalPublicationDao m_formalPubDao;
+	
+	/**
+	 * The DAO for links.
+	 */
+	@Inject
+	protected LinkDao m_linkDao;
 	
 	/**
 	 * Constructor.
@@ -71,21 +100,21 @@ public class DefaultReferenceService extends DefaultKeywordService
 	 * @return Returns the DAO for files.
 	 */
 	public FileDao getFileDao() {
-		return (FileDao) getDaoRegistry().getFor(File.class);
+		return m_fileDao;
 	}
 
 	/**
 	 * @return Returns the DAO for links.
 	 */
 	public LinkDao getLinkDao() {
-		return (LinkDao) getDaoRegistry().getFor(Link.class);
+		return m_linkDao;
 	}
 	
 	/**
 	 * @return Returns the DAO for formal publications.
 	 */
 	public FormalPublicationDao getFormalPublicationDao() {
-		return (FormalPublicationDao) getDaoRegistry().getFor(FormalPublication.class);
+		return m_formalPubDao;
 	}
 	
 	/**
@@ -93,7 +122,7 @@ public class DefaultReferenceService extends DefaultKeywordService
 	 * @return
 	 */
 	public BookDao getBookDao() {
-		return (BookDao) getDaoRegistry().getFor(Book.class);
+		return m_bookDao;
 	}
 	
 	/** {@inheritDoc} */
@@ -280,13 +309,11 @@ public class DefaultReferenceService extends DefaultKeywordService
 				Constants.REFERENCE);
 		}
 		
-		KeywordDao keywordDao = (KeywordDao) getDaoRegistry()
-			.getFor(Keyword.class);
 		
 		Iterator<Keyword> it = keywordSet.iterator();
 		while (it.hasNext()) {
 			int delKey = it.next().getKey();
-			keywordDao.deleteById(delKey);
+			getKeywordDao().deleteById(delKey);
 		}
 	}
 	

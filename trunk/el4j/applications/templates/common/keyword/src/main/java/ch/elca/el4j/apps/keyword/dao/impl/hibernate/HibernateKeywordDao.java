@@ -18,14 +18,18 @@ package ch.elca.el4j.apps.keyword.dao.impl.hibernate;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
+import org.hibernate.SessionFactory;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataRetrievalFailureException;
+import org.springframework.orm.hibernate3.HibernateTemplate;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import ch.elca.el4j.apps.keyword.dao.KeywordDao;
 import ch.elca.el4j.apps.keyword.dom.Keyword;
-import ch.elca.el4j.services.persistence.generic.dao.AutocollectedGenericDao;
 import ch.elca.el4j.services.persistence.hibernate.dao.GenericHibernateDao;
 
 /**
@@ -36,7 +40,7 @@ import ch.elca.el4j.services.persistence.hibernate.dao.GenericHibernateDao;
  *
  * @author Alex Mathey (AMA)
  */
-@AutocollectedGenericDao("keywordDao")
+@Repository("keywordDao")
 public class HibernateKeywordDao
 	extends GenericHibernateDao<Keyword, Integer>
 	implements KeywordDao {

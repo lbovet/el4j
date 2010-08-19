@@ -27,9 +27,11 @@
 		</property>
 	</bean>
 	
+	<import resource="classpath*:optional/refdb-tests-core-config.xml" />
+	
 	<bean id="jaxwsLazyPersonImpl" class="ch.elca.el4j.tests.remoting.jaxws.service.impl.LazyPersonImplJaxws">
-		<property name="daoRegistry">
-			<ref bean="daoRegistry"/>
+		<property name="personDao">
+			<ref bean="personDao"/>
 		</property>
 	</bean>
 </beans>

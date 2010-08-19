@@ -1312,27 +1312,31 @@ public abstract class AbstractReferenceServiceTest extends AbstractTestCaseBase 
 		book.setName("Testbook");
 		book.setAuthorName("Mister Y");
 		book.setPageNum(22);
+		book = getBookDao().saveOrUpdate(book);
 		Annotation a1 = new Annotation();
 		a1.setAnnotator("arr");
 		a1.setContent("very good testbook!");
+		// hashCode Problem: Save the annotations first, before adding 
+		// them to a collection (see TWiki: HibernateGuidelines > Automatic equals semantics)
+		a1.setReference(book);
+		a1 = getAnnotationDao().saveOrUpdateAndFlush(a1);
 		book.setAnnotations(new HashSet<Annotation>());
 		book.getAnnotations().add(a1);
-		a1.setReference(book);
+		
 		Keyword k1 = new Keyword();
 		k1.setName("Java");
 		Keyword k2 = new Keyword();
 		k2.setName("XML");
 		Keyword k3 = new Keyword();
 		k3.setName("other");
-
+		// hashCode Problem: Save the keywords first, before adding 
+		// them to a collection (see TWiki: HibernateGuidelines > Automatic equals semantics)
 		k1 = getKeywordDao().saveOrUpdate(k1);
 		k2 = getKeywordDao().saveOrUpdate(k2);
 		k3 = getKeywordDao().saveOrUpdate(k3);
-
 		book.setKeywords(new HashSet<Keyword>());
 		book.getKeywords().add(k1);
 		book = getBookDao().saveOrUpdate(book);
-		a1 = getAnnotationDao().saveOrUpdateAndFlush(a1);
 
 		assertEquals(1, getReferenceService().getReferencesByKeywords(Arrays.asList(k1)).size());
 		assertEquals(0, getReferenceService().getReferencesByKeywords(Arrays.asList(k2)).size());
