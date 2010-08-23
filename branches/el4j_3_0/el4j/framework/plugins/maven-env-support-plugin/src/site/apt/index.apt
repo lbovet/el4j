@@ -1,0 +1,342 @@
+ -----
+ Environment support plugin
+ -----
+ -----
+ 26 May 2009
+ -----
+
+Environment support plugin
+
+  The Environment plugin is used to have the same environment variables 
+  available (1) in maven for build system tasks and (2) while applications are running.
+  
+  Typically an environment variable is defined as a property in a maven pom file.
+  Here is an example:
+  
++----------------
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    ...
+    
+    <properties>
+        <rmi.host>localhost</rmi.host>
+        <rmi.port>8099</rmi.port>
+        
+        <db.username>refdb_user</db.username>
+        <db.password>my_secret_password</db.password>
+        
+        ...
+        
+    </properties>
+</project>
++----------------
+
+  To have the (maven) properties <<<rmi.host>>> and <<<rmi.port>>> also available during 
+  application runtime we have to <share> these properties between the 2 "worlds" 
+  (maven and the application runtime). In EL4J before version 1.6 this has been done
+  using a properties file. The EL4J <<<env-module>>> expected the
+  file <<<env-placeholder.properties>>> in the classpath. More information about the old way
+  can be found below in section 'Old env support'.
+  
+  In EL4J 1.6 the properties files have been replaced by the <<<env.xml>>> file, which provides
+  much more flexibility how maven properties get available at Java runtime. This file has
+  to be stored in <<<src/main/env>>> or <<<srv/test/env>>> for test environment properties.
+  
+  The simplest entries are placeholders. The following example shows how to make the values
+  of <<<rmi.host>>> and <<<rmi.port>>> available using the same placeholder names. You can
+  see that the <<<value>>> attribute is optional if the maven property has the same name.
+  
++----------------
+<?xml version="1.0" encoding="UTF-8"?>
+<env xmlns="http://www.el4-services.elca.ch/schema/env/"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.el4-services.elca.ch/schema/env/ http://el4.elca-services.ch/el4j/schema/env-1.0.xsd">
+    
+    <placeholders>
+        <placeholder name="rmi.host" value="${rmi.host}"/>
+        <placeholder name="rmi.port"/>
+    </placeholders>
+</env>
++----------------
+
+  The other category of properties are bean-overrides. They override a property of a Spring bean.
+  In the following example the property <<<description>>> of the bean <<<myBean>>> gets overwritten
+  using the (of course evaluated) value <<<The host is ${rmi.host}.>>>:
+  
++----------------
+<?xml version="1.0" encoding="UTF-8"?>
+<env xmlns="http://www.el4-services.elca.ch/schema/env/"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.el4-services.elca.ch/schema/env/ http://el4.elca-services.ch/el4j/schema/env-1.0.xsd">
+    
+    <bean-overrides>
+        <bean-override name="myBean.description" value="The host is ${rmi.host}."/>
+    </bean-overrides>
+</env>
++----------------
+  
+  Remark: The XML schema requires that the placeholders have to be declared prior to the bean-overrides.
+
+Activation
+  
+  To enable the processing of this file add the maven-env-support-plugin to the maven lifecycle.
+  
++----------------
+<build>
+    <plugins>
+        <!-- Building -->
+        <plugin>
+            <groupId>ch.elca.el4j.maven.plugins</groupId>
+            <artifactId>maven-env-support-plugin</artifactId>
+        </plugin>
+    </plugins>
+</build>
++----------------
+
+  The plugin copies the <<<env.xml>>> file to <<<target/env/>>> (or <<<target/env-test/>>>)
+  to make it available in the jar file and also creates there the <<<env-values.properties>>>
+  file containing all evaluated properties required to evaluate the <<<env.xml>>> file.
+  
+  Background info: The reason why not only a properties file is generated gets visible when
+  overriding of env properties is used. If module X declares a property having the value
+  <<<Connecting to ${rmi.host}:${rmi.port}>>> and a dependent module Y only overrides
+  <<<rmi.host>>>, it would not be possible to re-evaluate the whole string because <<<rmi.port>>>
+  is not available anymore (only somehow as evaluated property <<<Connecting to localhost:1234>>>).
+  
+Property overriding
+
+  The old env support prior to EL4J 1.6 only allowed one env property file per application.
+  As soon as applications can be extended this approach comes to its limits. Also most
+  applications had nearly the same env properties, which leads to duplication.
+  
+  Following the inheritable modularization idea of EL4J, env properties get inherited
+  along the maven dependency hierarchy. Here's an example:
+  
+  Module database needs the env property <<<db.name>>> to be set to work correctly. The
+  <<<env.xml>>> file therefore looks like this:
+
++----------------
+<?xml version="1.0" encoding="UTF-8"?>
+<env xmlns="http://www.el4-services.elca.ch/schema/env/"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.el4-services.elca.ch/schema/env/ http://el4.elca-services.ch/el4j/schema/env-1.0.xsd">
+    
+    <placeholders>
+        <placeholder name="db.name"/>
+    </placeholders>
+</env>
++----------------
+  
+  Any module that depends on module-database (and includes the env-support-plugin, of course)
+  will re-evaluate the placeholder <<<db.name>>> during their compilation using the current
+  maven properties. These modules therefore don't have to re-declare the placeholder <<<db.name>>>
+  in their <<<env.xml>>> file (if they need a <<<env.xml>>> at all).
+  
+ * Properties can be declared abstract, to enforce that modules inheriting from it have to
+  provide it. Abstract properties generate warnings during the execution of the env-support plugin.
+  To make a property abstract add <<<type="abstract">>>.
+  
+ * Another modifier is <<<type="final">>>. Final properties cannot be overwritten and don't get
+  re-evaluated in dependent modules.
+  
+ * Properties also can be removed using <<<remove-placeholder>>> or <<<remove-bean-override>>>.
+  
+  
+Full env.xml syntax
+
+  The following example describes a fully featured <<<env.xml>>> file. See comments for explanations.
+  
++----------------
+<!-- the XML header to get word completion in eclipse -->
+<?xml version="1.0" encoding="UTF-8"?>
+<env xmlns="http://www.el4-services.elca.ch/schema/env/"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.el4-services.elca.ch/schema/env/ http://el4.elca-services.ch/el4j/schema/env-1.0.xsd">
+    
+    <!-- all placeholders (before EL4J 1.6 stored in env-placeholder.properties) -->
+    <placeholders>
+        <!-- default usage -->
+        <placeholder name="remote.host" value="${server.hostIP}"/>
+        
+        <!-- short form: value here defaults to ${db.name} -->
+        <placeholder name="db.name"/>
+        
+        <!-- abstract property: property is needed to run this modules. Modules inheriting from this have to provide it -->
+        <placeholder name="localhost.port" type="abstract"/>
+        
+        <!-- final property: property must not be overwritten.
+                     If value contains ${}-expressions they only get evaluated at compile time of this module -->
+        <placeholder name="db.name" value="oracle" type="final"/>
+        
+        <!-- remove a placeholder -->
+        <remove-placeholder name="someDisturbingPlaceholder" />
+    </placeholders>
+    
+    <!-- all bean-overrides (before EL4J 1.6 stored in env-bean-property.properites) -->
+    <bean-overrides>
+        <!-- default usage -->
+        <bean-override name="someSpringBean.someValue" value="${someMavenProperty}"/>
+        
+        <!-- remove a bean-override defined in a super module -->
+        <remove-bean-override name="someOtherSpringBean.someOtherValue" comment="Do not override this value"/>
+    </bean-overrides>
+</env>
++----------------
+  
+Debugging
+
+  The goal <<<list>>> of the envsuppport plugin prints a detailed report
+  of what properties files are considered and how they get evaluated.
+  
+  Here is an example output:
+  
++----------------
+$ mvn envsupport:list
+...
+[INFO] [envsupport:list]
+[INFO]
+[INFO]   Properties placeholders declared in ch.elca.el4j.modules:module-database-common
+[INFO]     db.name = ${db.name}
+[INFO]
+[INFO]   Properties placeholders declared in ch.elca.el4j.modules:module-remoting_core
+[INFO]     jee-web.host = ${jee-web.host}
+[INFO]     jee-web.port = ${jee-web.port}
+[INFO]     jee-web.context = ${jee-web.context}
+[INFO]
+[INFO]   Evaluated properties:
+[INFO]     db.name = db2
+[INFO]     jee-web.port = 8080
+[INFO]     jee-web.host = localhost
+[INFO]     jee-web.context = swing-demo
+[INFO]
+[INFO]   Checking properties: OK
+[INFO]
+[INFO] ------------------------------------------------------------------------
+[INFO]
+[INFO]   Bean override properties declared in ch.elca.el4j.modules:module-hibernate
+[INFO]     dataSource.jdbcUrl = ${db.url}
+[INFO]     dataSource.user = ${db.username}
+[INFO]     dataSource.password = ${db.password}
+[INFO]
+[INFO]   Evaluated properties:
+[INFO]     dataSource.password = el4j_user
+[INFO]     dataSource.user = el4j_user
+[INFO]     dataSource.jdbcUrl = jdbc:derby://localhost:1527/el4j;create=true
+[INFO]
+[INFO]   Checking properties: OK
+
++----------------
+
+
+Old env support (before EL4J 1.6)
+  
+  Maven is able to filter resources which means that placeholders will be 
+  replaced by their values. To have the properties <<<rmi.host>>> and 
+  <<<rmi.port>>> with exactly the same name during runtime we have to write a 
+  <<<env.xml>>> file like this:
+  
++----------------
+rmi.host=${rmi.host}
+rmi.port=${rmi.port}
++----------------
+
+  You already know the path <<<src/main/resources>>>. Resources placed in this
+  path will be copied 1:1 to the place where the compiled Java sources are 
+  (by default <<<target/classes>>>). Now we have a similar path <<<src/main/env>>>.
+  Resources in this path will be copied and filtered i.e. the placeholders will be
+  replaced. The default target path for filtered files is <<<target/env>>>. This
+  path is handled like the <<<src/main/resources>>> path. To have this behavior
+  we must define the following in our parent pom (this is already made in 
+  the <root> pom of EL4J):
+  
++----------------
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    ...
+
+    <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>false</filtering>
+            </resource>
+
+            <!-- Used for the environment support of EL4J -->
+            <resource>
+                <directory>target/env</directory>
+                <filtering>false</filtering>
+            </resource>
+        </resources>
+        <testResources>
+            <testResource>
+                <directory>src/test/resources</directory>
+                <filtering>false</filtering>
+            </testResource>
+
+            <!-- Used for the environment support of EL4J -->
+            <testResource>
+                <directory>target/env-test</directory>
+                <filtering>false</filtering>
+            </testResource>
+        </testResources>
+    </build>
+    
+    ...
+    
+</project>
++----------------
+
+  To complete the example above, we have to place the
+  <<<env-placeholder.properties>>> file in <<<src/main/env>>>.
+  
+  The filtered <<<env-placeholder.properties>>> file will then look like the
+  following and can be found at <<<target/env>>>.
+  
++----------------
+rmi.host=localhost
+rmi.port=8099
++----------------
+
+  If you create an Eclipse project for your non-pom artifact you will have the path
+  <<<target/env>>> as source folder available. Through this you can clean your Eclipse
+  project without loosing the filtered file.
+  
+  [Test scope] The equivalent part for the test scope must be placed in 
+  <<<src/test/env>>> and filtered files will be placed by default in 
+  <<<target/env-test>>>.
+  
+  [Overriding bean properties] In the same directory as the
+  <<<env-placeholder.properties>>> files you can place another properties 
+  file with name <<<env-bean-property.properties>>>. Properties in this file
+  will be used to override Spring bean properties (like Spring's 
+  PropertyOverrideConfigurer). 
+  Here is an example:
+
++----------------
+dataSource.username=${db.username}
+dataSource.password=${db.password}
+dataSource.url=${db.url}
++----------------
+
+  The bean properties <<<username>>> and <<<password>>> of the bean <<<dataSource>>>
+  will then be overridden. BTW the value of <<<db.url>>> is already set when using the 
+  corresponding database profile of the EL4J (root) pom (by default it is set to db2 
+  (which is equivalent to derby)).
+  
+  [Global environment resource directory] You can define to use a global resource
+  directory so you do not have to have the <<<src/main/env>>> path in each artifact.
+  But be aware that you have the <<<env-placeholder.properties>>> file only one time in 
+  your classpath (otherwise you will get a warning and the wrong properties file may be 
+  chosen)!
+
+  []
+  
+  For detailed usage {{{plugin-info.html}see the plugin info page}}.
