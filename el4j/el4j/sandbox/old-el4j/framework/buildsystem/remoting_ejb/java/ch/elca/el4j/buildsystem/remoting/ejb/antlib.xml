@@ -1,8 +1,0 @@
-<?xml version="1.0"?>
-<antlib>
-  <taskdef name="client.dependency" classname="ch.elca.el4j.buildsystem.remoting.ejb.ClientDependency"/>
-  <taskdef name="generate.beans" classname="ch.elca.el4j.buildsystem.remoting.ejb.EjbSessionBeanGenerator"/>
-  <taskdef name="generate.ear.dd" classname="ch.elca.el4j.buildsystem.remoting.ejb.ApplicationXMLGenerator"/>
-  <taskdef name="init.ejb.generator" classname="ch.elca.el4j.buildsystem.remoting.ejb.GeneratorInitTask"/>
-  <taskdef name="init.ejb.container" classname="ch.elca.el4j.buildsystem.remoting.ejb.ContainerInitTask"/>
-</antlib>
