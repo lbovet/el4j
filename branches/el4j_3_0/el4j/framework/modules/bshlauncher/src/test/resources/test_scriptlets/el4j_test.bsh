@@ -1,5 +1,0 @@
-
-el4j_test() {
-  System.out.println("hello el4j\n");
-  aa+=1;
-}
