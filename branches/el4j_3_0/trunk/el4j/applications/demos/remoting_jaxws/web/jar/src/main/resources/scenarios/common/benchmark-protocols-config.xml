@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+	<!-- $Revision$ -->
+	<!-- $URL$ -->
+	<!-- $Date$ -->
+	<!-- $Author$ -->
+
+	<!-- JAX-WS Soap Protocol -->
+	<bean id="jaxwsProtocolWithoutContext" class="ch.elca.el4j.services.remoting.protocol.Jaxws">
+		<property name="serviceHost">
+			<value>${jee-web.host}</value>
+		</property>
+		<property name="servicePort">
+			<value>${jee-web.port}</value>
+		</property>
+		<property name="contextPath">
+			<value>${jee-web.context}</value>
+		</property>
+	</bean>
+	<bean id="jaxwsProtocolWithContext" class="ch.elca.el4j.services.remoting.protocol.JaxwsSoapHeaderContextPassing">
+		<property name="serviceHost">
+			<value>${jee-web.host}</value>
+		</property>
+		<property name="servicePort">
+			<value>${jee-web.port}</value>
+		</property>
+		<property name="contextPath">
+			<value>${jee-web.context}</value>
+		</property>
+		<property name="implicitContextPassingRegistry">
+			<ref local="implicitContextPassingRegistry" />
+		</property>
+		<property name="contextPassingContext">
+			<ref bean="jaxwsContextPassingContext" />
+		</property>
+	</bean>
+	
+	<!-- JAX-WS Soap Protocol for clients that do not need generated code -->
+	<bean id="jaxwsSpringProtocolWithoutContext"
+		class="ch.elca.el4j.services.remoting.protocol.JaxwsSpring">
+		<property name="serviceHost">
+			<value>${jee-web.host}</value>
+		</property>
+		<property name="servicePort">
+			<value>${jee-web.port}</value>
+		</property>
+		<property name="contextPath">
+			<value>${jee-web.context}</value>
+		</property>
+	</bean>
+	<bean id="jaxwsSpringProtocolWithContext"
+		class="ch.elca.el4j.services.remoting.protocol.JaxwsSpringSoapHeaderContextPassing">
+		<property name="serviceHost">
+			<value>${jee-web.host}</value>
+		</property>
+		<property name="servicePort">
+			<value>${jee-web.port}</value>
+		</property>
+		<property name="contextPath">
+			<value>${jee-web.context}</value>
+		</property>
+		<property name="implicitContextPassingRegistry">
+			<ref local="implicitContextPassingRegistry" />
+		</property>
+		<property name="contextPassingContext">
+			<ref bean="jaxwsContextPassingContext" />
+		</property>
+	</bean>
+
+	<bean id="implicitContextPassingRegistry" class="ch.elca.el4j.demos.remoting.TestImplicitContextPassingRegistry" />
+		
+	<!-- JAXBContext used by the JaxwsJaxb protocol to marshal the implicit context -->
+	<bean id="jaxwsContextPassingContext"
+		class="javax.xml.bind.JAXBContext"
+		factory-method="newInstance">
+		<constructor-arg index="0">
+			<list>
+				<value>ch.elca.el4j.demos.remoting.ComplexNumber</value>
+			</list>
+		</constructor-arg>
+	</bean>
+</beans>
