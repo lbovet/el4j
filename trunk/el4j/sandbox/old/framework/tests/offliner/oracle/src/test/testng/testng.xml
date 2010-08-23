@@ -1,9 +1,0 @@
-<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
-
-<suite name="offlinerSuite">
-	<test name="offliner">
-		<packages>
-			<package name="ch.elca.el4j.tests.services.persistence.hibernate.offlining" />
-		</packages>
-	</test>
-</suite>
