@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<!--
+		Spring bean configuration file for transaction manager and other default beans.
+		
+		Needed beans that are not defined in this file:
+		* dataSource
+		* sessionFactory
+	-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+	<!-- $Revision$ -->
+	<!-- $URL: https://el4j.svn.sourceforge.net/svnroot/el4j/trunk/el4j/framework/modules/hibernate/src/main/resources/scenarios/dataaccess/hibernate/hibernateDatabase.xml$	-->
+	<!-- $Date$ -->
+	<!-- $Author$ -->
+
+	<!-- The transaction manager to use for regular non JTA datasource -->
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	
+	<bean id="abstractDao" abstract="true">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+</beans>
