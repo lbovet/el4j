@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<!--
+		Spring bean configuration file for data source.
+		
+		The following properties must be overwritten:
+		* dataSource.driverClass
+		* dataSource.jdbcUrl
+		* dataSource.user
+		* dataSource.password
+	-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+	<!-- $Revision$ -->
+	<!-- $URL: https://el4j.svn.sourceforge.net/svnroot/el4j/trunk/el4j/framework/modules/hibernate/src/main/resources/scenarios/dataaccess/hibernate/hibernateDatabase.xml$	-->
+	<!-- $Date$ -->
+	<!-- $Author$ -->
+	
+	<!-- The DBCP DataSource -->
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+		destroy-method="close">
+		<property name="driverClass">
+			<value>oracle.jdbc.driver.OracleDriver
+			</value>
+		</property>
+		<property name="jdbcUrl">
+			<value>jdbc:oracle:thin:@host:port:sid
+			</value>
+		</property>
+		<property name="user">
+			<value>myUsername</value>
+		</property>
+		<property name="password">
+			<value>myPassword</value>
+		</property>
+
+		<property name="minPoolSize" value="0" />
+		<property name="maxPoolSize" value="8" /> 
+
+		<property name="acquireRetryAttempts" value="10"></property>
+		<!-- <property name="preferredTestQuery" value="SELECT 1"></property> -->
+		<property name="testConnectionOnCheckin" value="false"></property>
+		<property name="testConnectionOnCheckout" value="false"></property>
+		<property name="maxIdleTime" value="100"></property>
+		<property name="idleConnectionTestPeriod" value="30"></property>
+
+		<!--
+			The initial number of connections that are created when the pool is
+			started.
+		-->
+		<property name="initialPoolSize">
+			<value>3</value>
+		</property>
+	</bean>
+</beans>
