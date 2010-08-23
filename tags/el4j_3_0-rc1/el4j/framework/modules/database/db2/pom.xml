@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<!-- Version: $Revision$ -->
+	<!-- URL: $URL$ -->
+	<!-- Date: $Date$ -->
+	<!-- Author: $Author$ -->
+
+	<parent>
+		<groupId>ch.elca.el4j.modules</groupId>
+		<artifactId>module-databases</artifactId>
+		<version>3.0</version>
+	</parent>
+
+	<artifactId>module-database-db2</artifactId>
+	<packaging>jar</packaging>
+	<name>EL4J module database for db2</name>
+	<description>Module database for db2 of the EL4J framework.</description>
+	<dependencies>
+		<dependency>
+			<groupId>ch.elca.el4j.modules</groupId>
+			<artifactId>module-database-common</artifactId>
+		</dependency>
+
+		<!-- Derby network driver -->
+		<dependency>
+			<groupId>org.apache.derby</groupId>
+			<artifactId>derbyclient</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+	</dependencies>
+</project>

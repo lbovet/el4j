@@ -1,0 +1,49 @@
+ -----
+ News
+ -----
+ -----
+16 Dec 2009
+ -----
+
+News
+
+  * <16/12/2009> - <<EL4J 1.7 released.>>
+  On time for christmas, the 1.7 release of EL4J is available. Apart from a lot of smaller improvements, the main new features are: 
+  Upgrade to Maven 2.2.1, support for H2 databases, improved integration of FindBugs, upgraded to Spring Security 2.0.4, upgrade 
+  to Hibernate 3.3.2, full support of Spring IDE for eclipse in the normal maven lifecycle, added support for the Joda-Time library, 
+  upgrade of all major maven plugins to the newest versions... and a lot more. Check out the ReleaseNotes for more information on EL4J 1.7.
+
+  * <01/06/2009> - <<EL4J 1.6 released.>> 
+  Quite a large number of new features: DataExtent for controlling lazy loading, JAX-WS upgrade, first release of the Hibernate offliner, cleaned up env support (to share config
+  between Maven and Spring, now each module can incrementally define its configuration), database scripts can now be versioned and only
+  the "right" scripts are then applied, ID fixer improvements, support for the Maven Sonar plugin, better handling of the PK handling with Hibernate, full JPA support in Hibernate (e.g. @PrePersist can be enabled). Upgrades for many libraries C3P0 instead of DBCP, Spring, Maven, ...
+
+  * <24/10/2008> - <<EL4J 1.5.1 released.>> This is mainly a maintenance release: Clean ups, upgrade to new plugins and improved modules.
+
+  * <14/07/2008> - <<EL4J 1.5 released.>> Main features: Clean ups (some older parts were removed, some bugs fixed), more convenience methods for hibernate access, new beans:beans maven plugin that generates Spring IDE files, ...
+
+  * <30/6/2008> - <<Jazoon Presentation is online:>> {{{docs/pdf/Module-basedDevelopmentWithSpringMaven2.pdf}Module-based Development With Spring and Maven 2}} by Philipp H. Oser and Martin Zeltner
+
+  * <04/5/2008> - <<EL4J 1.4 released.>> Main features: More convenience methods for database access, new support to layout Swing GUIs in XML (similar to XAML), many maven improvements, jconsole can connect by default to EL4J applications, clean-ups, ...
+
+  * <22/2/2008> - <<EL4J 1.3 released.>> Main features: New JSF template, simplified database access, streamlined multi-environment support, improved doc, recursive maven builds, clean-ups, .... 
+
+  * <14/12/2007> - <<EL4J 1.2 released.>> Main features: New Swing GUI framework, JAXWS usable via POJO programming model, new libraries, improved doc, seam demo, clean-ups, .... 
+
+  * <13/08/2007> - <<EL4J 1.1.3 released.>> Main features: Upgrade to new libraries, mysql support, improved doc, many bugfixes. 
+
+  * <20/02/2007> - <<EL4J 1.1.1 released.>> Main features: Many clean ups and simplifications, new maven artefact, database and dependency maven plugins, JAXB support for webservices.
+  
+  * <03/11/2006> - <<EL4J 1.1>> released.
+
+  * <03/10/2006> - The license of EL4J is weakened to the <<L>>GPL license!  
+
+  * <21/09/2006> - EL4J 1.1 is delayed due to the delay of Spring 2.0. It is planned for the beginning of October.
+
+  * <08/08/2006> - Published article about <<identity fixer>> on {{{documentation.html}documentation page}}.
+  
+  * <21/07/2006> - EL4J 1.1 planned for august: Maven and JDK 1.5 support, generic DAO, more integrations, ...
+  
+  * <25/04/2006> - <<EL4J 1.0.0>> released.
+
+
