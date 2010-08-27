@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+	<!-- Common wrappers. -->
+	
+	<bean id="objectWrapper" class="ch.elca.el4j.util.objectwrapper.ObjectWrapper">
+		<property name="wrappables">
+			<map>
+				<entry key="ch.elca.el4j.util.objectwrapper.interfaces.KeyedVersioned" value-ref="keyedVersioned" /> 
+				<entry key="ch.elca.el4j.util.objectwrapper.interfaces.Linked" value-ref="linked" />
+				<entry key="ch.elca.el4j.services.persistence.hibernate.offlining.objectwrapper.Mapped" value-ref="mapped" />
+				<entry key="ch.elca.el4j.services.persistence.hibernate.offlining.objectwrapper.Typed" value-ref="typed" />
+				<entry key="ch.elca.el4j.services.persistence.hibernate.offlining.objectwrapper.UniqueKeyed" value-ref="uniqueKeyed" />
+				<entry key="ch.elca.el4j.services.persistence.hibernate.offlining.objectwrapper.OffliningStateWrappable" value-ref="offliningState" />
+			</map>
+		</property>
+	</bean>
+	
+	<bean id="keyedVersioned" class="ch.elca.el4j.util.objectwrapper.impl.KeyedVersionedHibernateImpl">
+		<constructor-arg ref="sessionFactory" />
+	</bean>
+	
+	<bean id="linked" class="ch.elca.el4j.util.objectwrapper.impl.LinkedHibernateImpl">
+		<constructor-arg ref="sessionFactory" />
+	</bean>
+
+	<!-- Mapped is separate for local and remote. -->
+	
+	<bean id="typed" class="ch.elca.el4j.services.persistence.hibernate.offlining.objectwrapper.impl.TypedImpl" />
+	
+	<bean id="uniqueKeyed" class="ch.elca.el4j.services.persistence.hibernate.offlining.objectwrapper.impl.UniqueKeyedImpl" />
+	
+	<bean id="offliningState" class="ch.elca.el4j.services.persistence.hibernate.offlining.objectwrapper.impl.OffliningStateTableImpl">
+		<constructor-arg ref="stateTable" />
+	</bean>
+	
+	<!-- The state table. Although this is in common, there are two different
+	tables on the client and the server. -->
+	
+	<bean id="stateTable" class="ch.elca.el4j.services.persistence.hibernate.offlining.util.OffliningStateTable" />
+</beans>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<!-- Version: $Revision$ -->
+	<!-- URL: $URL$ -->
+	<!-- Date: $Date$ -->
+	<!-- Author: $Author$ -->
+
+	<parent>
+		<groupId>ch.elca.el4j.applications</groupId>
+		<artifactId>el4j-demos</artifactId>
+		<version>3.0</version>
+	</parent>
+
+	<artifactId>el4j-detailed_statistics-demo</artifactId>
+	<packaging>pom</packaging>
+	<name>EL4J demo detailed statistics</name>
+	<description>
+		Demos for detailed statistic modules of the EL4J framework.
+	</description>
+	<modules>
+		<module>client</module>
+		<module>common</module>
+		<module>service</module>
+	</modules>
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>ch.elca.el4j.applications</groupId>
+				<artifactId>el4j-detailed_statistics-demo-common</artifactId>
+				<version>${version.el4j-framework.current}</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+</project>
