@@ -68,6 +68,7 @@ public final class MainFormDistributedMDI {
 				= new ModuleApplicationContextConfiguration();
 			
 			contextConfig.setInclusiveConfigLocations(applicationContextPaths);
+			contextConfig.setExclusiveConfigLocations(new String[] {"classpath*:mandatory/*-core-config.xml"});
 			contextConfig.setAllowBeanDefinitionOverriding(true);
 
 
