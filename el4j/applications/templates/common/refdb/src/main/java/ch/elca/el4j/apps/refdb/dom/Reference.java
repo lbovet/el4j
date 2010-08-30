@@ -69,6 +69,7 @@ public abstract class Reference extends AbstractIntKeyIntOptimisticLockingDto {
 	/**
 	 * Name of the reference (book title, ...).
 	 */
+	@edu.umd.cs.findbugs.annotations.NonNull
 	private String m_name;
 
 	/**

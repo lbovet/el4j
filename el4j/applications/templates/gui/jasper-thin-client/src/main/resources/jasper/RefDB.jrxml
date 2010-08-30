@@ -1,14 +1,13 @@
-<?xml version="1.0"?>
-<!DOCTYPE jasperReport
-	PUBLIC "-//JasperReports//DTD Report Design//EN"
-	"http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
-
-<jasperReport name="RefDBReport">
+<jasperReport name="RefDBReport"
+	xmlns="http://jasperreports.sourceforge.net/jasperreports" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports 
+		http://jasperreports.sourceforge.net/xsd/jasperreport.xsd">
 
 	<parameter name="ReportTitle" class="java.lang.String"/>
 	<field name="name" class="java.lang.String"/>
 	<field name="description" class="java.lang.String"/>
-	<field name="whenInserted" class="java.util.Date"/>
+	<field name="whenInserted" class="org.joda.time.DateTime"/>
 	
 	<group name="RefGroup" minHeightToStartNewPage="60">
 		<groupFooter>
@@ -79,7 +78,7 @@
 	<detail>
 		<band height="15">
 			<textField isStretchWithOverflow="true">
-				<reportElement positionType="Float" x="0" y="0" width="200" height="15"/>
+				<reportElement positionType="Float" x="0" y="0" width="100" height="15"/>
 				<box leftPadding="10" rightPadding="10">
 					<bottomPen lineWidth="0.5"/>
 				</box>
@@ -100,7 +99,7 @@
 					<bottomPen lineWidth="0.5"/>
 				</box>
 				<textElement/>
-				<textFieldExpression class="java.util.Date"><![CDATA[$F{whenInserted}]]></textFieldExpression>
+				<textFieldExpression class="java.util.Date"><![CDATA[$F{whenInserted}.toDate()]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
