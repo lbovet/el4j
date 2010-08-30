@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<macker>	
+	<ruleset name="Testing rules">
+		<pattern name="dao" class="ch.elca.el4j.apps.refdb.dao.**" />
+		<pattern name="service" class="ch.elca.el4j.apps.refdb.service.**" />
+		<pattern name="gui" class="ch.elca.el4j.demos.gui.**" />
+		<access-rule>
+			<message>GUI has to use service instead of DAOs</message>
+			<deny>
+				<from pattern="gui" />
+				<to pattern="dao" />
+			</deny>
+		</access-rule>
+		<access-rule>
+			<message>Swing and AWT calls belong to the GUI layer</message>
+			<deny>
+				<to>
+					<include class="java.awt.**" />
+					<include class="javax.swing.**" />
+				</to>
+			</deny>
+			<allow>
+				<from pattern="gui" />
+			</allow>
+		</access-rule>
+	</ruleset>
+</macker>

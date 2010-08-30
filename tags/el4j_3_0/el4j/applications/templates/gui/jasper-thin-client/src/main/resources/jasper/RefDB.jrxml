@@ -1,0 +1,125 @@
+<jasperReport name="RefDBReport"
+	xmlns="http://jasperreports.sourceforge.net/jasperreports" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports 
+		http://jasperreports.sourceforge.net/xsd/jasperreport.xsd">
+
+	<parameter name="ReportTitle" class="java.lang.String"/>
+	<field name="name" class="java.lang.String"/>
+	<field name="description" class="java.lang.String"/>
+	<field name="whenInserted" class="org.joda.time.DateTime"/>
+	
+	<group name="RefGroup" minHeightToStartNewPage="60">
+		<groupFooter>
+		<band height="20">
+			<staticText>
+				<reportElement x="400" y="1" width="60" height="15"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Count :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="460" y="1" width="30" height="15"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$V{RefGroup_COUNT}]]></textFieldExpression>
+			</textField>
+		</band>
+		</groupFooter>
+	</group>
+	
+	<title>
+		<band height="70">
+			<line>
+				<reportElement x="0" y="0" width="515" height="1"/>
+				<graphicElement/>
+			</line>
+			<textField isBlankWhenNull="true" bookmarkLevel="1">
+				<reportElement x="0" y="10" width="515" height="30"/>
+				<textElement textAlignment="Center">
+					<font size="22"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{ReportTitle}]]></textFieldExpression>
+				<anchorNameExpression><![CDATA["Title"]]></anchorNameExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="50" width="515" height="1"/>
+				<graphicElement/>
+			</line>
+		</band>
+	</title>
+	
+	<pageHeader>
+		<band height="20">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="5" width="10" height="15" forecolor="#ffffff" backcolor="#333333"/>
+				<text/>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="10" y="5" width="220" height="15" forecolor="#ffffff" backcolor="#333333"/>
+				<textElement><font isBold="true"/></textElement>
+				<text><![CDATA[Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="110" y="5" width="316" height="15" forecolor="#ffffff" backcolor="#333333"/>
+				<textElement><font isBold="true"/></textElement>
+				<text><![CDATA[Description]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="425" y="5" width="90" height="15" forecolor="#ffffff" backcolor="#333333"/>
+				<textElement><font isBold="true"/></textElement>
+				<text><![CDATA[Inserted]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	
+	<detail>
+		<band height="15">
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" x="0" y="0" width="100" height="15"/>
+				<box leftPadding="10" rightPadding="10">
+					<bottomPen lineWidth="0.5"/>
+				</box>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{name}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" x="100" y="0" width="315" height="15"/>
+				<box leftPadding="10" rightPadding="10">
+					<bottomPen lineWidth="0.5"/>
+				</box>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{description}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" x="415" y="0" width="100" height="15"/>
+				<box leftPadding="10" rightPadding="10">
+					<bottomPen lineWidth="0.5"/>
+				</box>
+				<textElement/>
+				<textFieldExpression class="java.util.Date"><![CDATA[$F{whenInserted}.toDate()]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	
+	<pageFooter>
+		<band height="40">
+			<line>
+				<reportElement x="0" y="10" width="515" height="1"/>
+				<graphicElement/>
+			</line>
+			<textField>
+				<reportElement x="200" y="20" width="80" height="15"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.lang.String"><![CDATA["Page " + String.valueOf($V{PAGE_NUMBER}) + " of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="280" y="20" width="75" height="15"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[" " + String.valueOf($V{PAGE_NUMBER})]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>
