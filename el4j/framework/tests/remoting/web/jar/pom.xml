@@ -13,10 +13,11 @@
 	<parent>
 		<groupId>ch.elca.el4j.tests</groupId>
 		<artifactId>el4j-framework-tests-remoting-web</artifactId>
-		<version>3.1-SNAPSHOT</version>
+		<version>1.7</version>
 	</parent>
 
 	<artifactId>module-remoting-tests-web-jar</artifactId>
+	<version>${version.module-remoting-tests}</version>
 	<packaging>jar</packaging>
 	<name>EL4J test remoting web - jar</name>
 	<description>

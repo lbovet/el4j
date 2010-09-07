@@ -16,24 +16,24 @@
  */
 package ch.elca.el4j.tests.services.security;
 
-import java.util.ArrayList;
-import java.util.Collection;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
+import org.springframework.security.AccessDeniedException;
+import org.springframework.security.Authentication;
+import org.springframework.security.AuthenticationCredentialsNotFoundException;
+import org.springframework.security.BadCredentialsException;
+import org.springframework.security.GrantedAuthority;
+import org.springframework.security.GrantedAuthorityImpl;
+
+
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.GrantedAuthorityImpl;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 
 import ch.elca.el4j.core.context.ModuleApplicationContext;
 import ch.elca.el4j.services.security.authentication.AuthenticationService;
@@ -76,7 +76,8 @@ public class AuthorizationDistributedTest {
 		"classpath:optional/security-attributes.xml",
 		"classpath:scenarios/services/sampleService.xml",
 		"classpath:scenarios/server/applicationContextTest.xml",
-		"classpath:scenarios/securityscope/distributed-security-scope-server.xml",
+		"classpath:scenarios/securityscope/distributed-security"
+			+ "-scope-server.xml",
 		"classpath:optional/rmi-protocol-config.xml",
 		"classpath:scenarios/services/serviceExporter.xml"};
 
@@ -86,7 +87,8 @@ public class AuthorizationDistributedTest {
 	private String[] m_configLocationsClient = new String[] {
 		"classpath*:mandatory/*.xml",
 		"classpath:scenarios/services/serviceProxy.xml",
-		"classpath:scenarios/securityscope/distributed-security-scope-client.xml",
+		"classpath:scenarios/securityscope/"
+			+ "distributed-security-scope-client.xml",
 		"classpath:optional/rmi-protocol-config.xml"};
 
 	/**
@@ -250,12 +252,10 @@ public class AuthorizationDistributedTest {
 		RSACipher rsaCipher = new RSACipher(publicKey);
 		String encryptedCredential = rsaCipher.encrypt(credential);
 		
-		Collection<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
-		authorities.add(new GrantedAuthorityImpl("ROLE_TELLER"));
-		authorities.add(new GrantedAuthorityImpl(role));
-		
 		Authentication auth = new TestingAuthenticationToken(principal,
-			encryptedCredential, authorities);
+			encryptedCredential, new GrantedAuthority[] {
+				new GrantedAuthorityImpl("ROLE_TELLER"),
+				new GrantedAuthorityImpl(role)});
 
 		getAuthenticationService().authenticate(auth);
 	}
@@ -272,10 +272,8 @@ public class AuthorizationDistributedTest {
 		RSACipher rsaCipher = new RSACipher(publicKey);
 		String encryptedCredential = rsaCipher.encrypt(credential);
 		
-		Collection<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
-		
 		Authentication auth = new TestingAuthenticationToken(principal,
-			encryptedCredential, authorities);
+			encryptedCredential, new GrantedAuthority[]{});
 		
 		getAuthenticationService().authenticate(auth);
 	}

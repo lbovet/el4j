@@ -8,11 +8,12 @@
 	<parent>
 		<groupId>ch.elca.el4j.maven.plugins</groupId>
 		<artifactId>el4j-maven-plugins</artifactId>
-		<version>3.1-SNAPSHOT</version>
+		<version>1.7</version>
 	</parent>
 
 	<artifactId>maven-jaxws-plugin</artifactId>
 	<packaging>maven-plugin</packaging>
+	<version>${version.maven-jaxws-plugin}</version>
 	<name>EL4J plugin jaxws</name>
 	<description>A plugin to ease the use of wsgen and wsimport</description>
 	<build>
@@ -45,24 +46,7 @@
 		<dependency>
 			<groupId>com.sun.xml.ws</groupId>
 			<artifactId>jaxws-tools</artifactId>
-			<version>2.1.5</version>
-			<exclusions>
-				<exclusion>
-					<groupId>woodstox</groupId>
-					<artifactId>wstx-asl</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<dependency>
-			<groupId>javax.xml.ws</groupId>
-			<artifactId>jaxws-api</artifactId>
-			<version>2.1-1</version>
-			<exclusions>
-				<exclusion>
-					<groupId>javax.jws</groupId>
-					<artifactId>jsr181</artifactId>
-				</exclusion>
-			</exclusions>
+			<version>2.1.4</version>
 		</dependency>
 		<dependency>
 			<groupId>javax.jws</groupId>

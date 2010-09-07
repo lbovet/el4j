@@ -56,8 +56,6 @@ public class CalculatorJaxwsTest extends AbstractJaxwsTest {
 	@Override
 	protected String[] getIncludeConfigLocations() {
 		return new String[] {"classpath*:mandatory/*.xml",
-			"classpath*:scenarios/dataaccess/hibernate/*.xml",
-			"classpath*:scenarios/dataaccess/hibernate/refdb/*.xml",
 			"scenarios/client/remotingtests-jaxws-client-config.xml"};
 	}
 

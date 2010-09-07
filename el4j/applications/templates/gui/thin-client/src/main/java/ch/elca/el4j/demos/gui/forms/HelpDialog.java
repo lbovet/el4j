@@ -24,7 +24,6 @@ import javax.swing.border.EmptyBorder;
 
 import org.jdesktop.application.ResourceMap;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import ch.elca.el4j.core.context.annotations.LazyInit;
@@ -37,7 +36,7 @@ import ch.elca.el4j.services.gui.swing.GUIApplication;
  *
  * @author Andreas Rueedlinger (ARR)
  */
-@Lazy
+@LazyInit
 @Component("helpDialog")
 public class HelpDialog extends JPanel {
 

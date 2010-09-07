@@ -29,9 +29,6 @@ import java.io.InputStreamReader;
 import java.util.HashSet;
 import java.util.List;
 
-import org.hibernate.Criteria;
-import org.hibernate.criterion.DetachedCriteria;
-import org.hibernate.validator.AssertTrue;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,16 +44,12 @@ import ch.elca.el4j.apps.keyword.dom.Keyword;
 import ch.elca.el4j.apps.refdb.dao.AnnotationDao;
 import ch.elca.el4j.apps.refdb.dao.FileDao;
 import ch.elca.el4j.apps.refdb.dao.FormalPublicationDao;
-import ch.elca.el4j.apps.refdb.dao.LinkDao;
 import ch.elca.el4j.apps.refdb.dom.Annotation;
 import ch.elca.el4j.apps.refdb.dom.Book;
 import ch.elca.el4j.apps.refdb.dom.File;
 import ch.elca.el4j.apps.refdb.dom.FormalPublication;
-import ch.elca.el4j.apps.refdb.dom.Link;
 import ch.elca.el4j.apps.refdb.dom.Reference;
-import ch.elca.el4j.apps.refdb.dom.LinkOrigin;
 import ch.elca.el4j.tests.refdb.AbstractTestCaseBase;
-import ch.elca.el4j.util.codelist.Codelist;
 import ch.elca.el4j.util.codingsupport.annotations.FindBugsSuppressWarnings;
 
 // Checkstyle: MagicNumber off
@@ -581,30 +574,23 @@ public abstract class AbstractReferenceDaoTest extends AbstractTestCaseBase {
 			Annotation a2 = new Annotation();
 			a2.setAnnotator("arr");
 			a2.setContent("it is snowing outside");
+			book.setAnnotations(new HashSet<Annotation>());
+			book.getAnnotations().add(a1);
+			a1.setReference(book);
+			book.getAnnotations().add(a2);
+			a2.setReference(book);
 			Keyword k1 = new Keyword();
 			k1.setName("Testkeyword97");
+			book.setKeywords(new HashSet<Keyword>());
+			book.getKeywords().add(k1);
 			TransactionStatus transaction = null;
 			try {
 				transaction = getTransactionManager().getTransaction(new DefaultTransactionDefinition());
 				
-				book = getBookDao().saveOrUpdate(book);
-				a1.setReference(book);
-				a2.setReference(book);
-				
-				// hashCode Problem: Save the keywords first, before adding 
-				// them to a collection (see TWiki: HibernateGuidelines > Automatic equals semantics)
 				k1 = getKeywordDao().saveOrUpdate(k1);
-				book.setKeywords(new HashSet<Keyword>());
-				book.getKeywords().add(k1);
-				// hashCode Problem: Save the annotations first, before adding 
-				// them to a collection (see TWiki: HibernateGuidelines > Automatic equals semantics)
+				book = getBookDao().saveOrUpdate(book);
 				a1 = getAnnotationDao().saveOrUpdate(a1);
 				a2 = getAnnotationDao().saveOrUpdate(a2);
-				book.setAnnotations(new HashSet<Annotation>());
-				book.getAnnotations().add(a1);
-				book.getAnnotations().add(a2);
-				
-				book = getBookDao().saveOrUpdate(book);
 				
 				getTransactionManager().getSessionFactory().getCurrentSession().flush();
 				getTransactionManager().commit(transaction);
@@ -647,48 +633,6 @@ public abstract class AbstractReferenceDaoTest extends AbstractTestCaseBase {
 			}
 			
 		}
-		
-	}
-	
-	/**
-	 * Tests the insertion of link origins which are implemented as a codelists.
-	 * @see Codelist
-	 */
-	@Test
-	public void testInsertReferenceOrigin() {
-		LinkDao dao = getLinkDao();
-
-		//insert two links
-		Link l1 = new Link();
-		l1.setName("Test Link 1");
-		l1.setUrl("http://www.elca.ch");
-		l1.setOrigin(LinkOrigin.DELICIOUS);
-		l1 = dao.saveOrUpdate(l1);
-		Link l2 = new Link();
-		l2.setName("Test Link 2");
-		l2.setUrl("http://www.google.ch");
-		l2.setOrigin(LinkOrigin.DIGG);
-		l2 = dao.saveOrUpdate(l2);
-		
-		//check link 1
-		List<Link> linklist = dao.getByName("Test Link 1");
-		assertEquals("Test Link 1 not found", 1, linklist.size());
-		Link lt = linklist.remove(0);
-		assertEquals("Origin not set correct", LinkOrigin.DELICIOUS, lt.getOrigin());
-		//checking some codlist properties
-		assertEquals("Codelist IntCode not the same", lt.getOrigin().getIntCode(), LinkOrigin.DELICIOUS.getIntCode());
-		assertEquals("Codelist ID not the same", lt.getOrigin().getID(), LinkOrigin.DELICIOUS.getID());
-		
-		//check link 2
-		linklist = dao.getByName("Test Link 2");
-		assertEquals("Test Link 2 not found", 1, linklist.size());
-		lt = linklist.remove(0);
-		assertEquals("Origin not set correct", LinkOrigin.DIGG, lt.getOrigin());
-		//checking some codlist properties
-		assertEquals("Codelist IntCode not the same", lt.getOrigin().getIntCode(), LinkOrigin.DIGG.getIntCode());
-		assertEquals("Codelist ID not the same", lt.getOrigin().getID(), LinkOrigin.DIGG.getID());
-		
-		
 		
 	}
 	

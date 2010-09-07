@@ -12,11 +12,12 @@
 	<parent>
 		<groupId>ch.elca.el4j.maven.plugins</groupId>
 		<artifactId>el4j-maven-plugins</artifactId>
-		<version>3.1-SNAPSHOT</version>
+		<version>1.7</version>
 	</parent>
 	
 	<artifactId>maven-env-support-plugin</artifactId>
 	<packaging>maven-plugin</packaging>
+	<version>${version.maven-env-support-plugin}</version>
 	<name>EL4J plugin environment support</name>
 	<build>
 		<plugins>
@@ -53,7 +54,7 @@
 		<dependency>
 			<groupId>ch.elca.el4j.maven.plugins</groupId>
 			<artifactId>maven-utils</artifactId>
-			<version>${version.el4j-framework.current}</version>
+			<version>${version.maven-utils}</version>
 		</dependency>
 		<dependency>
 			<groupId>ch.elca.el4j.modules</groupId>

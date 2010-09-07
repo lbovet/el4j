@@ -13,10 +13,11 @@
 	<parent>
 		<groupId>ch.elca.el4j.modules</groupId>
 		<artifactId>module-xml_merge-web</artifactId>
-		<version>3.1-SNAPSHOT</version>
+		<version>1.7</version>
 	</parent>
 
 	<artifactId>module-xml_merge-web-war</artifactId>
+	<version>${version.module-xml_merge}</version>
 	<packaging>war</packaging>
 	<name>EL4J module XmlMerge for web - war</name>
 	<description>

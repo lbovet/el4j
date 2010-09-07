@@ -13,10 +13,11 @@
 	<parent>
 		<groupId>ch.elca.el4j.modules</groupId>
 		<artifactId>el4j-framework-modules</artifactId>
-		<version>3.1-SNAPSHOT</version>
+		<version>1.7</version>
 	</parent>
 
 	<artifactId>module-remoting_core</artifactId>
+	<version>${version.module-remoting_core}</version>
 	<packaging>jar</packaging>
 	<name>EL4J module remoting core</name>
 	<description>

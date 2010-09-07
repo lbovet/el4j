@@ -19,23 +19,19 @@ package ch.elca.el4j.tests.services.security;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
-import java.util.ArrayList;
-import java.util.Collection;
-
-import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
-import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.GrantedAuthorityImpl;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.context.SecurityContextImpl;
+import org.springframework.security.AccessDeniedException;
+import org.springframework.security.AuthenticationCredentialsNotFoundException;
+import org.springframework.security.AuthenticationException;
+import org.springframework.security.GrantedAuthority;
+import org.springframework.security.GrantedAuthorityImpl;
+import org.springframework.security.context.SecurityContext;
+import org.springframework.security.context.SecurityContextHolder;
+import org.springframework.security.context.SecurityContextImpl;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import ch.elca.el4j.core.context.ModuleApplicationContext;
 import ch.elca.el4j.services.security.encryption.RSACipher;
@@ -232,13 +228,11 @@ public class AuthorizationLocalTest {
 		String publicKey = getAuthenticationProvider().getPublicKey();
 		RSACipher rsaCipher = new RSACipher(publicKey);
 		String encryptedCredential = rsaCipher.encrypt(credential);
-
-		Collection<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
-		authorities.add(new GrantedAuthorityImpl("ROLE_TELLER"));
-		authorities.add(new GrantedAuthorityImpl(role));
 		
 		TestingAuthenticationToken auth = new TestingAuthenticationToken(
-			principal, encryptedCredential, authorities);
+			principal, encryptedCredential, new GrantedAuthority[] {
+				new GrantedAuthorityImpl("ROLE_TELLER"),
+				new GrantedAuthorityImpl(role)});
 		SecurityContext sc = SecurityContextHolder.getContext();
 		sc.setAuthentication(auth);
 	}

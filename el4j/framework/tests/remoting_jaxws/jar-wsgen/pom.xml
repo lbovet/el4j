@@ -13,10 +13,11 @@
 	<parent>
 		<groupId>ch.elca.el4j.tests</groupId>
 		<artifactId>el4j-framework-tests-remoting-jaxws</artifactId>
-		<version>3.1-SNAPSHOT</version>
+		<version>1.7</version>
 	</parent>
 
 	<artifactId>module-remoting-jaxws-tests-jar-wsgen</artifactId>
+	<version>${version.module-remoting-jaxws-tests}</version>
 	<packaging>jar</packaging>
 	<name>EL4J test remoting-jaxws jar</name>
 	<description>

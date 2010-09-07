@@ -12,10 +12,11 @@
 	<parent>
 		<groupId>ch.elca.el4j.applications</groupId>
 		<artifactId>swing-demo-secure-server</artifactId>
-		<version>3.1-SNAPSHOT</version>
+		<version>1.7</version>
 	</parent>
 
 	<artifactId>swing-demo-secure-server-war</artifactId>
+	<version>${version.application-refdb}</version>
 	<packaging>war</packaging>
 	<name>EL4J application swing demo secure server - war</name>
 	<description>War part of Swing demo secure server module of the EL4J framework.</description>

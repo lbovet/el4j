@@ -16,14 +16,8 @@
  */
 package ch.elca.el4j.web.context;
 
-import java.io.IOException;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.web.context.ContextLoader;
+import org.springframework.web.context.ContextLoaderServlet;
 
 /**
  * Bootstrap servlet to start up the WebApplicationContext.
@@ -35,67 +29,11 @@ import org.springframework.web.context.ContextLoader;
  * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Stefan Wismer (SWI)
- * @author Jonas Hauenstein (JHN)
  */
-public class ModuleContextLoaderServlet extends HttpServlet {
-
-	/**
-	 * The Context Loader to be used.
-	 */
-	private ContextLoader contextLoader;
-
-	/**
-	 * Initialize the root web application context.
-	 */
-	public void init() throws ServletException {
-		this.contextLoader = createContextLoader();
-		this.contextLoader.initWebApplicationContext(getServletContext());
-	}
-
-	/**
-	 * Create the ContextLoader to use. Can be overridden in subclasses.
-	 * Creates the ModuleContextLoader as default.
-	 * @return the new ContextLoader
-	 */
+public class ModuleContextLoaderServlet extends ContextLoaderServlet {
+	/** {@inheritDoc} */
+	@Override
 	protected ContextLoader createContextLoader() {
 		return new ModuleContextLoader();
-	}
-
-	/**
-	 * Return the ContextLoader used by this servlet. 
-	 * @return the current ContextLoader
-	 */
-	public ContextLoader getContextLoader() {
-		return this.contextLoader;
-	}
-
-
-	/**
-	 * Close the root web application context.
-	 */
-	public void destroy() {
-		if (this.contextLoader != null) {
-			this.contextLoader.closeWebApplicationContext(getServletContext());
-		}
-	}
-
-
-	/**
-	 * This should never even be called since no mapping to this servlet should
-	 * ever be created in web.xml. That's why a correctly invoked Servlet 2.3
-	 * listener is much more appropriate for initialization work ;-)
-	 */
-	public void service(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		getServletContext().log(
-				"Attempt to call service method on ContextLoaderServlet as ["
-				+ request.getRequestURI() + "] was ignored");
-		response.sendError(HttpServletResponse.SC_BAD_REQUEST);
-	}
-
-
-	/** {@inheritDoc} */
-	public String getServletInfo() {
-		return "ContextLoaderServlet for Servlet API 2.3 "
-			+ "(deprecated in favor of ContextLoaderListener for Servlet API 2.4)";
 	}
 }

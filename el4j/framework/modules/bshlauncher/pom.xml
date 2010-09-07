@@ -13,10 +13,11 @@
 	<parent>
 		<groupId>ch.elca.el4j.modules</groupId>
 		<artifactId>el4j-framework-modules</artifactId>
-		<version>3.1-SNAPSHOT</version>
+		<version>1.7</version>
 	</parent>
 
 	<artifactId>module-bshlauncher</artifactId>
+	<version>${version.module-bshlauncher}</version>
 	<packaging>jar</packaging>
 	<name>EL4J module bsh launcher</name>
 	<description>
@@ -35,7 +36,7 @@
 		<dependency>
 			<groupId>org.beanshell</groupId>
 			<artifactId>bsh</artifactId>
-			<version>2.0b5</version>
+			<version>2.0b4</version>
 		</dependency>
 	</dependencies>
 </project>

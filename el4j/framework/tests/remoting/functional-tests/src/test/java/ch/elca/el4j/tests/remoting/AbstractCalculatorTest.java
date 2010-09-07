@@ -16,11 +16,8 @@
  */
 package ch.elca.el4j.tests.remoting;
 
-import java.lang.reflect.InvocationTargetException;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.remoting.RemoteAccessException;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -73,13 +70,12 @@ public abstract class AbstractCalculatorTest extends AbstractTest {
 		assertEquals("The area is not correctly calculated.", result, a * b, delta);
 	}
 	
-	
 	/**
 	 * This test tests the exception handling.
 	 * @throws Exception
 	 */
 	@Test
-	public void testExceptionBehaviour() throws Throwable {
+	public void testExceptionBehaviour() {
 		try {
 			getCalc().throwMeAnException();
 			fail("No exception was thrown.");
@@ -100,5 +96,4 @@ public abstract class AbstractCalculatorTest extends AbstractTest {
 		assertEquals(-1.3, result, 0.1);
 		//Checkstyle: MagicNumber on
 	}
-
 }

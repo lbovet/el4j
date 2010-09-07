@@ -27,9 +27,9 @@ import org.jdesktop.application.Action;
 import org.jdesktop.application.ResourceMap;
 import org.jdesktop.application.Task;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
+import ch.elca.el4j.core.context.annotations.LazyInit;
 import ch.elca.el4j.demos.gui.events.SearchProgressEvent;
 import ch.elca.el4j.demos.gui.events.SearchRefDBEvent;
 import ch.elca.el4j.services.gui.swing.GUIApplication;
@@ -46,7 +46,7 @@ import ch.elca.el4j.services.gui.swing.GUIApplication;
  *
  * @author Stefan Wismer (SWI)
  */
-@Lazy
+@LazyInit
 @Component("searchForm")
 public class SearchForm extends AbstractSearchForm {
 	/**

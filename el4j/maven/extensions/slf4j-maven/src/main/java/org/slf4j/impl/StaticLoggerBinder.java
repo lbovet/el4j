@@ -72,8 +72,4 @@ public class StaticLoggerBinder implements LoggerFactoryBinder {
 	public String getLoggerFactoryClassStr() {
 		return loggerFactoryClassStr;
 	}
-	
-	public static final StaticLoggerBinder getSingleton() {
-		return SINGLETON;
-	}
 }

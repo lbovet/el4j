@@ -179,7 +179,7 @@ public final class MavenLoggerAdapter extends MarkerIgnoringBase {
 	 */
 	public void debug(String format, Object arg) {
 		if (log.isDebugEnabled()) {
-			String msgStr = MessageFormatter.format(format, arg).toString();
+			String msgStr = MessageFormatter.format(format, arg);
 			log.debug(msgStr);
 		}
 	}
@@ -199,7 +199,7 @@ public final class MavenLoggerAdapter extends MarkerIgnoringBase {
 	 */
 	public void debug(String format, Object arg1, Object arg2) {
 		if (log.isDebugEnabled()) {
-			String msgStr = MessageFormatter.format(format, arg1, arg2).toString();
+			String msgStr = MessageFormatter.format(format, arg1, arg2);
 			log.debug(msgStr);
 		}
 	}
@@ -217,7 +217,7 @@ public final class MavenLoggerAdapter extends MarkerIgnoringBase {
 	 */
 	public void debug(String format, Object[] argArray) {
 		if (log.isDebugEnabled()) {
-			String msgStr = MessageFormatter.arrayFormat(format, argArray).toString();
+			String msgStr = MessageFormatter.arrayFormat(format, argArray);
 			log.debug(msgStr);
 		}
 	}
@@ -266,7 +266,7 @@ public final class MavenLoggerAdapter extends MarkerIgnoringBase {
 
 	public void info(String format, Object arg) {
 		if (log.isInfoEnabled()) {
-			String msgStr = MessageFormatter.format(format, arg).toString();
+			String msgStr = MessageFormatter.format(format, arg);
 			log.info(msgStr);
 		}
 	}
@@ -286,7 +286,7 @@ public final class MavenLoggerAdapter extends MarkerIgnoringBase {
 	 */
 	public void info(String format, Object arg1, Object arg2) {
 		if (log.isInfoEnabled()) {
-			String msgStr = MessageFormatter.format(format, arg1, arg2).toString();
+			String msgStr = MessageFormatter.format(format, arg1, arg2);
 			log.info(msgStr);
 		}
 	}
@@ -304,7 +304,7 @@ public final class MavenLoggerAdapter extends MarkerIgnoringBase {
 	 */
 	public void info(String format, Object[] argArray) {
 		if (log.isInfoEnabled()) {
-			String msgStr = MessageFormatter.arrayFormat(format, argArray).toString();
+			String msgStr = MessageFormatter.arrayFormat(format, argArray);
 			log.info(msgStr);
 		}
 	}
@@ -352,7 +352,7 @@ public final class MavenLoggerAdapter extends MarkerIgnoringBase {
 	 */
 	public void warn(String format, Object arg) {
 		if (log.isWarnEnabled()) {
-			String msgStr = MessageFormatter.format(format, arg).toString();
+			String msgStr = MessageFormatter.format(format, arg);
 			log.warn(msgStr);
 		}
 	}
@@ -372,7 +372,7 @@ public final class MavenLoggerAdapter extends MarkerIgnoringBase {
 	 */
 	public void warn(String format, Object arg1, Object arg2) {
 		if (log.isWarnEnabled()) {
-			String msgStr = MessageFormatter.format(format, arg1, arg2).toString();
+			String msgStr = MessageFormatter.format(format, arg1, arg2);
 			log.warn(msgStr);
 		}
 	}
@@ -390,7 +390,7 @@ public final class MavenLoggerAdapter extends MarkerIgnoringBase {
 	 */
 	public void warn(String format, Object[] argArray) {
 		if (log.isWarnEnabled()) {
-			String msgStr = MessageFormatter.arrayFormat(format, argArray).toString();
+			String msgStr = MessageFormatter.arrayFormat(format, argArray);
 			log.warn(msgStr);
 		}
 	}
@@ -439,7 +439,7 @@ public final class MavenLoggerAdapter extends MarkerIgnoringBase {
 	 */
 	public void error(String format, Object arg) {
 		if (log.isErrorEnabled()) {
-			String msgStr = MessageFormatter.format(format, arg).toString();
+			String msgStr = MessageFormatter.format(format, arg);
 			log.error(msgStr);
 		}
 	}
@@ -459,7 +459,7 @@ public final class MavenLoggerAdapter extends MarkerIgnoringBase {
 	 */
 	public void error(String format, Object arg1, Object arg2) {
 		if (log.isErrorEnabled()) {
-			String msgStr = MessageFormatter.format(format, arg1, arg2).toString();
+			String msgStr = MessageFormatter.format(format, arg1, arg2);
 			log.error(msgStr);
 		}
 	}
@@ -477,7 +477,7 @@ public final class MavenLoggerAdapter extends MarkerIgnoringBase {
 	 */
 	public void error(String format, Object[] argArray) {
 		if (log.isErrorEnabled()) {
-			String msgStr = MessageFormatter.arrayFormat(format, argArray).toString();
+			String msgStr = MessageFormatter.arrayFormat(format, argArray);
 			log.error(msgStr);
 		}
 	}

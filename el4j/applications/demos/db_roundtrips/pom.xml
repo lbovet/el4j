@@ -13,10 +13,11 @@
 	<parent>
 		<groupId>ch.elca.el4j.applications</groupId>
 		<artifactId>el4j-demos</artifactId>
-		<version>3.1-SNAPSHOT</version>
+		<version>1.7</version>
 	</parent>
 
 	<artifactId>el4j-db_roundtrips-demos</artifactId>
+	<version>${version.module-hibernate}</version>
 	<packaging>jar</packaging>
 	<name>EL4J demo DB roundtrips</name>
 	<description>

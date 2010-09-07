@@ -13,10 +13,11 @@
 	<parent>
 		<groupId>ch.elca.el4j.tests</groupId>
 		<artifactId>el4j-framework-tests</artifactId>
-		<version>3.1-SNAPSHOT</version>
+		<version>1.7</version>
 	</parent>
 
 	<artifactId>module-tcp_forwarder-tests</artifactId>
+	<version>${version.module-tcp_forwarder-tests}</version>
 	<packaging>jar</packaging>
 	<name>EL4J test tcp forwarder</name>
 	<description>

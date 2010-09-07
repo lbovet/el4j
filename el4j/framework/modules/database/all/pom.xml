@@ -12,14 +12,20 @@
 	<parent>
 		<groupId>ch.elca.el4j.modules</groupId>
 		<artifactId>module-databases</artifactId>
-		<version>3.1-SNAPSHOT</version>
+		<version>1.7</version>
 	</parent>
 
 	<artifactId>module-database</artifactId>
+	<version>${version.module-database}</version>
 	<packaging>jar</packaging>
 	<name>EL4J module database</name>
 	<description>Module database of the EL4J framework.</description>
 	<dependencies>
+		<dependency>
+			<groupId>ch.elca.el4j.modules</groupId>
+			<artifactId>module-database-common</artifactId>
+		</dependency>
+
 		<dependency>
 			<groupId>ch.elca.el4j.modules</groupId>
 			<artifactId>module-database-db2</artifactId>

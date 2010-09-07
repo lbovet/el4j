@@ -12,10 +12,11 @@
 	<parent>
 		<groupId>ch.elca.el4j.modules</groupId>
 		<artifactId>module-detailed_statistics</artifactId>
-		<version>3.1-SNAPSHOT</version>
+		<version>1.7</version>
 	</parent>
 
 	<artifactId>module-detailed_statistics-jmx</artifactId>
+	<version>${version.module-detailed_statistics}</version>
 	<packaging>jar</packaging>
 	<name>EL4J module detailed statistics for JMX</name>
 	<description>
@@ -26,7 +27,7 @@
 		<dependency>
 			<groupId>ch.elca.el4j.modules</groupId>
 			<artifactId>module-detailed_statistics-common</artifactId>
-			<version>${version.el4j-framework.current}</version>
+			<version>${version.module-detailed_statistics}</version>
 		</dependency>
 		<dependency>
 			<groupId>ch.elca.el4j.modules</groupId>

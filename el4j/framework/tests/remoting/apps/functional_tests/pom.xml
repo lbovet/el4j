@@ -12,10 +12,11 @@
 	<parent>
 		<groupId>ch.elca.el4j.tests</groupId>
 		<artifactId>module-remoting-tests-apps</artifactId>
-		<version>3.1-SNAPSHOT</version>
+		<version>1.7</version>
 	</parent>
 
 	<artifactId>module-remoting-tests-apps-functional_tests</artifactId>
+	<version>${version.module-remoting-tests}</version>
 	<packaging>jar</packaging>
 	<name>EL4J test remoting apps - functional tests</name>
 	<description>
@@ -38,7 +39,7 @@
 		<dependency>
 			<groupId>ch.elca.el4j.tests</groupId>
 			<artifactId>module-remoting-tests-apps-common</artifactId>
-			<version>${version.el4j-framework.current}</version>
+			<version>${version.module-remoting-tests}</version>
 			<type>test-jar</type>
 			<scope>test</scope>
 		</dependency>

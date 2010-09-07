@@ -19,15 +19,8 @@
 #   * %box% =svn switch <nop>https://cvs.elca.ch/subversion/el4j-internal/tags/el4j_1_1_1-rc0 .=
 #      * Switches the working copy to the tag repository. Adapt the path to the used above.
 
-#configuration of SVN urls
-ExternalURL="https://el4j.svn.sourceforge.net/svnroot/el4j"
-InternalURL="https://svn.elca.ch/subversion/el4j-internal"
-
 # make sure you are in right folder
-if ! [ -e external ] ; then
-	echo "Error: Folder 'external' not found. Go to its parent folder (el4j)!"
-	exit
-fi
+
 echo "The script will sometimes ask you if something is correct."
 echo "If it is, press Enter, if it is not, press Ctrl-C."
 echo "Press Enter to continue"
@@ -40,31 +33,43 @@ tagDot=$(cat .nextVersion)
 echo "You are preparing version $tagDot with the following settings: performExternal=$performExternal, performInternal=$performInternal. OK?"
 read dummy
 
+if ! [ -e external ] ; then
+	echo "Error: Folder 'external' not found. Go to its parent folder (el4j)!"
+	exit
+fi
+
+#echo "Which tag should be chosen for the new release? (like 1.1.1, without -rc0)"
+#read tagDot
 tagScore=$(echo $tagDot | sed "s/\./_/g")
 echo "Which release candiate should be chosen? (like 0 or 1, without -rc)"
 read rc
-echo "New tag is $tagDot-rc$rc, OK?"
+echo "Tag is $tagDot-rc$rc, OK?"
 read dummy
 
 function makeRelease() {
-	echo "Make a release candidate for $1 from (local) working copy"
+	echo "Step 1: Make a release candidate for $1"
 	cd $1
-
+	
+	echo "Please revert previous changes manually!"
+	echo "This step sometimes makes problems, so it is not done automatically."
 	echo "Press Enter to continue..."
 	read dummy
 
-	echo "Command is:"
-	echo svn copy . $2/tags/el4j_$tagScore-rc$rc$3 -m "Tagging the release candidate $rc for EL4J $tagDot"
-	echo "This can take a while. Continue?"
+	echo "Executing svn update..."
+	svn update
+	echo "Which revision is it? Just reenter the revision number printed above..."
+	read revision
+	echo "Revision is $revision, OK?"
 	read dummy
-	
-	#make subdir first...
-	if [ "$3" != "" ] ; then
-		svn mkdir $2/tags/el4j_$tagScore-rc$rc -m "Creation of $3 subdir inside tag for release candidate $rc for EL4J $tagDot"
-	fi
-	svn copy . $2/tags/el4j_$tagScore-rc$rc$3 -m "Tagging the release candidate $rc for EL4J $tagDot"
 
-	echo "Switching to newly created tag el4j_$tagScore-rc$rc ..."
+	echo "Command is:"
+	echo svn copy $2/trunk $2/tags/el4j_$tagScore-rc$rc -r $revision -m "Tagging the release candidate $rc for EL4J $tagDot"
+	echo "Continue?"
+	read dummy
+
+	svn copy $2/trunk $2/tags/el4j_$tagScore-rc$rc -r $revision -m "Tagging the release candidate $rc for EL4J $tagDot"
+
+	echo "Switch to tag..."
 	svn switch $2/tags/el4j_$tagScore-rc$rc$3 .
 
 	echo "$2 done."
@@ -72,17 +77,14 @@ function makeRelease() {
 }
 
 if [ $performExternal == "y" ] ; then
-	makeRelease "external" $ExternalURL "/el4j"
+	makeRelease "external" "https://el4j.svn.sourceforge.net/svnroot/el4j" "/el4j"
 fi
 
 #echo "Process internal? (y/n)"
 #read performInternal
 
 if [ $performInternal == "y" ] ; then
-	makeRelease "internal" $InternalURL ""
+	makeRelease "internal" "https://cvs.elca.ch/subversion/el4j-internal" ""
 fi
 
-#save the last release candidate tag in file
-echo "$tagScore-rc$rc" > .lastRC
-
-echo "Hint: The next step is to run tests."
+echo "Hint: The next step is to update the version numbers"

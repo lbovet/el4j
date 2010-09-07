@@ -35,13 +35,11 @@ import javax.management.ObjectName;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-//Checkstyle: UseLogger off
 import org.apache.log4j.Appender;
 import org.apache.log4j.Level;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.helpers.Loader;
 import org.apache.log4j.helpers.OptionConverter;
-//Checkstyle: UseLogger on
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.StaticApplicationContext;

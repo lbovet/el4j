@@ -13,10 +13,11 @@
 	<parent>
 		<groupId>ch.elca.el4j.applications</groupId>
 		<artifactId>el4j-demos-remoting-jaxws-web</artifactId>
-		<version>3.1-SNAPSHOT</version>
+		<version>1.7</version>
 	</parent>
 
 	<artifactId>el4j-remoting-jaxws-demos-web-jar</artifactId>
+	<version>${version.module-remoting-jaxws-demos}</version>
 	<packaging>jar</packaging>
 	<name>EL4J demo remoting-jaxws web - jar</name>
 	<description>

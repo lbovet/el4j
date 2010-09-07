@@ -58,89 +58,73 @@ el4jNext=$(cat .nextVersion)
 echo "You are preparing version $el4jNext with the following settings: performExternal=$performExternal, performInternal=$performInternal. OK?"
 read dummy
 
-# make sure you are in right folder
 if ! [ -e external ] ; then
 	echo "Error: Folder 'external' not found. Go to its parent folder (el4j)!"
 	exit
 fi
 
-#define function to execute statements and check for BUILD ERROR in return
-function executewithcheck {
-	builderrorfound=0;
-	while read line
-	do
-		echo $line
-		if [[ $line == *BUILD\ ERROR* ]] ; then
-			builderrorfound=1;
-		fi
-	done < <($1)
-	if [ $builderrorfound == 1 ] ; then 
-		echo "[SCRIPT ERROR] Build Error detected - execution of script aborted";
-		exit 1;
-	fi
-}
 
 if  [ $performExternal == "y" ] ; then
 
 	cd external
-	executewithcheck "mvn deploy -N"
+	mvn deploy -N
 	
 	cd applications
-	executewithcheck "mvn deploy -N"
+	mvn deploy -N
 	cd ..
 	
 	cd framework
-	executewithcheck "mvn deploy -N"
+	mvn deploy -N
 	
 	cd modules
-	executewithcheck "mvn deploy"
+	mvn deploy
 	cd ..
 	
 	cd plugins
 	# maven-metadata.xml is not updated in 2.0.9 if mvn deploy is not called for every plugin explicitly
-	executewithcheck "mvn deploy -N"
+	mvn deploy -N
 	for i in $(ls | grep "^maven-") ; do
 		cd $i
-		executewithcheck "mvn deploy"
+		mvn deploy
 		cd ..
 	done
 	
 	# deploy maven utils
 	cd utils
-	executewithcheck "mvn deploy"
+	mvn deploy
 	cd ..
 	
 	cd ../..
 	
 	cd maven
-	executewithcheck "mvn deploy -N"
+	mvn deploy -N
 	
 	cd archetypes
 	for i in $(ls) ; do
 		cd $i
-		executewithcheck "mvn deploy"
+		mvn deploy
 		cd ..
 	done
 	cd ..
 	
 	cd plugins
 	# maven-metadata.xml is not updated in 2.0.9 if mvn deploy is not called for every plugin explicitly
-	executewithcheck "mvn deploy -N"
+	mvn deploy -N
 	for i in $(ls | grep "^maven-") ; do
 		cd $i
-		executewithcheck "mvn deploy"
+		mvn deploy
 		cd ..
 	done
 	cd ..
 	
 	cd extensions/taglet
-	executewithcheck "mvn deploy"
+	mvn deploy
 	cd ../..
 	
 	cd ..
 	
 	cd skin
-	executewithcheck "mvn deploy"
+	mvn deploy
 	cd ..
 	
 	cd ..
@@ -148,23 +132,23 @@ fi
 
 if  [ $performInternal == "y" ] ; then
 	cd internal
-	executewithcheck "mvn deploy -N"
+	mvn deploy -N
 	
 	cd applications
-	executewithcheck "mvn deploy -N"
+	mvn deploy -N
 	cd ..
 	
 	cd framework
-	executewithcheck "mvn deploy -N"
+	mvn deploy -N
 	
 	cd modules
-	executewithcheck "mvn deploy"
+	mvn deploy
 	cd ../..
 	
 	cd maven
-	executewithcheck "mvn deploy -N"
+	mvn deploy -N
 	
 	cd plugins
-	executewithcheck "mvn deploy"
+	mvn deploy
 	cd ../..
 fi

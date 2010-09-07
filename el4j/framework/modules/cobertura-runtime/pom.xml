@@ -13,10 +13,11 @@
 	<parent>
 		<groupId>ch.elca.el4j.modules</groupId>
 		<artifactId>el4j-framework-modules</artifactId>
-		<version>3.1-SNAPSHOT</version>
+		<version>1.7</version>
 	</parent>
 
 	<artifactId>module-cobertura-runtime</artifactId>
+	<version>${version.module-cobertura-runtime}</version>
 	<packaging>jar</packaging>
 	<name>EL4J module cobertura-runtime</name>
 	<description>
@@ -28,7 +29,7 @@
 			module-core depending on this module, which leads to a dependency cycle! -->
 		<dependency>
 			<groupId>org.springframework</groupId>
-			<artifactId>spring-core</artifactId>
+			<artifactId>spring</artifactId>
 		</dependency>
 
 		<!-- Third party tools -->

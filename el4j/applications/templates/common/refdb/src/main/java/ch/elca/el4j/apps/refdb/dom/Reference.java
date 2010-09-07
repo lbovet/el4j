@@ -34,10 +34,7 @@ import javax.persistence.Transient;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
-import org.hibernate.annotations.Parameter;
 import org.hibernate.annotations.Type;
-import org.hibernate.annotations.TypeDef;
-import org.hibernate.annotations.TypeDefs;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Index;
 import org.hibernate.search.annotations.Store;
@@ -114,7 +111,7 @@ public abstract class Reference extends AbstractIntKeyIntOptimisticLockingDto {
 	 * Set of files for this reference.
 	 */
 	private Set<File> m_files;
-	
+
 	/**
 	 * The type this reference is actually of.
 	 * 
@@ -137,7 +134,7 @@ public abstract class Reference extends AbstractIntKeyIntOptimisticLockingDto {
 	 *            The date to set.
 	 */
 	public void setDate(LocalDate date) {
-		m_date = date;
+			m_date = date;
 	}
 
 	/**

@@ -17,7 +17,6 @@
 package ch.elca.el4j.maven.plugins.database.util.h2;
 
 import org.apache.commons.lang.StringUtils;
-import org.h2.engine.Constants;
 import org.h2.server.TcpServer;
 import org.h2.tools.Server;
 
@@ -40,7 +39,7 @@ public final class H2Controller implements DbController {
 	/**
 	 * H2 Database port.
 	 */
-	private int m_port = Constants.DEFAULT_TCP_PORT;
+	private int m_port = TcpServer.DEFAULT_PORT;
 	
 	/**
 	 * H2 Database user name.
@@ -58,7 +57,7 @@ public final class H2Controller implements DbController {
 	
 	/** {@inheritDoc} */
 	public void setPort(int port) {
-		m_port = port > 0 ? port : Constants.DEFAULT_TCP_PORT;
+		m_port = port > 0 ? port : TcpServer.DEFAULT_PORT;
 	}
 	
 	

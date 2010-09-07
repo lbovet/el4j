@@ -12,10 +12,11 @@
 	<parent>
 		<groupId>ch.elca.el4j.tests</groupId>
 		<artifactId>el4j-framework-tests-core</artifactId>
-		<version>3.1-SNAPSHOT</version>
+		<version>1.7</version>
 	</parent>
 
 	<artifactId>module-core_implicit_context_passing_test</artifactId>
+	<version>${version.module-core}</version>
 	<packaging>jar</packaging>
 	<name>EL4J test implicit context passing integration</name>
 	<description>
@@ -35,7 +36,7 @@
 		<dependency>
 			<groupId>ch.elca.el4j.tests</groupId>
 			<artifactId>module-remoting-tests-web-jar</artifactId>
-			<version>${version.el4j-framework.current}</version>
+			<version>${version.module-remoting-tests}</version>
 			<type>jar</type>
 		</dependency>
 	</dependencies>

@@ -17,7 +17,7 @@
 
 package ch.elca.el4j.services.security.authentication;
 
-import org.springframework.security.core.Authentication; 
+import org.springframework.security.Authentication; 
 
 
 

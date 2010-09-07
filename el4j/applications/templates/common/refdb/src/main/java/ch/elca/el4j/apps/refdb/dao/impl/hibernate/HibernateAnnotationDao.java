@@ -4,12 +4,12 @@ package ch.elca.el4j.apps.refdb.dao.impl.hibernate;
 import java.util.List;
 
 import org.springframework.dao.DataAccessException;
-import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import ch.elca.el4j.apps.refdb.dao.AnnotationDao;
 import ch.elca.el4j.apps.refdb.dom.Annotation;
+import ch.elca.el4j.services.persistence.generic.dao.AutocollectedGenericDao;
 import ch.elca.el4j.util.codingsupport.Reject;
 
 /**
@@ -19,7 +19,7 @@ import ch.elca.el4j.util.codingsupport.Reject;
  *
  * @author Alex Mathey (AMA)
  */
-@Repository("annotationDao")
+@AutocollectedGenericDao("annotationDao")
 public class HibernateAnnotationDao
 	extends GenericHibernateReferencedObjectDao<Annotation, Integer>
 	implements AnnotationDao {

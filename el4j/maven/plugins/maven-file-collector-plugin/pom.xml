@@ -12,11 +12,12 @@
 	<parent>
 		<groupId>ch.elca.el4j.maven.plugins</groupId>
 		<artifactId>el4j-maven-plugins</artifactId>
-		<version>3.1-SNAPSHOT</version>
+		<version>1.7</version>
 	</parent>
 	
 	<artifactId>maven-file-collector-plugin</artifactId>
 	<packaging>maven-plugin</packaging>
+	<version>${version.maven-file-collector-plugin}</version>
 	<name>EL4J plugin collector for files</name>
 	<build>
 		<plugins>
@@ -62,7 +63,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
-			<artifactId>spring-core</artifactId>
+			<artifactId>spring</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>

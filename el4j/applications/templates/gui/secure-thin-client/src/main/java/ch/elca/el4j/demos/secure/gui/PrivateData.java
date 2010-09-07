@@ -18,7 +18,7 @@ package ch.elca.el4j.demos.secure.gui;
 
 import javax.annotation.security.RolesAllowed;
 
-import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.annotation.Secured;
 
 
 

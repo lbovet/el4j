@@ -12,10 +12,11 @@
 	<parent>
 		<groupId>ch.elca.el4j.modules</groupId>
 		<artifactId>module-databases</artifactId>
-		<version>3.1-SNAPSHOT</version>
+		<version>1.7</version>
 	</parent>
 
 	<artifactId>module-database-common</artifactId>
+	<version>${version.module-database}</version>
 	<packaging>jar</packaging>
 	<name>EL4J module database common</name>
 	<description>Module database common of the EL4J framework.</description>
@@ -31,9 +32,14 @@
 	</build>
 	
 	<dependencies>
+		<!-- DBCP libraries -->
 		<dependency>
-			<groupId>ch.elca.el4j.modules</groupId>
-			<artifactId>module-core</artifactId>
+			<groupId>commons-dbcp</groupId>
+			<artifactId>commons-dbcp</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>commons-pool</groupId>
+			<artifactId>commons-pool</artifactId>
 		</dependency>
 	</dependencies>
 </project>

@@ -13,10 +13,11 @@
 	<parent>
 		<groupId>ch.elca.el4j.modules</groupId>
 		<artifactId>el4j-framework-modules</artifactId>
-		<version>3.1-SNAPSHOT</version>
+		<version>1.7</version>
 	</parent>
 
 	<artifactId>module-remoting_jaxws</artifactId>
+	<version>${version.module-remoting_jaxws}</version>
 	<packaging>jar</packaging>
 	<name>EL4J module remoting jaxws</name>
 	<description>
@@ -46,10 +47,6 @@
 				<exclusion>
 					<groupId>javax.xml.stream</groupId>
 					<artifactId>stax-api</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>woodstox</groupId>
-					<artifactId>wstx-asl</artifactId>
 				</exclusion>
 			</exclusions>
 		</dependency>

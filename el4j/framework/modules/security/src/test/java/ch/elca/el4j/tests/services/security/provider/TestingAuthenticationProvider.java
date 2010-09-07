@@ -1,8 +1,8 @@
 package ch.elca.el4j.tests.services.security.provider;
 
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.Authentication;
+import org.springframework.security.AuthenticationException;
+import org.springframework.security.providers.AuthenticationProvider;
 
 import ch.elca.el4j.tests.services.security.TestingAuthenticationToken;
 

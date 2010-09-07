@@ -13,10 +13,11 @@
 	<parent>
 		<groupId>ch.elca.el4j.applications</groupId>
 		<artifactId>el4j-demos-remoting-web</artifactId>
-		<version>3.1-SNAPSHOT</version>
+		<version>1.7</version>
 	</parent>
 
 	<artifactId>el4j-remoting-demos-web-jar</artifactId>
+	<version>${version.module-remoting-demos}</version>
 	<packaging>jar</packaging>
 	<name>EL4J demo remoting web - jar</name>
 	<description>

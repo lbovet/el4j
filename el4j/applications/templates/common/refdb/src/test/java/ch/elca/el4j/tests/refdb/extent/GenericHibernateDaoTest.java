@@ -41,6 +41,7 @@ import ch.elca.el4j.apps.refdb.dom.Book;
 import ch.elca.el4j.apps.refdb.dom.File;
 import ch.elca.el4j.apps.refdb.dom.Link;
 import ch.elca.el4j.apps.refdb.dom.Reference;
+import ch.elca.el4j.services.persistence.generic.dao.impl.DefaultDaoRegistry;
 import ch.elca.el4j.services.persistence.hibernate.dao.ConvenienceGenericHibernateDao;
 import ch.elca.el4j.services.persistence.hibernate.dao.extent.DataExtent;
 import ch.elca.el4j.services.search.QueryObject;
@@ -87,8 +88,7 @@ public class GenericHibernateDaoTest extends AbstractTestCaseBase {
 			"classpath*:scenarios/dataaccess/*.xml",
 			"classpath*:scenarios/dataaccess/hibernate/*.xml",
 			"classpath*:scenarios/dataaccess/hibernate/refdb/*.xml",
-			"classpath*:optional/interception/transactionJava5Annotations.xml",
-			"classpath*:optional/refdb-tests-core-config.xml"};
+			"classpath*:optional/interception/transactionJava5Annotations.xml"};
 	}
 	
 	/**
@@ -496,13 +496,6 @@ public class GenericHibernateDaoTest extends AbstractTestCaseBase {
 		b.setPublisher("Greenwich: Manning Publications");
 		b.setDescription("Persisting your Java objects to a relational database. The book for it.");
 		b.setIncomplete(false);
-		// hashCode Problem: Save the keywords first, before adding 
-		// them to a collection (see TWiki: HibernateGuidelines > Automatic equals semantics)
-		getKeywordDao().saveOrUpdate(k1);
-		getKeywordDao().saveOrUpdate(k2);
-		getKeywordDao().saveOrUpdate(k3);
-		getKeywordDao().saveOrUpdate(k4);
-		
 		b.setKeywords(new HashSet<Keyword>(Arrays.asList(k1, k2, k3, k4)));
 		f1.setReference(b);
 		Annotation a = new Annotation();
@@ -525,6 +518,10 @@ public class GenericHibernateDaoTest extends AbstractTestCaseBase {
 		l.setUrl("www.sample.link");
 		l.setDescription("some example link just for nothing");
 		
+		getKeywordDao().saveOrUpdate(k1);
+		getKeywordDao().saveOrUpdate(k2);
+		getKeywordDao().saveOrUpdate(k3);
+		getKeywordDao().saveOrUpdate(k4);
 		getHibernateBookDao().saveOrUpdate(b);
 		getLinkDao().saveOrUpdate(l);
 		getAnnotationDao().saveOrUpdate(a);
@@ -537,7 +534,11 @@ public class GenericHibernateDaoTest extends AbstractTestCaseBase {
 	 */
 	protected GenericHibernatePersonDaoInterface getPersonDao() {
 		if (m_personDao == null) {
-			m_personDao	= (GenericHibernatePersonDaoInterface) getApplicationContext().getBean("personDao");
+			DefaultDaoRegistry daoRegistry
+				= (DefaultDaoRegistry) getApplicationContext()
+					.getBean("daoRegistry");
+			m_personDao = (GenericHibernatePersonDaoInterface) daoRegistry
+				.getFor(Person.class);
 		}
 		return m_personDao;
 	}
@@ -547,8 +548,11 @@ public class GenericHibernateDaoTest extends AbstractTestCaseBase {
 	 */
 	protected ConvenienceGenericHibernateDao<Book, Integer> getHibernateBookDao() {
 		if (m_hiberanteBookDao == null) {
-			m_hiberanteBookDao = (ConvenienceGenericHibernateDao<Book, Integer>) getApplicationContext()
-				.getBean("bookDao");
+			DefaultDaoRegistry daoRegistry
+				= (DefaultDaoRegistry) getApplicationContext()
+					.getBean("daoRegistry");
+			m_hiberanteBookDao
+				= (ConvenienceGenericHibernateDao<Book, Integer>) daoRegistry.getFor(Book.class);
 		}
 		return m_hiberanteBookDao;
 	}

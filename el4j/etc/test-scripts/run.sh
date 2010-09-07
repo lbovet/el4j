@@ -77,7 +77,7 @@ case $1 in
 			SVN_INTERNAL=$3
 		else
 			SVN_EXTERNAL=https://el4j.svn.sourceforge.net/svnroot/el4j/trunk/el4j
-			SVN_INTERNAL=https://svn.elca.ch/subversion/el4j-internal/trunk
+			SVN_INTERNAL=https://cvs.elca.ch/subversion/el4j-internal/trunk
 		fi
 		# Checkout the external sourcecode
 		svn co -q $SVN_EXTERNAL external
@@ -88,8 +88,8 @@ case $1 in
 	"weekly")
 		mvn -f external/pom.xml clean install -fae -B -Pauto,tomcat6x,oracle,integrationTests ${ORACLE_SETTINGS} $2
 		mvn -f internal/pom.xml clean install -fae -B -Pauto,tomcat6x,oracle,integrationTests ${ORACLE_SETTINGS} $2
-		#mvn -f external/pom.xml clean install -fae -B -Pauto,weblogic10x,db2,integrationTests $2
-		#mvn -f internal/pom.xml clean install -fae -B -Pauto,weblogic10x,db2,integrationTests $2
+		mvn -f external/pom.xml clean install -fae -B -Pauto,weblogic10x,db2,integrationTests $2
+		mvn -f internal/pom.xml clean install -fae -B -Pauto,weblogic10x,db2,integrationTests $2
 		;;
 	"archetype")
 		# install archetype

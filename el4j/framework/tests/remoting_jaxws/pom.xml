@@ -13,7 +13,7 @@
 	<parent>
 		<groupId>ch.elca.el4j.tests</groupId>
 		<artifactId>el4j-framework-tests</artifactId>
-		<version>3.1-SNAPSHOT</version>
+		<version>1.7</version>
 	</parent>
 
 	<artifactId>el4j-framework-tests-remoting-jaxws</artifactId>
@@ -35,25 +35,25 @@
 			<dependency>
 				<groupId>ch.elca.el4j.tests</groupId>
 				<artifactId>module-remoting-jaxws-tests-jar-wsgen</artifactId>
-				<version>${version.el4j-framework.current}</version>
+				<version>${version.module-remoting-jaxws-tests}</version>
 				<type>jar</type>
 			</dependency>
 			<dependency>
 				<groupId>ch.elca.el4j.tests</groupId>
 				<artifactId>module-remoting-jaxws-tests-jar-wsimport</artifactId>
-				<version>${version.el4j-framework.current}</version>
+				<version>${version.module-remoting-jaxws-tests}</version>
 				<type>jar</type>
 			</dependency>
 			<dependency>
 				<groupId>ch.elca.el4j.tests</groupId>
 				<artifactId>module-remoting-jaxws-tests-jar-hibernate</artifactId>
-				<version>${version.el4j-framework.current}</version>
+				<version>${version.module-remoting-jaxws-tests}</version>
 				<type>jar</type>
 			</dependency>
 			<dependency>
 				<groupId>ch.elca.el4j.tests</groupId>
 				<artifactId>module-remoting-jaxws-tests-war</artifactId>
-				<version>${version.el4j-framework.current}</version>
+				<version>${version.module-remoting-jaxws-tests}</version>
 				<type>war</type>
 				<scope>provided</scope>
 			</dependency>

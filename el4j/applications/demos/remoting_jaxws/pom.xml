@@ -13,7 +13,7 @@
 	<parent>
 		<groupId>ch.elca.el4j.applications</groupId>
 		<artifactId>el4j-demos</artifactId>
-		<version>3.1-SNAPSHOT</version>
+		<version>1.7</version>
 	</parent>
 
 	<artifactId>el4j-demos-remoting-jaxws</artifactId>
@@ -32,13 +32,13 @@
 			<dependency>
 				<groupId>ch.elca.el4j.demos</groupId>
 				<artifactId>module-remoting-jaxws-demos-web-jar</artifactId>
-				<version>${version.el4j-framework.current}</version>
+				<version>${version.module-remoting-jaxws-demos}</version>
 				<type>jar</type>
 			</dependency>
 			<dependency>
 				<groupId>ch.elca.el4j.demos</groupId>
 				<artifactId>module-remoting-jaxws-demos-web-war</artifactId>
-				<version>${version.el4j-framework.current}</version>
+				<version>${version.module-remoting-jaxws-demos}</version>
 				<type>war</type>
 				<scope>provided</scope>
 			</dependency>

@@ -24,6 +24,7 @@ import org.springframework.dao.DataRetrievalFailureException;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
+import ch.elca.el4j.services.persistence.generic.dao.impl.DefaultDaoRegistry;
 import ch.elca.el4j.tests.person.dao.impl.hibernate.GenericHibernateBrainDaoInterface;
 import ch.elca.el4j.tests.person.dao.impl.hibernate.GenericHibernatePersonDaoInterface;
 import ch.elca.el4j.tests.person.dom.Brain;
@@ -48,7 +49,7 @@ public class GenericHibernateDaoBulkDeleteTest extends AbstractTestCaseBase {
 	/**
 	 * Brain DAO. Created by application context.
 	 */
-	private GenericHibernateBrainDaoInterface m_brainDao;
+	private GenericHibernateBrainDaoInterface brainDao;
 	
 	/**
 	 * {@inheritDoc}
@@ -61,8 +62,7 @@ public class GenericHibernateDaoBulkDeleteTest extends AbstractTestCaseBase {
 			"classpath*:scenarios/dataaccess/*.xml",
 			"classpath*:scenarios/dataaccess/hibernate/*.xml",
 			"classpath*:scenarios/dataaccess/hibernate/refdb/*.xml",
-			"classpath*:optional/interception/transactionJava5Annotations.xml",
-			"classpath*:optional/refdb-tests-core-config.xml"};
+			"classpath*:optional/interception/transactionJava5Annotations.xml"};
 	}
 	
 	/**
@@ -161,8 +161,11 @@ public class GenericHibernateDaoBulkDeleteTest extends AbstractTestCaseBase {
 	 */
 	protected GenericHibernatePersonDaoInterface getPersonDao() {
 		if (m_personDao == null) {
-			m_personDao = (GenericHibernatePersonDaoInterface) getApplicationContext()
-				.getBean("personDao");
+			DefaultDaoRegistry daoRegistry
+				= (DefaultDaoRegistry) getApplicationContext()
+					.getBean("daoRegistry");
+			m_personDao = (GenericHibernatePersonDaoInterface) daoRegistry
+				.getFor(Person.class);
 		}
 		return m_personDao;
 	}
@@ -171,11 +174,14 @@ public class GenericHibernateDaoBulkDeleteTest extends AbstractTestCaseBase {
 	 * @return Returns the brain DAO.
 	 */
 	protected GenericHibernateBrainDaoInterface getBrainDao() {
-		if (m_brainDao == null) {
-			m_brainDao = (GenericHibernateBrainDaoInterface) getApplicationContext()
-				.getBean("brainDao");
+		if (brainDao == null) {
+			DefaultDaoRegistry daoRegistry
+				= (DefaultDaoRegistry) getApplicationContext()
+					.getBean("daoRegistry");
+			brainDao = (GenericHibernateBrainDaoInterface) daoRegistry
+				.getFor(Brain.class);
 		}
-		return m_brainDao;
+		return brainDao;
 	}
 	
 }

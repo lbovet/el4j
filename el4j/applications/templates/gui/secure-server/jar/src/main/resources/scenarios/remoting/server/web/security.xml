@@ -5,10 +5,10 @@
 	xmlns:tx="http://www.springframework.org/schema/tx"
 	xmlns:security="http://www.springframework.org/schema/security"
 	xsi:schemaLocation="
-	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
-	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd	
-	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
-	http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.0.xsd">
+	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd	
+	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+	http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-2.0.2.xsd">
 
 	<!-- $Revision$ -->
 	<!-- $URL$ -->
@@ -20,9 +20,8 @@
 		Reference to the default authenticationManager that is set up when using the 
 		global-method-security tag, so that other beans can reference to it.
 	 -->
-	<security:authentication-manager alias="authenticationManager">
-		<security:authentication-provider ref="authenticationProvider"/>
-	</security:authentication-manager>	
+	<security:authentication-manager alias="authenticationManager"/>
+	
 	
 	<!-- 
 		Makes sure that the $Secured annotations are automatically regarded (sets up all necessary beans).
@@ -34,13 +33,14 @@
 	
 	
 	<bean id="authenticationProvider"
-		class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
+		class="org.springframework.security.providers.dao.DaoAuthenticationProvider">
 		<property name="userDetailsService" ref="authenticationDao" />
+		<security:custom-authentication-provider /> 
 	</bean>
 
 	
 	<bean id="authenticationDao"
-		class="org.springframework.security.core.userdetails.memory.InMemoryDaoImpl">
+		class="org.springframework.security.userdetails.memory.InMemoryDaoImpl">
 		<property name="userMap">
 			<value>
 				el4super=secret,ROLE_NORMALUSER,ROLE_SUPERUSER

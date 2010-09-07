@@ -179,21 +179,11 @@ public class ManifestOrderedConfigLocationProvider
 					s_logger.info("Attribute '" + CONFIG_FILES + "' not set ["
 							+ url.getFile() + "]");
 					files = "";
-				} else {
-					// The module contains no files (this is okay, no bug)
-					if (files.equals("null")) {
-						files = "";
-					}
 				}
 				if (!StringUtils.hasText(dependencies)) {
 					s_logger.info("Attribute '" + CONFIG_DEPENDENCIES
 							+ "' not set [" + url.getFile() + "]");
 					dependencies = "";
-				} else {
-					// Very rare case, but could happen
-					if (dependencies.equals("null")) {
-						dependencies = "";
-					}
 				}
 				
 				// skip modules that are not properly decorated

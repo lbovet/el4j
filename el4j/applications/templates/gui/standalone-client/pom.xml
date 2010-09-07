@@ -12,10 +12,11 @@
 	<parent>
 		<groupId>ch.elca.el4j.applications</groupId>
 		<artifactId>el4j-templates-swing-demo</artifactId>
-		<version>3.1-SNAPSHOT</version>
+		<version>1.7</version>
 	</parent>
 
 	<artifactId>swing-demo-standalone-client</artifactId>
+	<version>${version.application-refdb}</version>
 	<packaging>jar</packaging>
 	<name>EL4J application swing demo standalone-client</name>
 	<description>Swing demo standalone-client module of the EL4J framework.</description>

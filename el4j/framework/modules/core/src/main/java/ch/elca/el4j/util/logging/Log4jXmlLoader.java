@@ -18,9 +18,8 @@
 package ch.elca.el4j.util.logging;
 
 import java.net.URL;
-// Checkstyle: UseLogger off
+
 import org.apache.log4j.xml.DOMConfigurator;
-//Checkstyle: UseLogger on
 import org.springframework.beans.factory.BeanNameAware;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.util.StringUtils;

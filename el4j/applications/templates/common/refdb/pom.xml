@@ -12,10 +12,11 @@
 	<parent>
 		<groupId>ch.elca.el4j.applications</groupId>
 		<artifactId>el4j-templates-common</artifactId>
-		<version>3.1-SNAPSHOT</version>
+		<version>1.7</version>
 	</parent>
 
 	<artifactId>refdb</artifactId>
+	<version>${version.application-refdb}</version>
 	<packaging>jar</packaging>
 	<name>EL4J application refdb</name>
 	<description>RefDb application of the EL4J framework.</description>
