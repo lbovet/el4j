@@ -931,7 +931,7 @@
 					<tagletArtifact>
 						<groupId>ch.elca.el4j.maven.extensions</groupId>
 						<artifactId>taglet</artifactId>
-						<version>${version.maven-el4j-taglet}</version>
+						<version>${version.el4j-framework.current}</version>
 					</tagletArtifact>
 				</configuration>
 				<inherited>true</inherited>
