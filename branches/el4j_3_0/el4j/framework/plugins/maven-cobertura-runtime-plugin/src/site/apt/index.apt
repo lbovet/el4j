@@ -10,4 +10,4 @@ Cobertura runtime plugin
   Cobertura ({{{http://cobertura.sourceforge.net/}http://cobertura.sourceforge.net/}}) is used to create code coverage reports. The normal Cobertura Maven plugin is used for encapsulated tests, so just unit test are used to check the code coverage. The idea of this plugin is to build and deploy the application nearly as normal with maven and let Cobertura measure the coverage while working on the application. See {{{http://el4j.sourceforge.net/docs/pdf/ReferenceDoc.pdf}reference pdf}}.
   
   
-  For goal overview {{{plugin-info.html}see the plugin info page}} but read first the section in the reference pdf.
+  For goal overview {{{./plugin-info.html}see the plugin info page}} but read first the section in the reference pdf.
