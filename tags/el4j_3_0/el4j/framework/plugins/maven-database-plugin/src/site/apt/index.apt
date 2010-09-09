@@ -10,4 +10,4 @@ Database plugin
   The Database plugin can be used to automate the starting of a database, creating and droping table as well as adding and deleting data.
   
   
-  For usage {{{plugin-info.html}see the plugin info page}}.
+  For usage {{{./plugin-info.html}see the plugin info page}}.
