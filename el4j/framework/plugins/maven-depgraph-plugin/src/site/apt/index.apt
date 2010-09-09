@@ -21,6 +21,6 @@ Dependency graph plugin
    You can use the depgraph.filterEmptyArtifacts property if you want to eliminate 
    them from the graph. 
   
-  Here is {{{images/depgraph.png}an example}} of the plugin's output.
+  Here is {{{./images/depgraph.png}an example}} of the plugin's output.
   
-  For usage {{{plugin-info.html}see the plugin info page}}.
+  For usage {{{./plugin-info.html}see the plugin info page}}.
