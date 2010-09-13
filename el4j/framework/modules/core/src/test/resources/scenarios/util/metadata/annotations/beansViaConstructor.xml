@@ -11,15 +11,14 @@
 	<!--
 		Define the autoproxy bean which looks for each advisor in this context.
 	-->
-	<bean id="autoproxy"
+	<bean id="genericMetaDataAutoproxy"
 		class="ch.elca.el4j.core.aop.IntelligentAdvisorAutoProxyCreator">
-		<property name="proxyTargetClass">
-			<value>true</value>
-		</property>
+		<property name="proxyTargetClass" value="true"/>
+		<property name="usePrefix" value="true"/>
 	</bean>
 
 	<!-- Define the Advisor bean. -->
-	<bean id="genericMetaDataAdvisor"
+	<bean id="genericMetaDataAutoproxy.genericMetaDataAdvisor"
 		class="ch.elca.el4j.util.metadata.GenericMetaDataAdvisor">
 		<constructor-arg>
 			<ref local="exampleInterceptor"/>

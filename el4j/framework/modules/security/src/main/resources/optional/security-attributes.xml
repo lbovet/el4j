@@ -28,6 +28,7 @@
 	-->
 	<bean id="autoproxy"
 		class="ch.elca.el4j.core.aop.IntelligentAdvisorAutoProxyCreator">
+		<property name="forceUseOfAdvisorNamePrefix" value="false"/>
 	</bean>
 	
 	<!--  
