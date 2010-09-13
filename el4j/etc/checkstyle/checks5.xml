@@ -80,6 +80,9 @@
 
 		<module name="JavadocType">
 			<property name="authorFormat" value="[A-Za-z ]+\([a-zA-Z]{3}\)" />
+			
+			<!-- Needed to allow i.e. @svnLink -->
+			<property name="allowUnknownTags" value="true"/>
 		</module>
 		<module name="JavadocMethod">
 			<property name="allowThrowsTagsForSubclasses" value="true" />
