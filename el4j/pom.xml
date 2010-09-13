@@ -2642,7 +2642,10 @@
 		<version.module-socketstatistics>
 			1.0.1
 		</version.module-socketstatistics>
-		
+		<version.module-aspects-tests>
+            1.0.1
+		</version.module-aspects-tests>
+				
 		<!-- Maven utils -->
 		<version.maven-utils>
 			1.4.1

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context-2.5.xsd
+		http://www.springframework.org/schema/aop
+		http://www.springframework.org/schema/aop/spring-aop-2.5.xsd">
+
+	<!--  bean used to log method invocation of services -->
+
+	<bean name="serviceLoggerInterceptor" class="ch.elca.el4j.tests.aspects.interceptor.ServiceLoggerInterceptor">
+		<property name="useDynamicLogger" value="false" />
+	</bean>
+
+	<aop:config>
+		<aop:aspect id="serviceLoggerInterceptorExecution" ref="serviceLoggerInterceptor">
+			<aop:pointcut id="serviceLoggerCall" expression="execution(@ch.elca.el4j.tests.aspects.interceptor.Logged public * ch.elca.el4j..*(..)) " />
+			<aop:around pointcut-ref="serviceLoggerCall" method="test" />
+		</aop:aspect>
+	</aop:config>
+
+	<bean name="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+	<bean id="myService" class="ch.elca.el4j.tests.aspects.services.Service" />
+
+	<bean id="sessionFactory" parent="abstractSessionFactory" />
+	
+	<bean id="abstractSessionFactory" abstract="true"
+		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">ch.elca.el4j.services.persistence.hibernate.dialect.PatchedOracle10gDialect</prop>
+				<prop key="hibernate.cache.provider_class">org.hibernate.cache.NoCacheProvider</prop>
+				<prop key="hibernate.cache.use_second_level_cache">false</prop>
+			</props>
+		</property>		
+	</bean>
+	
+</beans>
+
