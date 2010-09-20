@@ -716,7 +716,6 @@ public class GenericHibernateDao<T, ID extends Serializable>
 	 * Recursively traverses the ExtentEntity structure and creates aliases for JOINed tables . 
 	 * 
 	 * @param criteria the criteria object to modify
-	 * @param projections a ProjectionList to which properties to be fetched are added
 	 * @param entity the ExtentEntity
 	 * @param alias the prefix to use when creating a new alias for an indirectly accessible property 
 	 * @return true if at least one JOIN could be added to the Criteria
