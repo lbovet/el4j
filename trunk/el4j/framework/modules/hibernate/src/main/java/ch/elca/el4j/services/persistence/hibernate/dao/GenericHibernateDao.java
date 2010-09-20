@@ -631,7 +631,9 @@ public class GenericHibernateDao<T, ID extends Serializable>
 		fetchedObjects.put(object, entity);
 		try {
 			// fetch the majority of all data using join queries
-			fetchExtentUsingJoinQuery(object, entity);
+			if (entity.isRoot()) {
+				fetchExtentUsingJoinQuery(object, entity);
+			}
 			
 			// we still need to fetch individual fields, e.g. if transient getters (included in the DataExtent)
 			// access some fields (that were not included in the DataExtent)
@@ -688,29 +690,25 @@ public class GenericHibernateDao<T, ID extends Serializable>
 		// Fetch the child entities via JOINs wherever possible
 		Criteria criteria = getSession().createCriteria(entity.getEntityClass());
 		criteria.add(Restrictions.idEq(id));
-		ProjectionList proList = Projections.projectionList();
-		if (buildJoinCriteria(criteria, proList, entity)) {
-			if (proList.getLength() > 0) {
-				criteria.setProjection(proList);
-				// Execute the query to fetch all listed data
-				criteria.list();
-			}
+		if (buildJoinCriteria(criteria, entity)) {
+			// Execute the query to fetch all listed data
+			criteria.setResultTransformer(Criteria.ALIAS_TO_ENTITY_MAP);
+			criteria.list();
 		}
 	}
 	
 	/**
 	 * Starts the recursive buildJoinCriteria with the initial value for the alias argument.
 	 * 
-	 * @see GenericHibernateDao#buildJoinCriteria(Criteria, ProjectionList, ExtentEntity, String)
+	 * @see GenericHibernateDao#buildJoinCriteria(Criteria, ExtentEntity, String)
 	 * 
 	 * @param criteria the criteria object to modify
-	 * @param projections a ProjectionList to which properties to be fetched are added
 	 * @param rootEntity the ExtentEntity
 	 * @return true if at least one JOIN could be added to the Criteria
 	 */
-	private boolean buildJoinCriteria(Criteria criteria, ProjectionList projections, ExtentEntity rootEntity) {
+	private boolean buildJoinCriteria(Criteria criteria, ExtentEntity rootEntity) {
 		// call the recursive builder with initial alias = null
-		return buildJoinCriteria(criteria, projections, rootEntity, null);
+		return buildJoinCriteria(criteria, rootEntity, null);
 	}
 
 	/**
@@ -723,7 +721,7 @@ public class GenericHibernateDao<T, ID extends Serializable>
 	 * @param alias the prefix to use when creating a new alias for an indirectly accessible property 
 	 * @return true if at least one JOIN could be added to the Criteria
 	 */
-	private boolean buildJoinCriteria(Criteria criteria, ProjectionList projections, ExtentEntity entity, String alias) {
+	private boolean buildJoinCriteria(Criteria criteria, ExtentEntity entity, String alias) {
 		ClassMetadata metadata = getSessionFactory().getClassMetadata(entity.getEntityClass());
 		
 		boolean couldJoin = false;
@@ -752,7 +750,6 @@ public class GenericHibernateDao<T, ID extends Serializable>
 				continue;
 			}
 			criteria.setFetchMode(prefix + field, FetchMode.JOIN);
-			projections.add(Projections.property(field));
 		}
 		
 		// fetch the other associations of the object 
@@ -771,10 +768,9 @@ public class GenericHibernateDao<T, ID extends Serializable>
 				criteria.createAlias(prefix + e.getName(), fieldAlias, Criteria.LEFT_JOIN);
 				couldJoin = true;
 				criteria.setFetchMode(prefix + e.getName(), FetchMode.JOIN);
-				projections.add(Projections.property(e.getName()));
+				buildJoinCriteria(criteria, e, fieldAlias);
 			} else {
 				criteria.setFetchMode(prefix + e.getName(), FetchMode.JOIN);
-				projections.add(Projections.property(e.getName()));
 			}
 		}
 		
