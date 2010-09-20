@@ -724,7 +724,6 @@ public class GenericHibernateDao<T, ID extends Serializable>
 	 * @return true if at least one JOIN could be added to the Criteria
 	 */
 	private boolean buildJoinCriteria(Criteria criteria, ProjectionList projections, ExtentEntity entity, String alias) {
-		s_logger.warn("calling buildJoinCriteria");
 		ClassMetadata metadata = getSessionFactory().getClassMetadata(entity.getEntityClass());
 		
 		boolean couldJoin = false;
@@ -746,7 +745,6 @@ public class GenericHibernateDao<T, ID extends Serializable>
 		
 		// fetch the primitive fields of the object
 		for (String field : entity.getFields()) {
-			s_logger.warn("Setting FetchMode.JOIN on " + field + " for " + prefix);
 			try {
 				metadata.getPropertyType(field);
 			} catch (HibernateException e) {
@@ -759,7 +757,6 @@ public class GenericHibernateDao<T, ID extends Serializable>
 		
 		// fetch the other associations of the object 
 		for (ExtentEntity e : entity.getChildEntities()) {
-			s_logger.warn("Trying to JOIN table for " + e.getName() + " for " + prefix);
 			Type type;
 			try {
 				type = metadata.getPropertyType(e.getName());
@@ -770,16 +767,12 @@ public class GenericHibernateDao<T, ID extends Serializable>
 				continue;
 			}
 			if (type instanceof EntityType) {
-				s_logger.warn(":::::::: " + e.getName() + " is an entity-type");
-				
 				String fieldAlias = aliasPrefix + e.getName();
 				criteria.createAlias(prefix + e.getName(), fieldAlias, Criteria.LEFT_JOIN);
 				couldJoin = true;
 				criteria.setFetchMode(prefix + e.getName(), FetchMode.JOIN);
 				projections.add(Projections.property(e.getName()));
 			} else {
-				s_logger.warn(":::::::: " + e.getName() + " is NOT an entity-type");
-				
 				criteria.setFetchMode(prefix + e.getName(), FetchMode.JOIN);
 				projections.add(Projections.property(e.getName()));
 			}
