@@ -214,7 +214,7 @@ public class GenericHibernateDaoTest extends AbstractTestCaseBase {
 	}
 	
 	/**
-	 * This test checks lazy loading of persons brain.
+	 * This test checks lazy loading of persons brain (bidirectional OneToOne relation)
 	 */
 	@Test
 	public void testLazyBrain() {
@@ -253,6 +253,72 @@ public class GenericHibernateDaoTest extends AbstractTestCaseBase {
 		person2 = dao.findById(person.getKey(), wholePerson);
 		try {
 			person2.getBrain().getIq();
+		} catch (LazyInitializationException e) {
+			fail("Brain has not been loaded though forced explicitly.");
+		}
+	}
+	
+	/**
+	 * This test checks lazy loading of persons with a recursion depth > 1 on ManyToOne relations
+	 */
+	@Test
+	public void testLazyBestFriend() {
+		
+		GenericHibernatePersonDaoInterface dao = getPersonDao();
+		Person person = new Person("Peter Muster");
+		Brain b = new Brain();
+		b.setIq(99);
+		person.setBrain(b);
+		
+		Person friend = new Person("Jean-Pierre Luc");
+		Brain b2 = new Brain();
+		friend.setBrain(b2);
+		person.setBestFriend(friend);
+		
+		Person friendsFriend = new Person("John Doe");
+		Brain b3 = new Brain();
+		b3.setIq(99);
+		friendsFriend.setBrain(b3);
+		friend.setBestFriend(friendsFriend);
+		
+		Person buddy = new Person("John Doe's Buddy");
+		Brain b4 = new Brain();
+		b4.setIq(50);
+		buddy.setBrain(b4);
+		friendsFriend.setBestFriend(buddy);
+		
+		dao.saveOrUpdate(buddy);
+		dao.saveOrUpdate(friendsFriend);
+		dao.saveOrUpdate(friend);
+		dao.saveOrUpdate(person);
+		
+		Person person2 = dao.findById(person.getKey());
+		try {
+			person2.getBestFriend().getName();
+			fail("Could access person's best friend which should not have been loaded.");
+		} catch (LazyInitializationException e) {
+			s_logger.debug("Expected exception catched.", e);
+		}
+		
+		// Set Extent explicitly to "with brain"
+		try {
+			DataExtent withBestFriend = new DataExtent(Person.class).with("bestFriend");
+			person2 = dao.findById(person.getKey(), withBestFriend);
+			try {
+				person2.getBestFriend().getName();
+			} catch (LazyInitializationException e) {
+				fail("Brain has not been loaded though forced explicitly.");
+			}
+		} catch (NoSuchMethodException e1) {
+			fail("Fields doesnt exist.");
+		}
+		
+		// Set Extent explicitly to "all" with recursion depth 3
+		DataExtent wholePerson = new DataExtent(Person.class).all(3);
+		
+		person2 = dao.findById(person.getKey(), wholePerson);
+		try {
+			person2.getBestFriend().getName();
 		} catch (LazyInitializationException e) {
 			fail("Brain has not been loaded though forced explicitly.");
 		}
@@ -300,7 +366,7 @@ public class GenericHibernateDaoTest extends AbstractTestCaseBase {
 	}
 	
 	/**
-	 * This test checks the lazy loading of a persons friends.
+	 * This test checks the lazy loading of a persons friends (OneToMany relation)
 	 */
 	@Test
 	public void testLazyFriends() {
@@ -407,7 +473,7 @@ public class GenericHibernateDaoTest extends AbstractTestCaseBase {
 				Person p1 = dao.reload(person1);
 				
 				try {
-					assertTrue("Hibernate did revert the Persons Friends although not told.", p1.getFriends()
+					assertTrue("Hibernate did revert the Person's Friends although not told.", p1.getFriends()
 						.get(0).getName().equals("Jean-Pierre"));
 				} catch (LazyInitializationException e) {
 					s_logger.debug("Expected Exception catched.", e);

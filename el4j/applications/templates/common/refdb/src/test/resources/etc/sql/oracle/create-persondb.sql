@@ -18,7 +18,9 @@ CREATE TABLE person (
    legalStatus				 INTEGER,
    name						 VARCHAR(255),
    brain_key				 INTEGER
-	NOT NULL	REFERENCES brain(keyId)
+	NOT NULL	REFERENCES brain(keyId),
+   bestfriend_key
+    REFERENCES person(keyId)
 );
 
 CREATE TABLE friends (
