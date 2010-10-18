@@ -203,6 +203,22 @@
 			</roles>
 			<timezone>+1</timezone>
 		</contributor>
+		<contributor>
+			<name>Philipp Brüschweiler</name>
+			<roles>
+				<role>Intern</role>
+				<role>Java developer</role>
+			</roles>
+			<timezone>+1</timezone>
+		</contributor>
+		<contributor>
+			<name>Simon Stelling</name>
+			<roles>
+				<role>Intern</role>
+				<role>Java developer</role>
+			</roles>
+			<timezone>+1</timezone>
+		</contributor>
 	</contributors>
 
 	<licenses>
@@ -1481,6 +1497,17 @@
 			<snapshots>
 				<enabled>false</enabled>
 			</snapshots>
+		</repository>
+		<repository>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<id>activiti.org</id>
+			<name>Activiti BPM Repository</name>
+			<url>http://maven.alfresco.com/nexus/content/repositories/activiti</url>
 		</repository>
 		<repository>
 			<snapshots>
