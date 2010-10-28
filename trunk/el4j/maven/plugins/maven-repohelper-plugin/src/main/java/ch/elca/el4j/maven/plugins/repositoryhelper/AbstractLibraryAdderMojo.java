@@ -385,7 +385,7 @@ public abstract class AbstractLibraryAdderMojo extends AbstractSlf4jEnabledMojo 
 				new FileSystemResourceLoader());
 		try {
 			Resource[] resources = resolver.getResources(
-				baseDir.getCanonicalPath() + "/" + pattern);
+				"file:" + baseDir.getCanonicalPath() + "/" + pattern);
 			if (resources != null) {
 				for (int i = 0; i < resources.length; i++) {
 					File file = resources[i].getFile();
