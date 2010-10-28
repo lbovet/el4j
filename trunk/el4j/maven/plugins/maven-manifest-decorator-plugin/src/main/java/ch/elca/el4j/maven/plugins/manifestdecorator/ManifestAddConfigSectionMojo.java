@@ -128,11 +128,11 @@ public class ManifestAddConfigSectionMojo extends AbstractSlf4jEnabledMojo {
 	 */
 	protected MavenSession session;
 	
-    /**
-     * Runtime Information used to check the Maven version.
-     * @since 2.0
-     * @component role="org.apache.maven.execution.RuntimeInformation"
-     */
+	/**
+	 * Runtime Information used to check the Maven version.
+	 * @since 2.0
+	 * @component role="org.apache.maven.execution.RuntimeInformation"
+	 */
 	protected RuntimeInformation rti;
 
 	//Checkstyle: MemberName on
@@ -452,15 +452,15 @@ public class ManifestAddConfigSectionMojo extends AbstractSlf4jEnabledMojo {
 		return string.length() > 0 ? string : " ";
 	}
 	
-    /**
-     * Copied from Artifact.VersionRange. This is tweaked to handle singular ranges properly. Currently the default
-     * containsVersion method assumes a singular version means allow everything. This method assumes that "2.0.4" ==
-     * "[2.0.4,)"
-     *
-     * @param allowedRange range of allowed versions.
-     * @param theVersion the version to be checked.
-     * @return true if the version is contained by the range.
-     */
+	/**
+	 * Copied from Artifact.VersionRange. This is tweaked to handle singular ranges properly. Currently the default
+	 * containsVersion method assumes a singular version means allow everything. This method assumes that "2.0.4" ==
+	 * "[2.0.4,)"
+	 *
+	 * @param allowedRange range of allowed versions.
+	 * @param theVersion the version to be checked.
+	 * @return true if the version is contained by the range.
+	 */
 	@SuppressWarnings("unchecked")
 	public static boolean containsVersion(VersionRange allowedRange, ArtifactVersion theVersion) {
 		boolean matched = false;
@@ -473,7 +473,7 @@ public class ManifestAddConfigSectionMojo extends AbstractSlf4jEnabledMojo {
 				}
 			}
 		} else {
-		    // only singular versions ever have a recommendedVersion
+			// only singular versions ever have a recommendedVersion
 			int compareTo = recommendedVersion.compareTo(theVersion);
 			matched = (compareTo <= 0);
 		}
