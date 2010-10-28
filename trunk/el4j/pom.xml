@@ -643,7 +643,7 @@
 				<plugin>
 					<groupId>ch.elca.el4j.maven.plugins</groupId>
 					<artifactId>maven-eclipse-server-plugin</artifactId>
-					<version>${version.el4j-framework.current</version>
+					<version>${version.el4j-framework.current}</version>
 					<configuration>
 						<workspace>${eclipse.workspace}</workspace>
 					</configuration>
@@ -653,9 +653,18 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-site-plugin</artifactId>
-					<version>2.1.1</version>
+					<version>3.0-beta-2</version>
 					<!-- The issue http://jira.codehaus.org/browse/MSITE-456 has been fixed in 2.1.1 -->
 					<!-- but there is a similar issue http://jira.codehaus.org/browse/MSITE-486 --> 
+					<!-- execute attach-descriptor explicitly, not done in version 3 anymore -->
+					<executions>
+						<execution>
+							<id>attach-descriptor</id>
+							<goals>
+								<goal>attach-descriptor</goal>
+							</goals>
+						</execution>
+					</executions>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
@@ -2758,7 +2767,7 @@
 		<javadoc.stylesheet.path>${el4j.external}/etc/javadoc/stylesheet.css</javadoc.stylesheet.path>
 		<javadoc.link.jdk>http://java.sun.com/javase/6/docs/api/</javadoc.link.jdk>
 		<javadoc.link.spring>http://static.springframework.org/spring/docs/2.5.x/api</javadoc.link.spring>
-		<javadoc.link.hibernate>http://www.hibernate.org/hib_docs/v3/api</javadoc.link.hibernate>
+		<javadoc.link.hibernate>http://docs.jboss.org/hibernate/stable/core/api</javadoc.link.hibernate>
 		
 		<!-- Checkstyle config -->
 		<checkstyle.config.location>${el4j.external}/etc/checkstyle/checks5.xml</checkstyle.config.location>
@@ -2793,7 +2802,7 @@
 		
 		<!-- Maven plugin versions. Needed due to false dep mgt. -->
 		<version.maven-project-info-reports-plugin>2.2</version.maven-project-info-reports-plugin>
-		<version.maven-checkstyle-plugin>2.4-el4j_20091020_1500</version.maven-checkstyle-plugin>
+		<version.maven-checkstyle-plugin>2.5</version.maven-checkstyle-plugin>
 		<version.findbugs-maven-plugin>2.3.1</version.findbugs-maven-plugin>
 		<version.maven-surefire-report-plugin>2.5</version.maven-surefire-report-plugin>
 		<version.maven-javadoc-plugin>2.6.1</version.maven-javadoc-plugin>
