@@ -58,8 +58,8 @@ cd ../..
 mvn install -Pauto,tomcat6x,db2,integrationTests $1
 mvn antrun:run -f site/pom.xml -Pcopy.surefire-report.tomcat-derby $1
 
-mvn install -Pauto,weblogic10x,oracle,integrationTests $1
-mvn antrun:run -f site/pom.xml -Pcopy.surefire-report.weblogic-oracle $1
+#mvn install -Pauto,-tomcat6x,-db2,weblogic10x,oracle,integrationTests $1
+#mvn antrun:run -f site/pom.xml -Pcopy.surefire-report.weblogic-oracle $1
 
 # aggregate files
 cd site
@@ -72,8 +72,8 @@ for p in $frameworkPlugins ; do
 done
 
 # make site
-mvn site -Psurefire-report.tomcat-derby $1
-mvn site -Psurefire-report.weblogic-oracle $1
+mvn site -P-tomcat6x,-db2,surefire-report.tomcat-derby $1
+#mvn site -P-tomcat6x,-db2,surefire-report.weblogic-oracle $1
 
 # deploy site
 mvn site-deploy $1
