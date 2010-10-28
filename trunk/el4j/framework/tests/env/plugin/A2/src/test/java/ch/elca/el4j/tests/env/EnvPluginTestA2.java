@@ -48,7 +48,7 @@ import ch.elca.el4j.util.env.EnvPropertiesUtils;
  *
  * @author Stefan Wismer (SWI)
  */
-public class EnvPluginTest {
+public class EnvPluginTestA2 {
 	/**
 	 * Test if env properties file contains the expected values.
 	 */
