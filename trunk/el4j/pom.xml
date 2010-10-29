@@ -502,13 +502,14 @@
 						<warName>${jee-web.war.name}</warName>
 						<webappDirectory>${jee-web.webapp.directory}</webappDirectory>
 						<archiveClasses>false</archiveClasses>
-						<!-- use this folder to add additional filtered web resources -->
+						<!-- use the following configuration to add additional filtered web resources
 						<webResources>
 							<resource>
 								<directory>src/main/webapp-resources</directory>
 								<filtering>true</filtering>
 							</resource>
 						</webResources>
+						-->
 					</configuration>
 				</plugin>
 				<plugin>
