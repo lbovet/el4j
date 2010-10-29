@@ -8,7 +8,18 @@
 -->
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context-2.5.xsd
+		http://www.springframework.org/schema/aop
+		http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+		http://www.springframework.org/schema/tx
+		http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
 
 	<!-- $Revision$ -->
 	<!-- $URL$ -->
@@ -18,34 +29,32 @@
 	<!--
 		General AOP definitions.
 	-->
-	<bean id="transactionAutoproxy"
-		class="ch.elca.el4j.core.aop.IntelligentAdvisorAutoProxyCreator">
-		<property name="proxyTargetClass">
-			<!--
-				false:
-					Jdk proxies will be used.
-					Only interface methods will be intercepted.
-					
-				true:
-					Cglib will be used to intercept methods.
-					Intercepted beans must have a default constructor and
-					must not be final.
-			-->
-			<value>false</value>
-		</property>
-		<property name="usePrefix" value="true"/>
-		<property name="order" value="100"/>
-	</bean>
+	<aop:config proxy-target-class="false">
+		<!--
+			false:
+				Jdk proxies will be used.
+				Only interface methods will be intercepted.
+				
+			true:
+				Cglib will be used to intercept methods.
+				Intercepted beans must have a default constructor and
+				must not be final.
+		-->
+		<aop:advisor advice-ref="transactionInterceptor"
+			pointcut-ref="transactionPointcut"
+			order="100"/>
+	</aop:config>
 	
 	<!--
 		Transaction configurations.
 	-->
-	<bean id="transactionAutoproxy.transactionAdvisor"
-		class="org.springframework.transaction.interceptor.TransactionAttributeSourceAdvisor">
+	<bean id="transactionPointcut"
+		class="org.springframework.transaction.interceptor.El4jTransactionAttributeSourcePointcut">
 		<constructor-arg>
 			<ref local="transactionInterceptor"/>
 		</constructor-arg>
 	</bean>
+	
 	<bean id="transactionInterceptor"
 		class="org.springframework.transaction.interceptor.TransactionInterceptor">
 		<property name="transactionManager">
