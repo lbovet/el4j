@@ -162,6 +162,11 @@ public class ModuleApplicationContext extends AbstractXmlApplicationContext
 	 * Synchronization monitor for the "refreshed" flag.
 	 */
 	private final Object m_refreshedMonitor = new Object();
+
+	/**
+	 * Creation listener for the application context.
+	 */
+	private final ModuleApplicationContextCreationListener m_creationListener;
 	
 	/**
 	 * @see ch.elca.el4j.core.context.ModuleApplicationContext#ModuleApplicationContext(
@@ -241,8 +246,8 @@ public class ModuleApplicationContext extends AbstractXmlApplicationContext
 	 * </ul>
 	 *
 	 * @see ch.elca.el4j.core.context.ModuleApplicationContext#ModuleApplicationContext(
-	 *      String[], String[], boolean, ApplicationContext, boolean, boolean,
-	 *      boolean)
+	 *      String[], String[], boolean, ApplicationContext, boolean, boolean, 
+	 *      boolean, ModuleApplicationContextCreationListener)
 	 */
 	public ModuleApplicationContext(String[] inclusiveConfigLocations,
 		String[] exclusiveConfigLocations,
@@ -250,7 +255,7 @@ public class ModuleApplicationContext extends AbstractXmlApplicationContext
 		boolean mergeWithOuterResources) {
 		this(inclusiveConfigLocations, exclusiveConfigLocations,
 				allowBeanDefinitionOverriding, parent, mergeWithOuterResources,
-				false, true);
+				false, true, null);
 	}
 			
 	/**
@@ -281,6 +286,8 @@ public class ModuleApplicationContext extends AbstractXmlApplicationContext
 	 *            least specific resource will be returned.
 	 * @param mostSpecificBeanDefinitionCounts
 	 *            Indicates that the most specific bean definition is used.
+	 * @param creationListener
+	 *            Is the listener to hock in while creation of the application context.
 	 */
 	@FindBugsSuppressWarnings(value = "UR_UNINIT_READ", 
 		justification = "Pattern resolver initialized by a super class.")
@@ -289,7 +296,8 @@ public class ModuleApplicationContext extends AbstractXmlApplicationContext
 			boolean allowBeanDefinitionOverriding, ApplicationContext parent,
 			boolean mergeWithOuterResources,
 			boolean mostSpecificResourceLast,
-			boolean mostSpecificBeanDefinitionCounts) {
+			boolean mostSpecificBeanDefinitionCounts,
+			ModuleApplicationContextCreationListener creationListener) {
 		super(parent);
 		m_inclusiveConfigLocations = inclusiveConfigLocations;
 		m_exclusiveConfigLocations = exclusiveConfigLocations;
@@ -297,6 +305,7 @@ public class ModuleApplicationContext extends AbstractXmlApplicationContext
 		m_mergeWithOuterResources = mergeWithOuterResources;
 		m_mostSpecificResourceLast = mostSpecificResourceLast;
 		m_mostSpecificBeanDefinitionCounts = mostSpecificBeanDefinitionCounts;
+		m_creationListener = creationListener;
 		
 		/**
 		 * HACK: The pattern resolver is initialized by a super class
@@ -342,7 +351,17 @@ public class ModuleApplicationContext extends AbstractXmlApplicationContext
 			config.getParent(),
 			config.isMergeWithOuterResources(),
 			config.isMostSpecificResourceLast(),
-			config.isMostSpecificBeanDefinitionCounts());
+			config.isMostSpecificBeanDefinitionCounts(),
+			config.getModuleApplicationContextCreationListener());
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	protected void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) {
+		if (m_creationListener != null) {
+			m_creationListener.postProcessBeanFactory(beanFactory);
+		}
 	}
 	
 	/**
@@ -568,6 +587,10 @@ public class ModuleApplicationContext extends AbstractXmlApplicationContext
 			listener.onContextRefreshed();
 		}
 		super.finishRefresh();
+		
+		if (m_creationListener != null) {
+			m_creationListener.finishRefresh(this);
+		}
 	}
 	
 	/** {@inheritDoc} */
