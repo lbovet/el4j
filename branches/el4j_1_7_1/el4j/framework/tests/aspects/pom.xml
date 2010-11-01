@@ -25,27 +25,40 @@
 	</description>
 
 	<dependencies>
-		
+		<!-- EL4J dependencies -->
 		<dependency>
 			<groupId>ch.elca.el4j.modules</groupId>
-			<artifactId>module-core</artifactId>
-		</dependency><dependency>
+			<artifactId>module-env</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>ch.elca.el4j.modules</groupId>
 			<artifactId>module-hibernate</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>ch.elca.el4j.modules</groupId>
-			<artifactId>module-database-oracle</artifactId>
+			<artifactId>module-database-${db.name}</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>javax.annotation</groupId>
-			<artifactId>jsr250-api</artifactId>
-			<version>1.0</version>
+			<groupId>ch.elca.el4j.modules</groupId>
+			<artifactId>module-core</artifactId>
+			<type>test-jar</type>
 		</dependency>
+		
+		<!-- AspectJ dependencies -->
 		<dependency>
 			<groupId>org.springframework</groupId>
-			<artifactId>spring-test</artifactId>
+			<artifactId>spring-aspects</artifactId>
 			<version>${version.spring}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring-beans</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>commons-logging</groupId>
+					<artifactId>commons-logging</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.aspectj</groupId>
@@ -53,31 +66,44 @@
 			<version>1.6.5</version>
 		</dependency>
 		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-aspects</artifactId>
-			<version>${version.spring}</version>
-		</dependency>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit-dep</artifactId>
-			<version>4.5</version>
-		</dependency>
-		
-		
-		<dependency>
 			<groupId>org.aspectj</groupId>
 			<artifactId>aspectjweaver</artifactId>
 			<version>1.6.5</version>
 		</dependency>
+		
+		<!-- Test dependencies -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>${version.spring}</version>
+			<scope>test</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>commons-logging</groupId>
+					<artifactId>commons-logging</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
 	</dependencies>
-	
-	<properties>
-		<db.username>LEAF3</db.username>
-		<db.password>LEAF</db.password>
-		<db.name>oracle</db.name>
-		<db.host>tulipe.elca.ch</db.host>
-		<db.port>1521</db.port>
-		<db.database-name>d92a</db.database-name>
-		<db.url>jdbc:oracle:thin:@${db.host}:${db.port}:${db.database-name}</db.url>
-	</properties>
+
+	<profiles>
+		<!-- DB -->
+		<profile>
+			<id>db2</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<db.username>el4j_user</db.username>
+				<db.password>el4j_user</db.password>
+			</properties>
+		</profile>
+		<profile>
+			<id>oracle</id>
+			<properties>
+				<db.username>LEAF3</db.username>
+				<db.password>LEAF</db.password>
+			</properties>
+		</profile>
+	</profiles>
 </project>

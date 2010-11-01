@@ -1,43 +1,49 @@
+/*
+ * EL4J, the Extension Library for the J2EE, adds incremental enhancements to
+ * the spring framework, http://el4j.sf.net
+ * Copyright (C) 2010 by ELCA Informatique SA, Av. de la Harpe 22-24,
+ * 1000 Lausanne, Switzerland, http://www.elca.ch
+ *
+ * EL4J is published under the GNU Lesser General Public License (LGPL)
+ * Version 2.1. See http://www.gnu.org/licenses/
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Lesser General Public License for more details.
+ *
+ * For alternative licensing, please contact info@elca.ch
+ */
 package ch.elca.el4j.tests.aspects;
 
-import javax.annotation.Resource;
+import static junit.framework.Assert.assertEquals;
 
-import org.aopalliance.aop.Advice;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.springframework.aop.Advisor;
-import org.springframework.aop.aspectj.AspectJAroundAdvice;
-import org.springframework.aop.framework.Advised;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit38.AbstractJUnit38SpringContextTests;
+import java.util.List;
 
-import ch.elca.el4j.tests.aspects.services.Service;
+import org.junit.Test;
 
-@ContextConfiguration(locations = { "classpath*:mandatory/aspect-test-config.xml" })
-public class InvokationWithoutTrJ5ATest extends AbstractJUnit38SpringContextTests {
-	Log logger = LogFactory.getLog(InvokationWithoutTrJ5ATest.class);
+import ch.elca.el4j.tests.aspects.interceptor.ServiceLoggerInterceptor;
+import ch.elca.el4j.tests.aspects.util.InvocationMonitor;
 
-	public static int counter = 0;
-
-	@Resource
-	protected Service myService;
-
+/**
+ * Aspects tests class with transaction interseptor.
+ *
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
+ *
+ * @author Martin Zeltner (MZE)
+ */
+public class InvokationWithoutTrJ5ATest extends AbstractInvokationTests {
+	/**
+	 * Tests the double invokation problem.
+	 */
+	@Test
 	public void testDoubleInvokation() {
-		Service.resetCounter();
-		if (myService instanceof Advised) {
-			Advised myAdvisedService = (Advised) myService;
-			for (Advisor adv : myAdvisedService.getAdvisors()) {
-				Advice advice = adv.getAdvice();
-				if (advice instanceof AspectJAroundAdvice) {
-					AspectJAroundAdvice around = (AspectJAroundAdvice) advice;
-					System.out.println("- around advice " + around.getAspectName() + ": " + adv.getAdvice());
-				} else {
-					System.out.println("- " + adv.getAdvice());
-				}
-
-			}
-		}
-		myService.oneMethod();
-		assertEquals(1, Service.getCounter());
+		InvocationMonitor.clear();
+		commonDoubleInvokationTest();
+		
+		// Check invocation order
+		List<Class<?>> invocationList = InvocationMonitor.getInvocationList();
+		assertEquals(1, invocationList.size());
+		assertEquals(ServiceLoggerInterceptor.class, invocationList.get(0));
 	}
 }
