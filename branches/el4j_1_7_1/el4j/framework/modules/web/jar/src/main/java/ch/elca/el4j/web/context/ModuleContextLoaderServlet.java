@@ -31,6 +31,11 @@ import org.springframework.web.context.ContextLoaderServlet;
  * @author Stefan Wismer (SWI)
  */
 public class ModuleContextLoaderServlet extends ContextLoaderServlet {
+	/**
+	 * Generated serial version UID.
+	 */
+	private static final long serialVersionUID = -8377568521343505991L;
+
 	/** {@inheritDoc} */
 	@Override
 	protected ContextLoader createContextLoader() {

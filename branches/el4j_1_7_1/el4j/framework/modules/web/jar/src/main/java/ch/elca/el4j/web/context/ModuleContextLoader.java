@@ -103,20 +103,17 @@ public class ModuleContextLoader extends ContextLoader {
 
 			wac = new ModuleWebApplicationContext(inclusiveConfigLocations,
 				exclusiveConfigLocations, beanOverriding, servletContext,
-				mergeResources);
+				mergeResources, parent);
 
 		} else {
-			wac = (ConfigurableWebApplicationContext) BeanUtils
-				.instantiateClass(contextClass);
-
+			wac = (ConfigurableWebApplicationContext) BeanUtils.instantiateClass(contextClass);
 			wac.setServletContext(servletContext);
-			String configLocation = servletContext
-				.getInitParameter(CONFIG_LOCATION_PARAM);
+			String configLocation = servletContext.getInitParameter(CONFIG_LOCATION_PARAM);
 			if (configLocation != null) {
 				wac.setConfigLocations(toStringArray(configLocation));
 			}
+			wac.setParent(parent);
 		}
-		wac.setParent(parent);
 		wac.refresh();
 		return wac;
 	}
