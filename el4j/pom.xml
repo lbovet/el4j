@@ -578,6 +578,7 @@
 						</additionalBuildcommands>
 						<workspace>${eclipse.workspace}</workspace>
 						<wtpversion>2.0</wtpversion>
+						<ajdtVersion>none</ajdtVersion>
 					</configuration>
 				
 					<executions>
