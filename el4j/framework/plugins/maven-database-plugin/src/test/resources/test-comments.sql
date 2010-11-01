@@ -9,7 +9,7 @@ CREATE TABLE keywords (
   optimisticLockingVersion  INTEGER        NOT NULL
 );
 /* another comment...
-... ending in a valid line */INSERT INTO KEYWORDS (KEYID,NAME,DESCRIPTION,OPTIMISTICLOCKINGVERSION) VALUES (1,'Java','A title with
+... ending in a valid line */INSERT INTO /* intermediate comment */ KEYWORDS (KEYID,NAME,DESCRIPTION,OPTIMISTICLOCKINGVERSION) VALUES (1,'Java','A title with
 multiple
 lines',0);
 /* multi
