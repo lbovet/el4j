@@ -257,7 +257,25 @@ public class ModuleApplicationContext extends AbstractXmlApplicationContext
 				allowBeanDefinitionOverriding, parent, mergeWithOuterResources,
 				false, true, null);
 	}
-			
+
+	/**
+	 * With this constructor we use no app context creation listener.
+	 * 
+	 * @see ch.elca.el4j.core.context.ModuleApplicationContext#ModuleApplicationContext(
+	 *      String[], String[], boolean, ApplicationContext, boolean, boolean, 
+	 *      boolean, ModuleApplicationContextCreationListener)
+	 */
+	public ModuleApplicationContext(String[] inclusiveConfigLocations,
+		String[] exclusiveConfigLocations,
+		boolean allowBeanDefinitionOverriding, ApplicationContext parent,
+		boolean mergeWithOuterResources,
+		boolean mostSpecificResourceLast,
+		boolean mostSpecificBeanDefinitionCounts) {
+		this(inclusiveConfigLocations, exclusiveConfigLocations,
+			allowBeanDefinitionOverriding, parent, mergeWithOuterResources,
+			mostSpecificResourceLast, mostSpecificBeanDefinitionCounts, null);
+	}
+	
 	/**
 	 * Create a new ModuleApplicationContext with the given parent, loading the
 	 * definitions from the given XML files in "inclusiveConfigLocations"
