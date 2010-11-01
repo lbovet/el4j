@@ -34,6 +34,10 @@ import org.springframework.web.servlet.DispatcherServlet;
  * @author Andreas Bur (ABU)
  */
 public class ModuleDispatcherServlet extends DispatcherServlet {
+	/**
+	 * Generated serial version UID.
+	 */
+	private static final long serialVersionUID = 2583279389917262839L;
 
 	/**
 	 * The configuration locations that are included to initialize the
@@ -76,9 +80,8 @@ public class ModuleDispatcherServlet extends DispatcherServlet {
 			= new ModuleWebApplicationContext(incl, excl,
 					isAllowBeanDefinitionOverriding(),
 					getServletContext(),
-					m_mergeWithOuterResources);
+					m_mergeWithOuterResources, parent);
 		
-		wac.setParent(parent);
 		wac.setNamespace(getNamespace());
 		wac.refresh();
 		return wac;
