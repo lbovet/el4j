@@ -74,8 +74,10 @@ public final class SqlUtils {
 		final Pattern beginStmtRegex = Pattern.compile("(declare|is|begin|as)", Pattern.CASE_INSENSITIVE);
 		Matcher beginStmtMatcher;
 		String expectedDelimiter = statementDelimiter;
+		String[] markers = {"/*", "*/"};
+		int currentMarker = 0;
 		boolean insideComment = false;
-
+		
 		/*
 		 * General remark: SQL allows Strings to span over multiple lines. That means that trim is never allowed!
 		 */
@@ -93,17 +95,43 @@ public final class SqlUtils {
 				String trimmed = StringUtils.trimWhitespace(part);
 				
 				// Filter out comments
-				if (part.length() != 0 && !trimmed.startsWith("--") && (!insideComment || trimmed.contains("*/"))) {
+				if (part.length() != 0 && !trimmed.startsWith("--")) {
 					
-					// detect multiline comments
-					if (part.contains("*/")) {
-						part = part.substring(part.indexOf("*/") + "*/".length());
-						insideComment = false;
+					int cursor = 0;
+					
+					String remainingPart = part;
+					String resultingPart = "";
+					while (remainingPart.length() != 0) {
+						int nextCursor = remainingPart.indexOf(markers[currentMarker]);
+						
+						if (nextCursor == -1) {
+							// in a multi-line comment, we need to compensate the flip a few
+							// lines later, so we invert insideComment here already
+							
+							if (!insideComment) {
+								resultingPart += remainingPart;
+							}
+							remainingPart = "";
+						} else {
+							if (!insideComment) {
+								resultingPart += remainingPart.subSequence(0, nextCursor);
+							}
+							
+							// skip the two comment chars /* */
+							if (nextCursor + 2 < remainingPart.length()) {
+								nextCursor += 2;
+							} else {
+								nextCursor = remainingPart.length();
+							}
+							
+							remainingPart = remainingPart.substring(nextCursor);
+							cursor += nextCursor;
+							insideComment = !insideComment;
+							currentMarker = (currentMarker + 1) % 2;
+						}
 					}
-					if (trimmed.startsWith("/*")) {
-						part = "";
-						insideComment = !trimmed.endsWith("*/");
-					}
+					
+					part = resultingPart;
 					
 					beginStmtMatcher = beginStmtRegex.matcher(trimmed);
 					// Detect begin/end of statement sequence
