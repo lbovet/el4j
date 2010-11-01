@@ -13,6 +13,9 @@
  * Remoting
    = Make service protocol of remoting protocols configurable. Before "http" was
      hardcoded (ELJ-167).
+   = Boolean property "doNotForcePreInstantiationOfExporterObject" added to
+     ch.elca.el4j.services.remoting.AbstractRemotingProtocol to be able to stop
+     pre-instantiation of service exporter object.
 
  * Build system
    = DB plugin can now handle inline comments (ELJ-147).
