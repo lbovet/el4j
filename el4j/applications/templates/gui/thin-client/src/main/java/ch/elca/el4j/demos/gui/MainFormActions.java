@@ -111,6 +111,14 @@ public class MainFormActions {
 	}
 	
 	/**
+	 * EhCache Demo.
+	 */
+	@Action
+	public void showCachingDemo() {
+		app.show("cachingDemoForm");
+	}
+	
+	/**
 	 * Send an example event.
 	 */
 	@Action
