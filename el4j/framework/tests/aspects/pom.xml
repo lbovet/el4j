@@ -13,11 +13,10 @@
 	<parent>
 		<groupId>ch.elca.el4j.tests</groupId>
 		<artifactId>el4j-framework-tests</artifactId>
-		<version>1.7.1</version>
+		<version>3.1-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>module-aspects-tests</artifactId>
-	<version>${version.module-aspects-tests}</version>
 	<packaging>jar</packaging>
 	<name>EL4J test aspects</name>
 	<description>
