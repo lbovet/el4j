@@ -23,8 +23,8 @@ import javax.xml.bind.Unmarshaller;
 import javax.xml.ws.handler.soap.SOAPHandler;
 import javax.xml.ws.handler.soap.SOAPMessageContext;
 
-import org.apache.log4j.Logger;
 import org.jdom.Namespace;
+import org.slf4j.Logger;
 
 /**
  *

@@ -33,13 +33,14 @@ import javax.xml.soap.SOAPMessage;
 import javax.xml.ws.handler.MessageContext;
 import javax.xml.ws.handler.soap.SOAPMessageContext;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import com.sun.xml.ws.util.xml.NodeListIterator;
-
 import ch.elca.el4j.core.contextpassing.ImplicitContextPassingRegistry;
+
+import com.sun.xml.ws.util.xml.NodeListIterator;
 
 /**
  * This class is a JAX-WS Handler that injects the implicit context while
@@ -55,7 +56,7 @@ public class JaxwsContextHandler extends AbstractJaxwsJaxbContextHandler {
 	 * The logger.
 	 */
 	private static Logger s_logger
-		= Logger.getLogger(JaxwsContextHandler.class);
+		= LoggerFactory.getLogger(JaxwsContextHandler.class);
 	
 	/**
 	 * The registry to get the context from.
