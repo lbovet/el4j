@@ -16,6 +16,8 @@
    = Boolean property "doNotForcePreInstantiationOfExporterObject" added to
      ch.elca.el4j.services.remoting.AbstractRemotingProtocol to be able to stop
      pre-instantiation of service exporter object (ELJ-177).
+   = Dependency "woodstox:wstx-asl" replaced by dependency "org.codehaus.woodstox:wstx-asl"
+     to remove error message on maven build output (ELJ-179).
 
  * Build system
    = DB plugin can now handle inline comments (ELJ-147).
