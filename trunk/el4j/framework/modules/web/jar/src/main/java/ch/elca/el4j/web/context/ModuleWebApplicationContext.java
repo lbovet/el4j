@@ -30,6 +30,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
+import org.springframework.context.ApplicationContext;
 import org.springframework.core.io.DefaultResourceLoader;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
@@ -41,9 +42,9 @@ import org.springframework.web.context.support.ServletContextResourcePatternReso
 import org.springframework.web.context.support.XmlWebApplicationContext;
 
 import ch.elca.el4j.core.context.ModuleApplicationContext;
-import ch.elca.el4j.core.context.RefreshableModuleApplicationContext;
 import ch.elca.el4j.core.context.ModuleApplicationContextUtils;
 import ch.elca.el4j.core.context.ModuleApplicationListener;
+import ch.elca.el4j.core.context.RefreshableModuleApplicationContext;
 import ch.elca.el4j.core.io.support.ListResourcePatternResolverDecorator;
 import ch.elca.el4j.core.io.support.ManifestOrderedConfigLocationProvider;
 
@@ -69,7 +70,7 @@ public class ModuleWebApplicationContext extends XmlWebApplicationContext
 	 * This logger is used to print out some global debugging info. Consult it
 	 * for info what is going on.
 	 */
-	protected static final Logger s_el4jLogger
+	protected static final Logger s_loggerEl4j
 		= LoggerFactory.getLogger(ModuleApplicationContext.EL4J_DEBUGGING_LOGGER);
 
 	/**
@@ -126,10 +127,24 @@ public class ModuleWebApplicationContext extends XmlWebApplicationContext
 	private final Object m_refreshedMonitor = new Object();
 	
 	/**
+	 * There is no parent app context.
+	 *
+	 * @see #ModuleWebApplicationContext(String[], String[], boolean,
+	 *       ServletContext, boolean, ApplicationContext))
+	 */
+	public ModuleWebApplicationContext(String[] inclusiveConfigLocations,
+		String[] exclusiveConfigLocations,
+		boolean allowBeanDefinitionOverriding, ServletContext servletContext,
+		boolean mergeWithOuterResources) {
+		this(inclusiveConfigLocations, exclusiveConfigLocations,
+			allowBeanDefinitionOverriding, servletContext,
+			mergeWithOuterResources, null);
+	}
+	
+	/**
 	 * <ul>
 	 * <li>Most specific resource last is set to <code>false</code>.</li>
-	 * <li>Most specific bean definition counts is set to
-	 * <code>true</code>.</li>
+	 * <li>Most specific bean definition counts is set to <code>true</code>.</li>
 	 * </ul>
 	 *
 	 * @see #ModuleWebApplicationContext(String[], String[], boolean,
@@ -138,12 +153,28 @@ public class ModuleWebApplicationContext extends XmlWebApplicationContext
 	public ModuleWebApplicationContext(String[] inclusiveConfigLocations,
 		String[] exclusiveConfigLocations,
 		boolean allowBeanDefinitionOverriding, ServletContext servletContext,
-		boolean mergeWithOuterResources) {
+		boolean mergeWithOuterResources, ApplicationContext parent) {
 		this(inclusiveConfigLocations, exclusiveConfigLocations,
 			allowBeanDefinitionOverriding, servletContext,
-			mergeWithOuterResources, false, true);
+			mergeWithOuterResources, false, true, parent);
 	}
-
+	
+	/**
+	 * There is no parent app context.
+	 *
+	 * @see #ModuleWebApplicationContext(String[], String[], boolean,
+	 *       ServletContext, boolean, boolean, boolean))
+	 */
+	public ModuleWebApplicationContext(String[] inclusiveConfigLocations,
+		String[] exclusiveConfigLocations,
+		boolean allowBeanDefinitionOverriding, ServletContext servletContext,
+		boolean mergeWithOuterResources, boolean mostSpecificResourceLast,
+		boolean mostSpecificBeanDefinitionCounts) {
+		this(inclusiveConfigLocations, exclusiveConfigLocations,
+			allowBeanDefinitionOverriding, servletContext,
+			mergeWithOuterResources, mostSpecificResourceLast, mostSpecificBeanDefinitionCounts, null);
+	}
+	
 	/**
 	 * Create a new ModuleApplicationContext with the given parent, loading the
 	 * definitions from the given XML files in "inclusiveConfigLocations"
@@ -172,12 +203,14 @@ public class ModuleWebApplicationContext extends XmlWebApplicationContext
 	 *            least specific resource will be returned.
 	 * @param mostSpecificBeanDefinitionCounts
 	 *            Indicates that the most specific bean definition is used.
+	 * @param parent
+	 *            Is the parent application context. 
 	 */
 	public ModuleWebApplicationContext(String[] inclusiveConfigLocations,
 		String[] exclusiveConfigLocations,
 		boolean allowBeanDefinitionOverriding, ServletContext servletContext,
 		boolean mergeWithOuterResources, boolean mostSpecificResourceLast,
-		boolean mostSpecificBeanDefinitionCounts) {
+		boolean mostSpecificBeanDefinitionCounts, ApplicationContext parent) {
 
 		super();
 		
@@ -188,20 +221,18 @@ public class ModuleWebApplicationContext extends XmlWebApplicationContext
 		m_mostSpecificResourceLast = mostSpecificResourceLast;
 		m_mostSpecificBeanDefinitionCounts = mostSpecificBeanDefinitionCounts;
 		setServletContext(servletContext);
+		setParent(parent);
 		
 		/**
 		 * HACK: The pattern resolver is initialized by a super class
 		 * via method <code>getResourcePatternResolver</code>.
 		 */
 		Assert.notNull(m_patternResolver);
-		Assert.isInstanceOf(ListResourcePatternResolverDecorator.class,
-			m_patternResolver);
+		Assert.isInstanceOf(ListResourcePatternResolverDecorator.class, m_patternResolver);
 		ListResourcePatternResolverDecorator listResourcePatternResolver
 			= (ListResourcePatternResolverDecorator) m_patternResolver;
-		listResourcePatternResolver.setMostSpecificResourceLast(
-			isMostSpecificResourceLast());
-		listResourcePatternResolver.setMergeWithOuterResources(
-			isMergeWithOuterResources());
+		listResourcePatternResolver.setMostSpecificResourceLast(isMostSpecificResourceLast());
+		listResourcePatternResolver.setMergeWithOuterResources(isMergeWithOuterResources());
 		
 		if (servletContext != null) {
 			listResourcePatternResolver.setPatternResolver(
@@ -211,8 +242,7 @@ public class ModuleWebApplicationContext extends XmlWebApplicationContext
 		ModuleApplicationContextUtils utils
 			= new ModuleApplicationContextUtils(this);
 		utils.setReverseConfigLocationResourceArray(
-			isMostSpecificResourceLast()
-				!= isMostSpecificBeanDefinitionCounts());
+			isMostSpecificResourceLast() != isMostSpecificBeanDefinitionCounts());
 		
 		m_configLocations = utils.calculateInputFiles(inclusiveConfigLocations,
 				exclusiveConfigLocations, allowBeanDefinitionOverriding);
@@ -249,43 +279,39 @@ public class ModuleWebApplicationContext extends XmlWebApplicationContext
 		boolean mergeWithOuterResources, boolean mostSpecificResourceLast,
 		boolean mostSpecificBeanDefinitionCounts) {
 
-		s_el4jLogger
-			.info("Starting up ModuleApplicationContext. configLocations :"
-				+ StringUtils.arrayToDelimitedString(m_configLocations, ", "));
-		if (s_el4jLogger.isDebugEnabled()) {
-			s_el4jLogger.debug("inclusiveLocation:"
-				+ StringUtils.arrayToDelimitedString(
-					m_inclusiveConfigLocations, ", "));
-			s_el4jLogger.debug("exclusiveLocation:"
-				+ StringUtils.arrayToDelimitedString(
-					m_exclusiveConfigLocations, ", "));
-			s_el4jLogger.debug("allowBeanDefinitionOverriding:"
+		s_loggerEl4j.info("Starting up ModuleApplicationContext. configLocations :"
+			+ StringUtils.arrayToDelimitedString(m_configLocations, ", "));
+		if (s_loggerEl4j.isDebugEnabled()) {
+			s_loggerEl4j.debug("inclusiveLocation:"
+				+ StringUtils.arrayToDelimitedString(m_inclusiveConfigLocations, ", "));
+			s_loggerEl4j.debug("exclusiveLocation:"
+				+ StringUtils.arrayToDelimitedString(m_exclusiveConfigLocations, ", "));
+			s_loggerEl4j.debug("allowBeanDefinitionOverriding:"
 				+ allowBeanDefinitionOverriding);
-			s_el4jLogger.debug("mergeWithOuterResources:"
+			s_loggerEl4j.debug("mergeWithOuterResources:"
 				+ mergeWithOuterResources);
-			s_el4jLogger.debug("mostSpecificResourceLast:"
+			s_loggerEl4j.debug("mostSpecificResourceLast:"
 				+ mostSpecificResourceLast);
-			s_el4jLogger.debug("mostSpecificBeanDefinitionCounts:"
+			s_loggerEl4j.debug("mostSpecificBeanDefinitionCounts:"
 				+ mostSpecificBeanDefinitionCounts);
 
 			BufferedReader reader = null;
 			try {
 				for (String configLocation : m_configLocations) {
 					Resource res = getResource(configLocation);
-					reader = new BufferedReader(
-						new InputStreamReader(res.getInputStream()));
+					reader = new BufferedReader(new InputStreamReader(res.getInputStream()));
 					StringBuffer buf = new StringBuffer();
 					while (reader.ready()) {
 						buf.append(reader.readLine());
 						buf.append("\n");
 					}
-					s_el4jLogger.debug("Content of " + configLocation + " : "
+					s_loggerEl4j.debug("Content of " + configLocation + " : "
 						+ buf.toString() + "\n---");
 
 				}
 			} catch (Exception e) {
 				// deliberately ignore exception
-				s_el4jLogger.debug("Error during printing of config location "
+				s_loggerEl4j.debug("Error during printing of config location "
 					+ StringUtils.arrayToCommaDelimitedString(m_configLocations)
 					, e);
 			} finally {
@@ -293,7 +319,7 @@ public class ModuleWebApplicationContext extends XmlWebApplicationContext
 					try {
 						reader.close();
 					} catch (IOException e) {
-						s_el4jLogger.debug("Error closing reader", e);
+						s_loggerEl4j.debug("Error closing reader", e);
 					}
 				}
 			}

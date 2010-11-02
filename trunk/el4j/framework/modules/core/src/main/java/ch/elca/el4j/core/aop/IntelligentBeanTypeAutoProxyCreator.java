@@ -31,8 +31,12 @@ import org.springframework.aop.framework.autoproxy.AbstractAutoProxyCreator;
  *
  * @author Martin Zeltner (MZE)
  */
-public class IntelligentBeanTypeAutoProxyCreator
-	extends BeanTypeAutoProxyCreator {
+public class IntelligentBeanTypeAutoProxyCreator extends BeanTypeAutoProxyCreator {
+	/**
+	 * Serial version UID.
+	 */
+	private static final long serialVersionUID = -2417610783882720300L;
+
 	/**
 	 * COPYIED FROM SUPERCLASS!
 	 *
@@ -46,14 +50,16 @@ public class IntelligentBeanTypeAutoProxyCreator
 	 * COPYIED FROM SUPERCLASS!
 	 *
 	 * Default is global AdvisorAdapterRegistry.
-	 * */
+	 */
 	private AdvisorAdapterRegistry m_advisorAdapterRegistry
 		= GlobalAdvisorAdapterRegistry.getInstance();
 
 	/**
-	 * @see #setApplyCommonInterceptorsFirst(boolean)
+	 * COPYIED FROM SUPERCLASS!
+	 *
+	 * Default is "true"; else, bean-specific interceptors will get applied first.
 	 */
-	private boolean m_applyCommonInterceptorsFirst;
+	private boolean m_applyCommonInterceptorsFirst = true;
 
 	/**
 	 * Will not create a new proxy for a given bean if this bean is already
@@ -61,6 +67,7 @@ public class IntelligentBeanTypeAutoProxyCreator
 	 *
 	 * {@inheritDoc}
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	protected Object createProxy(Class beanClass, String beanName,
 		Object[] specificInterceptors, TargetSource targetSource) {
@@ -79,6 +86,19 @@ public class IntelligentBeanTypeAutoProxyCreator
 	}
 
 	/**
+	 * Here we additionally de-proxy beans (to avoid that certain applications of interceptors fail).
+	 * 
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override	
+	protected Object[] getAdvicesAndAdvisorsForBean(Class beanClass, String beanName, TargetSource targetSource) {
+		Class deproxiedBeanClass = IntelligentAdvisorAutoProxyCreator.deproxyBeanClass(
+			beanClass, beanName, getBeanFactory());
+		return super.getAdvicesAndAdvisorsForBean(deproxiedBeanClass, beanName, targetSource);
+	}	
+
+	/**
 	 * @return Returns the interceptorNames.
 	 */
 	protected String[] getInterceptorNames() {
@@ -86,6 +106,8 @@ public class IntelligentBeanTypeAutoProxyCreator
 	}
 
 	/**
+	 * COPYIED FROM SUPERCLASS!
+	 * 
 	 * Added to have access to the interceptor names.
 	 *
 	 * {@inheritDoc}
@@ -104,6 +126,8 @@ public class IntelligentBeanTypeAutoProxyCreator
 	}
 
 	/**
+	 * COPYIED FROM SUPERCLASS!
+	 * 
 	 * Added to have access to the interceptor names.
 	 *
 	 * {@inheritDoc}
@@ -142,6 +166,7 @@ public class IntelligentBeanTypeAutoProxyCreator
 	 *
 	 * @param applyCommonInterceptorsFirst See method description.
 	 */
+	@Override
 	public void setApplyCommonInterceptorsFirst(
 		boolean applyCommonInterceptorsFirst) {
 		m_applyCommonInterceptorsFirst = applyCommonInterceptorsFirst;

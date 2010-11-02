@@ -126,5 +126,13 @@
 			<artifactId>inject</artifactId>
 			<version>1.0</version>
 		</dependency>
+		
+				<!-- Test dependencies -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>${version.spring}</version>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 </project>

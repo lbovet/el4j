@@ -74,6 +74,13 @@ public abstract class AbstractRemotingProtocol implements
 	private boolean m_protocolSpecificContextPassing = false;
 	
 	/**
+	 * If it is set to <code>true</code>, the exporter object (if singleton),
+	 * will not be pre-instantiated. By default singleton exporter objects
+	 * will be pre-instantiated.
+	 */
+	private boolean m_doNotForcePreInstantiationOfExporterObject = false;
+	
+	/**
 	 * Does this protocol handle context passing on its own?
 	 * @return Whether this protocol handles the context
 	 */
@@ -241,7 +248,7 @@ public abstract class AbstractRemotingProtocol implements
 	 */
 	public void checkRemotingExporter(RemotingServiceExporter serviceExporter)
 		throws Exception {
-		if (serviceExporter.isSingleton()) {
+		if (!isDoNotForcePreInstantiationOfExporterObject() && serviceExporter.isSingleton()) {
 			s_logger.info("Service exporter bean '"
 				+ serviceExporter.getBeanName() + "' is a singleton. Will now "
 				+ "pre-instantiate exporter object like it was done in "
@@ -309,5 +316,23 @@ public abstract class AbstractRemotingProtocol implements
 	public Set<ApplicationContext> getChlidApplicationContexts() {
 		return new LinkedHashSet<ApplicationContext>(
 			m_chlidApplicationContexts);
+	}
+
+	/**
+	 * @return Returns the doNotForcePreInstantiationOfExporterObject.
+	 */
+	public boolean isDoNotForcePreInstantiationOfExporterObject() {
+		return m_doNotForcePreInstantiationOfExporterObject;
+	}
+
+	/**
+	 * If it is set to <code>true</code>, the exporter object (if singleton),
+	 * will not be pre-instantiated. By default singleton exporter objects
+	 * will be pre-instantiated.
+	 * 
+	 * @param doNotForcePreInstantiationOfExporterObject Is the doNotForcePreInstantiationOfExporterObject to set.
+	 */
+	public void setDoNotForcePreInstantiationOfExporterObject(boolean doNotForcePreInstantiationOfExporterObject) {
+		m_doNotForcePreInstantiationOfExporterObject = doNotForcePreInstantiationOfExporterObject;
 	}
 }

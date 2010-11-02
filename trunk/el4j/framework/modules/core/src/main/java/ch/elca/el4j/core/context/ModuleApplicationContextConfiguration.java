@@ -63,6 +63,11 @@ public class ModuleApplicationContextConfiguration {
 	 * @see #setParent(ApplicationContext)
 	 */
 	private ApplicationContext m_parent = null;
+	
+	/**
+	 * @see #setModuleApplicationContextCreationListener(ModuleApplicationContextCreationListener)
+	 */
+	private ModuleApplicationContextCreationListener m_moduleApplicationContextCreationListener;
 
 	/**
 	 * @return Returns the allowBeanDefinitionOverriding.
@@ -195,5 +200,22 @@ public class ModuleApplicationContextConfiguration {
 	 */
 	public final void setParent(ApplicationContext parent) {
 		m_parent = parent;
+	}
+
+	/**
+	 * @return Returns the moduleApplicationContextCreationListener.
+	 */
+	public ModuleApplicationContextCreationListener getModuleApplicationContextCreationListener() {
+		return m_moduleApplicationContextCreationListener;
+	}
+
+	/**
+	 * Is used to hock into the creation process of the module application context.
+	 * 
+	 * @param moduleApplicationContextCreationListener Is the moduleApplicationContextCreationListener to set.
+	 */
+	public void setModuleApplicationContextCreationListener(
+		ModuleApplicationContextCreationListener moduleApplicationContextCreationListener) {
+		m_moduleApplicationContextCreationListener = moduleApplicationContextCreationListener;
 	}
 }

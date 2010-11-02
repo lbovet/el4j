@@ -58,7 +58,7 @@ public class IntelligentExclusiveBeanNameAutoProxyCreator
 	/**
 	 * @see #setApplyCommonInterceptorsFirst(boolean)
 	 */
-	private boolean m_applyCommonInterceptorsFirst;
+	private boolean m_applyCommonInterceptorsFirst = true;
 
 	/**
 	 * Will not create a new proxy for a given bean if this bean is already
