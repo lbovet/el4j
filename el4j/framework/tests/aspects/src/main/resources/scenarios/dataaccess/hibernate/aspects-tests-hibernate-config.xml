@@ -17,17 +17,17 @@
 		</description>
 		
 		<property name="autoDetectEntityPackage">
-			<list>
+			<list>	
 				<value>ch.elca.el4j.tests.aspects.model</value>
 			</list>
 		</property>
-		
+
 		<property name="annotatedPackages">
-	  		<list>
-		  		<value>ch.elca.el4j.tests.aspects.model</value>
-	  		</list>
-	  	</property>
-		
+			<list>	
+				<value>ch.elca.el4j.tests.aspects.model</value>
+			</list>
+		</property>
+
 		<property name="hibernateProperties">
 			<props merge="true">
 				<!-- additional properties (see also abstractSessionFactory bean) -->
