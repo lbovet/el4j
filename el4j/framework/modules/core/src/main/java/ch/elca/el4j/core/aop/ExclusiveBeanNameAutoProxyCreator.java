@@ -30,7 +30,6 @@ import org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.util.Assert;
 import org.springframework.util.ClassUtils;
 import org.springframework.util.StringUtils;
@@ -60,12 +59,15 @@ import org.springframework.util.StringUtils;
  * @author Andreas Bur (ABU)
  * @see org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator
  */
-public class ExclusiveBeanNameAutoProxyCreator
-	extends BeanNameAutoProxyCreator implements InitializingBean {
-
+public class ExclusiveBeanNameAutoProxyCreator extends BeanNameAutoProxyCreator implements InitializingBean {
 	/** Bean names to autoproxy all beans. */
 	public static final String[] AUTOPROXY_ALL_BEANS = {"*"};
-	
+
+	/**
+	 * Serial version UID.
+	 */
+	private static final long serialVersionUID = -8400205514261384172L;
+
 	/** List of bean names that don't have to be advised. */
 	private List<String> m_exclusiveBeanNames;
 	
@@ -90,14 +92,16 @@ public class ExclusiveBeanNameAutoProxyCreator
 	 * COPYIED FROM SUPERCLASS!
 	 *
 	 * Default is global AdvisorAdapterRegistry.
-	 * */
+	 */
 	private AdvisorAdapterRegistry m_advisorAdapterRegistry
 		= GlobalAdvisorAdapterRegistry.getInstance();
 
 	/**
-	 * @see #setApplyCommonInterceptorsFirst(boolean)
+	 * COPYIED FROM SUPERCLASS!
+	 *
+	 * Default is "true"; else, bean-specific interceptors will get applied first.
 	 */
-	private boolean m_applyCommonInterceptorsFirst;	
+	private boolean m_applyCommonInterceptorsFirst = true;
 	
 	/**
 	 * Should the output of a {@link FactoryBean} be proxied instead of the factory itself?
@@ -188,30 +192,12 @@ public class ExclusiveBeanNameAutoProxyCreator
 	}
 	
 	/**
-	 * COPYIED FROM SUPERCLASS!
-	 * 
-	 * @return    a list of {@link Advisor}s to use for auto proxying
-	 */
-	private Advisor[] resolveInterceptorNames() {
-		ConfigurableBeanFactory cbf = (getBeanFactory() instanceof ConfigurableBeanFactory
-			? (ConfigurableBeanFactory) getBeanFactory() : null);
-		List<Advisor> advisors = new ArrayList<Advisor>();
-		for (int i = 0; i < getInterceptorNames().length; i++) {
-			String beanName = getInterceptorNames()[i];
-			if (cbf == null || !cbf.isCurrentlyInCreation(beanName)) {
-				Object next = getBeanFactory().getBean(beanName);
-				advisors.add(getAdvisorAdapterRegistry().wrap(next));
-			}
-		}
-		return advisors.toArray(new Advisor[advisors.size()]);
-	}
-
-	/**
 	 * Will not create a new proxy for a given bean if this bean is already
 	 * a proxy bean.
 	 *
 	 * {@inheritDoc}
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	protected Object createProxy(Class beanClass, String beanName,
 		Object[] specificInterceptors, TargetSource targetSource) {
@@ -232,8 +218,8 @@ public class ExclusiveBeanNameAutoProxyCreator
 	/**
 	 * {@inheritDoc}
 	 */
-	protected Object[] getAdvicesAndAdvisorsForBean(
-			Class beanClass, String beanName, TargetSource targetSource) {
+	@SuppressWarnings("unchecked")
+	protected Object[] getAdvicesAndAdvisorsForBean(Class beanClass, String beanName, TargetSource targetSource) {
 		boolean doNotProxy = false;
 		if (m_exclusiveBeanNames != null) {
 			if (m_exclusiveBeanNames.contains(beanName)) {
@@ -251,12 +237,12 @@ public class ExclusiveBeanNameAutoProxyCreator
 		if (doNotProxy) {
 			return DO_NOT_PROXY;
 		} else {
-			Class bClass = IntelligentAdvisorAutoProxyCreator.
+			Class deproxiedBeanClass = IntelligentAdvisorAutoProxyCreator.
 				deproxyBeanClass(beanClass, beanName, getBeanFactory());
 			
 			if (this.m_beanNames != null) {
 				for (String mappedName : this.m_beanNames) {
-					if (!m_proxyFactoryBeanOutput && FactoryBean.class.isAssignableFrom(bClass)) {
+					if (!m_proxyFactoryBeanOutput && FactoryBean.class.isAssignableFrom(deproxiedBeanClass)) {
 						if (!mappedName.startsWith(BeanFactory.FACTORY_BEAN_PREFIX)) {
 							continue;
 						}
@@ -279,6 +265,8 @@ public class ExclusiveBeanNameAutoProxyCreator
 	}
 
 	/**
+	 * COPYIED FROM SUPERCLASS!
+	 * 
 	 * Added to have access to the interceptor names.
 	 *
 	 * {@inheritDoc}
@@ -297,6 +285,8 @@ public class ExclusiveBeanNameAutoProxyCreator
 	}
 
 	/**
+	 * COPYIED FROM SUPERCLASS!
+	 * 
 	 * Added to have access to the interceptor names.
 	 *
 	 * {@inheritDoc}
@@ -314,7 +304,7 @@ public class ExclusiveBeanNameAutoProxyCreator
 	protected boolean isApplyCommonInterceptorsFirst() {
 		return m_applyCommonInterceptorsFirst;
 	}
-	
+
 	/**
 	 * COPYIED FROM SUPERCLASS!
 	 *
@@ -324,6 +314,7 @@ public class ExclusiveBeanNameAutoProxyCreator
 	 *
 	 * @param applyCommonInterceptorsFirst See method description.
 	 */
+	@Override
 	public void setApplyCommonInterceptorsFirst(
 		boolean applyCommonInterceptorsFirst) {
 		m_applyCommonInterceptorsFirst = applyCommonInterceptorsFirst;

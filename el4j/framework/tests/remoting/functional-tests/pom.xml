@@ -13,10 +13,11 @@
 	<parent>
 		<groupId>ch.elca.el4j.tests</groupId>
 		<artifactId>el4j-framework-tests-remoting</artifactId>
-		<version>3.1-SNAPSHOT</version>
+		<version>1.7.1</version>
 	</parent>
 
 	<artifactId>module-remoting-tests-functional_tests</artifactId>
+	<version>${version.module-remoting-tests}</version>
 	<packaging>jar</packaging>
 	<name>EL4J test remoting functional</name>
 	<description>
@@ -239,7 +240,7 @@
 						<plugin>
 							<groupId>org.apache.maven.plugins</groupId>
 							<artifactId>maven-antrun-plugin</artifactId>
-							<version>1.4</version>
+							<version>1.1</version>
 							<inherited>true</inherited>
 							<executions>
 								<execution>

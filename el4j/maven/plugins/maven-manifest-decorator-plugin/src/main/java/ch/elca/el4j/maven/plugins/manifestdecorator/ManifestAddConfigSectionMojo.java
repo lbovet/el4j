@@ -19,27 +19,13 @@ package ch.elca.el4j.maven.plugins.manifestdecorator;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
-import java.util.Set;
 
-import org.apache.maven.ProjectDependenciesResolver;
-import org.apache.maven.artifact.Artifact;
-import org.apache.maven.artifact.resolver.ArtifactNotFoundException;
-import org.apache.maven.artifact.resolver.ArtifactResolutionException;
-import org.apache.maven.artifact.versioning.ArtifactVersion;
-import org.apache.maven.artifact.versioning.InvalidVersionSpecificationException;
-import org.apache.maven.artifact.versioning.Restriction;
-import org.apache.maven.artifact.versioning.VersionRange;
-import org.apache.maven.execution.MavenSession;
-import org.apache.maven.execution.RuntimeInformation;
 import org.apache.maven.model.Build;
 import org.apache.maven.model.Dependency;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.project.MavenProject;
-import org.codehaus.plexus.component.repository.exception.ComponentLookupException;
 import org.codehaus.plexus.util.FileUtils;
 import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
@@ -118,38 +104,13 @@ public class ManifestAddConfigSectionMojo extends AbstractSlf4jEnabledMojo {
 	 * @readonly
 	 */
 	protected MavenProject project;
-	
-	/**
-	 * The maven session.
-	 * 
-	 * @parameter expression="${session}"
-	 * @required
-	 * @readonly
-	 */
-	protected MavenSession session;
-	
-	/**
-	 * Runtime Information used to check the Maven version.
-	 * @since 2.0
-	 * @component role="org.apache.maven.execution.RuntimeInformation"
-	 */
-	protected RuntimeInformation rti;
 
 	//Checkstyle: MemberName on
 	
 	/**
-	 * The list of runtime dependencies of this project.
-	 */
-	private List<Dependency> deps;
-	
-	/**
-	 * The list of testing dependencies of this project.
-	 */
-	private List<Dependency> testDeps;
-	
-	/**
 	 * {@inheritDoc}
 	 */
+	@SuppressWarnings("unchecked")
 	public void execute() throws MojoExecutionException {
 		String projectPackaging = project.getPackaging();
 		if (!StringUtils.hasText(projectPackaging)
@@ -167,10 +128,14 @@ public class ManifestAddConfigSectionMojo extends AbstractSlf4jEnabledMojo {
 		String manifestTestModule = project.getGroupId() + ":"
 			+ project.getArtifactId() + ":" + packagingNameTestJar;
 		
-		findDependencies();
-		
+		/**
+		 * Get runtime dependency list for manifest.
+		 */
+		List<Dependency> deps = project.getRuntimeDependencies();
 		String manifestDependencies = getDependencyList(deps, false);
+		List<Dependency> testDeps = project.getTestDependencies();
 		String manifestTestDependencies = getDependencyList(testDeps, false);
+		
 		logDependencies(deps, testDeps);
 		
 		// Prepend dependency to own (main) module jar.
@@ -210,93 +175,6 @@ public class ManifestAddConfigSectionMojo extends AbstractSlf4jEnabledMojo {
 		projectProperties.setProperty(
 			propertyNamePrefix + ".testdependencies", ensureNotEmpty(manifestTestDependencies));
 	}
-	/**
-	 * Get runtime dependency list for manifest.
-	 * 
-	 * This got broken in maven 3, we use two different strategies to
-	 * get the dependencies.
-	 */
-	@SuppressWarnings("deprecation")
-	private void findDependencies() throws MojoExecutionException {
-		ArtifactVersion detectedMavenVersion = rti.getApplicationVersion();
-		VersionRange vr;
-		try {
-			vr = VersionRange.createFromVersionSpec("[3.0,)");
-		} catch (InvalidVersionSpecificationException e) {
-			throw new MojoExecutionException(e.getLocalizedMessage(), e);
-		}
-		
-		if (containsVersion(vr, detectedMavenVersion)) {
-			// In maven 3, use the new API.
-			
-			// We're fetching this component dynamically. When annotating a field with
-			// @component, maven 2 chokes on it because this class didn't
-			// exist yet.
-			ProjectDependenciesResolver resolver;
-			try {
-				resolver = (ProjectDependenciesResolver)
-					session.lookup(ProjectDependenciesResolver.class.getName());
-			} catch (ComponentLookupException e) {
-				throw new MojoExecutionException(e.getLocalizedMessage(), e);
-			}
-			
-			Collection<String> scopes = new ArrayList<String>(1);
-			scopes.add(Artifact.SCOPE_COMPILE);
-			scopes.add(Artifact.SCOPE_RUNTIME);
-			Set<Artifact> depsArtifacts;
-			try {
-				depsArtifacts = resolver.resolve(project, scopes, session);
-			} catch (ArtifactResolutionException e) {
-				throw new MojoExecutionException(e.getLocalizedMessage(), e);
-			} catch (ArtifactNotFoundException e) {
-				throw new MojoExecutionException(e.getLocalizedMessage(), e);
-			}
-			
-			scopes.add(Artifact.SCOPE_TEST);
-			Set<Artifact> testDepsArtifacts;
-			try {
-				testDepsArtifacts = resolver.resolve(project, scopes, session);
-			} catch (ArtifactResolutionException e) {
-				throw new MojoExecutionException(e.getLocalizedMessage(), e);
-			} catch (ArtifactNotFoundException e) {
-				throw new MojoExecutionException(e.getLocalizedMessage(), e);
-			}
-			
-			// Convert the Artifacts to Dependencies so we can reuse the rest
-			// of the code in this plugin.
-			deps = new ArrayList<Dependency>(depsArtifacts.size());
-			for (Artifact a : depsArtifacts) {
-				deps.add(convertToDependency(a));
-			}
-			
-			testDeps = new ArrayList<Dependency>(testDepsArtifacts.size());
-			for (Artifact a : testDepsArtifacts) {
-				testDeps.add(convertToDependency(a));
-			}
-		} else {
-			// In maven 2, use the old API.
-			deps = project.getRuntimeDependencies();
-			testDeps = project.getTestDependencies();
-		}
-	}
-	
-	/**
-	 * Convert an Artifact to a Dependecy.
-	 * This code is copied from MavenProject.
-	 * @param a The artifact to convert.
-	 * @return The corresponding dependency.
-	 */
-	private Dependency convertToDependency(Artifact a) {
-		Dependency dependency = new Dependency();
-		dependency.setArtifactId(a.getArtifactId());
-		dependency.setGroupId(a.getGroupId());
-		dependency.setVersion(a.getVersion());
-		dependency.setScope(a.getScope());
-		dependency.setType(a.getType());
-		dependency.setClassifier(a.getClassifier());
-		
-		return dependency;
-	}
 
 	/**
 	 * Log dependencies more intelligently.
@@ -304,23 +182,26 @@ public class ManifestAddConfigSectionMojo extends AbstractSlf4jEnabledMojo {
 	 * @param deps	the dependencies for normal executions
 	 * @param testDeps  the dependencies for tests
 	 */
-	private void logDependencies(List<Dependency> deps, List<Dependency> testDeps) {
-		
-		List<Dependency> workingDeps = deps == null ? new ArrayList<Dependency>() : deps;
-		List<Dependency> workingTestDeps = testDeps == null ? new ArrayList<Dependency>() : testDeps;
-		
+	private void logDependencies(List<Dependency> deps,
+			List<Dependency> testDeps) {
+		if (deps == null) {
+			deps = new ArrayList<Dependency>();
+		}
+		if (testDeps == null) {
+			testDeps = new ArrayList<Dependency>();
+		}
 		
 		List<Dependency> onlyInNormal = calculateDependencyOnlyInFirstList(
-			workingDeps, workingTestDeps);
+				deps, testDeps);
 		
 		List<Dependency> onlyInTests = calculateDependencyOnlyInFirstList(
-			workingTestDeps, workingDeps);
+				testDeps, deps);
 		
-		String manifestDependencies = getDependencyList(workingDeps, true);
+		String manifestDependencies = getDependencyList(deps, true);
 		
 		getLog().info("Project " + project.getGroupId() + ":"
 			+ project.getArtifactId() + " has the following "
-			+ workingDeps.size() + " runtime dependencies: "
+			+ deps.size() + " runtime dependencies: "
 			+ manifestDependencies);
 		
 		getLog().info("Delta for tests:    only in tests: " + getDependencyList(onlyInTests, true)
@@ -451,33 +332,4 @@ public class ManifestAddConfigSectionMojo extends AbstractSlf4jEnabledMojo {
 	private String ensureNotEmpty(String string) {
 		return string.length() > 0 ? string : " ";
 	}
-	
-	/**
-	 * Copied from Artifact.VersionRange. This is tweaked to handle singular ranges properly. Currently the default
-	 * containsVersion method assumes a singular version means allow everything. This method assumes that "2.0.4" ==
-	 * "[2.0.4,)"
-	 *
-	 * @param allowedRange range of allowed versions.
-	 * @param theVersion the version to be checked.
-	 * @return true if the version is contained by the range.
-	 */
-	@SuppressWarnings("unchecked")
-	public static boolean containsVersion(VersionRange allowedRange, ArtifactVersion theVersion) {
-		boolean matched = false;
-		ArtifactVersion recommendedVersion = allowedRange.getRecommendedVersion();
-		if (recommendedVersion == null) {
-			for (Iterator i = allowedRange.getRestrictions().iterator(); i.hasNext() && !matched;) {
-				Restriction restriction = (Restriction) i.next();
-				if (restriction.containsVersion(theVersion)) {
-					matched = true;
-				}
-			}
-		} else {
-			// only singular versions ever have a recommendedVersion
-			int compareTo = recommendedVersion.compareTo(theVersion);
-			matched = (compareTo <= 0);
-		}
-		return matched;
-	}
-
 }

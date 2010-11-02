@@ -12,10 +12,11 @@
 	<parent>
 		<groupId>ch.elca.el4j.tests</groupId>
 		<artifactId>el4j-framework-tests-core</artifactId>
-		<version>3.1-SNAPSHOT</version>
+		<version>1.7.1</version>
 	</parent>
 
 	<artifactId>module-core_integration_parent-tests</artifactId>
+	<version>${version.module-core}</version>
 	<packaging>jar</packaging>
 	<name>EL4J test core integration - parent</name>
 	<description>

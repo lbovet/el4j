@@ -26,8 +26,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.inject.Inject;
-
 import org.hibernate.validator.AssertFalse;
 import org.junit.Before;
 import org.junit.Test;
@@ -37,6 +35,7 @@ import ch.elca.el4j.apps.refdb.dom.Book;
 import ch.elca.el4j.apps.refdb.dom.Reference;
 import ch.elca.el4j.services.persistence.generic.dao.AbstractIdentityFixer;
 import ch.elca.el4j.services.persistence.generic.dao.DaoChangeListener;
+import ch.elca.el4j.services.persistence.generic.dao.DaoRegistry;
 import ch.elca.el4j.services.persistence.generic.dao.IdentityFixedDao;
 import ch.elca.el4j.services.persistence.generic.dao.IdentityFixerMergePolicy;
 import ch.elca.el4j.services.persistence.generic.dao.DaoChangeNotifier.Change;
@@ -53,18 +52,17 @@ import ch.elca.el4j.tests.refdb.AbstractTestCaseBase;
  * @author Alex Mathey (AMA)
  */
 public abstract class AbstractIdentityFixerTest extends AbstractTestCaseBase {
+	/** The DAO registry to be used in tests. */
+	protected DaoRegistry m_daoRegistry;
 	
 	/** The identity fixer to be tested. */
 	protected AbstractIdentityFixer m_fixer;
 
 	/** The identity-fixed keyword DAO.*/
-	@Inject
 	private ConvenienceGenericHibernateDao<Keyword, Integer> m_keywordDao;
 	/** The identity-fixed book DAO.*/
-	@Inject
 	private ConvenienceGenericHibernateDao<Book, Integer> m_bookDao;
 	/** The not identity-fixed book DAO.*/
-	@Inject
 	private ConvenienceGenericHibernateDao<Book, Integer> m_noFixedBookDao;
 	
 	/**
@@ -72,9 +70,9 @@ public abstract class AbstractIdentityFixerTest extends AbstractTestCaseBase {
 	 * for entities of type {@code T}.
 	 */
 	@SuppressWarnings("unchecked")
-	private <T,ID extends Serializable> ConvenienceGenericHibernateDao<T,ID> identityFixedDaoFor(String c) {
+	private <T,ID extends Serializable> ConvenienceGenericHibernateDao<T,ID> identityFixedDaoFor(Class<T> c) {
 		return (ConvenienceGenericHibernateDao<T,ID>) m_fixer.new GenericInterceptor(
-			IdentityFixedDao.class).decorate(getApplicationContext().getBean(c));
+			IdentityFixedDao.class).decorate(getDaoRegistry().getFor(c));
 	}
 	
 	/**
@@ -82,8 +80,8 @@ public abstract class AbstractIdentityFixerTest extends AbstractTestCaseBase {
 	 * for entities of type {@code T} without any id fixer.
 	 */
 	@SuppressWarnings("unchecked")
-	private <T,ID extends Serializable> ConvenienceGenericHibernateDao<T,ID> nonFixedDaoFor(String c) { 
-		return (ConvenienceGenericHibernateDao<T,ID>) getApplicationContext().getBean(c);
+	private <T,ID extends Serializable> ConvenienceGenericHibernateDao<T,ID> nonFixedDaoFor(Class<T> c) {
+		return (ConvenienceGenericHibernateDao<T,ID>) getDaoRegistry().getFor(c);
 	}
 	
 
@@ -92,9 +90,9 @@ public abstract class AbstractIdentityFixerTest extends AbstractTestCaseBase {
 	@Before
 	public void setUp() throws Exception {
 		super.setUp();
-		m_keywordDao =  identityFixedDaoFor("keywordDao");
-		m_bookDao = identityFixedDaoFor("bookDao");
-		m_noFixedBookDao = nonFixedDaoFor("bookDao");
+		m_keywordDao =  identityFixedDaoFor(Keyword.class);
+		m_bookDao = identityFixedDaoFor(Book.class);
+		m_noFixedBookDao = nonFixedDaoFor(Book.class);
 	}
 	
 	/***/
@@ -257,9 +255,11 @@ public abstract class AbstractIdentityFixerTest extends AbstractTestCaseBase {
 	
 	/** Renames the only keyword to "another name". */
 	private void renameKeyword() {
-		Keyword okw = m_keywordDao.getAll().iterator().next();
+		ConvenienceGenericHibernateDao<Keyword, Integer> otherKeywordDao
+			= (ConvenienceGenericHibernateDao<Keyword, Integer>) getDaoRegistry().getFor(Keyword.class);
+		Keyword okw = otherKeywordDao.getAll().iterator().next();
 		okw.setName("Another name");
-		m_keywordDao.saveOrUpdate(okw);
+		otherKeywordDao.saveOrUpdate(okw);
 	}
 	
 	/** Records the first change notification received. */
@@ -275,6 +275,17 @@ public abstract class AbstractIdentityFixerTest extends AbstractTestCaseBase {
 				this.m_change = change;
 			}
 		}
+	}
+	
+	/**
+	 * @return Returns the DAO registry.
+	 */
+	protected DaoRegistry getDaoRegistry() {
+		if (m_daoRegistry == null) {
+			m_daoRegistry = (DaoRegistry) getApplicationContext()
+				.getBean("daoRegistry");
+		}
+		return m_daoRegistry;
 	}
 	
 }

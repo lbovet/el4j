@@ -20,11 +20,8 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.inject.Inject;
-
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.OptimisticLockingFailureException;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,6 +30,7 @@ import ch.elca.el4j.apps.keyword.dom.Keyword;
 import ch.elca.el4j.apps.keyword.service.KeywordService;
 import ch.elca.el4j.core.context.ModuleApplicationListener;
 import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
+import ch.elca.el4j.services.persistence.generic.dao.DaoRegistry;
 
 /**
  *
@@ -43,27 +41,42 @@ import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
  * @author Alex Mathey (AMA)
  * @author Adrian Moos (AMS)
  */
-@Service("keywordService")
 public class DefaultKeywordService implements KeywordService, ModuleApplicationListener {
 	
 	/**
-	 * The DAO for keywords.
+	 * Hibernate DAO registry.
 	 */
-	@Inject
-	protected KeywordDao m_keywordDao;
+	protected DaoRegistry m_daoRegistry;
 
 	/**
 	 * Constructor.
 	 */
 	public DefaultKeywordService() { }
-		
+	
+	/**
+	 * @return The DAO registry
+	 */
+	public DaoRegistry getDaoRegistry() {
+		return m_daoRegistry;
+	}
+	
+	/**
+	 * @param reg
+	 *            The DaoRegistry to set
+	 */
+	public void setDaoRegistry(DaoRegistry reg) {
+		m_daoRegistry = reg;
+	}
+	
+	
+	
 	/**
 	 * Returns the DAO for keywords.
 	 *
 	 * @return The DAO for keywords
 	 */
 	protected KeywordDao getKeywordDao() {
-		return m_keywordDao;
+		return (KeywordDao) getDaoRegistry().getFor(Keyword.class);
 	}
 	
 	/** {@inheritDoc} */

@@ -27,26 +27,13 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.collections.map.ReferenceMap;
-import org.hibernate.Criteria;
 import org.hibernate.EntityMode;
-import org.hibernate.FetchMode;
 import org.hibernate.Hibernate;
-import org.hibernate.HibernateException;
 import org.hibernate.LockMode;
-import org.hibernate.SessionFactory;
-import org.hibernate.TransientObjectException;
 import org.hibernate.criterion.CriteriaSpecification;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
-import org.hibernate.criterion.ProjectionList;
-import org.hibernate.criterion.Projections;
-import org.hibernate.criterion.Restrictions;
-import org.hibernate.metadata.ClassMetadata;
-import org.hibernate.metadata.CollectionMetadata;
 import org.hibernate.proxy.HibernateProxy;
-import org.hibernate.type.CollectionType;
-import org.hibernate.type.EntityType;
-import org.hibernate.type.Type;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
@@ -630,13 +617,11 @@ public class GenericHibernateDao<T, ID extends Serializable>
 		}
 		fetchedObjects.put(object, entity);
 		try {
-			// fetch the majority of all data using join queries
-			if (entity.isRoot()) {
-				fetchExtentUsingJoinQuery(object, entity);
-			}
-			
-			// we still need to fetch individual fields, e.g. if transient getters (included in the DataExtent)
-			// access some fields (that were not included in the DataExtent)
+			// Fetch the base type fields, obsolete without byte-code instrumentation
+			/*for (Method m : entity.getFields()) {
+				m.invoke(object, nullArg);
+			}*/
+			// Fetch the child entities
 			for (ExtentEntity ent : entity.getChildEntities()) {
 				Object obj = ent.getMethod().invoke(object, nullArg);
 				// Initialize the object if it is a proxy
@@ -647,8 +632,7 @@ public class GenericHibernateDao<T, ID extends Serializable>
 					fetchExtentObject(obj, ent, fetchedObjects);
 				}
 			}
-			
-			// Fetch the collections. Since we assume batch fetching for collections
+			// Fetch the collections
 			for (ExtentCollection c : entity.getCollections()) {
 				Collection<?> coll = (Collection<?>) c.getMethod().invoke(object, nullArg);
 				if (coll != null) {
@@ -667,116 +651,6 @@ public class GenericHibernateDao<T, ID extends Serializable>
 			throw new RuntimeException(e);
 		}
 		
-	}
-	
-	/**
-	 * builds and executes an efficient CriteriaQuery to fetch almost all data in the given ExtentEntity
-	 * and its sub-entities.
-	 * 
-	 * This method cannot fetch ALL data since transient getters are unknown to Hibernate, therefore we
-	 * cannot use a JOIN to get data that would otherwise be retrieved when a transient getter is called.
-	 * 
-	 * @param object the object to load in the given extent
-	 * @param entity the entity entity
-	 */
-	private void fetchExtentUsingJoinQuery(Object object, ExtentEntity entity) {
-		ID id;
-		ClassMetadata metadata = getSessionFactory().getClassMetadata(object.getClass());
-		if (metadata == null) {
-			// object is not a hibernate-entity, so skip it.
-			return;
-		}
-		id = (ID) metadata.getIdentifier(object, EntityMode.POJO);
-		// Fetch the child entities via JOINs wherever possible
-		Criteria criteria = getSession().createCriteria(entity.getEntityClass());
-		criteria.add(Restrictions.idEq(id));
-		if (buildJoinCriteria(criteria, entity)) {
-			// Execute the query to fetch all listed data
-			criteria.setResultTransformer(Criteria.ALIAS_TO_ENTITY_MAP);
-			criteria.list();
-		}
-	}
-	
-	/**
-	 * Starts the recursive buildJoinCriteria with the initial value for the alias argument.
-	 * 
-	 * @see GenericHibernateDao#buildJoinCriteria(Criteria, ExtentEntity, String)
-	 * 
-	 * @param criteria the criteria object to modify
-	 * @param rootEntity the ExtentEntity
-	 * @return true if at least one JOIN could be added to the Criteria
-	 */
-	private boolean buildJoinCriteria(Criteria criteria, ExtentEntity rootEntity) {
-		// call the recursive builder with initial alias = null
-		return buildJoinCriteria(criteria, rootEntity, null);
-	}
-
-	/**
-	 * Builds the Criteria Query. 
-	 * Recursively traverses the ExtentEntity structure and creates aliases for JOINed tables . 
-	 * 
-	 * @param criteria the criteria object to modify
-	 * @param entity the ExtentEntity
-	 * @param alias the prefix to use when creating a new alias for an indirectly accessible property 
-	 * @return true if at least one JOIN could be added to the Criteria
-	 */
-	private boolean buildJoinCriteria(Criteria criteria, ExtentEntity entity, String alias) {
-		ClassMetadata metadata = getSessionFactory().getClassMetadata(entity.getEntityClass());
-		
-		boolean couldJoin = false;
-		
-		if (metadata == null) {
-			// entity not mapped, nothing to do here
-			return false;
-		}
-		
-		String prefix;
-		String aliasPrefix;
-		if (alias == null) {
-			prefix = "";
-			aliasPrefix = "ALIAS_";
-		} else {
-			aliasPrefix = alias + "_";
-			prefix = alias + ".";
-		}
-		
-		// fetch the primitive fields of the object
-		for (String field : entity.getFields()) {
-			try {
-				metadata.getPropertyType(field);
-			} catch (HibernateException e) {
-				// skip this field
-				continue;
-			}
-			criteria.setFetchMode(prefix + field, FetchMode.JOIN);
-		}
-		
-		// fetch the other associations of the object 
-		for (ExtentEntity e : entity.getChildEntities()) {
-			Type type;
-			try {
-				type = metadata.getPropertyType(e.getName());
-			} catch (HibernateException he) {
-				// not a property that is managed by Hibernate
-				// it could be a transient field though which fetches data, 
-				// so just skip it and let fetchExtentObject() call the getter
-				continue;
-			}
-			if (type instanceof EntityType) {
-				String fieldAlias = aliasPrefix + e.getName();
-				criteria.createAlias(prefix + e.getName(), fieldAlias, Criteria.LEFT_JOIN);
-				couldJoin = true;
-				criteria.setFetchMode(prefix + e.getName(), FetchMode.JOIN);
-				buildJoinCriteria(criteria, e, fieldAlias);
-			} else {
-				criteria.setFetchMode(prefix + e.getName(), FetchMode.JOIN);
-			}
-		}
-		
-		// don't optimize queries on collections, since we assume that 
-		// batch fetching is enabled there
-		
-		return couldJoin;
 	}
 	
 	/**

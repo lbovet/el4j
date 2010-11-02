@@ -31,10 +31,7 @@ public abstract class AbstractJaxwsTest extends AbstractTest {
 	protected String[] getExcludeConfigLocations() {
 		// LazyInitializationTest introduces dependencies to keyword and refdb, therefore
 		// some exclude config locations have to be added
-		return new String[] {
-			"classpath*:mandatory/keyword-core-service-config.xml",
-			"classpath*:mandatory/refdb-core-service-config.xml",
-			"classpath*:scenarios/dataaccess/extent-test-hibernate-config.xml"
-		};
+		return new String[] {"classpath*:mandatory/keyword-core-service-config.xml",
+			"classpath*:mandatory/refdb-core-service-config.xml"};
 	}
 }

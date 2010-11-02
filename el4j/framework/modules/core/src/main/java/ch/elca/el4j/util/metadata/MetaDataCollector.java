@@ -25,6 +25,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.metadata.Attributes;
 
 import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
 

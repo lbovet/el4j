@@ -17,10 +17,10 @@
 package ch.elca.el4j.services.security.authentication;
 
 
+import org.springframework.security.Authentication;
+import org.springframework.security.AuthenticationManager;
+import org.springframework.security.context.SecurityContextHolder;
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 
 import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
 

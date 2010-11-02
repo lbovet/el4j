@@ -80,9 +80,6 @@
 
 		<module name="JavadocType">
 			<property name="authorFormat" value="[A-Za-z ]+\([a-zA-Z]{3}\)" />
-			
-			<!-- Needed to allow i.e. @svnLink -->
-			<property name="allowUnknownTags" value="true"/>
 		</module>
 		<module name="JavadocMethod">
 			<property name="allowThrowsTagsForSubclasses" value="true" />
@@ -206,14 +203,6 @@
 			<property name="message" value="Remove whitespaces at end of line"/>
 			<property name="illegalPattern" value="true"/>
 		</module>
-		
-		<module name="Regexp">
-			<property name="format" value="org\.apache\.log4j"/>
-			<property name="ignoreComments " value="true"/>
-			<property name="message" value="Do not use Log4J classes directly! Use SLF4J classes instead."/>
-			<property name="illegalPattern" value="true"/>
-			<property name="severity" value="error" />
-		</module>
 
 		<!-- Modifiers -->
 
@@ -271,9 +260,7 @@
 		</module>
 		<!--module name="IllegalType"/-->
 		<module name="DeclarationOrder" />
-		<module name="ParameterAssignment">
-			<property name="severity" value="error" />
-		</module>
+		<module name="ParameterAssignment" />
 		<!--module name="ExplicitInitialization"/-->
 		<module name="DefaultComesLast" />
 		<!--module name="MissingCtor"/-->

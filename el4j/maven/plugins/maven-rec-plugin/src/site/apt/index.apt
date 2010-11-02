@@ -10,4 +10,4 @@ Maven recursive plugin
   The maven-rec-plugin executes commands recursively on all
   dependencies of a project.
   
-  For usage {{{./plugin-info.html}see the plugin info page}}.
+  For usage {{{plugin-info.html}see the plugin info page}}.

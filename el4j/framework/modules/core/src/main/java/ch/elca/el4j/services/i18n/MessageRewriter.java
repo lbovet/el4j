@@ -393,8 +393,6 @@ public class MessageRewriter {
 			int currentFormatElementId = 0;
 			StringBuilder sb = new StringBuilder();
 			
-			Cursor localbegin = begin;
-			
 		loop:
 			while (true) {
 				switch (cursor.read()) {
@@ -403,14 +401,14 @@ public class MessageRewriter {
 							// MessageFormat can handle it
 							while (cursor.read() != '}') { }
 						} else {
-							sb.append(localbegin.textTo(cursor));
+							sb.append(begin.textTo(cursor));
 							LookupFormat sf = handleBrace(sb, cursor);
 							if (cursor.eos()) {
 								throw new IllegalRuleFormatException(
 									"missing '}'"
 								);
 							}
-							localbegin = cursor.clone();
+							begin = cursor.clone();
 							cursor.loc++;
 							if (sf != null) {
 								subFormats.put(currentFormatElementId, sf);
@@ -423,7 +421,7 @@ public class MessageRewriter {
 				}
 			}
 			cursor.loc--;
-			sb.append(localbegin.textTo(cursor));
+			sb.append(begin.textTo(cursor));
 			
 			MessageFormat mf = new MessageFormat(sb.toString());
 			for (Map.Entry<Integer, LookupFormat> entry

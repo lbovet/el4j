@@ -13,10 +13,11 @@
 	<parent>
 		<groupId>ch.elca.el4j.modules</groupId>
 		<artifactId>el4j-framework-modules</artifactId>
-		<version>3.1-SNAPSHOT</version>
+		<version>1.7.1</version>
 	</parent>
 
 	<artifactId>module-env</artifactId>
+	<version>${version.module-env}</version>
 	<packaging>jar</packaging>
 	<name>EL4J module env</name>
 	<description>

@@ -20,7 +20,7 @@ manual set up in those files, the manual set up takes precedence.
 
 Prerequisites:
  * If under Windows: Cygwin (http://www.cygwin.com/) otherwise bash suffices.
- * JDK 1.6.0_16 or higher
+ * JDK 1.5.0_14 or higher
 
 To set up:
  * create directory d:/Projects (Windows) or /data/Projects (Linux)
@@ -53,11 +53,10 @@ To start working with the EL4J sources
  * mvn clean install
  * if you're outside of ELCA, this will fail due to missing database driver
     (we don't have the right to publish it). In this case, do the following (you could also remove the oracle dependency):
-     * Download the Oracle driver (ojdbc6_g.jar) from "http://www.oracle.com/technology/software/tech/java/sqlj_jdbc/htdocs/jdbc_112010.html". 
-	   Note: You can also use the 11g driver for version 9 and 10 databases.
+     * Download the Oracle driver (ojdbc14_g.jar) from "http://www.oracle.com/technology/software/tech/java/sqlj_jdbc/". Note: You can also use the 10g driver for version 9 databases.
      * Open a console and change to the directory where you have saved the downloaded jar files (but within the EL4J/external directory).
      * Execute the following command:
-       o mvn install:install-file -DgroupId=com.oracle -DartifactId=ojdbc6_g -Dversion=11.2.0.1.0 -Dpackaging=jar -Dfile=ojdbc6_g.jar
+       o mvn install:install-file -DgroupId=com.oracle -DartifactId=ojdbc14_g -Dversion=10.2.0.3.0 -Dpackaging=jar -Dfile=ojdbc14_g.jar
      * if you are using JDK 6 and want the jaxws support working, set up jaxws 2.1 like described here: 
          http://weblogs.java.net/blog/ramapulavarthi/archive/2007/01/problems_using.html
      * mvn clean install

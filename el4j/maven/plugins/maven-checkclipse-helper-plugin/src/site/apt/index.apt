@@ -29,4 +29,4 @@ Checkclipse helper plugin
         (Websphere Studio Application Developer is the IBM-product based on 
         the Eclipse Platform).
   
-  For usage {{{./plugin-info.html}see the plugin info page}}.
+  For usage {{{plugin-info.html}see the plugin info page}}.

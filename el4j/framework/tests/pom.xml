@@ -12,7 +12,7 @@
 	<parent>
 		<groupId>ch.elca.el4j</groupId>
 		<artifactId>el4j-framework</artifactId>
-		<version>3.1-SNAPSHOT</version>
+		<version>1.7.1</version>
 	</parent>
 
 	<groupId>ch.elca.el4j.tests</groupId>
@@ -38,5 +38,6 @@
 		<module>remoting_jaxws</module>
 		<module>tcp_forwarder</module>
 		<module>plugins</module>
+		<module>aspects</module>
 	</modules>
 </project>

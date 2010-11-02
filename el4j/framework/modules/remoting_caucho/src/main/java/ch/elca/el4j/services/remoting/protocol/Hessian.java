@@ -102,7 +102,8 @@ public class Hessian extends AbstractInetSocketAddressWebProtocol {
 	 */
 	public String generateUrl(AbstractRemotingBase remoteBase) {
 		StringBuffer sb = new StringBuffer();
-		sb.append("http://");
+		sb.append(getServiceProtocol());
+		sb.append("://");
 		sb.append(getServiceHost());
 		sb.append(":");
 		sb.append(getServicePort());

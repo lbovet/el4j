@@ -39,7 +39,6 @@ import org.jdesktop.beansbinding.AbstractBindingListener;
 import org.jdesktop.beansbinding.AutoBinding;
 import org.jdesktop.beansbinding.Binding;
 import org.jdesktop.swingbinding.validation.ValidatedProperty;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import ch.elca.el4j.apps.refdb.dom.Book;
@@ -82,7 +81,7 @@ import cookxml.cookswing.CookSwing;
  *
  * @author Stefan Wismer (SWI)
  */
-@Lazy
+@LazyInit
 @Component("refDBDemoForm")
 public class RefDBDemoForm extends JPanel implements Bindable {
 	protected JTextField name;
@@ -271,6 +270,7 @@ public class RefDBDemoForm extends JPanel implements Bindable {
 					Object item = dlm.getValueAt(index, 0);
 					if (item instanceof ValidatedProperty) {
 						ValidatedProperty p = (ValidatedProperty) item;
+						
 						ReferenceEditorForm editor = new ReferenceEditorForm();
 						editor.setReference((Reference) p.getParent());
 						if (AbstractWrapperFactory

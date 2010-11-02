@@ -12,10 +12,11 @@
 	<parent>
 		<groupId>ch.elca.el4j.applications</groupId>
 		<artifactId>el4j-templates-swing-demo</artifactId>
-		<version>3.1-SNAPSHOT</version>
+		<version>1.7.1</version>
 	</parent>
 
 	<artifactId>swing-demo-jasper-thin-client</artifactId>
+	<version>${version.application-refdb}</version>
 	<packaging>jar</packaging>
 	<name>EL4J application swing demo jasper thin-client</name>
 	<description>Swing-demo jasper thin-client module of the EL4J framework.</description>
@@ -44,17 +45,13 @@
 					<groupId>commons-logging</groupId>
 					<artifactId>commons-logging</artifactId>
 				</exclusion>
-				<exclusion>
-					<groupId>jfree</groupId>
-					<artifactId>jcommon</artifactId>
-				</exclusion>
 			</exclusions>
 		</dependency>
 		<!-- use explicit version to prevent downloading some "brew" (=snapshot) version -->
 		<dependency>
 			<groupId>jfree</groupId>
 			<artifactId>jfreechart</artifactId>
-			<version>1.0.13</version>
+			<version>1.0.9</version>
 		</dependency>
 	</dependencies>
 </project>

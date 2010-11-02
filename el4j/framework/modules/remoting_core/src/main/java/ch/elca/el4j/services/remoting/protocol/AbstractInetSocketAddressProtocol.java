@@ -24,6 +24,7 @@ import ch.elca.el4j.services.remoting.AbstractRemotingProtocol;
 
 /**
  * This is an abstract <code>InetSocketAddress</code> protocol.
+ * HTTP is used as default service protocol.
  *
  * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
@@ -40,6 +41,11 @@ public abstract class AbstractInetSocketAddressProtocol
 	 * This is the port where the service is installed.
 	 */
 	private int m_servicePort;
+
+	/**
+	 * The service protocol. Default is "http".
+	 */
+	private String m_serviceProtocol = "http";
 
 	/**
 	 * @return Returns the serviceHost.
@@ -69,6 +75,20 @@ public abstract class AbstractInetSocketAddressProtocol
 	 */
 	public void setServicePort(int servicePort) {
 		m_servicePort = servicePort;
+	}
+
+	/**
+	 * @return Returns the m_serviceProtocol.
+	 */
+	public String getServiceProtocol() {
+		return m_serviceProtocol;
+	}
+
+	/**
+	 * @param serviceProtocol Is the serviceProtocol to set.
+	 */
+	public void setServiceProtocol(String serviceProtocol) {
+		m_serviceProtocol = serviceProtocol;
 	}
 
 	/**

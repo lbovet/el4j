@@ -13,7 +13,7 @@
 	<parent>
 		<groupId>ch.elca.el4j.applications</groupId>
 		<artifactId>el4j-demos</artifactId>
-		<version>3.1-SNAPSHOT</version>
+		<version>1.7.1</version>
 	</parent>
 
 	<artifactId>el4j-detailed_statistics-demo</artifactId>
@@ -32,7 +32,7 @@
 			<dependency>
 				<groupId>ch.elca.el4j.applications</groupId>
 				<artifactId>el4j-detailed_statistics-demo-common</artifactId>
-				<version>${version.el4j-framework.current}</version>
+				<version>${version.module-detailed_statistics}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>

@@ -56,4 +56,4 @@ Eclipse server plugin
   plugin and re-execute the goal, you have to <<refresh>> the Servers project to make eclipse adapt 
   the changed configuration. 
   
-  For detailed usage {{{./plugin-info.html}see the plugin info page}}.
+  For detailed usage {{{plugin-info.html}see the plugin info page}}.

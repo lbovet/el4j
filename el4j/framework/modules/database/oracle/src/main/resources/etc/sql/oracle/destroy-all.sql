@@ -3,7 +3,7 @@
 -- Date: $Date$
 -- Author: $Author$
 
--- this nice and shiny script drops all tables and views contained in the schema for the current db user
+-- this nice and shiny script drops all tables contained in the schema for the current db user
 
 BEGIN
   FOR lv_cur IN
@@ -57,27 +57,6 @@ BEGIN
         sequence_name                     AS target
       FROM user_sequences
       ORDER BY sequence_name
-    )
-  LOOP
-    EXECUTE IMMEDIATE lv_cur.cmd;
-    COMMIT;
-  END LOOP;
-END;
-/
-
-
-BEGIN
-  FOR lv_cur IN
-    (
-      SELECT 
-	  --the command to be executed: drop view
-        'drop view '||view_name||' cascade constraint'     AS cmd,
-        ROW_NUMBER() OVER (ORDER BY view_name)
-                                       AS sofar,
-        COUNT(*) OVER (PARTITION BY 1) AS totalwork,
-        view_name                     AS target
-      FROM user_views
-      ORDER BY view_name
     )
   LOOP
     EXECUTE IMMEDIATE lv_cur.cmd;

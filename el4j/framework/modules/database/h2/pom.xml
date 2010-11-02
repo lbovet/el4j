@@ -4,18 +4,19 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<!-- Version: $Revision$ -->
-	<!-- URL: $URL$ -->
-	<!-- Date: $Date$ -->
-	<!-- Author: $Author$ -->
+	<!-- Version: $Revision:1422 $ -->
+	<!-- URL: $URL:https://svn.sourceforge.net/svnroot/el4j/trunk/el4j/framework/modules/database/pom.xml $ -->
+	<!-- Date: $Date:2006-10-30 15:18:05 +0000 (Mo, 30 Okt 2006) $ -->
+	<!-- Author: $Author:swisswheel $ -->
 
 	<parent>
 		<groupId>ch.elca.el4j.modules</groupId>
 		<artifactId>module-databases</artifactId>
-		<version>3.1-SNAPSHOT</version>
+		<version>1.7.1</version>
 	</parent>
 
 	<artifactId>module-database-h2</artifactId>
+	<version>${version.module-database}</version>
 	<packaging>jar</packaging>
 	<name>EL4J module database for H2</name>
 	<description>Module database for H2 of the EL4J framework.</description>
@@ -24,11 +25,11 @@
 			<groupId>ch.elca.el4j.modules</groupId>
 			<artifactId>module-database-common</artifactId>
 		</dependency>
-
+		
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
-			<version>1.2.139</version>
+			<version>1.1.115</version>
 			<scope>runtime</scope>
 		</dependency>
 	</dependencies>

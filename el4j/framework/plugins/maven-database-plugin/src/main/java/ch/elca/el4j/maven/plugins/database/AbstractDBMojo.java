@@ -85,8 +85,6 @@ public abstract class AbstractDBMojo extends AbstractDependencyAwareMojo {
 		
 		if (skip) {
 			getLog().info("Skipping database plugin due to configuration");
-		} else if ("pom".equals(this.getProject().getPackaging())) {
-			throw new MojoExecutionException("You are trying to run the db plugin on a pom-artifact. Try it in a jar-artifact instead.");
 		} else {
 			executeInternal();
 		}

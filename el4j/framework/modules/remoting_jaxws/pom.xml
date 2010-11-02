@@ -13,10 +13,11 @@
 	<parent>
 		<groupId>ch.elca.el4j.modules</groupId>
 		<artifactId>el4j-framework-modules</artifactId>
-		<version>3.1-SNAPSHOT</version>
+		<version>1.7.1</version>
 	</parent>
 
 	<artifactId>module-remoting_jaxws</artifactId>
+	<version>${version.module-remoting_jaxws}</version>
 	<packaging>jar</packaging>
 	<name>EL4J module remoting jaxws</name>
 	<description>
@@ -38,6 +39,12 @@
 			<artifactId>stax-api</artifactId>
 			<version>1.0.1</version>
 		</dependency>
+		<!-- specify wstx-asl version explicitly -->
+		<dependency>
+			<groupId>org.codehaus.woodstox</groupId>
+			<artifactId>wstx-asl</artifactId>
+			<version>3.2.3</version>
+		</dependency>
 		<dependency>
 			<groupId>com.sun.xml.ws</groupId>
 			<artifactId>jaxws-rt</artifactId>
@@ -48,6 +55,9 @@
 					<artifactId>stax-api</artifactId>
 				</exclusion>
 				<exclusion>
+					<!-- fix invalid dependency pulled from 
+					jaxws-rt on invalid wstx-asl by excluding it and 
+					adding the correct groupId below -->
 					<groupId>woodstox</groupId>
 					<artifactId>wstx-asl</artifactId>
 				</exclusion>

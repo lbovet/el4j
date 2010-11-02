@@ -13,10 +13,11 @@
 	<parent>
 		<groupId>ch.elca.el4j.modules</groupId>
 		<artifactId>module-web</artifactId>
-		<version>3.1-SNAPSHOT</version>
+		<version>1.7.1</version>
 	</parent>
 
 	<artifactId>module-web-war</artifactId>
+	<version>${version.module-web}</version>
 	<packaging>war</packaging>
 	<name>EL4J module web - war</name>
 	<description>

@@ -28,6 +28,7 @@ import java.util.Map;
 
 import org.springframework.aop.support.AopUtils;
 import org.springframework.core.BridgeMethodResolver;
+import org.springframework.metadata.Attributes;
 import org.springframework.util.Assert;
 
 import ch.elca.el4j.util.codingsupport.CollectionUtils;
@@ -248,7 +249,6 @@ public class DefaultGenericMetaDataSource implements GenericMetaDataSource {
 	/**
 	 * {@inheritDoc}
 	 */
-	@Override
 	public void setInterceptingMetaData(List<Class> interceptedAttributes) {
 		m_interceptingMetaData = interceptedAttributes;
 	}

@@ -12,35 +12,35 @@ Plugins
 *----------------------------+-------------------+
 | <<Plugin>>                 | <<Description>>
 *----------------------------+-------------------+
-| {{{./maven-checkclipse-helper-plugin/index.html}checkclipse-helper}}   | Configures <Checkclipse> for smooth <Checkstyle> integration into Eclipse.
+| {{{maven-checkclipse-helper-plugin/index.html}checkclipse-helper}}   | Configures <Checkclipse> for smooth <Checkstyle> integration into Eclipse.
 *----------------------------+-------------------+
-| {{{./maven-env-support-plugin/index.html}env-support}}                 | To share environment variables between Maven and the running application.
+| {{{maven-env-support-plugin/index.html}env-support}}                 | To share environment variables between Maven and the running application.
 *----------------------------+-------------------+
-| {{{./maven-file-collector-plugin/index.html}file-collector}}           | Powerful copy tool.
+| {{{maven-file-collector-plugin/index.html}file-collector}}           | Powerful copy tool.
 *----------------------------+-------------------+
-| {{{./maven-jaxws-plugin/index.html}JAX-WS}}                            | Integrates the wsgen and wsimport tools into the automated build process.
+| {{{maven-jaxws-plugin/index.html}JAX-WS}}                            | Integrates the wsgen and wsimport tools into the automated build process.
 *----------------------------+-------------------+
-| {{{./maven-manifest-decorator-plugin/index.html}manifest-decorator}}   | Collects information about artifacts to reconstruct the artifact dependency order on runtime.
+| {{{maven-manifest-decorator-plugin/index.html}manifest-decorator}}   | Collects information about artifacts to reconstruct the artifact dependency order on runtime.
 *----------------------------+-------------------+
-| {{{./maven-repohelper-plugin/index.html}repohelper}}                   | Tool to install and deploy multiple libraries with their sources.
+| {{{maven-repohelper-plugin/index.html}repohelper}}                   | Tool to install and deploy multiple libraries with their sources.
 *----------------------------+-------------------+
-| {{{./maven-database-plugin/index.html}database}}                   	   | Plugin to automate database actions.
+| {{{maven-database-plugin/index.html}database}}                   	   | Plugin to automate database actions.
 *----------------------------+-------------------+  
-| {{{./maven-depgraph-plugin/index.html}dependency-graph}}               | Tool to visualize a project's depedency graph.
+| {{{maven-depgraph-plugin/index.html}dependency-graph}}               | Tool to visualize a project's depedency graph.
 *----------------------------+-------------------+  
-| {{{./maven-rec-plugin/index.html}mvn-rec}}               			   | Tool to run maven commands for a project and all its dependent projets.
+| {{{maven-rec-plugin/index.html}mvn-rec}}               			   | Tool to run maven commands for a project and all its dependent projets.
 *----------------------------+-------------------+  
-| {{{./maven-abbot-plugin/index.html}abbot}}               			   | Integrates abbot GUI tests into the maven build lifecycle.
+| {{{maven-abbot-plugin/index.html}abbot}}               			   | Integrates abbot GUI tests into the maven build lifecycle.
 *----------------------------+-------------------+  
-| {{{./maven-duplicatefinder-plugin/index.html}duplicatefinder}}         | Tool to find different versions of the same jar in the classpath.
+| {{{maven-duplicatefinder-plugin/index.html}duplicatefinder}}         | Tool to find different versions of the same jar in the classpath.
 *----------------------------+-------------------+  
-| {{{./maven-spring-ide-plugin/index.html}spring-ide}}               	   | Collects all beans files that are used in a ModuleApplicationContext.
+| {{{maven-spring-ide-plugin/index.html}spring-ide}}               	   | Collects all beans files that are used in a ModuleApplicationContext.
 *----------------------------+-------------------+  
-| {{{./maven-spring-ide-plugin/index.html}beans}}             		   | Deprecated. Has been renamed to maven spring ide plugin.
+| {{{maven-spring-ide-plugin/index.html}beans}}             		   | Deprecated. Has been renamed to maven spring ide plugin.
 *----------------------------+-------------------+  
-| {{{./maven-cobertura-runtime-plugin/index.html}cobertura-runtime}}     | Build and deploy the application nearly as normal with maven and let Cobertura measure the coverage while working on the application.
+| {{{maven-cobertura-runtime-plugin/index.html}cobertura-runtime}}     | Build and deploy the application nearly as normal with maven and let Cobertura measure the coverage while working on the application.
 *----------------------------+-------------------+  
-| {{{./maven-eclipse-server-plugin/index.html}ecplipse-server}}          | Create a tomcat6x server inside your eclipse workspace.
+| {{{maven-eclipse-server-plugin/index.html}ecplipse-server}}          | Create a tomcat6x server inside your eclipse workspace.
 *----------------------------+-------------------+  
   Please refer also the plugin section of the {{{http://el4j.sourceforge.net/docs/pdf/ReferenceDoc.pdf}reference document}} and the maven cheat sheet for more information. 
 

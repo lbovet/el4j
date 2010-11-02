@@ -14,7 +14,6 @@ import org.hibernate.criterion.Expression;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.orm.hibernate3.HibernateCallback;
-import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
@@ -22,6 +21,7 @@ import org.springframework.util.Assert;
 import ch.elca.el4j.apps.refdb.dao.FormalPublicationDao;
 import ch.elca.el4j.apps.refdb.dom.Book;
 import ch.elca.el4j.apps.refdb.dom.FormalPublication;
+import ch.elca.el4j.services.persistence.generic.dao.AutocollectedGenericDao;
 import ch.elca.el4j.services.persistence.hibernate.criteria.CriteriaTransformer;
 import ch.elca.el4j.services.search.QueryObject;
 import ch.elca.el4j.services.search.criterias.AbstractCriteria;
@@ -35,7 +35,7 @@ import ch.elca.el4j.services.search.criterias.IncludeCriteria;
  *
  * @author Alex Mathey (AMA)
  */
-@Repository("formalPublicationDao")
+@AutocollectedGenericDao("formalPublicationDao")
 public class HibernateFormalPublicationDao
 	extends GenericHibernateReferenceDao<FormalPublication, Integer>
 	implements FormalPublicationDao {

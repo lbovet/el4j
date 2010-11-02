@@ -38,7 +38,7 @@ import ch.elca.el4j.util.codingsupport.SerializableEnum;
  * @author Jonas Hauenstein (JHN)
  */
 
-public interface Codelist extends SerializableEnum<String> {
+public interface Codelist extends SerializableEnum {
 	
 	/**
 	 * Getter for the globally unique ID of the code.

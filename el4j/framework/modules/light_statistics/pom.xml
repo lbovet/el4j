@@ -13,7 +13,7 @@
 	<parent>
 		<groupId>ch.elca.el4j.modules</groupId>
 		<artifactId>el4j-framework-modules</artifactId>
-		<version>3.1-SNAPSHOT</version>
+		<version>1.7.1</version>
 	</parent>
 
 	<artifactId>module-light_statistics</artifactId>
@@ -32,7 +32,7 @@
 			<dependency>
 				<groupId>ch.elca.el4j.modules</groupId>
 				<artifactId>module-light_statistics-common</artifactId>
-				<version>${version.el4j-framework.current}</version>
+				<version>${version.module-light_statistics}</version>
 				<type>jar</type>
 			</dependency>
 		</dependencies>

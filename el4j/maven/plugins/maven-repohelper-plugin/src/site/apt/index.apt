@@ -64,4 +64,4 @@ Repository helper plugin
   artifacts with <<<classifier=sources>>> for each dependency of an Eclipse
   project.
   
-  For detailed usage {{{./plugin-info.html}see the plugin info page}}.
+  For detailed usage {{{plugin-info.html}see the plugin info page}}.

@@ -41,6 +41,7 @@ import ch.elca.el4j.apps.refdb.dom.Book;
 import ch.elca.el4j.apps.refdb.dom.File;
 import ch.elca.el4j.apps.refdb.dom.Link;
 import ch.elca.el4j.apps.refdb.dom.Reference;
+import ch.elca.el4j.services.persistence.generic.dao.impl.DefaultDaoRegistry;
 import ch.elca.el4j.services.persistence.hibernate.dao.ConvenienceGenericHibernateDao;
 import ch.elca.el4j.services.persistence.hibernate.dao.extent.DataExtent;
 import ch.elca.el4j.services.search.QueryObject;
@@ -87,8 +88,7 @@ public class GenericHibernateDaoTest extends AbstractTestCaseBase {
 			"classpath*:scenarios/dataaccess/*.xml",
 			"classpath*:scenarios/dataaccess/hibernate/*.xml",
 			"classpath*:scenarios/dataaccess/hibernate/refdb/*.xml",
-			"classpath*:optional/interception/transactionJava5Annotations.xml",
-			"classpath*:optional/refdb-tests-core-config.xml"};
+			"classpath*:optional/interception/transactionJava5Annotations.xml"};
 	}
 	
 	/**
@@ -214,7 +214,7 @@ public class GenericHibernateDaoTest extends AbstractTestCaseBase {
 	}
 	
 	/**
-	 * This test checks lazy loading of persons brain (bidirectional OneToOne relation)
+	 * This test checks lazy loading of persons brain.
 	 */
 	@Test
 	public void testLazyBrain() {
@@ -253,72 +253,6 @@ public class GenericHibernateDaoTest extends AbstractTestCaseBase {
 		person2 = dao.findById(person.getKey(), wholePerson);
 		try {
 			person2.getBrain().getIq();
-		} catch (LazyInitializationException e) {
-			fail("Brain has not been loaded though forced explicitly.");
-		}
-	}
-	
-	/**
-	 * This test checks lazy loading of persons with a recursion depth > 1 on ManyToOne relations
-	 */
-	@Test
-	public void testLazyBestFriend() {
-		
-		GenericHibernatePersonDaoInterface dao = getPersonDao();
-		Person person = new Person("Peter Muster");
-		Brain b = new Brain();
-		b.setIq(99);
-		person.setBrain(b);
-		
-		Person friend = new Person("Jean-Pierre Luc");
-		Brain b2 = new Brain();
-		friend.setBrain(b2);
-		person.setBestFriend(friend);
-		
-		Person friendsFriend = new Person("John Doe");
-		Brain b3 = new Brain();
-		b3.setIq(99);
-		friendsFriend.setBrain(b3);
-		friend.setBestFriend(friendsFriend);
-		
-		Person buddy = new Person("John Doe's Buddy");
-		Brain b4 = new Brain();
-		b4.setIq(50);
-		buddy.setBrain(b4);
-		friendsFriend.setBestFriend(buddy);
-		
-		dao.saveOrUpdate(buddy);
-		dao.saveOrUpdate(friendsFriend);
-		dao.saveOrUpdate(friend);
-		dao.saveOrUpdate(person);
-		
-		Person person2 = dao.findById(person.getKey());
-		try {
-			person2.getBestFriend().getName();
-			fail("Could access person's best friend which should not have been loaded.");
-		} catch (LazyInitializationException e) {
-			s_logger.debug("Expected exception catched.", e);
-		}
-		
-		// Set Extent explicitly to "with brain"
-		try {
-			DataExtent withBestFriend = new DataExtent(Person.class).with("bestFriend");
-			person2 = dao.findById(person.getKey(), withBestFriend);
-			try {
-				person2.getBestFriend().getName();
-			} catch (LazyInitializationException e) {
-				fail("Brain has not been loaded though forced explicitly.");
-			}
-		} catch (NoSuchMethodException e1) {
-			fail("Fields doesnt exist.");
-		}
-		
-		// Set Extent explicitly to "all" with recursion depth 3
-		DataExtent wholePerson = new DataExtent(Person.class).all(3);
-		
-		person2 = dao.findById(person.getKey(), wholePerson);
-		try {
-			person2.getBestFriend().getName();
 		} catch (LazyInitializationException e) {
 			fail("Brain has not been loaded though forced explicitly.");
 		}
@@ -366,7 +300,7 @@ public class GenericHibernateDaoTest extends AbstractTestCaseBase {
 	}
 	
 	/**
-	 * This test checks the lazy loading of a persons friends (OneToMany relation)
+	 * This test checks the lazy loading of a persons friends.
 	 */
 	@Test
 	public void testLazyFriends() {
@@ -473,7 +407,7 @@ public class GenericHibernateDaoTest extends AbstractTestCaseBase {
 				Person p1 = dao.reload(person1);
 				
 				try {
-					assertTrue("Hibernate did revert the Person's Friends although not told.", p1.getFriends()
+					assertTrue("Hibernate did revert the Persons Friends although not told.", p1.getFriends()
 						.get(0).getName().equals("Jean-Pierre"));
 				} catch (LazyInitializationException e) {
 					s_logger.debug("Expected Exception catched.", e);
@@ -562,13 +496,6 @@ public class GenericHibernateDaoTest extends AbstractTestCaseBase {
 		b.setPublisher("Greenwich: Manning Publications");
 		b.setDescription("Persisting your Java objects to a relational database. The book for it.");
 		b.setIncomplete(false);
-		// hashCode Problem: Save the keywords first, before adding 
-		// them to a collection (see TWiki: HibernateGuidelines > Automatic equals semantics)
-		getKeywordDao().saveOrUpdate(k1);
-		getKeywordDao().saveOrUpdate(k2);
-		getKeywordDao().saveOrUpdate(k3);
-		getKeywordDao().saveOrUpdate(k4);
-		
 		b.setKeywords(new HashSet<Keyword>(Arrays.asList(k1, k2, k3, k4)));
 		f1.setReference(b);
 		Annotation a = new Annotation();
@@ -591,6 +518,10 @@ public class GenericHibernateDaoTest extends AbstractTestCaseBase {
 		l.setUrl("www.sample.link");
 		l.setDescription("some example link just for nothing");
 		
+		getKeywordDao().saveOrUpdate(k1);
+		getKeywordDao().saveOrUpdate(k2);
+		getKeywordDao().saveOrUpdate(k3);
+		getKeywordDao().saveOrUpdate(k4);
 		getHibernateBookDao().saveOrUpdate(b);
 		getLinkDao().saveOrUpdate(l);
 		getAnnotationDao().saveOrUpdate(a);
@@ -603,7 +534,11 @@ public class GenericHibernateDaoTest extends AbstractTestCaseBase {
 	 */
 	protected GenericHibernatePersonDaoInterface getPersonDao() {
 		if (m_personDao == null) {
-			m_personDao	= (GenericHibernatePersonDaoInterface) getApplicationContext().getBean("personDao");
+			DefaultDaoRegistry daoRegistry
+				= (DefaultDaoRegistry) getApplicationContext()
+					.getBean("daoRegistry");
+			m_personDao = (GenericHibernatePersonDaoInterface) daoRegistry
+				.getFor(Person.class);
 		}
 		return m_personDao;
 	}
@@ -613,8 +548,11 @@ public class GenericHibernateDaoTest extends AbstractTestCaseBase {
 	 */
 	protected ConvenienceGenericHibernateDao<Book, Integer> getHibernateBookDao() {
 		if (m_hiberanteBookDao == null) {
-			m_hiberanteBookDao = (ConvenienceGenericHibernateDao<Book, Integer>) getApplicationContext()
-				.getBean("bookDao");
+			DefaultDaoRegistry daoRegistry
+				= (DefaultDaoRegistry) getApplicationContext()
+					.getBean("daoRegistry");
+			m_hiberanteBookDao
+				= (ConvenienceGenericHibernateDao<Book, Integer>) daoRegistry.getFor(Book.class);
 		}
 		return m_hiberanteBookDao;
 	}

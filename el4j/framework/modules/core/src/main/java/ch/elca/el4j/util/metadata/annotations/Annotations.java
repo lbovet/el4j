@@ -23,8 +23,7 @@ import java.util.Collection;
 import java.util.Iterator;
 
 import org.springframework.core.annotation.AnnotationUtils;
-
-import ch.elca.el4j.util.metadata.Attributes;
+import org.springframework.metadata.Attributes;
 
 /**
  * Helper class to get annotations of a field, method, and class. Annotations

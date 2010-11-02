@@ -23,12 +23,16 @@ import org.slf4j.LoggerFactory;
 import org.springframework.aop.TargetSource;
 import org.springframework.aop.framework.adapter.AdvisorAdapterRegistry;
 import org.springframework.aop.framework.adapter.GlobalAdvisorAdapterRegistry;
+import org.springframework.aop.framework.autoproxy.AbstractAutoProxyCreator;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.aop.support.AopUtils;
 import org.springframework.beans.factory.BeanFactory;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
+import org.springframework.util.Assert;
 
+import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
 import ch.elca.el4j.util.codingsupport.AopHelper;
 
 /**
@@ -41,11 +45,16 @@ import ch.elca.el4j.util.codingsupport.AopHelper;
  *
  * @author Martin Zeltner (MZE)
  */
-public class IntelligentAdvisorAutoProxyCreator
-	extends DefaultAdvisorAutoProxyCreator {
-	
-	protected static final Logger s_logger = 
-		LoggerFactory.getLogger(IntelligentAdvisorAutoProxyCreator.class);
+public class IntelligentAdvisorAutoProxyCreator extends DefaultAdvisorAutoProxyCreator implements InitializingBean {
+	/**
+	 * Serial version UID.
+	 */
+	private static final long serialVersionUID = 8582646215764283797L;
+
+	/**
+	 * Private logger.
+	 */
+	private static final Logger s_logger = LoggerFactory.getLogger(IntelligentAdvisorAutoProxyCreator.class);
 	
 	/**
 	 * COPYIED FROM SUPERCLASS!
@@ -60,14 +69,22 @@ public class IntelligentAdvisorAutoProxyCreator
 	 * COPYIED FROM SUPERCLASS!
 	 *
 	 * Default is global AdvisorAdapterRegistry.
-	 * */
+	 */
 	private AdvisorAdapterRegistry m_advisorAdapterRegistry
 		= GlobalAdvisorAdapterRegistry.getInstance();
 
 	/**
-	 * @see #setApplyCommonInterceptorsFirst(boolean)
+	 * COPYIED FROM SUPERCLASS!
+	 *
+	 * Default is "true"; else, bean-specific interceptors will get applied first.
 	 */
-	private boolean m_applyCommonInterceptorsFirst;
+	private boolean m_applyCommonInterceptorsFirst = true;
+	
+	/**
+	 * If <code>true</code> (default) the use of advisor name prefix is mandatory.
+	 * @see #setUsePrefix(boolean)
+	 */
+	private boolean forceUseOfAdvisorNamePrefix = true;
 
 	/**
 	 * Will not create a new proxy for a given bean if this bean is already
@@ -75,6 +92,7 @@ public class IntelligentAdvisorAutoProxyCreator
 	 *
 	 * {@inheritDoc}
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	protected Object createProxy(Class beanClass, String beanName,
 		Object[] specificInterceptors, TargetSource targetSource) {
@@ -93,40 +111,44 @@ public class IntelligentAdvisorAutoProxyCreator
 	}
 
 	/**
-	 * Here we additionally de-proxy beans (to avoid that certain applications of interceptors fail)
+	 * Here we additionally de-proxy beans (to avoid that certain applications of interceptors fail).
+	 * 
 	 * {@inheritDoc}
 	 */
+	@SuppressWarnings("unchecked")
 	@Override	
 	protected Object[] getAdvicesAndAdvisorsForBean(Class beanClass, String beanName, TargetSource targetSource) {
-		Class bClass = deproxyBeanClass(beanClass, beanName, getBeanFactory());
-		return super.getAdvicesAndAdvisorsForBean(bClass, beanName, targetSource);
+		Class deproxiedBeanClass = deproxyBeanClass(beanClass, beanName, getBeanFactory());
+		return super.getAdvicesAndAdvisorsForBean(deproxiedBeanClass, beanName, targetSource);
 	}
 
 	/**
-	 *  Check whether beanClass is a proxy and "deproxy" it if it is one
-	 * @param beanClass
-	 * @param beanName
-	 * @param beanFactory the beanFactory (to be able to keep this method static)
-	 * @return a deproxies beanClass if possible, otherwise return the bean class itself
+	 * Finds out if the given class is a generated one of a proxy. If yes, the original class will be returned.
+	 * 
+	 * @param beanClass Is the class of the bean.
+	 * @param beanName Is the name opf the bean.
+	 * @param beanFactory Is the beanFactory (to be able to keep this method static).
+	 * @return Returns the original class if it is a proxy class. Else the given class will be returned.
 	 */
+	@SuppressWarnings("unchecked")
 	protected static Class deproxyBeanClass(Class beanClass, String beanName, BeanFactory beanFactory) {
+		Class deproxiedBeanClass = beanClass;
 		if (AopUtils.isCglibProxyClass(beanClass)) {
-			return AopHelper.getClassOfCglibProxyClass(beanClass);
+			deproxiedBeanClass = AopHelper.getClassOfCglibProxyClass(beanClass);
 		} else if (Proxy.isProxyClass(beanClass) && (beanFactory instanceof DefaultListableBeanFactory)) {
-
 			DefaultListableBeanFactory factory = (DefaultListableBeanFactory) beanFactory;
 			BeanDefinition beanDefinition = factory.getBeanDefinition(beanName);
 			if (!beanDefinition.isAbstract()) {
 				String beanClassName = beanDefinition.getBeanClassName();
 				try {
 					// replace the beanClass (if it works - otherwise keep "old" beanClass)
-					return beanClass.getClassLoader().loadClass(beanClassName);
+					deproxiedBeanClass = beanClass.getClassLoader().loadClass(beanClassName);
 				} catch (ClassNotFoundException e) {
 					s_logger.debug("error deproxying beanClass:" + beanClass, e);
 				} // ignore error in loading class, just return null
 			}
 		}
-		return beanClass;
+		return deproxiedBeanClass;
 	}
 
 	/**
@@ -137,6 +159,8 @@ public class IntelligentAdvisorAutoProxyCreator
 	}
 
 	/**
+	 * COPYIED FROM SUPERCLASS!
+	 * 
 	 * Added to have access to the interceptor names.
 	 *
 	 * {@inheritDoc}
@@ -155,6 +179,8 @@ public class IntelligentAdvisorAutoProxyCreator
 	}
 
 	/**
+	 * COPYIED FROM SUPERCLASS!
+	 * 
 	 * Added to have access to the interceptor names.
 	 *
 	 * {@inheritDoc}
@@ -182,8 +208,35 @@ public class IntelligentAdvisorAutoProxyCreator
 	 *
 	 * @param applyCommonInterceptorsFirst See method description.
 	 */
+	@Override
 	public void setApplyCommonInterceptorsFirst(
 		boolean applyCommonInterceptorsFirst) {
 		m_applyCommonInterceptorsFirst = applyCommonInterceptorsFirst;
+		super.setApplyCommonInterceptorsFirst(applyCommonInterceptorsFirst);
+	}
+
+	/**
+	 * @return Returns the forceUseOfAdvisorNamePrefix.
+	 */
+	public boolean isForceUseOfAdvisorNamePrefix() {
+		return forceUseOfAdvisorNamePrefix;
+	}
+
+	/**
+	 * @param forceUseOfAdvisorNamePrefix Is the forceUseOfAdvisorNamePrefix to set.
+	 */
+	public void setForceUseOfAdvisorNamePrefix(boolean forceUseOfAdvisorNamePrefix) {
+		this.forceUseOfAdvisorNamePrefix = forceUseOfAdvisorNamePrefix;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void afterPropertiesSet() throws Exception {
+		Assert.isTrue(!isForceUseOfAdvisorNamePrefix() || isUsePrefix(),
+			"Property 'forceUseOfAdvisorNamePrefix' is set to true, so property 'usePrefix' must be true too. "
+			+ "This was made to eliminate duplicated used advisors, so interceptors are not applied twice or "
+			+ "even more on one bean.");
 	}
 }

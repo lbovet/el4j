@@ -25,7 +25,6 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
@@ -64,9 +63,6 @@ public class Person extends AbstractIntKeyIntOptimisticLockingDto {
 	
 	/** See corresponding setter method for more details. */
 	private LegalStatus m_legalStatus;
-	
-	/** See corresponding setter method for more details. */
-	private Person m_bestFriend;
 	
 	/** Default constructor. */
 	public Person() {
@@ -149,19 +145,6 @@ public class Person extends AbstractIntKeyIntOptimisticLockingDto {
 	 */
 	public void setFriends(List<Person> friends) {
 		m_friends = friends;
-	}
-	
-	/**
-	 * @return Returns the best friend.
-	 */
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "bestfriend_key")
-	public Person getBestFriend() {
-		return m_bestFriend;
-	}
-	
-	public void setBestFriend(Person bestFriend) {
-		m_bestFriend = bestFriend;
 	}
 	
 	/** {@inheritDoc} */

@@ -254,7 +254,7 @@ public class DataExtentTest extends AbstractTestCaseBase {
 			
 			DataExtent ex2 = new DataExtent(Person.class);
 			ex2.with("name", "legalStatus", "brain", "friends", "teeth",
-				"key", "keyAsObject", "bestFriend", "optimisticLockingVersion");
+				"key", "keyAsObject", "optimisticLockingVersion");
 			
 			assertEquals("Ids of equal extents are not equal.", ex.toString(),
 				ex2.toString());

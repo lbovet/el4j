@@ -12,11 +12,12 @@
 	<parent>
 		<groupId>ch.elca.el4j.maven.plugins</groupId>
 		<artifactId>el4j-maven-plugins</artifactId>
-		<version>3.1-SNAPSHOT</version>
+		<version>1.7.1</version>
 	</parent>
 
 	<artifactId>maven-utils</artifactId>
-
+	<version>${version.maven-utils}</version>
+	
 	<packaging>jar</packaging>
 	<name>EL4J maven utils</name>
 	<description>

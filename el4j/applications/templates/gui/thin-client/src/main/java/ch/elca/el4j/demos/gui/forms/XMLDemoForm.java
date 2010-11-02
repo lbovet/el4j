@@ -26,16 +26,10 @@ import javax.swing.JTextField;
 
 import org.jdesktop.application.Action;
 import org.joda.time.DateTime;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import com.silvermindsoftware.hitch.Binder;
-import com.silvermindsoftware.hitch.BinderManager;
-import com.silvermindsoftware.hitch.binding.BindingFactory;
-
-import cookxml.cookswing.CookSwing;
-
+import ch.elca.el4j.core.context.annotations.LazyInit;
 import ch.elca.el4j.demos.gui.TableCellRenderers.JodaTimeTableCellRenderer;
 import ch.elca.el4j.demos.gui.widgets.JodaDateTimePicker;
 import ch.elca.el4j.demos.model.DefaultPerson;
@@ -43,6 +37,12 @@ import ch.elca.el4j.demos.model.Person;
 import ch.elca.el4j.services.gui.model.mixin.PropertyChangeListenerMixin;
 import ch.elca.el4j.services.gui.swing.cookswing.binding.Bindable;
 import ch.elca.el4j.util.codingsupport.annotations.FindBugsSuppressWarnings;
+
+import com.silvermindsoftware.hitch.Binder;
+import com.silvermindsoftware.hitch.BinderManager;
+import com.silvermindsoftware.hitch.binding.BindingFactory;
+
+import cookxml.cookswing.CookSwing;
 
 
 /**
@@ -59,7 +59,7 @@ import ch.elca.el4j.util.codingsupport.annotations.FindBugsSuppressWarnings;
  *
  * @author Stefan Wismer (SWI)
  */
-@Lazy
+@LazyInit
 @Scope("prototype")
 @Component("xmlDemoForm")
 @FindBugsSuppressWarnings(value = {"NP_UNWRITTEN_FIELD", "UWF_UNWRITTEN_FIELD"}, 

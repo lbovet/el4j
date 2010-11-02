@@ -12,10 +12,11 @@
 	<parent>
 		<groupId>ch.elca.el4j.modules</groupId>
 		<artifactId>module-databases</artifactId>
-		<version>3.1-SNAPSHOT</version>
+		<version>1.7.1</version>
 	</parent>
 
 	<artifactId>module-database-mysql</artifactId>
+	<version>${version.module-database}</version>
 	<packaging>jar</packaging>
 	<name>EL4J module database for mysql</name>
 	<description>Module database for mysql of the EL4J framework.</description>

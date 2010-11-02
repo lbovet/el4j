@@ -78,4 +78,4 @@ Manifest decorator plugin
     </plugin>
 +--------------
   
-  For detailed usage {{{./plugin-info.html}see the plugin info page}}.
+  For detailed usage {{{plugin-info.html}see the plugin info page}}.

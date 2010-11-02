@@ -65,4 +65,4 @@ String[] excluded = {
 </param-value>
 +----------------
 
-  For detailed usage {{{./plugin-info.html}see the plugin info page}}.
+  For detailed usage {{{plugin-info.html}see the plugin info page}}.

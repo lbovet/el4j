@@ -16,10 +16,9 @@
  */
 package ch.elca.el4j.services.monitoring.jmx;
 
-//Checkstyle: UseLogger off
 import org.apache.log4j.Appender;
 import org.apache.log4j.Level;
-//Checkstyle: UseLogger on
+
 /**
  * The interface of the logging proxy class, for setting logging properties via JMX.
  *

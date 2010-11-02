@@ -23,13 +23,10 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
-import javax.inject.Inject;
-
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.dao.OptimisticLockingFailureException;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -62,34 +59,8 @@ import ch.elca.el4j.util.codingsupport.Reject;
  * @author Martin Zeltner (MZE)
  * @author Alex Mathey (AMA)
  */
-@Service("referenceService")
 public class DefaultReferenceService extends DefaultKeywordService
 	implements ReferenceService {
-	
-	/**
-	 * The DAO for books.
-	 */
-	@Inject
-	protected BookDao m_bookDao;
-	
-	
-	/**
-	 * The DAO for files.
-	 */
-	@Inject
-	protected FileDao m_fileDao;
-	
-	/**
-	 * The DAO for formal publications.
-	 */
-	@Inject
-	protected FormalPublicationDao m_formalPubDao;
-	
-	/**
-	 * The DAO for links.
-	 */
-	@Inject
-	protected LinkDao m_linkDao;
 	
 	/**
 	 * Constructor.
@@ -100,21 +71,21 @@ public class DefaultReferenceService extends DefaultKeywordService
 	 * @return Returns the DAO for files.
 	 */
 	public FileDao getFileDao() {
-		return m_fileDao;
+		return (FileDao) getDaoRegistry().getFor(File.class);
 	}
 
 	/**
 	 * @return Returns the DAO for links.
 	 */
 	public LinkDao getLinkDao() {
-		return m_linkDao;
+		return (LinkDao) getDaoRegistry().getFor(Link.class);
 	}
 	
 	/**
 	 * @return Returns the DAO for formal publications.
 	 */
 	public FormalPublicationDao getFormalPublicationDao() {
-		return m_formalPubDao;
+		return (FormalPublicationDao) getDaoRegistry().getFor(FormalPublication.class);
 	}
 	
 	/**
@@ -122,7 +93,7 @@ public class DefaultReferenceService extends DefaultKeywordService
 	 * @return
 	 */
 	public BookDao getBookDao() {
-		return m_bookDao;
+		return (BookDao) getDaoRegistry().getFor(Book.class);
 	}
 	
 	/** {@inheritDoc} */
@@ -204,20 +175,15 @@ public class DefaultReferenceService extends DefaultKeywordService
 	public List<Reference> searchReferences(QueryObject query)
 		throws DataAccessException {
 		Reject.ifNull(query);
+		
+		List<Link> listLinks = getLinkDao().findByQuery(query);
+		List<FormalPublication> listFormalPublications = getFormalPublicationDao().findByQuery(query);
+		List<Book> listBooks = getBookDao().findByQuery(query);
+		
 		List<Reference> list = new LinkedList<Reference>();
-		Boolean all = (query.getBeanClass() == Reference.class) || (query.getBeanClass() == null);
-		if (all || (query.getBeanClass() == Link.class)) {
-			List<Link> listLinks = getLinkDao().findByQuery(query);
-			list.addAll(listLinks);
-		}
-		if (all || (query.getBeanClass() == FormalPublication.class)) {
-			List<FormalPublication> listFormalPublications = getFormalPublicationDao().findByQuery(query);
-			list.addAll(listFormalPublications);
-		}
-		if (all || (query.getBeanClass() == Book.class)) {
-			List<Book> listBooks = getBookDao().findByQuery(query);
-			list.addAll(listBooks);
-		}
+		list.addAll(listLinks);
+		list.addAll(listFormalPublications);
+		list.addAll(listBooks);
 		return list;
 	}
 	
@@ -309,11 +275,13 @@ public class DefaultReferenceService extends DefaultKeywordService
 				Constants.REFERENCE);
 		}
 		
+		KeywordDao keywordDao = (KeywordDao) getDaoRegistry()
+			.getFor(Keyword.class);
 		
 		Iterator<Keyword> it = keywordSet.iterator();
 		while (it.hasNext()) {
 			int delKey = it.next().getKey();
-			getKeywordDao().deleteById(delKey);
+			keywordDao.deleteById(delKey);
 		}
 	}
 	

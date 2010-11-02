@@ -11,10 +11,11 @@
 	<parent>
 		<groupId>ch.elca.el4j.modules</groupId>
 		<artifactId>el4j-framework-modules</artifactId>
-		<version>3.1-SNAPSHOT</version>
+		<version>1.7.1</version>
 	</parent>
 
 	<artifactId>module-socketstatistics</artifactId>
+	<version>${version.module-socketstatistics}</version>
 	<packaging>jar</packaging>
 	<name>EL4J module socketstatistics</name>
 	<url>http://wiki.elca.ch/twiki/el4j/bin/view/EL4J/ModuleSocketStatistics</url>

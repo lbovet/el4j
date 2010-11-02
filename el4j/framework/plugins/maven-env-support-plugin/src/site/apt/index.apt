@@ -339,4 +339,4 @@ dataSource.url=${db.url}
 
   []
   
-  For detailed usage {{{./plugin-info.html}see the plugin info page}}.
+  For detailed usage {{{plugin-info.html}see the plugin info page}}.

@@ -12,10 +12,11 @@
 	<parent>
 		<groupId>ch.elca.el4j.tests</groupId>
 		<artifactId>el4j-database-plugin-tests</artifactId>
-		<version>3.1-SNAPSHOT</version>
+		<version>1.7.1</version>
 	</parent>
 
 	<artifactId>el4j-database-plugin-tests-parent</artifactId>
+	<version>${version.maven-database-plugin}</version>
 	<packaging>jar</packaging>
 	<name>EL4J maven-database-plugin test parent</name>
 	

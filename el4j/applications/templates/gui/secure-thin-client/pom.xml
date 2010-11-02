@@ -12,10 +12,11 @@
 	<parent>
 		<groupId>ch.elca.el4j.applications</groupId>
 		<artifactId>el4j-templates-swing-demo</artifactId>
-		<version>3.1-SNAPSHOT</version>
+		<version>1.7.1</version>
 	</parent>
 
 	<artifactId>swing-demo-secure-thin-client</artifactId>
+	<version>${version.application-refdb}</version>
 	<packaging>jar</packaging>
 	<name>EL4J application swing demo secure thin-client</name>
 	<description>Swing-demo secure thin-client module of the EL4J framework.</description>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
 
 	<!-- $Revision$ -->
 	<!-- $URL$ -->
@@ -11,15 +11,14 @@
 	<!--
 		Define the autoproxy bean which looks for each advisor in this context.
 	-->
-	<bean id="autoproxy"
+	<bean id="genericMetaDataAutoproxy"
 		class="ch.elca.el4j.core.aop.IntelligentAdvisorAutoProxyCreator">
-		<property name="proxyTargetClass">
-			<value>true</value>
-		</property>
+		<property name="proxyTargetClass" value="true"/>
+		<property name="usePrefix" value="true"/>
 	</bean>
 
 	<!-- Define the Advisor bean. -->
-	<bean id="genericMetaDataAdvisor"
+	<bean id="genericMetaDataAutoproxy.genericMetaDataAdvisor"
 		class="ch.elca.el4j.util.metadata.GenericMetaDataAdvisor">
 		<constructor-arg>
 			<ref local="exampleInterceptor"/>

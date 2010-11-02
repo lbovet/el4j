@@ -13,10 +13,11 @@
 	<parent>
 		<groupId>ch.elca.el4j.applications</groupId>
 		<artifactId>el4j-detailed_statistics-demo</artifactId>
-		<version>3.1-SNAPSHOT</version>
+		<version>1.7.1</version>
 	</parent>
 
 	<artifactId>el4j-detailed_statistics-demo-service</artifactId>
+	<version>${version.module-detailed_statistics}</version>
 	<packaging>jar</packaging>
 	<name>EL4J demo detailed statistics service</name>
 	<description>

@@ -9,7 +9,6 @@ import java.util.List;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Expression;
 import org.springframework.dao.DataAccessException;
-import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
@@ -29,7 +28,6 @@ import ch.elca.el4j.services.search.criterias.IncludeCriteria;
  *
  * @author Alex Mathey (AMA)
  */
-@Repository("linkDao")
 public class HibernateLinkDao
 	extends GenericHibernateReferenceDao<Link, Integer> implements LinkDao {
 

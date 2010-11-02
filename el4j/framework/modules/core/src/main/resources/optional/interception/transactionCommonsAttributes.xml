@@ -8,7 +8,7 @@
 -->
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
 
 	<!-- $Revision$ -->
 	<!-- $URL$ -->
@@ -33,12 +33,14 @@
 			-->
 			<value>false</value>
 		</property>
+		<property name="usePrefix" value="true"/>
+		<property name="order" value="100"/>
 	</bean>
 	
 	<!--
 		Transaction configurations.
 	-->
-	<bean id="transactionAdvisor"
+	<bean id="transactionAutoproxy.transactionAdvisor"
 		class="org.springframework.transaction.interceptor.TransactionAttributeSourceAdvisor">
 		<constructor-arg>
 			<ref local="transactionInterceptor"/>

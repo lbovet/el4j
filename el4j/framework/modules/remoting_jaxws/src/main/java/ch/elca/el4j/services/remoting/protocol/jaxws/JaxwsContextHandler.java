@@ -38,9 +38,9 @@ import org.slf4j.LoggerFactory;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import com.sun.xml.ws.util.xml.NodeListIterator;
-
 import ch.elca.el4j.core.contextpassing.ImplicitContextPassingRegistry;
+
+import com.sun.xml.ws.util.xml.NodeListIterator;
 
 /**
  * This class is a JAX-WS Handler that injects the implicit context while
@@ -51,10 +51,12 @@ import ch.elca.el4j.core.contextpassing.ImplicitContextPassingRegistry;
  * @author Stefan Wismer (SWI)
  */
 public class JaxwsContextHandler extends AbstractJaxwsJaxbContextHandler {
+	
 	/**
-	 * Private logger.
+	 * The logger.
 	 */
-	private static Logger s_logger = LoggerFactory.getLogger(JaxwsContextHandler.class);
+	private static Logger s_logger
+		= LoggerFactory.getLogger(JaxwsContextHandler.class);
 	
 	/**
 	 * The registry to get the context from.

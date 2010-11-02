@@ -21,6 +21,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 import ch.elca.el4j.services.persistence.generic.dao.GenericDao;
+import ch.elca.el4j.services.persistence.generic.dao.impl.DefaultDaoRegistry;
 import ch.elca.el4j.tests.core.AbstractTest;
 import ch.elca.el4j.tests.person.dom.Brain;
 import ch.elca.el4j.tests.person.dom.Person;
@@ -45,8 +46,7 @@ public class HibernateJpaSupportTest extends AbstractTest {
 			"classpath*:scenarios/db/raw/*.xml",
 			"classpath*:scenarios/dataaccess/hibernate/*.xml",
 			"classpath*:scenarios/dataaccess/hibernate/jpasupport/test/*.xml",
-			"classpath*:optional/interception/transactionJava5Annotations.xml",
-			"classpath*:optional/refdb-tests-core-config.xml"};
+			"classpath*:optional/interception/transactionJava5Annotations.xml"};
 	}
 	
 	/**
@@ -54,8 +54,10 @@ public class HibernateJpaSupportTest extends AbstractTest {
 	 */
 	protected GenericDao<Person> getPersonDao() {
 		if (m_personDao == null) {
-			m_personDao
-				= (GenericDao<Person>) getApplicationContext().getBean("personDao");
+			DefaultDaoRegistry daoRegistry
+				= (DefaultDaoRegistry) getApplicationContext()
+					.getBean("daoRegistry");
+			m_personDao = daoRegistry.getFor(Person.class);
 		}
 		return m_personDao;
 	}
