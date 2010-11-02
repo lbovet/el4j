@@ -1,14 +1,14 @@
 <ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:noNamespaceSchemaLocation="http://ehcache.org/ehcache.xsd"
-         updateCheck="false">
+	xsi:noNamespaceSchemaLocation="http://ehcache.org/ehcache.xsd"
+	updateCheck="false">
 
 	<defaultCache
-           maxElementsInMemory="10000"
-           eternal="true"
-           overflowToDisk="false" />
-    <cache name="demoCache"
-           maxElementsInMemory="10000"
-           eternal="true"
-           overflowToDisk="false" />
+		maxElementsInMemory="10000"
+		eternal="true"
+		overflowToDisk="false" />
+	<cache name="demoCache"
+		maxElementsInMemory="10000"
+		eternal="true"
+		overflowToDisk="false" />
 
 </ehcache>
