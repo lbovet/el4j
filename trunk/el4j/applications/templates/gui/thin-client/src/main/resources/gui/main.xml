@@ -29,6 +29,7 @@
 			<menusplit />
 			<menuitem action="showSearch" />
 			<menuitem action="showRefDB" />
+			<menuitem action="showCachingDemo" />
 			<menusplit />
 			<menuitem action="showDemo5" />
 			<menuitem action="sendExampleEvent" />

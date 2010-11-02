@@ -117,7 +117,7 @@ public class MainFormDocking extends DockingApplication {
 		List<String> editMenuActionNames = Arrays.asList("cut", "copy", "paste", "delete");
 		List<String> demoMenuActionNames
 			= Arrays.asList("showDemo1", "showDemo2", "showDemo3", "showDemo4", "---",
-				"showSearch", "showRefDB", "---",
+				"showSearch", "showRefDB", "showCachingDemo", "---",
 				"showDemo5", "sendExampleEvent", "throwException");
 		List<String> helpMenuActionNames = Arrays.asList("help", "about");
 		menuBar.add(MenuUtils.createMenu(actionsContext, "fileMenu", fileMenuActionNames));
