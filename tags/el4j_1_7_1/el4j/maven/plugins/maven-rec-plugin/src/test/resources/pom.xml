@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<project>
+	<parent>
+		<artifactId>el4j-maven-plugins</artifactId>
+		<groupId>ch.elca.el4j.maven.plugins</groupId>
+		<version>1.7.1</version>
+	</parent>
+	
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>ch.elca.el4j.maven.plugins</groupId>
+	<artifactId>test-project</artifactId>
+	<packaging>pom</packaging>
+	<name>maven-rec-plugin test project</name>
+	<version>1.0</version>
+	<url>http://maven.apache.org</url>
+	
+	<dependencies>
+		<dependency>
+			<groupId>ch.elca.el4j.maven.plugins</groupId>
+			<artifactId>maven-rec-plugin</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.maven</groupId>
+			<artifactId>maven-plugin-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.maven</groupId>
+			<artifactId>maven-project</artifactId>
+		</dependency>
+	</dependencies>
+</project>

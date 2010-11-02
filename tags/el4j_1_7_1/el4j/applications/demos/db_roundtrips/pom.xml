@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<!-- Version: $Revision$ -->
+	<!-- URL: $URL$ -->
+	<!-- Date: $Date$ -->
+	<!-- Author: $Author$ -->
+
+	<parent>
+		<groupId>ch.elca.el4j.applications</groupId>
+		<artifactId>el4j-demos</artifactId>
+		<version>1.7.1</version>
+	</parent>
+
+	<artifactId>el4j-db_roundtrips-demos</artifactId>
+	<version>${version.module-hibernate}</version>
+	<packaging>jar</packaging>
+	<name>EL4J demo DB roundtrips</name>
+	<description>
+		DB roundtrips benchmark for module hibernate of the EL4J framework.
+	</description>
+	
+	<profiles>
+		<profile>
+			<id>integrationTests</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			
+			<build>
+				<plugins>
+					<!-- EL4J Database plugin to start and fill DB automatically -->
+					<plugin>
+						<groupId>ch.elca.el4j.maven.plugins</groupId>
+						<artifactId>maven-database-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>prepare</id>
+								<goals>
+									<goal>prepare</goal>
+								</goals>
+								<phase>pre-integration-test</phase>
+							</execution>
+							
+							<!-- Delete tables and stop Network Server -->
+							<execution>
+								<id>cleanUp</id>
+								<goals>
+									<goal>cleanUp</goal>
+								</goals>
+								<phase>post-integration-test</phase>
+							</execution>
+						</executions>
+					</plugin>
+
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>exec-maven-plugin</artifactId>
+						<configuration>
+							<mainClass>ch.elca.el4j.demos.roundtrips.RoundtripBenchmark</mainClass>
+						</configuration>
+						<executions>
+							<execution>
+								<id>runBenchmark</id>
+								<goals>
+									<goal>java</goal>
+								</goals>
+								<phase>integration-test</phase>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		
+		<!-- DB -->
+		<profile>
+			<id>db2</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<db.username>el4j_user</db.username>
+				<db.password>el4j_user</db.password>
+			</properties>
+		</profile>
+		<profile>
+			<id>oracle</id>
+			<properties>
+				<db.username>LEAF3</db.username>
+				<db.password>LEAF</db.password>
+			</properties>
+		</profile>
+		<profile>
+			<id>oracle10</id>
+			<properties>
+				<db.username>LEAF3</db.username>
+				<db.password>LEAF</db.password>
+			</properties>
+		</profile>
+		<profile>
+			<id>mysql</id>
+			<properties>
+				<db.username>root</db.username>
+				<db.password>admin</db.password>
+			</properties>
+		</profile>
+	</profiles>
+	
+	<dependencies>
+		<dependency>
+			<groupId>ch.elca.el4j.applications</groupId>
+			<artifactId>keyword</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>ch.elca.el4j.modules</groupId>
+			<artifactId>module-env</artifactId>
+		</dependency>
+		
+		<!-- Monitor DB roundtrips and other metrics. -->
+		<dependency>
+			<groupId>ch.elca.el4j.modules</groupId>
+			<artifactId>module-database-jamon</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>ch.elca.el4j.modules</groupId>
+			<artifactId>module-core</artifactId>
+			<type>test-jar</type>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+</project>
