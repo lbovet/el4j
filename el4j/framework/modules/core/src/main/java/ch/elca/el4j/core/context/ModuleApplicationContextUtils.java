@@ -104,7 +104,11 @@ public class ModuleApplicationContextUtils {
 			return null;
 		}
 
-		checkConfigLocations(inclusiveConfigLocations[0]);
+		// check config location but only for the root application context, not for
+		// child contexts
+		if (m_appContext.getParent() == null) {
+			checkConfigLocations(inclusiveConfigLocations[0]);
+		}
 		
 		List<String> inclusiveFileNames
 			= getResolvedFileNames(inclusiveConfigLocations);

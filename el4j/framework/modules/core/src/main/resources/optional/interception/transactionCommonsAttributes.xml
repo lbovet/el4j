@@ -33,12 +33,14 @@
 			-->
 			<value>false</value>
 		</property>
+		<property name="usePrefix" value="true"/>
+		<property name="order" value="100"/>
 	</bean>
 	
 	<!--
 		Transaction configurations.
 	-->
-	<bean id="transactionAdvisor"
+	<bean id="transactionAutoproxy.transactionAdvisor"
 		class="org.springframework.transaction.interceptor.TransactionAttributeSourceAdvisor">
 		<constructor-arg>
 			<ref local="transactionInterceptor"/>

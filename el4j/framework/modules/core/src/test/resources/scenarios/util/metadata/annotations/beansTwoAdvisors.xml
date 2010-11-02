@@ -42,11 +42,13 @@
 	<!--
 		Define the autoproxy bean which looks for each advisor in this context.
 	-->
-	<bean id="autoproxy"
-		class="ch.elca.el4j.core.aop.IntelligentAdvisorAutoProxyCreator"/>
+	<bean id="genericMetaDataAutoproxy"
+		class="ch.elca.el4j.core.aop.IntelligentAdvisorAutoProxyCreator">
+		<property name="usePrefix" value="true"/>
+	</bean>
 
 	<!-- Define the first Advisor bean. -->
-	<bean id="genericMetaDataAdvisorOne"
+	<bean id="genericMetaDataAutoproxy.genericMetaDataAdvisorOne"
 		class="ch.elca.el4j.util.metadata.GenericMetaDataAdvisor">
 		<property name="methodInterceptor">
 			<ref local="exampleInterceptorOne"/>
@@ -62,7 +64,7 @@
 	</bean>
 
 	<!-- Define the second Advisor bean. -->
-	<bean id="genericMetaDataAdvisorTwo"
+	<bean id="genericMetaDataAutoproxy.genericMetaDataAdvisorTwo"
 		class="ch.elca.el4j.util.metadata.GenericMetaDataAdvisor">
 		<property name="methodInterceptor">
 			<ref local="exampleInterceptorTwo"/>

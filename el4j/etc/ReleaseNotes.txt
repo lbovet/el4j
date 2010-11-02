@@ -70,7 +70,35 @@
   * Maven 
    = Fixed cobertura plugin: it only needs to run once
    =
-	 
+
+--------------------------------------------------------------------------------
+ Date :   01.11.10
+                            EL4J version  1.7.1
+--------------------------------------------------------------------------------
+
+ * Core
+   = Moved from Spring 2.5.6.SEC01 to Spring 2.5.6.SEC02 (ELJ-145).
+   = Combination of Spring AOP namespace support and Spring autoproxy creator for
+     transaction support resulted in duplicated invocation of transaction interceptor.
+     This issue is now solved (ELJ-132).
+   = Do not warn "classpath*:mandatory/*.xml" in child application contexts (ELJ-166).
+
+ * Remoting
+   = Make service protocol of remoting protocols configurable. Before "http" was
+     hardcoded (ELJ-167).
+   = Boolean property "doNotForcePreInstantiationOfExporterObject" added to
+     ch.elca.el4j.services.remoting.AbstractRemotingProtocol to be able to stop
+     pre-instantiation of service exporter object (ELJ-177).
+   = Dependency "woodstox:wstx-asl" replaced by dependency "org.codehaus.woodstox:wstx-asl"
+     to remove error message on maven build output (ELJ-179).
+
+ * Build system
+   = DB plugin can now handle inline comments (ELJ-147).
+   = By default the eclipse plugin tries to resolve AspectJ deps with own deps. Most
+     time, the result is, that the dependency is missing in Eclipse projects.
+     This problem is now solved (ELJ-160).
+   = The repohelper did not work on any unix os. This is now solved (ELJ-176).
+
 --------------------------------------------------------------------------------
  Date :   16.12.09
                             EL4J version  1.7
