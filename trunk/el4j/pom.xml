@@ -2169,6 +2169,13 @@
 				</exclusions>
 			</dependency>	
 			
+			<!-- optional dependencies from spring -->
+			<dependency>
+				<groupId>org.aspectj</groupId>
+				<artifactId>aspectjweaver</artifactId>
+				<version>${version.aspectj}</version>
+			</dependency>
+			
 			<!-- Logging -->
 			<dependency>
 				<groupId>org.slf4j</groupId>
@@ -2797,6 +2804,9 @@
 		
 		<!-- Spring security -->
 		<version.springsecurity>3.0.3.RELEASE</version.springsecurity>
+		
+		<!-- AspectJ version -->
+		<version.aspectj>1.6.5</version.aspectj>
 		
 		<!-- SLF4J -->
 		<!--

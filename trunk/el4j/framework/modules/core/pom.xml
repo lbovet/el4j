@@ -56,6 +56,16 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-orm</artifactId>
 		</dependency>
+
+		<!-- 
+			dependencies marked 'optional' in spring-aop
+			so we need to pull them in explicitly. see ELJ-180 
+		-->
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjweaver</artifactId>
+		</dependency>		
+
 		<!--
 			Use the one from the EL4J repository!
 			Else you will have dependencies to servlet-api and so on!!!!
