@@ -31,7 +31,6 @@ import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.SequenceGenerator;
 
-import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.IndexColumn;
 import org.hibernate.validator.NotNull;
 
@@ -117,7 +116,6 @@ public class Person extends AbstractIntKeyIntOptimisticLockingDto {
 	 * @return Returns the teeth.
 	 */
 	@OneToMany(mappedBy = "owner", cascade = { CascadeType.ALL })
-	@Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
 	@ContainedClass(Tooth.class)
 	public List<Tooth> getTeeth() {
 		return m_teeth;
