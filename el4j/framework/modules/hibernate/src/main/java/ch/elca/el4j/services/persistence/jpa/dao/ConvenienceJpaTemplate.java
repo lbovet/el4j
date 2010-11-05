@@ -192,7 +192,7 @@ public class ConvenienceJpaTemplate extends JpaTemplate {
 		} else {
 			upperIndex = firstResult + maxResults;
 		}
-		return results.subList(firstResult - 1, upperIndex);
+		return results.subList(firstResult, upperIndex);
 	}
 	
 	/**
