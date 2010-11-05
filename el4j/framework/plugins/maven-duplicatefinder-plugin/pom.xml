@@ -7,6 +7,7 @@
 		<groupId>ch.elca.el4j.maven.plugins</groupId>
 		<artifactId>el4j-maven-plugins</artifactId>
 		<version>3.1-SNAPSHOT</version>
+		<relativePath>../../../maven/plugins/pom.xml</relativePath>
 	</parent>
 
 	<artifactId>maven-duplicatefinder-plugin</artifactId>
