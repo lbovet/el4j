@@ -109,12 +109,4 @@
 			<version>1.0</version>
 		</dependency>
 	</dependencies>
-
-	<repositories>
-		<repository>
-			<id>java.net</id>
-			<url>http://download.java.net/maven/1</url>
-			<layout>legacy</layout>
-		</repository>
-	</repositories>
 </project>
