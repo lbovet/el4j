@@ -28,19 +28,20 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Order;
 
 import org.apache.commons.lang.NotImplementedException;
+import org.hibernate.criterion.DetachedCriteria;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.DataRetrievalFailureException;
-import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.orm.jpa.JpaCallback;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import ch.elca.el4j.services.persistence.generic.dao.annotations.ReturnsUnchangedParameter;
+import ch.elca.el4j.services.persistence.jpa.criteria.CriteriaTransformer;
 import ch.elca.el4j.services.search.QueryObject;
 import ch.elca.el4j.util.codingsupport.Reject;
 
@@ -348,25 +349,21 @@ public class GenericJpaDao<T, ID extends Serializable>
 		return getPersistentClass().getSimpleName();
 	}
 	
-	// TODO. the CriteriaTransformer needs to be split into an interface and two implementations,
-	// one for Hibernate and one for JPA.
 	/**
 	 * @param queryObject    an EL4J {@link QueryObject} that should be converted to a {@link DetachedCriteria}
 	 * @return               a suitable {@link CriteriaQuery}
 	 */
 	protected CriteriaQuery<T> getCriteria(QueryObject queryObject) {
-		// TODO. postponed to a second phase.
-		throw new NotImplementedException();
 		
-//		CriteriaTransformer ct = new CriteriaTransformer(
-//				getConvenienceJpaTemplate().getEntityManagerFactory().getCriteriaBuilder());
-//		CriteriaQuery<T> criteria = ct.transform(queryObject, getPersistentClass());
-//		
-//		if (queryObject.getOrderConstraints().size() == 0) {
-//			criteria = addOrder(criteria);
-//		}
-//		
-//		return makeDistinct(criteria);
+		CriteriaTransformer<T> ct = new CriteriaTransformer<T>(getPersistentClass(), 
+				getConvenienceJpaTemplate().getEntityManagerFactory().getCriteriaBuilder());
+		CriteriaQuery<T> criteria = ct.transform(queryObject);
+		
+		if (queryObject.getOrderConstraints().size() == 0) {
+			criteria = addOrder(criteria);
+		}
+		
+		return makeDistinct(criteria);
 	}
 	
 	

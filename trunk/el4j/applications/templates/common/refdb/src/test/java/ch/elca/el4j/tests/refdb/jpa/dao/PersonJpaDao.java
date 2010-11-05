@@ -14,24 +14,20 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.tests.refdb.jpa;
+package ch.elca.el4j.tests.refdb.jpa.dao;
 
-import org.springframework.stereotype.Repository;
-
-import ch.elca.el4j.services.persistence.jpa.dao.GenericJpaDao;
+import ch.elca.el4j.services.persistence.jpa.dao.ConvenienceGenericJpaDao;
 import ch.elca.el4j.tests.person.dom.Person;
 
 /**
  * 
- * DAO for Person entity class using JPA.
+ * DAO for Person class.
  *
  * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Simon Stelling (SST)
  */
-@Repository("personJpaDao")
-public class PersonJpaDaoImpl 
-	extends GenericJpaDao<Person, Integer> 
-	implements PersonJpaDao {
+public interface PersonJpaDao 
+	extends ConvenienceGenericJpaDao<Person, Integer> {
 
 }
