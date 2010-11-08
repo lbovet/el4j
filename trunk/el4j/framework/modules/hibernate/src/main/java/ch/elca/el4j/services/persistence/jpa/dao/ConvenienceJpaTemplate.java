@@ -17,7 +17,6 @@
 package ch.elca.el4j.services.persistence.jpa.dao;
 
 import java.io.Serializable;
-import java.lang.reflect.ParameterizedType;
 import java.util.Collection;
 import java.util.List;
 
@@ -25,11 +24,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
-import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
 
-import org.apache.commons.lang.NotImplementedException;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.dao.OptimisticLockingFailureException;
@@ -82,20 +78,22 @@ public class ConvenienceJpaTemplate extends JpaTemplate {
 	 *             in case of Hibernate errors
 	 * @throws OptimisticLockingFailureException
 	 *             in case optimistic locking fails
+	 * @return the merged entity
 	 */
-	public void mergeStrong(Object entity, final String objectName)
+	public Object mergeStrong(Object entity, final String objectName)
 		throws DataAccessException, OptimisticLockingFailureException {
 		
 		Reject.ifNull(entity);
 		Reject.ifEmpty(objectName, "The name of the persistent object type "
 			+ "must not be empty.");
 		try {
-			merge(entity);
+			return merge(entity);
 		} catch (JpaOptimisticLockingFailureException holfe) {
 			String message = "The current " + objectName + " was modified or"
 				+ " deleted in the meantime.";
 			PersistenceNotificationHelper.notifyOptimisticLockingFailure(
 				message, objectName, holfe);
+			throw holfe;
 		}
 	}
 	

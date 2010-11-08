@@ -29,10 +29,10 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.hibernate.Hibernate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.hibernate.Hibernate;
-import org.hibernate.validator.NotNull;
+
 
 /**
  * File domain object.
@@ -135,9 +135,8 @@ public class File extends AbstractFile {
 	 * Content of the file converted to Blob. Used by hibernate only!
 	 * @return Returns the data.
 	 */
-	@NotNull(message = "{File.data}")
 	@Lob
-	@Column(name = "content", length = Integer.MAX_VALUE - 1)
+	@Column(name = "content", length = Integer.MAX_VALUE - 1, nullable = false)
 	public Blob getData() {
 		if (m_data == null) {
 			// Re-set the blob if null (eg. after serialization)
