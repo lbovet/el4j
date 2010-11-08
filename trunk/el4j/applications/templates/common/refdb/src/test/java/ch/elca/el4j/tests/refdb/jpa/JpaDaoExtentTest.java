@@ -459,7 +459,7 @@ public class JpaDaoExtentTest extends AbstractJpaDaoTest {
 		ex.all(3);
 		
 		try {
- 			Person person1 = dao.findByQuery(query, ex).get(0);
+			Person person1 = dao.findByQuery(query, ex).get(0);
 			entityManager.detach(person1);
 			
 			person1.getFriends().get(0).setName("Jean-Pierre");
