@@ -24,11 +24,15 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceException;
+import javax.persistence.PersistenceUnitUtil;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Order;
 
+import org.apache.commons.collections.map.ReferenceMap;
 import org.apache.commons.lang.NotImplementedException;
+import org.hibernate.Hibernate;
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.proxy.HibernateProxy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
@@ -41,6 +45,9 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import ch.elca.el4j.services.persistence.generic.dao.annotations.ReturnsUnchangedParameter;
+import ch.elca.el4j.services.persistence.hibernate.dao.extent.DataExtent;
+import ch.elca.el4j.services.persistence.hibernate.dao.extent.ExtentCollection;
+import ch.elca.el4j.services.persistence.hibernate.dao.extent.ExtentEntity;
 import ch.elca.el4j.services.persistence.jpa.criteria.CriteriaTransformer;
 import ch.elca.el4j.services.search.QueryObject;
 import ch.elca.el4j.util.codingsupport.Reject;
@@ -218,13 +225,13 @@ public class GenericJpaDao<T, ID extends Serializable>
 	}
 	
 	/** {@inheritDoc} */
+	@SuppressWarnings("unchecked")
 	@ReturnsUnchangedParameter
 	@Transactional(propagation = Propagation.REQUIRED)
 	public T merge(T entity) throws DataAccessException,
 		DataIntegrityViolationException, OptimisticLockingFailureException {
 		
-		getConvenienceJpaTemplate().mergeStrong(entity, getPersistentClassName());
-		return entity;
+		return (T) getConvenienceJpaTemplate().mergeStrong(entity, getPersistentClassName());
 	}
 	
 	/**
@@ -239,14 +246,19 @@ public class GenericJpaDao<T, ID extends Serializable>
 		return entity;
 	}
 	
-	/** {@inheritDoc} */
+	/**
+	 * Deprecated: Use merge instead.
+	 * 
+	 * Note: this method is NOT equivalent to Hibernate's <code>saveOrUpdate</code> but to
+	 * <code>saveOrUpdateCopy</code>, i.e. you need to use the return value:
+	 * 
+	 * <pre>
+	 * dom = dao.saveOrUpdate(dom);
+	 * </pre>
+	 */
 	@Deprecated
 	public T saveOrUpdate(T entity) {
-		if (getConvenienceJpaTemplate().contains(entity)) {
-			return merge(entity);
-		} else {
-			return persist(entity);
-		}
+		return merge(entity);
 	}
 	
 	/** {@inheritDoc} */
@@ -276,14 +288,7 @@ public class GenericJpaDao<T, ID extends Serializable>
 		getConvenienceJpaTemplate().refresh(e);
 		return e;
 	}
-	
-	/** {@inheritDoc} */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public T reload(final T entity) throws DataAccessException,
-		DataRetrievalFailureException {
-		return refresh(entity);
-	}
-	
+		
 	/** {@inheritDoc} */
 	@Deprecated
 	@Transactional(propagation = Propagation.REQUIRED)
@@ -384,6 +389,167 @@ public class GenericJpaDao<T, ID extends Serializable>
 	 */
 	protected CriteriaQuery<T> makeDistinct(CriteriaQuery<T> criteria) {
 		return criteria.distinct(true);
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public T reload(T entity) throws DataAccessException, DataRetrievalFailureException {
+		PersistenceUnitUtil util = getConvenienceJpaTemplate().getEntityManagerFactory().getPersistenceUnitUtil();
+		return findById((ID) util.getIdentifier(entity));
+	}
+
+	// extent-using methods:
+	
+	/** 
+	 * Prototype of Extent-based fetching,
+	 * steps through all the retrieved objects and calls
+	 * the methods of the extent to ensure loading from db.
+	 * 
+	 * @param objects	list of objects to load in given extent
+	 * @param extent	the fetch-extent
+	 * @return returns the new list of objects.
+	 * 
+	 * @throws DataAccessException 
+	 */
+	protected List<T> fetchExtent(List<T> objects, DataExtent extent)
+		throws DataAccessException {
+		
+		if (extent != null) {
+			ReferenceMap fetchedObjects = new ReferenceMap();
+			for (Object obj : objects) {
+				fetchExtentObject(obj, extent.getRootEntity(), fetchedObjects);
+			}
+		}
+		return objects;
+	}
+	
+	/** 
+	 * Prototype of Extent-based fetching,
+	 * steps through all the retrieved objects and calls
+	 * the methods of the extent to ensure loading from db.
+	 * 
+	 * @param object	object to load in given extent
+	 * @param extent	the fetch-extent
+	 * @return returns the new object.
+	 * 
+	 * @throws DataAccessException 
+	 */
+	protected T fetchExtent(T object, DataExtent extent)
+		throws DataAccessException {
+		
+		if (extent != null) {
+			ReferenceMap fetchedObjects = new ReferenceMap();
+			fetchExtentObject(object, extent.getRootEntity(), fetchedObjects);
+		}
+		return object;
+	}
+	
+	/**
+	 * Sub-method of the extent-based fetching, steps
+	 * through the entities and calls the required methods.
+	 * <p>
+	 * <strong>Note:</strong> This implementation assumes that the underlying JPA implementation
+	 * is Hibernate. If another implementation is used, and that implemenation returns proxy
+	 * objects when a entity is requested, less than the requested extent might be loaded and
+	 * LazyInitializationExceptions may occur.
+	 * 
+	 * @param object			the object to load in given extent
+	 * @param entity			the extent entity
+	 * @param fetchedObjects	the HashMap with all the already fetched objects
+	 * 
+	 * @throws DataAccessException
+	 */
+	private void fetchExtentObject(Object object, ExtentEntity entity, ReferenceMap fetchedObjects)
+		throws DataAccessException {
+		
+		Object[] nullArg = null;
+		if (object == null || entity == null || fetchedObjects == null) {
+			return;
+		}
+		fetchedObjects.put(object, entity);
+		try {
+			for (ExtentEntity ent : entity.getChildEntities()) {
+				Object obj = ent.getMethod().invoke(object, nullArg);
+				// Initialize the object if it is a proxy
+				if (obj instanceof HibernateProxy && !Hibernate.isInitialized(obj)) {
+					Hibernate.initialize(obj);
+				}
+				if (!fetchedObjects.containsKey(obj) || !fetchedObjects.get(obj).equals(ent)) {
+					fetchExtentObject(obj, ent, fetchedObjects);
+				}
+			}
+			
+			// Fetch the collections. Since we assume batch fetching for collections
+			for (ExtentCollection c : entity.getCollections()) {
+				Collection<?> coll = (Collection<?>) c.getMethod().invoke(object, nullArg);
+				if (coll != null) {
+					for (Object o : coll) {
+						// Initialize the object if it is a proxy
+						if (o instanceof HibernateProxy && !Hibernate.isInitialized(o)) {
+							Hibernate.initialize(o);
+						}
+						if (!fetchedObjects.containsKey(o) || !fetchedObjects.get(o).equals(c.getContainedEntity())) {
+							fetchExtentObject(o, c.getContainedEntity(), fetchedObjects);
+						}
+					}
+				}
+			}
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+		
+	}
+
+	/** {@inheritDoc} */
+	@Override
+	public List<T> findByCriteria(CriteriaQuery<T> criteria, DataExtent extent) throws DataAccessException {
+		return fetchExtent(getConvenienceJpaTemplate().findByCriteria(criteria), extent);
+	}
+
+	/** {@inheritDoc} */
+	@Override
+	public List<T> findByCriteria(CriteriaQuery<T> criteria, int firstResult, int maxResults, DataExtent extent)
+		throws DataAccessException {
+		return fetchExtent(getConvenienceJpaTemplate().findByCriteria(criteria, firstResult, maxResults), extent);
+	}
+
+	/** {@inheritDoc} */
+	@Override
+	public T findById(ID id, DataExtent extent) throws DataRetrievalFailureException, DataAccessException {
+		return fetchExtent((T) getConvenienceJpaTemplate().findByIdStrong(
+			getPersistentClass(), id, getPersistentClassName()), extent);
+	}
+
+	/** {@inheritDoc} */
+	@Override
+	public List<T> findByQuery(QueryObject q, DataExtent extent) throws DataAccessException {
+		CriteriaQuery<T> criteria = getCriteria(q);
+		
+		return fetchExtent(getConvenienceJpaTemplate().findByCriteria(criteria, q.getFirstResult(), 
+			q.getMaxResults()), extent);
+	}
+
+	/** {@inheritDoc} */
+	@Override
+	public List<T> getAll(DataExtent extent) throws DataAccessException {
+		return fetchExtent(getConvenienceJpaTemplate().findByCriteria(getOrderedCriteria()), extent);
+	}
+
+	/** {@inheritDoc} */
+	@Override
+	public T refresh(T entity, DataExtent extent) throws DataAccessException, DataRetrievalFailureException {
+		getConvenienceJpaTemplate().refresh(entity);
+		return fetchExtent(entity, extent);
+	}
+
+	/** {@inheritDoc} */
+	@Override
+	public T reload(T entity, DataExtent extent) throws DataAccessException, DataRetrievalFailureException {
+		return fetchExtent(reload(entity), extent);
 	}
 
 }

@@ -20,22 +20,16 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import javax.inject.Inject;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
-import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.orm.ObjectRetrievalFailureException;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.transaction.annotation.Transactional;
 
 import static ch.elca.el4j.services.search.criterias.CriteriaHelper.and;
 
@@ -49,14 +43,9 @@ import ch.elca.el4j.services.search.QueryObject;
 import ch.elca.el4j.services.search.criterias.ComparisonCriteria;
 import ch.elca.el4j.services.search.criterias.LikeCriteria;
 import ch.elca.el4j.services.search.criterias.Order;
-import ch.elca.el4j.tests.core.ModuleTestContextLoader;
-import ch.elca.el4j.tests.core.context.ExtendedContextConfiguration;
-import ch.elca.el4j.tests.core.context.junit4.EL4JJunit4ClassRunner;
 import ch.elca.el4j.tests.person.dom.Brain;
 import ch.elca.el4j.tests.person.dom.Person;
 import ch.elca.el4j.tests.person.dom.Person.LegalStatus;
-import ch.elca.el4j.tests.refdb.jpa.dao.BrainJpaDao;
-import ch.elca.el4j.tests.refdb.jpa.dao.PersonJpaDao;
 /**
  * 
  * Tests the functionality provided by {@link GenericJpaDao}.
@@ -67,68 +56,12 @@ import ch.elca.el4j.tests.refdb.jpa.dao.PersonJpaDao;
  *
  * @author Simon Stelling (SST)
  */
-@RunWith(EL4JJunit4ClassRunner.class)
-@ExtendedContextConfiguration(exclusiveConfigLocations = {
-		"classpath*:mandatory/refdb-core-config.xml",
-		"classpath*:mandatory/keyword-core-config.xml" })
-@ContextConfiguration(
-	locations = {
-		"classpath*:mandatory/*.xml",
-		"classpath*:scenarios/db/raw/*.xml",
-		"classpath*:scenarios/dataaccess/jpa/*.xml",
-		"classpath*:optional/jpadao/*.xml",
-		"classpath*:scenarios/dataaccess/jpa/refdb/*.xml"
-		},
-	loader = ModuleTestContextLoader.class)
-@Transactional
-public class JpaDaoTest {
+public class JpaDaoTest extends AbstractJpaDaoTest {
 
 	/**
 	 * Logger.
 	 */
 	private static Logger s_logger = LoggerFactory.getLogger(JpaDaoTest.class);
-	
-	/**
-	 * JPA DAO for people.
-	 */
-	@Inject
-	private PersonJpaDao personJpaDao;
-	
-	/**
-	 * JPA DAO for brain.
-	 */
-	@Inject
-	private BrainJpaDao brainJpaDao;
-	
-	/**
-	 * The {@link EntityManagerFactory} used to retrieve a CriteriaBuilder.
-	 */
-	@Inject
-	private EntityManagerFactory entityManagerFactory;
-	
-	/**
-	 * @return a new Person
-	 * @param name the name of the new person
-	 */
-	private Person getNewPerson(String name) {
-		Person p = new Person(name);
-		Brain b = new Brain();
-		b.setIq(99);
-		p.setBrain(b);
-		b.setOwner(p);
-		
-		return p;
-	}
-	
-	/**
-	 * Since other tests commit data to the DB, we have to wipe everything
-	 * before we start our own tests. Note that the tests in this class
-	 * are always rolled back.
-	 */
-	@Before
-	public void wipeDB() {
-		personJpaDao.deleteAll();
-	}
 	
 	/**
 	 * Tests the <code>persists</code> and <code>findById</code> methods.
@@ -138,6 +71,7 @@ public class JpaDaoTest {
 		Person p1 = getNewPerson("Donald");
 		
 		personJpaDao.persist(p1);
+		personJpaDao.flush();
 		
 		Person p2 = personJpaDao.findById(p1.getKey());
 		assertNotNull("Could not retrieve person from DAO", p2);
@@ -151,9 +85,12 @@ public class JpaDaoTest {
 	public void testMerge() {
 		Person p1 = getNewPerson("Mr. Hyde");
 		personJpaDao.persist(p1);
+		personJpaDao.flush();
 		
+		entityManager.detach(p1);
 		p1.setName("Dr. Jekyll");
 		personJpaDao.merge(p1);
+		personJpaDao.flush();
 		
 		Person p2 = personJpaDao.findById(p1.getKey());
 		
@@ -168,11 +105,14 @@ public class JpaDaoTest {
 	public void testSaveOrUpdate() {
 		Person p1 = getNewPerson("Balou");
 		
-		personJpaDao.saveOrUpdate(p1);
+		p1 = personJpaDao.saveOrUpdate(p1);
+		personJpaDao.flush();
+		entityManager.detach(p1);
 		
 		// ensure it is there
 		try {
 			personJpaDao.findById(p1.getKey());
+			entityManager.detach(p1);
 		} catch (ObjectRetrievalFailureException e) {
 			fail("saveOrUpdate did not persist person " + p1.getName());
 		}
@@ -192,6 +132,7 @@ public class JpaDaoTest {
 		
 		Person p1 = getNewPerson("Dagobert");
 		p1 = personJpaDao.persist(p1);
+		personJpaDao.flush();
 		p1.setName("Dagobert Duck");
 		p1 = personJpaDao.refresh(p1);
 		
@@ -208,7 +149,10 @@ public class JpaDaoTest {
 		Person p1 = getNewPerson("Dagobert");
 		
 		p1 = personJpaDao.persist(p1);
+		personJpaDao.flush();
 		p1.setName("Dagobert Duck");
+		entityManager.detach(p1);
+		
 		p1 = personJpaDao.reload(p1);
 		
 		// The @PrePersist callback in Person appends the comment. 
@@ -228,9 +172,11 @@ public class JpaDaoTest {
 		p1 = personJpaDao.persist(p1);
 		p2 = personJpaDao.persist(p2);
 		p3 = personJpaDao.persist(p3);
+		personJpaDao.flush();
 		
 		// delete by id
 		personJpaDao.delete(p1.getKey());
+		personJpaDao.flush();
 		
 		try {
 			personJpaDao.findById(p1.getKey());
@@ -241,6 +187,7 @@ public class JpaDaoTest {
 		
 		// delete by id 2
 		personJpaDao.deleteById(p3.getKey());
+		personJpaDao.flush();
 		
 		try {
 			personJpaDao.findById(p3.getKey());
@@ -251,6 +198,7 @@ public class JpaDaoTest {
 		
 		// delete by entity reference
 		personJpaDao.delete(p2);
+		personJpaDao.flush();
 		
 		try {
 			personJpaDao.findById(p2.getKey());
@@ -280,6 +228,7 @@ public class JpaDaoTest {
 		}
 		
 		personJpaDao.delete(collection);
+		personJpaDao.flush();
 		
 		for (Person p : collection) {
 			try {
@@ -304,7 +253,7 @@ public class JpaDaoTest {
 		}
 		
 		personJpaDao.deleteAll();
-		
+		personJpaDao.flush();
 		for (int i = 0; i < people.size(); i++) {
 			try {
 				personJpaDao.findById(people.get(i).getKey());
@@ -325,6 +274,7 @@ public class JpaDaoTest {
 			people.add(p);
 			personJpaDao.persist(p);
 		}
+		personJpaDao.flush();
 		
 		List<Person> fetched = personJpaDao.getAll();
 
@@ -363,6 +313,7 @@ public class JpaDaoTest {
 		einstein.getBrain().setIq(170);
 		
 		personJpaDao.persist(einstein);
+		personJpaDao.flush();
 		
 		CriteriaBuilder cb = entityManagerFactory.getCriteriaBuilder();
 		
@@ -399,6 +350,8 @@ public class JpaDaoTest {
 		johndoe.setLegalStatus(LegalStatus.MARRIED);
 		personJpaDao.persist(johndoe);
 		
+		personJpaDao.flush();
+		
 		// SELECT *
 		// FROM Person
 		// WHERE name ILIKE "%JoHn%" AND legalStatus == SINGLE
@@ -428,6 +381,8 @@ public class JpaDaoTest {
 		Person frankenstein = getNewPerson("Frankenstein's Monster");
 		frankenstein.getBrain().setIq(-1);
 		personJpaDao.persist(frankenstein);
+		
+		personJpaDao.flush();
 		
 		// The SQL-Query
 		//
@@ -468,6 +423,8 @@ public class JpaDaoTest {
 		Person johndoe = getNewPerson("John Doe");
 		johndoe.setLegalStatus(LegalStatus.MARRIED);
 		personJpaDao.persist(johndoe);
+		
+		personJpaDao.flush();
 		
 		// SELECT *
 		// FROM Person
@@ -513,6 +470,8 @@ public class JpaDaoTest {
 		personJpaDao.persist(lisa);
 		personJpaDao.persist(bart);
 
+		personJpaDao.flush();
+		
 		QueryObject query = new QueryObject(Brain.class);
 		query.addCriteria(new ComparisonCriteria("iq", 100, "<=", "Integer"));
 		query.addOrder(Order.desc("iq"));

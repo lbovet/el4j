@@ -22,11 +22,15 @@ import java.util.List;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Order;
 
+import org.hibernate.criterion.DetachedCriteria;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.dao.OptimisticLockingFailureException;
 
 import ch.elca.el4j.services.persistence.generic.dao.ConvenienceGenericDao;
+import ch.elca.el4j.services.persistence.hibernate.dao.extent.DataExtent;
+import ch.elca.el4j.services.search.QueryObject;
 
 /**
  * This interface extends {@link ConvenienceGenericDao} with query methods using
@@ -78,7 +82,7 @@ public interface ConvenienceGenericJpaDao<T, ID extends Serializable>
 		DataIntegrityViolationException, OptimisticLockingFailureException;
 	
 	/** 
-	 * Deletes all available <code>T</code> using a HQL query.
+	 * Deletes all available <code>T</code> using a JPQL query.
 	 * 
 	 * This has the benefit of a significant performance improvement
 	 * in comparison to {@link deleteAll}. The tradeoff is that this
@@ -93,7 +97,7 @@ public interface ConvenienceGenericJpaDao<T, ID extends Serializable>
 //		throws OptimisticLockingFailureException, DataAccessException;
 	
 	/**
-	 * Deletes the given domain objects using a HQL query. 
+	 * Deletes the given domain objects using a JPQL query. 
 	 * 
 	 * This has the benefit of a significant performance improvement
 	 * in comparison to {@link delete}. The tradeoff is that this
@@ -109,12 +113,9 @@ public interface ConvenienceGenericJpaDao<T, ID extends Serializable>
 //		DataIntegrityViolationException, OptimisticLockingFailureException;
 
 	/**
-	 * Retrieves all the domain objects matching the Hibernate criteria.
+	 * Retrieves all the domain objects matching the JPA criteria.
 	 * 
 	 * @param criteria             the criteria that the result has to fulfill
-	 *                             <b>Note: Do not reuse criteria objects! They need to be recreated
-	 *                             (or cloned e.g. using <tt>SerializationUtils.clone()</tt>) per execution,
-	 *                             due to the suboptimal design of Hibernate's criteria facility.</b>
 	 * @return                     all object that fulfill the criteria
 	 * @throws DataAccessException
 	 *
@@ -125,29 +126,23 @@ public interface ConvenienceGenericJpaDao<T, ID extends Serializable>
 	
 	
 	/**
-	 * Retrieves all the domain objects matching the Hibernate criteria.
+	 * Retrieves all the domain objects matching the JPA criteria.
 	 * Loads at least the given extent.
 	 * 
-	 * @param criteria              the criteria that the result has to fulfill
-	 *                             <b>Note: Do not reuse criteria objects! They need to recreated
-	 *                             (or cloned e.g. using <tt>SerializationUtils.clone()</tt>) per execution,
-	 *                             due to the suboptimal design of Hibernate's criteria facility.</b>
+	 * @param criteria             the criteria that the result has to fulfill
 	 * @param extent               the extent in which objects get loaded.
 	 * @return                     all object that fulfill the criteria
 	 * @throws DataAccessException
 	 *
 	 * @see ConvenienceJpaTemplate#findByCriteria(DetachedCriteria)
 	 */
-//	public List<T> findByCriteria(CriteriaQuery<T> criteria,
-//		DataExtent extent) throws DataAccessException;
+	public List<T> findByCriteria(CriteriaQuery<T> criteria,
+		DataExtent extent) throws DataAccessException;
 	
 	/**
-	 * Retrieves a range of domain objects matching the Hibernate criteria.
+	 * Retrieves a range of domain objects matching the JPA criteria.
 	 * 
 	 * @param criteria             the criteria that the result has to fulfill
-	 *                             <b>Note: Do not reuse criteria objects! They need to recreated
-	 *                             (or cloned e.g. using <tt>SerializationUtils.clone()</tt>) per execution,
-	 *                             due to the suboptimal design of Hibernate's criteria facility.</b>
 	 * @param firstResult          the index of the first result to return
 	 * @param maxResults           the maximum number of results to return
 	 * @return                     the specified subset of object that fulfill
@@ -156,17 +151,14 @@ public interface ConvenienceGenericJpaDao<T, ID extends Serializable>
 	 *
 	 * @see ConvenienceJpaTemplate#findByCriteria(DetachedCriteria, int, int)
 	 */
-//	public List<T> findByCriteria(CriteriaQuery<T> criteria,
-//		int firstResult, int maxResults) throws DataAccessException;
+	public List<T> findByCriteria(CriteriaQuery<T> criteria,
+		int firstResult, int maxResults) throws DataAccessException;
 	
 	/**
-	 * Retrieves a range of domain objects matching the Hibernate criteria.
+	 * Retrieves a range of domain objects matching the JPA criteria.
 	 * Loads at least the given extent.
 	 * 
 	 * @param criteria             the criteria that the result has to fulfill
-	 *                             <b>Note: Do not reuse criteria objects! They need to recreated
-	 *                             (or cloned e.g. using <tt>SerializationUtils.clone()</tt>) per execution,
-	 *                             due to the suboptimal design of Hibernate's criteria facility.</b>
 	 * @param firstResult          the index of the first result to return
 	 * @param maxResults           the maximum number of results to return
 	 * @param extent               the extent in which objects get loaded.
@@ -176,16 +168,13 @@ public interface ConvenienceGenericJpaDao<T, ID extends Serializable>
 	 *
 	 * @see ConvenienceJpaTemplate#findByCriteria(DetachedCriteria, int, int)
 	 */
-//	public List<T> findByCriteria(CriteriaQuery<T> criteria, int firstResult,
-//		int maxResults, DataExtent extent) throws DataAccessException;
+	public List<T> findByCriteria(CriteriaQuery<T> criteria, int firstResult,
+		int maxResults, DataExtent extent) throws DataAccessException;
 	
 	/**
-	 * Retrieves the number of domain objects matching the Hibernate criteria.
+	 * Retrieves the number of domain objects matching the JPA criteria.
 	 * 
 	 * @param criteria             the criteria that the result has to fulfill
-	 *                             <b>Note: Do not reuse criteria objects! They need to recreated
-	 *                             (or cloned e.g. using <tt>SerializationUtils.clone()</tt>) per execution,
-	 *                             due to the suboptimal design of Hibernate's criteria facility.</b>
 	 * @return                     the number of objects that fulfill
 	 *                             the criteria
 	 * @throws DataAccessException
@@ -210,8 +199,8 @@ public interface ConvenienceGenericJpaDao<T, ID extends Serializable>
 	 * @throws DataAccessException
 	 *             If general data access problem occurred
 	 */
-//	public T findById(ID id, DataExtent extent) 
-//		throws DataRetrievalFailureException, DataAccessException;
+	public T findById(ID id, DataExtent extent) 
+		throws DataRetrievalFailureException, DataAccessException;
 	
 	/**
 	 * Retrieves all the domain objects of type T.
@@ -224,7 +213,7 @@ public interface ConvenienceGenericJpaDao<T, ID extends Serializable>
 	 * @throws DataAccessException
 	 *             If general data access problem occurred
 	 */
-//	List<T> getAll(DataExtent extent) throws DataAccessException;
+	List<T> getAll(DataExtent extent) throws DataAccessException;
 	
 	/**
 	 * Executes a query based on a given query object.
@@ -238,7 +227,7 @@ public interface ConvenienceGenericJpaDao<T, ID extends Serializable>
 	 *             If general data access problem occurred
 	 * @return A list containing 0 or more domain objects
 	 */
-//	List<T> findByQuery(QueryObject q, DataExtent extent) throws DataAccessException;
+	List<T> findByQuery(QueryObject q, DataExtent extent) throws DataAccessException;
 
 	/**
 	 * Re-reads the state of the given domain object from the underlying
@@ -255,8 +244,8 @@ public interface ConvenienceGenericJpaDao<T, ID extends Serializable>
 	 *             If domain object could not be re-read
 	 * @return The refreshed entity
 	 */
-//	T refresh(T entity, DataExtent extent) throws DataAccessException,
-//		DataRetrievalFailureException;
+	T refresh(T entity, DataExtent extent) throws DataAccessException,
+		DataRetrievalFailureException;
 	
 	/**
 	 * Re-reads the state of the given domain object from the undermost
@@ -273,8 +262,8 @@ public interface ConvenienceGenericJpaDao<T, ID extends Serializable>
 	 *             If domain object could not be re-read
 	 * @return The refreshed entity
 	 */
-//	T reload(T entity, DataExtent extent) throws DataAccessException,
-//		DataRetrievalFailureException;
+	T reload(T entity, DataExtent extent) throws DataAccessException,
+		DataRetrievalFailureException;
 	
 	/**
 	 * @return    the default {@link Order} to order the results
