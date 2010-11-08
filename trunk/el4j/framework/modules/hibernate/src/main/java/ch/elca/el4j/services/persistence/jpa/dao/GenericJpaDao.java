@@ -29,7 +29,6 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Order;
 
 import org.apache.commons.collections.map.ReferenceMap;
-import org.apache.commons.lang.NotImplementedException;
 import org.hibernate.Hibernate;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.proxy.HibernateProxy;
@@ -146,11 +145,8 @@ public class GenericJpaDao<T, ID extends Serializable>
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public T findByIdLazy(ID id)
 		throws DataAccessException, DataRetrievalFailureException {
-		// TODO. postponed to a second phase.
-		throw new NotImplementedException();
-		
-//		return (T) getConvenienceJpaTemplate().getByIdStrongLazy(
-//			getPersistentClass(), id, getPersistentClassName());
+		return (T) getConvenienceJpaTemplate().findByIdStrongLazy(
+			getPersistentClass(), id, getPersistentClassName());
 	}
 
 	/**

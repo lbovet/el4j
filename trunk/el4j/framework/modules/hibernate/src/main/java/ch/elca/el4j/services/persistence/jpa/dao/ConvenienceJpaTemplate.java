@@ -226,6 +226,40 @@ public class ConvenienceJpaTemplate extends JpaTemplate {
 		}
 		return result;
 	}
+	
+	/**
+	 * Retrieves the persistent instance given by its identifier in a strong
+	 * way: does the same as the <code>getReference(Class, java.io.Serializable)</code>
+	 * method, but throws a <code>DataRetrievalException</code> instead of
+	 * <code>null</code> if the persistent instance could not be found.
+	 *
+	 * @param <T> entity type
+	 * @param entityClass
+	 *            The class of the object which should be returned.
+	 * @param id
+	 *            An identifier of the persistent instance
+	 * @param objectName
+	 *            Name of the persistent object type.
+	 * @return the persistent instance
+	 * @throws org.springframework.dao.DataAccessException
+	 *             in case of Jpa persistence exceptions
+	 * @throws org.springframework.dao.DataRetrievalFailureException
+	 *             in case the persistent instance is null
+	 */
+	public <T> T findByIdStrongLazy(Class<T> entityClass, Serializable id, final String objectName)
+		throws DataAccessException, DataRetrievalFailureException {
+
+		Reject.ifNull(id, "The identifier must not be null.");
+		Reject.ifEmpty(objectName, "The name of the persistent object type "
+			+ "must not be empty.");
+		
+		T result = getReference(entityClass, id);
+		
+		if (result == null || !(entityClass.isInstance(result))) {
+			PersistenceNotificationHelper.notifyObjectRetrievalFailure(entityClass, id, objectName);
+		}
+		return result;
+	}
 
 	/**
 	 * Removes the persistent instance given by its identifier in a strong way:
