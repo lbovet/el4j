@@ -24,6 +24,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaQuery;
 
 import org.springframework.dao.DataAccessException;
@@ -179,18 +180,19 @@ public class ConvenienceJpaTemplate extends JpaTemplate {
 	 * @param maxResults the maximum number of rows to return
 	 * @return the list of found objects, which may be empty.
 	 */
-	public <T> List<T> findByCriteria(final CriteriaQuery<T> criteria, int firstResult, int maxResults) {
-		// TODO: replace this awful implementation with an actual query
+	public <T> List<T> findByCriteria(final CriteriaQuery<T> criteria, final int firstResult, final int maxResults) {
 		Assert.notNull(criteria, "CriteriaQuery must not be null");
-		List<T> results = findByCriteria(criteria);
-		
-		int upperIndex;
-		if (results.size() < firstResult + maxResults) {
-			upperIndex = results.size();
-		} else {
-			upperIndex = firstResult + maxResults;
-		}
-		return results.subList(firstResult, upperIndex);
+		return execute(new JpaCallback<List<T>>() {
+
+			@Override
+			public List<T> doInJpa(EntityManager em) throws PersistenceException {
+				TypedQuery<T> query = em.createQuery(criteria);
+				query.setFirstResult(firstResult);
+				query.setMaxResults(maxResults);
+				return query.getResultList();
+			}
+		});
+
 	}
 	
 	/**
