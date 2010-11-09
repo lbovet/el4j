@@ -22,6 +22,7 @@ import java.lang.reflect.ParameterizedType;
 import java.util.Collection;
 import java.util.List;
 
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceException;
 import javax.persistence.PersistenceUnitUtil;
@@ -29,9 +30,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Order;
 
 import org.apache.commons.collections.map.ReferenceMap;
-import org.hibernate.Hibernate;
 import org.hibernate.criterion.DetachedCriteria;
-import org.hibernate.proxy.HibernateProxy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
@@ -45,9 +44,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import ch.elca.el4j.services.persistence.generic.dao.annotations.ReturnsUnchangedParameter;
 import ch.elca.el4j.services.persistence.hibernate.dao.extent.DataExtent;
-import ch.elca.el4j.services.persistence.hibernate.dao.extent.ExtentCollection;
 import ch.elca.el4j.services.persistence.hibernate.dao.extent.ExtentEntity;
 import ch.elca.el4j.services.persistence.jpa.criteria.CriteriaTransformer;
+import ch.elca.el4j.services.persistence.jpa.dao.extentstrategies.ExtentFetcher;
 import ch.elca.el4j.services.search.QueryObject;
 import ch.elca.el4j.util.codingsupport.Reject;
 
@@ -83,6 +82,12 @@ public class GenericJpaDao<T, ID extends Serializable>
 	 */
 	private Order[] defaultOrder = null;
 	
+	/**
+	 * The ExtentFetcher used to fetch extents. 
+	 * Injected by JpaExtentFetcherInjectorBeanPostprocessor.
+	 */
+	private ExtentFetcher extentFetcher;
+
 	/**
 	 * Set up the Generic Dao. Auto-derive the parametrized type.
 	 */
@@ -398,7 +403,21 @@ public class GenericJpaDao<T, ID extends Serializable>
 		return findById((ID) util.getIdentifier(entity));
 	}
 
-	// extent-using methods:
+	// extent-related methods:
+	
+	/**
+	 * @return Returns the extentFetcher.
+	 */
+	public ExtentFetcher getExtentFetcher() {
+		return extentFetcher;
+	}
+
+	/**
+	 * @param extentFetcher Is the extentFetcher to set.
+	 */
+	public void setExtentFetcher(ExtentFetcher extentFetcher) {
+		this.extentFetcher = extentFetcher;
+	}
 	
 	/** 
 	 * Prototype of Extent-based fetching,
@@ -448,11 +467,6 @@ public class GenericJpaDao<T, ID extends Serializable>
 	 * Sub-method of the extent-based fetching, steps
 	 * through the entities and calls the required methods.
 	 * <p>
-	 * <strong>Note:</strong> This implementation assumes that the underlying JPA implementation
-	 * is Hibernate. If another implementation is used, and that implemenation returns proxy
-	 * objects when a entity is requested, less than the requested extent might be loaded and
-	 * LazyInitializationExceptions may occur.
-	 * 
 	 * @param object			the object to load in given extent
 	 * @param entity			the extent entity
 	 * @param fetchedObjects	the HashMap with all the already fetched objects
@@ -461,43 +475,8 @@ public class GenericJpaDao<T, ID extends Serializable>
 	 */
 	private void fetchExtentObject(Object object, ExtentEntity entity, ReferenceMap fetchedObjects)
 		throws DataAccessException {
-		
-		Object[] nullArg = null;
-		if (object == null || entity == null || fetchedObjects == null) {
-			return;
-		}
-		fetchedObjects.put(object, entity);
-		try {
-			for (ExtentEntity ent : entity.getChildEntities()) {
-				Object obj = ent.getMethod().invoke(object, nullArg);
-				// Initialize the object if it is a proxy
-				if (obj instanceof HibernateProxy && !Hibernate.isInitialized(obj)) {
-					Hibernate.initialize(obj);
-				}
-				if (!fetchedObjects.containsKey(obj) || !fetchedObjects.get(obj).equals(ent)) {
-					fetchExtentObject(obj, ent, fetchedObjects);
-				}
-			}
-			
-			// Fetch the collections. Since we assume batch fetching for collections
-			for (ExtentCollection c : entity.getCollections()) {
-				Collection<?> coll = (Collection<?>) c.getMethod().invoke(object, nullArg);
-				if (coll != null) {
-					for (Object o : coll) {
-						// Initialize the object if it is a proxy
-						if (o instanceof HibernateProxy && !Hibernate.isInitialized(o)) {
-							Hibernate.initialize(o);
-						}
-						if (!fetchedObjects.containsKey(o) || !fetchedObjects.get(o).equals(c.getContainedEntity())) {
-							fetchExtentObject(o, c.getContainedEntity(), fetchedObjects);
-						}
-					}
-				}
-			}
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-		
+		s_logger.debug("using extent-fetcher " + extentFetcher.getClass());
+		extentFetcher.fetchExtentObject(object, entity, fetchedObjects);
 	}
 
 	/** {@inheritDoc} */
