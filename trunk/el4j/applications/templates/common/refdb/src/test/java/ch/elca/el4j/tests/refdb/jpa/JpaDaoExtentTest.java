@@ -62,7 +62,7 @@ import ch.elca.el4j.tests.refdb.jpa.dao.PersonJpaDao;
 	allowBeanDefinitionOverriding = "true",
 	exclusiveConfigLocations = {"classpath*:scenarios/dataaccess/jpa/jpaEntityManagerFactory.xml" })
 @ContextConfiguration(
-	locations = { "classpath*:scenarios/dataaccess/extent-test-jpa-config.xml" },
+	locations = { "classpath*:scenarios/dataaccess/jpa/extent/extent-test-jpa-config.xml" },
 	loader = ModuleTestContextLoader.class)
 public class JpaDaoExtentTest extends AbstractJpaDaoTest {
 
