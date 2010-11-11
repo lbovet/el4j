@@ -2821,7 +2821,7 @@
 		
 		<!-- Maven plugin versions. Needed due to false dep mgt. -->
 		<version.maven-project-info-reports-plugin>2.2</version.maven-project-info-reports-plugin>
-		<version.maven-checkstyle-plugin>2.5</version.maven-checkstyle-plugin>
+		<version.maven-checkstyle-plugin>2.5-el4j_20101111_0930</version.maven-checkstyle-plugin>
 		<version.findbugs-maven-plugin>2.3.1</version.findbugs-maven-plugin>
 		<version.maven-surefire-report-plugin>2.5</version.maven-surefire-report-plugin>
 		<version.maven-javadoc-plugin>2.6.1</version.maven-javadoc-plugin>
