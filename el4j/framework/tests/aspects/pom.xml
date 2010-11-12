@@ -62,12 +62,10 @@
 		<dependency>
 			<groupId>org.aspectj</groupId>
 			<artifactId>aspectjrt</artifactId>
-			<version>${version.aspectj}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.aspectj</groupId>
 			<artifactId>aspectjweaver</artifactId>
-			<version>${version.aspectj}</version>
 		</dependency>
 		
 		<!-- Test dependencies -->

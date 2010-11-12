@@ -72,13 +72,11 @@
 		<dependency>
 			<groupId>org.aspectj</groupId>
 			<artifactId>aspectjrt</artifactId>
-			<version>${version.aspectj}</version>
 		</dependency> 
 		<!-- needed for fancy pointcut stuff -->
 		<dependency>
 			<groupId>org.aspectj</groupId>
 			<artifactId>aspectjmatcher</artifactId>
-			<version>${version.aspectj}</version>
 		</dependency> 
 
 		<dependency>
