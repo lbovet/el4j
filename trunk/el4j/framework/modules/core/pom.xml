@@ -63,7 +63,7 @@
 		-->
 		<dependency>
 			<groupId>org.aspectj</groupId>
-			<artifactId>aspectjweaver</artifactId>
+			<artifactId>aspectjmatcher</artifactId>
 		</dependency>		
 
 		<!--
