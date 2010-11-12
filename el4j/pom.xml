@@ -2172,7 +2172,7 @@
 			<!-- optional dependencies from spring -->
 			<dependency>
 				<groupId>org.aspectj</groupId>
-				<artifactId>aspectjweaver</artifactId>
+				<artifactId>aspectjmatcher</artifactId>
 				<version>${version.aspectj}</version>
 			</dependency>
 			
@@ -2806,7 +2806,7 @@
 		<version.springsecurity>3.0.3.RELEASE</version.springsecurity>
 		
 		<!-- AspectJ version -->
-		<version.aspectj>1.6.5</version.aspectj>
+		<version.aspectj>1.6.10</version.aspectj>
 		
 		<!-- SLF4J -->
 		<!--
