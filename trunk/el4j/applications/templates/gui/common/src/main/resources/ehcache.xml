@@ -5,10 +5,12 @@
 	<defaultCache
 		maxElementsInMemory="10000"
 		eternal="true"
-		overflowToDisk="false" />
+		overflowToDisk="false"
+		statistics="true" />
 	<cache name="ServerCache"
 		maxElementsInMemory="10000"
 		eternal="true"
-		overflowToDisk="false" />
+		overflowToDisk="false"
+		statistics="true" />
 
 </ehcache>

@@ -60,17 +60,23 @@ public final class MainFormDistributedDocking {
 				
 		
 			// $$ BEANS INCLUDE $$
-			String[] applicationContextPaths = {
+			String[] inclusiveConfigLocations = {
 				"classpath*:mandatory/*.xml",
 				"classpath*:scenarios/gui/swing/*.xml",
 				"classpath*:scenarios/remoting/client/httpInvoker-client-config.xml",
 				"classpath:scenarios/caching/*.xml"
 			};
 			
+			// $$ BEANS EXCLUDE $$
+			String[] exclusiveConfigLocations = {
+				"classpath*:mandatory/refdb-core-config.xml"
+			};
+			
 			ModuleApplicationContextConfiguration contextConfig
 				= new ModuleApplicationContextConfiguration();
 			
-			contextConfig.setInclusiveConfigLocations(applicationContextPaths);
+			contextConfig.setInclusiveConfigLocations(inclusiveConfigLocations);
+			contextConfig.setExclusiveConfigLocations(exclusiveConfigLocations);
 			contextConfig.setAllowBeanDefinitionOverriding(true);
 
 
