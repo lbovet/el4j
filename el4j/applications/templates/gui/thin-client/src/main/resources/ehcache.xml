@@ -5,11 +5,13 @@
 	<defaultCache
 		maxElementsInMemory="10000"
 		eternal="true"
-		overflowToDisk="false" />
+		overflowToDisk="false"
+		statistics="true" />
 	<cache name="ClientCache"
 		maxElementsInMemory="10000"
 		eternal="true"
-		overflowToDisk="false" />
+		overflowToDisk="false"
+		statistics="true" />
 	
 	<!--
 		This is a hack so we can run the standalone application. Normally you would
@@ -19,6 +21,7 @@
 	<cache name="ServerCache"
 		maxElementsInMemory="10000"
 		eternal="true"
-		overflowToDisk="false" />
+		overflowToDisk="false"
+		statistics="true" />
 
 </ehcache>
