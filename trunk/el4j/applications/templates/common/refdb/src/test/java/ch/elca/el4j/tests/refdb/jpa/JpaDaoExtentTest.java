@@ -193,6 +193,8 @@ public class JpaDaoExtentTest extends AbstractJpaDaoTest {
 		person.setBrain(b);
 		person = dao.saveOrUpdate(person);
 		
+		dao.flush();
+		
 		// detach to ensure the next findById call will return a fresh instance.
 		entityManager.detach(person);
 		
