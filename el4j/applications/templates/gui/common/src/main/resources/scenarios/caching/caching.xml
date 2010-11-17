@@ -14,35 +14,29 @@
 	<!-- $Date$ -->
 	<!-- $Author$ -->
 	
-	<!-- explicitly create the cache providers and managers to avoid conflicts if needed -->
-	<bean name="clientCacheManager"
-		class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
-		<property name="configLocation" value="classpath:/ehcache.xml" />
-	</bean>
-	<bean name="clientCacheProvider"
-		class="org.springmodules.cache.provider.ehcache.EhCacheFacade">
-		<property name="cacheManager" ref="clientCacheManager" />
-	</bean>
+	<bean name="nonCachingService"
+		class="ch.elca.el4j.demos.gui.service.impl.CacheableServiceImpl" />
+	
+	<!-- this creates a bean named 'cacheManager' -->
+	<ehcache:config configLocation="classpath:ehcache.xml" />
 	
 	<!-- turn on jmx statistics -->
-	<bean id="clientMBeanServer" class="org.springframework.jmx.support.MBeanServerFactoryBean">
+	<bean id="mbeanServer" class="org.springframework.jmx.support.MBeanServerFactoryBean">
 		<property name="locateExistingServerIfPossible" value="true" />
 	</bean>
 
 	<bean class="net.sf.ehcache.management.ManagementService" init-method="init">
-		<constructor-arg ref="clientCacheManager" />
-		<constructor-arg ref="clientMBeanServer" />
+		<constructor-arg ref="cacheManager" />
+		<constructor-arg ref="mbeanServer" />
 		<constructor-arg value="true" />
 		<constructor-arg value="true" />
 		<constructor-arg value="true" />
 		<constructor-arg value="true" />
 	</bean>
 	
-	<!-- make a cache of the not yet cached method -->
-	<ehcache:proxy id="localCachingService" refId="remoteCachingService"
-		providerId="clientCacheProvider">
-		<ehcache:caching methodName="computeResult" cacheName="ClientCache" />
-		<ehcache:flushing methodName="deleteCaches" cacheNames="ClientCache" />
+	<ehcache:proxy id="remoteCachingService" refId="nonCachingService">
+		<ehcache:caching methodName="computeResultCached" cacheName="ServerCache" />
+		<ehcache:flushing methodName="deleteCaches" cacheNames="ServerCache" />
 	</ehcache:proxy>
 	
 </beans>
