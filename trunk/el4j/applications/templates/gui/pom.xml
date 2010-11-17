@@ -43,8 +43,8 @@
 		<jee-web.context>swing-demo</jee-web.context>
 	</properties>
 
-	<build>
-		<dependencyManagement>
+	<dependencyManagement>
+		<dependencies>
 			<dependency>
 				<groupId>net.sf.ehcache</groupId>
 				<artifactId>ehcache-core</artifactId>
@@ -55,8 +55,8 @@
 				<artifactId>spring-modules-cache</artifactId>
 				<version>0.9</version>
 			</dependency>
-		</dependencyManagement>
-	</build>
+		</dependencies>
+	</dependencyManagement>
 
 	<reporting>
 		<plugins>
