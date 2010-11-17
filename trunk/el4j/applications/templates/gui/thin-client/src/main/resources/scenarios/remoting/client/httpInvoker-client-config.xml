@@ -75,4 +75,11 @@
 		</property>
 	</bean>
 	
+	<bean id="remoteCachingService" parent="abstractHttpInvokerProxyFactoryBean"
+		class="ch.elca.el4j.services.remoting.RemotingProxyFactoryBean">
+		<property name="serviceInterface">
+			<value>ch.elca.el4j.demos.gui.service.CacheableService</value>
+		</property>
+	</bean>
+	
 </beans>

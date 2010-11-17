@@ -17,6 +17,7 @@
 package ch.elca.el4j.demos.gui.forms;
 
 import java.awt.Dimension;
+import java.awt.Font;
 
 import javax.inject.Inject;
 import javax.swing.JButton;
@@ -24,15 +25,16 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import net.java.dev.designgridlayout.DesignGridLayout;
-import net.sf.ehcache.Ehcache;
-import net.sf.ehcache.Element;
-
 import org.jdesktop.application.Action;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
+import ch.elca.el4j.demos.gui.service.CacheableService;
 import ch.elca.el4j.services.gui.swing.GUIApplication;
+
+import net.java.dev.designgridlayout.DesignGridLayout;
+import net.java.dev.designgridlayout.ISpannableGridRow;
 
 /**
  * Demonstrates how to set up and use an Ehcache using spring.
@@ -44,25 +46,90 @@ import ch.elca.el4j.services.gui.swing.GUIApplication;
 @Lazy
 @Component("cachingDemoForm")
 public class CachingDemoForm extends JPanel {
-	
-	/** The cache. */
+
+	/**
+	 * The service proxy. Only {@link CacheableService#computeResultCached(int)}
+	 * is already cached.
+	 */
 	@Inject
-	private Ehcache cache;
+	@Qualifier("remoteCachingService")
+	private CacheableService remoteCachingService;
+
+	/**
+	 * A caching proxy around the service. The not yet cached method
+	 * ({@link CacheableService#computeResult(int)}) is now cached
+	 * locally.
+	 */
+	@Inject
+	@Qualifier("localCachingService")
+	private CacheableService localCachingService;
+	
+	/** "Uncached Service". */
+	private JLabel uncachedTitle;
+	/** "Remotely Cached Service". */
+	private JLabel remoteTitle;
+	/** "Locally Cached Service". */
+	private JLabel localTitle;
 	
 	/** The label displaying "Input:". */
-	private JLabel input;
-	
-	/** The text field for the input. */
-	private JTextField inputField;
-	
-	/** The button to start encryption. */
-	private JButton encryptButton;
+	private JLabel uncachedInputLabel;
+	/** The label displaying "Input:". */
+	private JLabel remoteInputLabel;
+	/** The label displaying "Input:". */
+	private JLabel localInputLabel;
 	
 	/** The label displaying "Result:". */
-	private JLabel result;
+	private JLabel uncachedResultLabel;
+	/** The label displaying "Result:". */
+	private JLabel remoteResultLabel;
+	/** The label displaying "Result:". */
+	private JLabel localResultLabel;
 	
-	/** The text field for the 'encrypted' result. */
-	private JTextField resultField;
+	/** "Time taken:". */
+	private JLabel uncachedTimeTakenLabel;
+	/** "Time taken:". */
+	private JLabel remoteTimeTakenLabel;
+	/** "Time taken:". */
+	private JLabel localTimeTakenLabel;
+	
+	/** Shows the time taken to call the method. */
+	private JTextField uncachedTimeTakenField;
+	/** Shows the time taken to call the method. */
+	private JTextField remoteTimeTakenField;
+	/** Shows the time taken to call the method. */
+	private JTextField localTimeTakenField;
+	
+	/** Drops the cache of the remotely cached service. */
+	private JButton remoteDropCacheButton;
+	/** Drops the cache of the locally cached service. */
+	private JButton localDropCacheButton;
+	
+	/** The button to call the uncached service. */
+	private JButton uncachedButton;
+
+	/** The input text field for the uncached service. */
+	private JTextField uncachedInputField;
+	
+	/** The text field for the uncached service result. */
+	private JTextField uncachedResultField;	
+	
+	/** The button to call the remotely cached service. */
+	private JButton remoteButton;
+
+	/** The input text field for the remotely cached service. */
+	private JTextField remoteInputField;
+	
+	/** The text field for the remotely cached service result. */
+	private JTextField remoteResultField;	
+	
+	/** The button to call the locally cached service. */
+	private JButton localButton;
+
+	/** The input text field for the locally cached service. */
+	private JTextField localInputField;
+	
+	/** The text field for the locally cached service result. */
+	private JTextField localResultField;
 	
 	/**
 	 * Constructor.
@@ -72,28 +139,81 @@ public class CachingDemoForm extends JPanel {
 	public CachingDemoForm(GUIApplication application) {
 		createComponents();
 		createLayout();
+
+		uncachedButton.setAction(application.getAction(this, "computeUncached"));
+		remoteButton.setAction(application.getAction(this, "computeRemote"));
+		localButton.setAction(application.getAction(this, "computeLocal"));
 		
-		encryptButton.setAction(application.getAction(this, "encryptAndCache"));
-		setPreferredSize(new Dimension(500, 200));
+		remoteDropCacheButton.setAction(application.getAction(this, "remoteDropCache"));
+		localDropCacheButton.setAction(application.getAction(this, "localDropCache"));
+		setPreferredSize(new Dimension(500, 600));
 	}
 	
 	/**
 	 * Create the form components.
 	 */
 	protected void createComponents() {
-		input = new JLabel();
-		input.setName("input");
+		uncachedTitle = new JLabel();
+		Font titleFont = uncachedTitle.getFont().deriveFont(Font.BOLD);
+		uncachedTitle.setName("uncachedTitle");
+		uncachedTitle.setFont(titleFont);
+		remoteTitle = new JLabel();
+		remoteTitle.setName("remoteTitle");
+		remoteTitle.setFont(titleFont);
+		localTitle = new JLabel();
+		localTitle.setName("localTitle");
+		localTitle.setFont(titleFont);
 		
-		inputField = new JTextField();
-
-		encryptButton = new JButton();
-		encryptButton.setName("encryptButton");
+		uncachedInputLabel = new JLabel();
+		uncachedInputLabel.setName("uncachedInputLabel");
+		remoteInputLabel = new JLabel();
+		remoteInputLabel.setName("remoteInputLabel");
+		localInputLabel = new JLabel();
+		localInputLabel.setName("localInputLabel");
 		
-		result = new JLabel();
-		result.setName("result");
+		uncachedResultLabel = new JLabel();
+		uncachedResultLabel.setName("uncachedResultLabel");
+		remoteResultLabel = new JLabel();
+		remoteResultLabel.setName("remoteResultLabel");
+		localResultLabel = new JLabel();
+		localResultLabel.setName("localResultLabel");
 		
-		resultField = new JTextField();
-		resultField.setEditable(false);
+		uncachedTimeTakenLabel = new JLabel();
+		uncachedTimeTakenLabel.setName("uncachedTimeTakenLabel");
+		remoteTimeTakenLabel = new JLabel();
+		remoteTimeTakenLabel.setName("uncachedTimeTakenLabel");
+		localTimeTakenLabel = new JLabel();
+		localTimeTakenLabel.setName("uncachedTimeTakenLabel");
+		
+		uncachedTimeTakenField = new JTextField();
+		uncachedTimeTakenField.setEditable(false);
+		remoteTimeTakenField = new JTextField();
+		remoteTimeTakenField.setEditable(false);
+		localTimeTakenField = new JTextField();
+		localTimeTakenField.setEditable(false);
+		
+		uncachedInputField = new JTextField();
+		remoteInputField = new JTextField();
+		localInputField = new JTextField();
+		
+		remoteDropCacheButton = new JButton();
+		remoteDropCacheButton.setName("remoteDropCacheButton");
+		localDropCacheButton = new JButton();
+		localDropCacheButton.setName("localDropCacheButton");
+		
+		uncachedButton = new JButton();
+		uncachedButton.setName("uncachedButton");
+		remoteButton = new JButton();
+		remoteButton.setName("remoteButton");
+		localButton = new JButton();
+		localButton.setName("localButton");
+		
+		uncachedResultField = new JTextField();
+		uncachedResultField.setEditable(false);
+		remoteResultField = new JTextField();
+		remoteResultField.setEditable(false);
+		localResultField = new JTextField();
+		localResultField.setEditable(false);
 	}
 	
 	/**
@@ -103,47 +223,154 @@ public class CachingDemoForm extends JPanel {
 		// create the form layout
 		DesignGridLayout layout = new DesignGridLayout(this);
 		setLayout(layout);
+		ISpannableGridRow grid;
 
-		layout.row().left().add(input);
-		layout.row().grid().add(inputField, 2);
-		layout.row().right().add(encryptButton);
-		layout.row().left().add(result);
-		layout.row().grid().add(resultField, 2);
+		layout.row().center().add(uncachedTitle);
+		grid = layout.row().grid();
+		grid.add(uncachedInputLabel);
+		grid.add(uncachedInputField, 3);
+		layout.row().right().add(uncachedButton);
+		grid = layout.row().grid();
+		grid.add(uncachedResultLabel);
+		grid.add(uncachedResultField, 3);
+		grid = layout.row().grid();
+		grid.add(uncachedTimeTakenLabel);
+		grid.add(uncachedTimeTakenField, 3);
+		
+		layout.row().center().add(remoteTitle);
+		grid = layout.row().grid();
+		grid.add(remoteInputLabel);
+		grid.add(remoteInputField, 3);
+		layout.row().right().add(remoteDropCacheButton, remoteButton);
+		grid = layout.row().grid();
+		grid.add(remoteResultLabel);
+		grid.add(remoteResultField, 3);
+		grid = layout.row().grid();
+		grid.add(remoteTimeTakenLabel);
+		grid.add(remoteTimeTakenField, 3);
+		
+		layout.row().center().add(localTitle);
+		grid = layout.row().grid();
+		grid.add(localInputLabel);
+		grid.add(localInputField, 3);
+		layout.row().right().add(localDropCacheButton, localButton);
+		grid = layout.row().grid();
+		grid.add(localResultLabel);
+		grid.add(localResultField, 3);
+		grid = layout.row().grid();
+		grid.add(localTimeTakenLabel);
+		grid.add(localTimeTakenField, 3);
 	}
 	
 	/**
-	 * Encrypts the text in the input field, but first checks if the
-	 * cache already contains the result.
-	 * Called when the user clicks the "Encrypt" button.
+	 * Contact the service and time the execution.
+	 * @param service The service to contact.
+	 * @param inputField The field to read the input from.
+	 * @param resultField The field to write the result to.
+	 * @param timeTakenField The field to write the time to.
+	 */
+	public void compute(CacheableService service, JTextField inputField,
+		JTextField resultField, JTextField timeTakenField) {
+		int input;
+		
+		try {
+			input = Integer.parseInt(inputField.getText());
+		} catch (NumberFormatException e) {
+			resultField.setText("Please enter an integer!");
+			timeTakenField.setText("");
+			return;
+		}
+		
+		long start = System.currentTimeMillis();
+		int result = service.computeResult(input);
+		long time = System.currentTimeMillis() - start;
+		
+		resultField.setText(Integer.toString(result));
+		timeTakenField.setText(Long.toString(time) + " ms");
+	}
+	
+	/**
+	 * Compute the answer using the uncached service.
 	 */
 	@Action
-	public void encryptAndCache() {
-		String input = inputField.getText();
-		String output = null;
+	public void computeUncached() {
+		int input;
 		
-		if (cache.isKeyInCache(input)) {
-			output = (String) cache.get(input).getValue();
-		} else {
-			output = encrypt(input);
-			cache.put(new Element(input, output));
+		try {
+			input = Integer.parseInt(uncachedInputField.getText());
+		} catch (NumberFormatException e) {
+			uncachedResultField.setText("Please enter an integer!");
+			uncachedTimeTakenField.setText("");
+			return;
 		}
 		
-		resultField.setText(output);
+		long start = System.currentTimeMillis();
+		int result = remoteCachingService.computeResult(input);
+		long time = System.currentTimeMillis() - start;
+		
+		uncachedResultField.setText(Integer.toString(result));
+		uncachedTimeTakenField.setText(Long.toString(time) + " ms");
 	}
 	
 	/**
-	 * 'Encrypt' the input string. Just takes a really long time.
-	 * @param input The string to encrypt.
-	 * @return The encrypted string, or an error message if
-	 * we got interrupted.
+	 * Compute the answer using the remotely cached service.
 	 */
-	private String encrypt(String input) {
+	@Action
+	public void computeRemote() {
+		int input;
+		
 		try {
-			Thread.sleep(3000);
-		} catch (InterruptedException e) {
-			return "I was interrupted, please try again.";
+			input = Integer.parseInt(remoteInputField.getText());
+		} catch (NumberFormatException e) {
+			remoteResultField.setText("Please enter an integer!");
+			remoteTimeTakenField.setText("");
+			return;
 		}
 		
-		return "ThIsIsNoTaCtUaLlYeNcRyPtEd" + input;
+		long start = System.currentTimeMillis();
+		int result = remoteCachingService.computeResultCached(input);
+		long time = System.currentTimeMillis() - start;
+		
+		remoteResultField.setText(Integer.toString(result));
+		remoteTimeTakenField.setText(Long.toString(time) + " ms");
+	}
+	
+	/**
+	 * Compute the answer using the locally cached service.
+	 */
+	@Action
+	public void computeLocal() {
+		int input;
+		
+		try {
+			input = Integer.parseInt(localInputField.getText());
+		} catch (NumberFormatException e) {
+			localResultField.setText("Please enter an integer!");
+			localTimeTakenField.setText("");
+			return;
+		}
+		
+		long start = System.currentTimeMillis();
+		int result = localCachingService.computeResult(input);
+		long time = System.currentTimeMillis() - start;
+		
+		localResultField.setText(Integer.toString(result));
+		localTimeTakenField.setText(Long.toString(time) + " ms");
+	}
+	
+	/**
+	 * Drop the caches of the remotely cached service.
+	 */
+	@Action
+	public void remoteDropCache() {
+		remoteCachingService.deleteCaches();
+	}
+	
+	/**
+	 * Drop the caches of the locally cached service.
+	 */
+	@Action
+	public void localDropCache() {
+		localCachingService.deleteCaches();
 	}
 }

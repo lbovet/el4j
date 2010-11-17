@@ -6,16 +6,6 @@
 		maxElementsInMemory="10000"
 		eternal="true"
 		overflowToDisk="false" />
-	<cache name="ClientCache"
-		maxElementsInMemory="10000"
-		eternal="true"
-		overflowToDisk="false" />
-	
-	<!--
-		This is a hack so we can run the standalone application. Normally you would
-		declare the cache used by the server only in the jar (or war) itself and not
-		in the client.
-	-->
 	<cache name="ServerCache"
 		maxElementsInMemory="10000"
 		eternal="true"

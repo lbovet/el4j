@@ -62,7 +62,7 @@ public final class MainFormDistributedMDI {
 				"classpath*:mandatory/*.xml",
 				"classpath*:scenarios/gui/swing/*.xml",
 				"classpath*:scenarios/remoting/client/httpInvoker-client-config.xml",
-				"classpath*:scenarios/caching/caching.xml"
+				"classpath:scenarios/caching/*.xml"
 			};
 			
 			ModuleApplicationContextConfiguration contextConfig
