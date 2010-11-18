@@ -41,28 +41,42 @@ public class CorrelationIdManagerSlf4jImpl implements CorrelationIdManager {
 	 */
 	private static final UuidPrimaryKeyGenerator UUID_KEY_GENERATOR = new UuidPrimaryKeyGenerator();
 	
+	private String generateNewId() {
+		return Integer.toString(UUID_KEY_GENERATOR.getPrimaryKey().hashCode());
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void createNewCorrelationId() {
-		String correlationId = UUID_KEY_GENERATOR.getPrimaryKey();
+		String correlationId = generateNewId();
 		setCurrentCorrelationId(correlationId);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public String getCurrentCorrelationId() {
 		return MDC.get(CORRELATION_ID_VARNAME);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void setCurrentCorrelationId(String correlationId) {
 		MDC.put(CORRELATION_ID_VARNAME, correlationId);
 		
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void clearCurrentCorrelationId() {
 		MDC.remove(CORRELATION_ID_VARNAME);
 	}
-
-	
 	
 }
