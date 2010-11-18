@@ -18,6 +18,8 @@ package ch.elca.el4j.core.correlationId;
 
 /**
  * Provides the functionality to set and get the current correlation id.
+ * Usually implementations will be available as Spring bean under the name
+ * 'correlationIdManager'.
  *
  * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
