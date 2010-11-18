@@ -66,8 +66,10 @@ public class CorrelationIdImplicitContextPasser extends AbstractImplicitContextP
 	@Override
 	public void afterPropertiesSet() throws Exception {
 		super.afterPropertiesSet();
-		CoreNotificationHelper.notifyLackingEssentialProperty(
-			"correlationIdManager", this);
+		if (correlationIdManager == null) {
+			CoreNotificationHelper.notifyLackingEssentialProperty(
+				"correlationIdManager", this);
+		}
 	}
 	
 }

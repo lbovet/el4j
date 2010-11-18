@@ -67,8 +67,11 @@ public class CorrelationIdManagerSlf4jImpl implements CorrelationIdManager {
 	 */
 	@Override
 	public void setCurrentCorrelationId(String correlationId) {
-		MDC.put(CORRELATION_ID_VARNAME, correlationId);
-		
+		if (correlationId != null) {
+			MDC.put(CORRELATION_ID_VARNAME, correlationId);
+		} else {
+			clearCurrentCorrelationId();
+		}
 	}
 
 	/**

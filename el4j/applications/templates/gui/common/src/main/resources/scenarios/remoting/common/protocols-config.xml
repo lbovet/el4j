@@ -30,4 +30,15 @@
 		</property>
 	</bean>
 	
+	<!-- correlation id-related context passing configuration -->
+	<bean id="correlationIdManager" class="ch.elca.el4j.core.correlationId.CorrelationIdManagerSlf4jImpl" />
+	<bean id="correlationIdContextPasser" class="ch.elca.el4j.core.correlationId.CorrelationIdImplicitContextPasser">
+		<property name="implicitContextPassingRegistry">
+			<ref bean="defaultImplicitContextPassingRegistry"/>
+		</property>
+		<property name="correlationIdManager">
+			<ref bean="correlationIdManager"/>
+		</property>
+	</bean>
+	
 </beans>
