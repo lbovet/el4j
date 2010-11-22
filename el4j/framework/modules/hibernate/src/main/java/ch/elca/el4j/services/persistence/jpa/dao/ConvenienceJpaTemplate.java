@@ -23,7 +23,6 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceException;
-import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaQuery;
 
@@ -105,39 +104,6 @@ public class ConvenienceJpaTemplate extends JpaTemplate {
 	 *  NO_CONSTRAINT means we do not constrain anything
 	 */
 	int m_firstResult = QueryObject.NO_CONSTRAINT;
-	
-	/**
-	 * Overload parent class to support also a constraint
-	 *  of the id of the first result to load.
-	 * {@inheritDoc}
-	 *
-	 *  TODO shall we drop this and instead use the
-	 *   findByCriteria(DetachedCriteria,int,int) method?
-	 */
-	@Override
-	public void prepareQuery(Query queryObject) {
-		super.prepareQuery(queryObject);
-		
-		if (getFirstResult() != QueryObject.NO_CONSTRAINT) {
-			queryObject.setFirstResult(getFirstResult());
-		}
-		
-	}
-	
-	/**
-	 * Counts the number of results of a search.
-	 * @param <T> the type of the entities to find.
-	 * @param criteria The criteria for the query.
-	 * @return The number of results of the query.
-	 * @throws DataAccessException
-	 */
-	public <T> int findCountByCriteria(final CriteriaQuery<T> criteria) throws DataAccessException {
-		Assert.notNull(criteria, "CriteriaQuery must not be null");
-		
-		// TODO: find a more efficient implementation, if possible.
-		List<T> results = findByCriteria(criteria);
-		return results.size();
-	}
 	
 	/**
 	 * Gets the id of the first result to return.

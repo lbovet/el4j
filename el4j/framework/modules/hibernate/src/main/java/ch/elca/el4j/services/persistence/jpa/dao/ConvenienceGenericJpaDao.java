@@ -17,10 +17,10 @@
 package ch.elca.el4j.services.persistence.jpa.dao;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Order;
 
 import org.hibernate.criterion.DetachedCriteria;
 import org.springframework.dao.DataAccessException;
@@ -29,8 +29,9 @@ import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.dao.OptimisticLockingFailureException;
 
 import ch.elca.el4j.services.persistence.generic.dao.ConvenienceGenericDao;
+import ch.elca.el4j.services.persistence.generic.dao.annotations.ReturnsUnchangedParameter;
 import ch.elca.el4j.services.persistence.hibernate.dao.extent.DataExtent;
-import ch.elca.el4j.services.search.QueryObject;
+import ch.elca.el4j.services.persistence.jpa.criteria.QueryBuilder;
 
 /**
  * This interface extends {@link ConvenienceGenericDao} with query methods using
@@ -43,8 +44,174 @@ import ch.elca.el4j.services.search.QueryObject;
  *
  * @author Simon Stelling (SST)
  */
-public interface ConvenienceGenericJpaDao<T, ID extends Serializable>
-	extends ConvenienceGenericDao<T, ID> {
+// TODO: javadoc review.
+public interface ConvenienceGenericJpaDao<T, ID extends Serializable> {
+	
+	// begin GenericDao part
+	
+	/**
+	 *  Needed because the Java generics throw away this type
+	 *  information.
+	 * @return Returns the domain class this DAO is responsible for.
+	 */
+	public Class<T> getPersistentClass();
+	
+	/**
+	 * New: this callback is in general no longer required (the constructor
+	 *  should figure the type out itself).
+	 *
+	 * @param c    Mandatory. The domain class this DAO is responsible for.
+	 */
+	public void setPersistentClass(Class<T> c);
+	
+	/**
+	 * Re-reads the state of the given domain object from the underlying
+	 * store.
+	 *
+	 * @param entity
+	 *            The domain object to re-read the state of
+	 * @throws DataAccessException
+	 *             If general data access problem occurred
+	 * @throws DataRetrievalFailureException
+	 *             If domain object could not be re-read
+	 * @return The refreshed entity
+	 */
+	T refresh(T entity) throws DataAccessException,
+		DataRetrievalFailureException;
+	
+	/**
+	 * Re-reads the state of the given domain object from the undermost
+	 * store (eg. the database).
+	 *
+	 * @param entity
+	 *            The domain object to re-load the state of
+	 * @throws DataAccessException
+	 *             If general data access problem occurred
+	 * @throws DataRetrievalFailureException
+	 *             If domain object could not be re-loaded
+	 * @return The reloaded entity
+	 */
+	T reload(T entity) throws DataAccessException,
+		DataRetrievalFailureException;
+
+	/**
+	 * Saves or updates the given domain object.
+	 *
+	 * @param entity
+	 *            The domain object to save or update
+	 * @throws DataAccessException
+	 *             If general data access problem occurred
+	 * @throws DataIntegrityViolationException
+	 *             If domain object could not be inserted due to a data
+	 *             integrity violation
+	 * @throws OptimisticLockingFailureException
+	 *             If domain object has been modified/deleted in the meantime
+	 * @return The saved or updated domain object
+	 */
+	@ReturnsUnchangedParameter
+	T saveOrUpdate(T entity) throws DataAccessException,
+		DataIntegrityViolationException, OptimisticLockingFailureException;
+
+	/**
+	 * Deletes the given domain objects. This method executed in a single
+	 * transaction (by default with the Required semantics).
+	 *
+	 * @param entities
+	 *             The domain objects to delete.
+	 * @throws DataAccessException
+	 *             If general data access problem occurred
+	 * @throws OptimisticLockingFailureException
+	 *             If domain object has been modified/deleted in the meantime
+	 */
+	void delete(Collection<T> entities)
+		throws OptimisticLockingFailureException, DataAccessException;
+	
+	// end GenericDao
+	// begin ConvenienceGenericDao part
+	
+	/**
+	 * Retrieves a domain object by identifier. This method gets the object from
+	 * the hibernate cache. It might be that you don't get the actual version
+	 * that is in the database. If you want the actual version do a refresh()
+	 * after this method call.
+	 *
+	 * @param id
+	 *            The id of the domain object to find
+	 * @return Returns the found domain object.
+	 * @throws DataRetrievalFailureException
+	 *             If no domain object could be found with given id.
+	 * @throws DataAccessException
+	 *             If general data access problem occurred
+	 */
+	T findById(ID id) throws DataRetrievalFailureException, DataAccessException;
+	
+	/**
+	 * Deletes the domain object with the given id, disregarding any
+	 * concurrent modifications that may have occurred.
+	 *
+	 * @param id
+	 *             The id of the domain object to delete
+	 * @throws OptimisticLockingFailureException
+	 *             If domain object has been deleted in the meantime
+	 * @throws DataAccessException
+	 *             If general data access problem occurred
+	 */
+	void deleteById(ID id)
+		throws OptimisticLockingFailureException, DataAccessException;
+	
+	/**
+	 * Retrieves all the domain objects of type T.
+	 *
+	 * @return The list containing all the domain objects of type T; if no such
+	 *         domain objects exist, an empty list will be returned
+	 * @throws DataAccessException
+	 *             If general data access problem occurred
+	 */
+	List<T> getAll() throws DataAccessException;
+	
+	/**
+	 * Deletes the given domain object.
+	 *
+	 * @param entity
+	 *             The domain object to delete
+	 * @throws OptimisticLockingFailureException
+	 *             If domain object has been modified/deleted in the meantime
+	 * @throws DataAccessException
+	 *             If general data access problem occurred
+	 */
+	void delete(T entity)
+		throws OptimisticLockingFailureException, DataAccessException;
+	
+	/**
+	 * Deletes all available <code>T</code>.
+	 *
+	 * @throws OptimisticLockingFailureException
+	 *             If domain object has been modified/deleted in the meantime
+	 * @throws DataAccessException
+	 *             If general data access problem occurred
+	 */
+	public void deleteAll()
+		throws OptimisticLockingFailureException, DataAccessException;
+	
+	/**
+	 * Sometimes, the way Hibernate handles all the actions in a session is
+	 * very unbelievable. For example, we call
+	 * <code>
+	 *  delete(project);
+	 *  project.setId(null) <= to insert new one
+	 *  insert(project);
+	 * </code>
+	 *
+	 * It could cause java.sql.BatchUpdateException:
+	 * ORA-00001: unique constraint BECAUSE Hibernate doesn't flush
+	 * the previous action first.
+	 *
+	 * This method provides a way to flush manually some action.
+	 * Note that this method is only used in an extremely rare case.
+	 */
+	void flush();
+	
+	// end ConvenienceGenericDao part
 	
 	/**
 	 * Convenience method: Executes saveOrUpdate() and flush() on that entity.
@@ -121,9 +288,8 @@ public interface ConvenienceGenericJpaDao<T, ID extends Serializable>
 	 *
 	 * @see ConvenienceJpaTemplate#findByCriteria(DetachedCriteria)
 	 */
-	public List<T> findByCriteria(CriteriaQuery<T> criteria)
+	public List<T> findByQuery(QueryBuilder criteria)
 		throws DataAccessException;
-	
 	
 	/**
 	 * Retrieves all the domain objects matching the JPA criteria.
@@ -136,7 +302,7 @@ public interface ConvenienceGenericJpaDao<T, ID extends Serializable>
 	 *
 	 * @see ConvenienceJpaTemplate#findByCriteria(DetachedCriteria)
 	 */
-	public List<T> findByCriteria(CriteriaQuery<T> criteria,
+	public List<T> findByQuery(QueryBuilder criteria,
 		DataExtent extent) throws DataAccessException;
 	
 	/**
@@ -151,7 +317,7 @@ public interface ConvenienceGenericJpaDao<T, ID extends Serializable>
 	 *
 	 * @see ConvenienceJpaTemplate#findByCriteria(DetachedCriteria, int, int)
 	 */
-	public List<T> findByCriteria(CriteriaQuery<T> criteria,
+	public List<T> findByQuery(QueryBuilder criteria,
 		int firstResult, int maxResults) throws DataAccessException;
 	
 	/**
@@ -168,7 +334,7 @@ public interface ConvenienceGenericJpaDao<T, ID extends Serializable>
 	 *
 	 * @see ConvenienceJpaTemplate#findByCriteria(DetachedCriteria, int, int)
 	 */
-	public List<T> findByCriteria(CriteriaQuery<T> criteria, int firstResult,
+	public List<T> findByQuery(QueryBuilder criteria, int firstResult,
 		int maxResults, DataExtent extent) throws DataAccessException;
 	
 	/**
@@ -181,7 +347,7 @@ public interface ConvenienceGenericJpaDao<T, ID extends Serializable>
 	 *
 	 * @see ConvenienceJpaTemplate#findCountByCriteria(DetachedCriteria)
 	 */
-	public int findCountByCriteria(CriteriaQuery<T> criteria)
+	public int findCountByQuery(QueryBuilder criteria)
 		throws DataAccessException;
 	
 	/**
@@ -214,20 +380,6 @@ public interface ConvenienceGenericJpaDao<T, ID extends Serializable>
 	 *             If general data access problem occurred
 	 */
 	List<T> getAll(DataExtent extent) throws DataAccessException;
-	
-	/**
-	 * Executes a query based on a given query object.
-	 *  This method may also support paging (see javadoc
-	 *   of implementing class).
-	 * Loads at least the given extent.
-	 *
-	 * @param q         The search query object
-	 * @param extent    the extent in which objects get loaded.
-	 * @throws  DataAccessException
-	 *             If general data access problem occurred
-	 * @return A list containing 0 or more domain objects
-	 */
-	List<T> findByQuery(QueryObject q, DataExtent extent) throws DataAccessException;
 
 	/**
 	 * Re-reads the state of the given domain object from the underlying
@@ -264,25 +416,5 @@ public interface ConvenienceGenericJpaDao<T, ID extends Serializable>
 	 */
 	T reload(T entity, DataExtent extent) throws DataAccessException,
 		DataRetrievalFailureException;
-	
-	/**
-	 * @return    the default {@link Order} to order the results
-	 */
-	public Order[] getDefaultOrder();
-
-	/**
-	 * Set default order of results returned by getAll and findByQuery (not findByCriteria!).
-	 * If defaultOrder is <code>null</code> then default ordering is deactivated.
-	 * 
-	 * @param defaultOrder    the default {@link Order} to order the results
-	 */
-	public void setDefaultOrder(Order... defaultOrder);
-	
-	/**
-	 * Create a {@link DetachedCriteria} that contains default ordering and distinct constraints.
-	 * 
-	 * @return    a {@link DetachedCriteria}
-	 */
-	public CriteriaQuery<T> getOrderedCriteria();
 	
 }

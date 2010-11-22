@@ -38,6 +38,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import ch.elca.el4j.services.persistence.jpa.criteria.QueryBuilder;
 import ch.elca.el4j.services.persistence.jpa.dao.GenericJpaDao;
 import ch.elca.el4j.services.search.QueryObject;
 import ch.elca.el4j.services.search.criterias.ComparisonCriteria;
@@ -175,7 +176,7 @@ public class JpaDaoTest extends AbstractJpaDaoTest {
 		personJpaDao.flush();
 		
 		// delete by id
-		personJpaDao.delete(p1.getKey());
+		personJpaDao.deleteById(p1.getKey());
 		personJpaDao.flush();
 		
 		try {
@@ -289,26 +290,25 @@ public class JpaDaoTest extends AbstractJpaDaoTest {
 	}
 	
 	/**
-	 * Tests <code>findCountByCriteria</code>.
+	 * Tests {@link GenericJpaDao#findCountByQuery(QueryBuilder)}.
 	 */
 	@Test
-	public void testFindCountByCriteria1() {
+	public void testFindCountByQuery1() {
 
 		List<Person> people = personJpaDao.getAll();
 		
-		CriteriaQuery<Person> criteria = entityManagerFactory.getCriteriaBuilder().createQuery(Person.class);
-		criteria.from(Person.class);
+		QueryBuilder q = QueryBuilder.select("p").from("Person p");
 		
-		int count = personJpaDao.findCountByCriteria(criteria);
+		int count = personJpaDao.findCountByQuery(q);
 		
 		assertEquals("count should equal the number of stored persons", people.size(), count);
 	}
 	
 	/**
-	 * Tests <code>findCountByCriteria</code>.
+	 * Tests {@link GenericJpaDao#findCountByQuery(QueryBuilder)}.
 	 */
 	@Test
-	public void testFindCountByCriteria2() {
+	public void testFindCountByQuery2() {
 		Person einstein = getNewPerson("Albert Einstein");
 		einstein.getBrain().setIq(170);
 		
@@ -322,62 +322,25 @@ public class JpaDaoTest extends AbstractJpaDaoTest {
 		// FROM Brain b
 		// WHERE b.iq = 170
 		
-		CriteriaQuery<Person> query = cb.createQuery(Person.class);
-		Root<Person> root = query.from(Person.class);
-		Join<Object, Object> brainJoin = root.join("brain");
-		Predicate iqPredicate = cb.equal(brainJoin.<Integer>get("iq"), 170);
-		query.select(root).where(iqPredicate);
+		// JPA Criteria API madness:
+//		CriteriaQuery<Person> query = cb.createQuery(Person.class);
+//		Root<Person> root = query.from(Person.class);
+//		Join<Object, Object> brainJoin = root.join("brain");
+//		Predicate iqPredicate = cb.equal(brainJoin.<Integer>get("iq"), 170);
+//		query.select(root).where(iqPredicate);
 		
-		int count = personJpaDao.findCountByCriteria(query);
+		QueryBuilder q = QueryBuilder.select("b").from("Brain b").startAnd().ifCond("b.iq = 170").end();
+		
+		int count = personJpaDao.findCountByQuery(q);
 		
 		assertEquals("findCountByCriteria reported wrong count", 1, count);
 	}
 	
 	/**
-	 * Tests the <code>findCountByQuery</code> method.
+	 * Tests {@link GenericJpaDao#findByQuery(QueryBuilder)} method.
 	 */
 	@Test
-	public void testFindCountByQuery() {
-		Person john = getNewPerson("John the Ripper");
-		john.setLegalStatus(LegalStatus.SINGLE);
-		personJpaDao.persist(john);
-		
-		Person johnny = getNewPerson("Johnny99");
-		johnny.setLegalStatus(LegalStatus.SINGLE);
-		personJpaDao.persist(johnny);
-		
-		Person johndoe = getNewPerson("John Doe");
-		johndoe.setLegalStatus(LegalStatus.MARRIED);
-		personJpaDao.persist(johndoe);
-		
-		personJpaDao.flush();
-		
-		// SELECT *
-		// FROM Person
-		// WHERE name ILIKE "%JoHn%" AND legalStatus == SINGLE
-		// ORDER BY name ASC
-		
-		QueryObject query = new QueryObject(Person.class);
-		query.addCriteria(
-			and(
-				LikeCriteria.caseInsensitive("name", "%JoHn%"), 
-				new ComparisonCriteria(
-					"legalStatus", LegalStatus.SINGLE, "=", "LegalStatus"
-				)
-			)
-		);
-		query.addOrder(Order.asc("name"));
-		
-		int count = personJpaDao.findCountByQuery(query);
-		
-		assertEquals("Wrong number of persons returned", 2, count);
-	}
-	
-	/**
-	 * Tests the <code>findByCriteria</code> method.
-	 */
-	@Test
-	public void testFindByCriteria() {
+	public void testFindByQuery() {
 		Person frankenstein = getNewPerson("Frankenstein's Monster");
 		frankenstein.getBrain().setIq(-1);
 		personJpaDao.persist(frankenstein);
@@ -387,101 +350,27 @@ public class JpaDaoTest extends AbstractJpaDaoTest {
 		// The SQL-Query
 		//
 		// SELECT p.*
-		// FROM Person p JOIN Brain b
-		// WHERE b.iq == 0
+		// FROM Person p JOIN p.brain AS b
+		// WHERE b.iq = 1
 		//
 		// is translated to... 
 		
-		CriteriaBuilder criteriaBuilder = entityManagerFactory.getCriteriaBuilder();
+		// JPA Criteria API madness:
+//		CriteriaBuilder criteriaBuilder = entityManagerFactory.getCriteriaBuilder();
+//		CriteriaQuery<Person> criteria = criteriaBuilder.createQuery(Person.class);
+//		Root<Person> personRoot = criteria.from(Person.class);
+//		Join<Object, Object> brainJoin = personRoot.join("brain");
+//		Predicate deadBrain = criteriaBuilder.equal(brainJoin.<Integer>get("iq"), -1);
+//		criteria.select(personRoot).here(deadBrain);
 		
-		CriteriaQuery<Person> criteria = criteriaBuilder.createQuery(Person.class);
-		Root<Person> personRoot = criteria.from(Person.class);
-		Join<Object, Object> brainJoin = personRoot.join("brain");
-		Predicate deadBrain = criteriaBuilder.equal(brainJoin.<Integer>get("iq"), -1);
-		criteria.select(personRoot).where(deadBrain);
+		QueryBuilder q = QueryBuilder.select("p").from("Person p").join("p.brain AS b")
+			.startAnd().ifCond("b.iq = -1").end();
 		
-		List<Person> retrieved = personJpaDao.findByCriteria(criteria);
+		List<Person> retrieved = personJpaDao.findByQuery(q);
 		
 		assertNotNull("retrieved list must not be null", retrieved);
 		assertEquals("number of retrieved rows should be 1", 1, retrieved.size());
 		assertEquals("returned person is not Frankenstein's Monster", frankenstein, retrieved.get(0));
 	}
-
-	/**
-	 * Tests the <code>findByQuery</code> method.
-	 */
-	@Test
-	public void testFindByQuery1() {
-		Person john = getNewPerson("John the Ripper");
-		john.setLegalStatus(LegalStatus.SINGLE);
-		personJpaDao.persist(john);
-		
-		Person johnny = getNewPerson("Johnny99");
-		johnny.setLegalStatus(LegalStatus.SINGLE);
-		personJpaDao.persist(johnny);
-		
-		Person johndoe = getNewPerson("John Doe");
-		johndoe.setLegalStatus(LegalStatus.MARRIED);
-		personJpaDao.persist(johndoe);
-		
-		personJpaDao.flush();
-		
-		// SELECT *
-		// FROM Person
-		// WHERE name LIKE "%John%" AND legalStatus == SINGLE
-		// ORDER BY name ASC
-		
-		QueryObject query = new QueryObject(Person.class);
-		query.addCriteria(
-			and(
-				LikeCriteria.caseSensitive("name", "%John%"), 
-				new ComparisonCriteria(
-					"legalStatus", LegalStatus.SINGLE, "=", "LegalStatus"
-				)
-			)
-		);
-		query.addOrder(Order.asc("name"));
-		
-		List<Person> results = personJpaDao.findByQuery(query);
-		
-		assertNotNull("retrieved person list must not be null", results);
-		assertEquals("Wrong number of persons returned", 2, results.size());
-		assertEquals("Wrong person returned first", john, results.get(0));
-		assertEquals("Wrong person returned last", johnny, results.get(1));
-	}
 	
-	/**
-	 * Tests the <code>findByQuery</code> method.
-	 */
-	@Test
-	public void testFindByQuery2() {
-		Person einstein = getNewPerson("Albert Einstein");
-		Person homer = getNewPerson("Homer Simpson");
-		Person lisa = getNewPerson("Lisa Simpson");
-		Person bart = getNewPerson("Bart Simpson");
-		
-		einstein.getBrain().setIq(170);
-		homer.getBrain().setIq(30);
-		lisa.getBrain().setIq(100);
-		bart.getBrain().setIq(80);
-		
-		personJpaDao.persist(einstein);
-		personJpaDao.persist(homer);
-		personJpaDao.persist(lisa);
-		personJpaDao.persist(bart);
-
-		personJpaDao.flush();
-		
-		QueryObject query = new QueryObject(Brain.class);
-		query.addCriteria(new ComparisonCriteria("iq", 100, "<=", "Integer"));
-		query.addOrder(Order.desc("iq"));
-		query.setFirstResult(1);
-		query.setMaxResults(1);
-		
-		List<Brain> result = brainJpaDao.findByQuery(query);
-		
-		assertNotNull("retrieved brain list must not be null", result);
-		assertEquals("Wrong number of brains returned", 1, result.size());
-		assertEquals("Wrong brain returned", bart.getBrain(), result.get(0));
-	}
 }

@@ -59,9 +59,9 @@ public class JpaEntityManagerFactoryInjectorBeanPostProcessor
 	 */
 	public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
 		s_logger.debug("Treating bean with name:" + beanName);
-		if (GenericDao.class.isAssignableFrom(bean.getClass())) {
+		if (ConvenienceGenericJpaDao.class.isAssignableFrom(bean.getClass())) {
 			s_logger.debug("init dao with name:" + beanName);
-			initDao((GenericDao<?>) bean);
+			initDao((ConvenienceGenericJpaDao<?, ?>) bean);
 		}
 		return bean;
 	}
@@ -76,7 +76,7 @@ public class JpaEntityManagerFactoryInjectorBeanPostProcessor
 	 * Try to init the sessionFactory of the bean.
 	 * @param dao
 	 */
-	protected void initDao(GenericDao<?> dao) {
+	protected void initDao(ConvenienceGenericJpaDao<?, ?> dao) {
 		if (getEntityManagerFactory() != null) {
 			try {
 				Method setter = dao.getClass().getMethod(
