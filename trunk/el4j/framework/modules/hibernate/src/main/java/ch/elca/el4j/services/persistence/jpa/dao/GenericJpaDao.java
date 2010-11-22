@@ -22,15 +22,12 @@ import java.lang.reflect.ParameterizedType;
 import java.util.Collection;
 import java.util.List;
 
-import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceException;
 import javax.persistence.PersistenceUnitUtil;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Order;
 
 import org.apache.commons.collections.map.ReferenceMap;
-import org.hibernate.criterion.DetachedCriteria;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
@@ -45,9 +42,8 @@ import org.springframework.transaction.annotation.Transactional;
 import ch.elca.el4j.services.persistence.generic.dao.annotations.ReturnsUnchangedParameter;
 import ch.elca.el4j.services.persistence.hibernate.dao.extent.DataExtent;
 import ch.elca.el4j.services.persistence.hibernate.dao.extent.ExtentEntity;
-import ch.elca.el4j.services.persistence.jpa.criteria.CriteriaTransformer;
+import ch.elca.el4j.services.persistence.jpa.criteria.QueryBuilder;
 import ch.elca.el4j.services.persistence.jpa.dao.extentstrategies.ExtentFetcher;
-import ch.elca.el4j.services.search.QueryObject;
 import ch.elca.el4j.util.codingsupport.Reject;
 
 /**
@@ -76,11 +72,6 @@ public class GenericJpaDao<T, ID extends Serializable>
 	 * The domain class this DAO is responsible for.
 	 */
 	private Class<T> persistentClass;
-	
-	/**
-	 * The default JPA {@link Order} to order results.
-	 */
-	private Order[] defaultOrder = null;
 	
 	/**
 	 * The ExtentFetcher used to fetch extents. 
@@ -124,16 +115,6 @@ public class GenericJpaDao<T, ID extends Serializable>
 		return persistentClass;
 	}
 	
-	/** {@inheritDoc} */
-	public Order[] getDefaultOrder() {
-		return defaultOrder;
-	}
-	
-	/** {@inheritDoc} */
-	public void setDefaultOrder(Order... defaultOrder) {
-		this.defaultOrder = defaultOrder;
-	}
-	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -162,67 +143,55 @@ public class GenericJpaDao<T, ID extends Serializable>
 		return getConvenienceJpaTemplate().findByCriteria(getOrderedCriteria());
 	}
 	
-	/**
-	 * {@inheritDoc}
-	 *
-	 * This method supports paging (see QueryObject for info on
-	 *  how to use this).
-	 *
-	 */
+	/** {@inheritDoc} */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<T> findByQuery(QueryObject q) throws DataAccessException {
-		CriteriaQuery<T> criteria = getCriteria(q);
+	public List<T> findByQuery(final QueryBuilder criteria)
+		throws DataAccessException {
 		
 		ConvenienceJpaTemplate template = getConvenienceJpaTemplate();
 		
-		return template.findByCriteria(criteria, q.getFirstResult(), q.getMaxResults());
-	}
+		return template.execute(new JpaCallback<List<T>>() {
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * This method supports paging (see QueryObject for info on
-	 *  how to use this).
-	 *
-	 * @return how many elements do we find with the given query
-	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int findCountByQuery(QueryObject q) throws DataAccessException {
-		CriteriaQuery<T> criteria = getCriteria(q);
-		
-		ConvenienceJpaTemplate template = getConvenienceJpaTemplate();
-
-		return template.findCountByCriteria(criteria);
+			@Override
+			public List<T> doInJpa(EntityManager em) throws PersistenceException {
+				return criteria.applySelect(em).getResultList(persistentClass);
+			}
+			
+		});
 	}
 	
 	/** {@inheritDoc} */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<T> findByCriteria(CriteriaQuery<T> criteria)
+	public List<T> findByQuery(final QueryBuilder criteria, final int firstResult, final int maxResults)
 		throws DataAccessException {
 		
 		ConvenienceJpaTemplate template = getConvenienceJpaTemplate();
 		
-		return template.findByCriteria(criteria);
-	}
-	
-	/** {@inheritDoc} */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<T> findByCriteria(CriteriaQuery<T> criteria, int firstResult, int maxResults)
-		throws DataAccessException {
-		
-		ConvenienceJpaTemplate template = getConvenienceJpaTemplate();
-		
-		return template.findByCriteria(criteria, firstResult, maxResults);
+		return template.execute(new JpaCallback<List<T>>() {
+
+			@Override
+			public List<T> doInJpa(EntityManager em) throws PersistenceException {
+				return criteria.applySelect(em).getResultList(persistentClass, firstResult, maxResults);
+			}
+			
+		});
 	}
 
 	/** {@inheritDoc} */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int findCountByCriteria(CriteriaQuery<T> criteria)
+	public int findCountByQuery(final QueryBuilder criteria)
 		throws DataAccessException {
 		
 		ConvenienceJpaTemplate template = getConvenienceJpaTemplate();
 
-		return template.findCountByCriteria(criteria);
+		return template.execute(new JpaCallback<Integer>() {
+
+			@Override
+			public Integer doInJpa(EntityManager em) throws PersistenceException {
+				return criteria.applyCount(em).getCount();
+			}
+			
+		});
 	}
 	
 	/** {@inheritDoc} */
@@ -341,7 +310,7 @@ public class GenericJpaDao<T, ID extends Serializable>
 				}
 			});
 		
-		return addOrder(makeDistinct(criteria));
+		return makeDistinct(criteria);
 	}
 
 	/**
@@ -353,35 +322,6 @@ public class GenericJpaDao<T, ID extends Serializable>
 	 */
 	protected String getPersistentClassName() {
 		return getPersistentClass().getSimpleName();
-	}
-	
-	/**
-	 * @param queryObject    an EL4J {@link QueryObject} that should be converted to a {@link DetachedCriteria}
-	 * @return               a suitable {@link CriteriaQuery}
-	 */
-	protected CriteriaQuery<T> getCriteria(QueryObject queryObject) {
-		
-		CriteriaTransformer<T> ct = new CriteriaTransformer<T>(getPersistentClass(), 
-				getConvenienceJpaTemplate().getEntityManagerFactory().getCriteriaBuilder());
-		CriteriaQuery<T> criteria = ct.transform(queryObject);
-		
-		if (queryObject.getOrderConstraints().size() == 0) {
-			criteria = addOrder(criteria);
-		}
-		
-		return makeDistinct(criteria);
-	}
-	
-	
-	/**
-	 * @param criteria    the criteria to modify
-	 * @return            the criteria enhanced with order constraints (if set using setDefaultOrder)
-	 */
-	protected CriteriaQuery<T> addOrder(CriteriaQuery<T> criteria) {
-		if (defaultOrder != null) {
-			criteria.orderBy(defaultOrder);
-		}
-		return criteria;
 	}
 	
 	/**
@@ -481,15 +421,15 @@ public class GenericJpaDao<T, ID extends Serializable>
 
 	/** {@inheritDoc} */
 	@Override
-	public List<T> findByCriteria(CriteriaQuery<T> criteria, DataExtent extent) throws DataAccessException {
-		return fetchExtent(getConvenienceJpaTemplate().findByCriteria(criteria), extent);
+	public List<T> findByQuery(QueryBuilder criteria, DataExtent extent) throws DataAccessException {
+		return fetchExtent(findByQuery(criteria), extent);
 	}
 
 	/** {@inheritDoc} */
 	@Override
-	public List<T> findByCriteria(CriteriaQuery<T> criteria, int firstResult, int maxResults, DataExtent extent)
+	public List<T> findByQuery(QueryBuilder criteria, int firstResult, int maxResults, DataExtent extent)
 		throws DataAccessException {
-		return fetchExtent(getConvenienceJpaTemplate().findByCriteria(criteria, firstResult, maxResults), extent);
+		return fetchExtent(findByQuery(criteria, firstResult, maxResults), extent);
 	}
 
 	/** {@inheritDoc} */
@@ -497,15 +437,6 @@ public class GenericJpaDao<T, ID extends Serializable>
 	public T findById(ID id, DataExtent extent) throws DataRetrievalFailureException, DataAccessException {
 		return fetchExtent((T) getConvenienceJpaTemplate().findByIdStrong(
 			getPersistentClass(), id, getPersistentClassName()), extent);
-	}
-
-	/** {@inheritDoc} */
-	@Override
-	public List<T> findByQuery(QueryObject q, DataExtent extent) throws DataAccessException {
-		CriteriaQuery<T> criteria = getCriteria(q);
-		
-		return fetchExtent(getConvenienceJpaTemplate().findByCriteria(criteria, q.getFirstResult(), 
-			q.getMaxResults()), extent);
 	}
 
 	/** {@inheritDoc} */
