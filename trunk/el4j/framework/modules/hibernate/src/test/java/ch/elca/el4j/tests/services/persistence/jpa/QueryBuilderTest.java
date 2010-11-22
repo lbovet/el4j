@@ -29,6 +29,8 @@ import ch.elca.el4j.services.persistence.jpa.criteria.SortOrder;
 /**
  * Test {@link QueryBuilder}.
  * 
+ * @svnLink $Revision: $;$Date: $;$Author: $;$URL: $
+ * 
  * @author Simon Stelling (SST)
  * @author Huy Hung Nguyen (HUN)
  */

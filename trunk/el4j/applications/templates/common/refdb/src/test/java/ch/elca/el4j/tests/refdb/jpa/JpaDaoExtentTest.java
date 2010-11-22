@@ -362,135 +362,133 @@ public class JpaDaoExtentTest extends AbstractJpaDaoTest {
 		entityManager.detach(person4);
 	}
 	
-//	/**
-//	 * This test checks the lazy loading of a persons friends (OneToMany relation).
-//	 */
-//	@Test
-//	public void testLazyFriends() {
-//		insertFriendsScenario();
-//		PersonJpaDao dao = getPersonDao();
-//		
-//		QueryBuilder q = QueryBuilder.select(select)
-//		
-//		QueryObject query = new QueryObject();
-//		query.addCriteria(LikeCriteria.caseInsensitive("name", "%Mary Muster%"));
-//		
-//		try {
-//			Person mary = dao.findByQuery(query).get(0);
-//			entityManager.detach(mary);
-//			List<Person> f = mary.getFriends();
-//			assertFalse("Friend list must not be empty", f.isEmpty());
-//			f.get(0).getName();
-//			
-//			fail("Could access friends list of lazy loaded person");
-//		} catch (IndexOutOfBoundsException e) {
-//			fail("Couldn't retrieve person inserted shortly before.");
-//		} catch (LazyInitializationException e) {
-//			s_logger.debug("Expected exception catched.", e);
-//		}
-//		
-//		// Add the friends to the extent
-//		DataExtent ex;
-//		try {
-//			ex = new DataExtent(Person.class).with("friends");
-//			Person mary = dao.findByQuery(query, ex).get(0);
-//			entityManager.detach(mary);
-//			List<Person> f = mary.getFriends();
-//			
-//			assertFalse("Friend list must not be empty", f.isEmpty());
-//			f.get(0).getName();
-//		} catch (IndexOutOfBoundsException e) {
-//			fail("Couldn't retrieve person inserted shortly before.");
-//		} catch (LazyInitializationException e) {
-//			fail("Could not access friends list of explicitly loaded person");
-//		} catch (NoSuchMethodException e1) {
-//			fail("Field friends doesnt exist");
-//		}
-//		
-//	}
-//	
-//	/**
-//	 * This test checks the if circular references results in infinite loops.
-//	 */
-//	@Test(timeout = 10000)
-//	public void testCircularFriends() {
-//		insertFriendsScenario();
-//		PersonJpaDao dao = getPersonDao();
-//		
-//		QueryObject query = new QueryObject();
-//		query.addCriteria(LikeCriteria.caseInsensitive("name", "%Mary Muster%"));
-//		
-//		// Check circular reference in Extent
-//		try {
-//			DataExtent ex = new DataExtent(Person.class);
-//			ex.withSubentities(collection("friends", ex.getRootEntity()));
-//			
-//			Person mary = dao.findByQuery(query, ex).get(0);
-//			
-//			entityManager.detach(mary);
-//			
-//			List<Person> f = mary.getFriends();
-//			assertFalse("Friend list must not be empty", f.isEmpty());
-//			
-//			for (int i = 0; i < f.size(); i++) {
-//				List<Person> f2 = f.get(i).getFriends();
-//				for (int j = 0; j < f2.size(); j++) {
-//					f2.get(j).getName();
-//				}
-//			}
-//			
-//			
-//		} catch (NoSuchMethodException e) {
-//			fail("Could not add list friends to extent.");
-//		} catch (IndexOutOfBoundsException e) {
-//			fail("Couldn't retrieve person inserted shortly before.");
-//		} catch (LazyInitializationException e) {
-//			fail("Could not access friends' friends list of explicitly loaded person");
-//		}
-//	}
-//	
-//	/**
-//	 * Test reload of the given extent: does it revert whole graph?.
-//	 */
-//	@Test
-//	public void testReloadReverting() {
-//		insertFriendsScenario();
-//		
-//		PersonJpaDao dao = getPersonDao();
-//		
-//		QueryObject query = new QueryObject();
-//		query.addCriteria(LikeCriteria.caseInsensitive("name", "%Mary Muster%"));
-//		DataExtent ex = new DataExtent(Person.class);
-//		ex.all(3);
-//		
-//		try {
-//			Person person1 = dao.findByQuery(query, ex).get(0);
-//			entityManager.detach(person1);
-//			
-//			person1.getFriends().get(0).setName("Jean-Pierre");
-//			
-//			try {
-//				Person p1 = dao.reload(person1);
-//				entityManager.detach(p1);
-//				try {
-//					assertTrue("Hibernate did revert the Person's Friends although not told.", p1.getFriends()
-//						.get(0).getName().equals("Jean-Pierre"));
-//				} catch (LazyInitializationException e) {
-//					s_logger.debug("Expected Exception catched.", e);
-//				}
-//
-//				Person p2 = dao.reload(person1, ex);
-//				entityManager.detach(p2);
-//				p2.getName();
-//				
-//				assertFalse("Hibernate did not revert the Persons Friends.", p2.getFriends()
-//					.get(0).getName().equals("Jean-Pierre"));
-//			} catch (LazyInitializationException e) {
-//				fail("Could not accesss friends of person with extent depth 3.");
-//			}
-//		} catch (Exception e) {
-//			fail("Loading person and accessing friends failed.");
-//		}
-//	}
+	/**
+	 * This test checks the lazy loading of a persons friends (OneToMany relation).
+	 */
+	@Test
+	public void testLazyFriends() {
+		insertFriendsScenario();
+		PersonJpaDao dao = getPersonDao();
+		
+		QueryBuilder query = QueryBuilder.select("p");
+		query.from("Person p").startAnd().ifCond("p.name LIKE \"%Mary Muster%\"");
+		
+		try {
+			Person mary = dao.findByQuery(query).get(0);
+			entityManager.detach(mary);
+			List<Person> f = mary.getFriends();
+			assertFalse("Friend list must not be empty", f.isEmpty());
+			f.get(0).getName();
+			
+			fail("Could access friends list of lazy loaded person");
+		} catch (IndexOutOfBoundsException e) {
+			fail("Couldn't retrieve person inserted shortly before.");
+		} catch (LazyInitializationException e) {
+			s_logger.debug("Expected exception catched.", e);
+		}
+		
+		// Add the friends to the extent
+		DataExtent ex;
+		try {
+			ex = new DataExtent(Person.class).with("friends");
+			Person mary = dao.findByQuery(query, ex).get(0);
+			entityManager.detach(mary);
+			List<Person> f = mary.getFriends();
+			
+			assertFalse("Friend list must not be empty", f.isEmpty());
+			f.get(0).getName();
+		} catch (IndexOutOfBoundsException e) {
+			fail("Couldn't retrieve person inserted shortly before.");
+		} catch (LazyInitializationException e) {
+			fail("Could not access friends list of explicitly loaded person");
+		} catch (NoSuchMethodException e1) {
+			fail("Field friends doesnt exist");
+		}
+		
+	}
+	
+	/**
+	 * This test checks the if circular references results in infinite loops.
+	 */
+	@Test(timeout = 10000)
+	public void testCircularFriends() {
+		insertFriendsScenario();
+		PersonJpaDao dao = getPersonDao();
+		
+		QueryBuilder query = QueryBuilder.select("p");
+		query.from("Person p").startAnd().ifCond("p.name LIKE \"%Mary Muster%\"");
+		
+		// Check circular reference in Extent
+		try {
+			DataExtent ex = new DataExtent(Person.class);
+			ex.withSubentities(collection("friends", ex.getRootEntity()));
+			
+			Person mary = dao.findByQuery(query, ex).get(0);
+			
+			entityManager.detach(mary);
+			
+			List<Person> f = mary.getFriends();
+			assertFalse("Friend list must not be empty", f.isEmpty());
+			
+			for (int i = 0; i < f.size(); i++) {
+				List<Person> f2 = f.get(i).getFriends();
+				for (int j = 0; j < f2.size(); j++) {
+					f2.get(j).getName();
+				}
+			}
+			
+			
+		} catch (NoSuchMethodException e) {
+			fail("Could not add list friends to extent.");
+		} catch (IndexOutOfBoundsException e) {
+			fail("Couldn't retrieve person inserted shortly before.");
+		} catch (LazyInitializationException e) {
+			fail("Could not access friends' friends list of explicitly loaded person");
+		}
+	}
+	
+	/**
+	 * Test reload of the given extent: does it revert whole graph?.
+	 */
+	@Test
+	public void testReloadReverting() {
+		insertFriendsScenario();
+		
+		PersonJpaDao dao = getPersonDao();
+		
+		QueryBuilder query = QueryBuilder.select("p");
+		query.from("Person p").startAnd().ifCond("p.name LIKE \"%Mary Muster%\"");
+		DataExtent ex = new DataExtent(Person.class);
+		ex.all(3);
+		
+		try {
+			Person person1 = dao.findByQuery(query, ex).get(0);
+			entityManager.detach(person1);
+			
+			person1.getFriends().get(0).setName("Jean-Pierre");
+			
+			try {
+				Person p1 = dao.reload(person1);
+				entityManager.detach(p1);
+				try {
+					assertTrue("Hibernate did revert the Person's Friends although not told.", p1.getFriends()
+						.get(0).getName().equals("Jean-Pierre"));
+				} catch (LazyInitializationException e) {
+					s_logger.debug("Expected Exception catched.", e);
+				}
+
+				Person p2 = dao.reload(person1, ex);
+				entityManager.detach(p2);
+				p2.getName();
+				
+				assertFalse("Hibernate did not revert the Persons Friends.", p2.getFriends()
+					.get(0).getName().equals("Jean-Pierre"));
+			} catch (LazyInitializationException e) {
+				fail("Could not accesss friends of person with extent depth 3.");
+			}
+		} catch (Exception e) {
+			fail("Loading person and accessing friends failed.");
+		}
+	}
 		
 }
