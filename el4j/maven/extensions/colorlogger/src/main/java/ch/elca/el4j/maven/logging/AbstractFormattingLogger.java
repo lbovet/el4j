@@ -16,22 +16,40 @@
  */
 package ch.elca.el4j.maven.logging;
 
-import org.codehaus.plexus.logging.AbstractLogger;
+import java.io.PrintStream;
+
+import org.apache.maven.cli.PrintStreamLogger;
 import org.codehaus.plexus.logging.Logger;
 import org.codehaus.plexus.util.ExceptionUtils;
 
-
 /**
  * Base class for various formatting loggers.
+ * <p/>
+ * As of maven 3 we need our loggers to extend PrintStreamLogger.
+ * This is possible with some hackage (see the constructor and
+ * the stream field).
  *
  * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author David Bernhard (DBD)
  */
-public abstract class AbstractFormattingLogger extends AbstractLogger {
+public abstract class AbstractFormattingLogger extends PrintStreamLogger {
+
+	/**
+	 * This is a copy of the field <code>out</code>
+	 * of PrintStreamLogger.
+	 * Because the maven embedder api is horrible.
+	 */
+	private PrintStream stream;
 
 	/**
 	 * Delegating constructor.
+	 * <p/>
+	 * In maven 3, we have to inherit from PrintStreamLogger,
+	 * which doesn't have a constructor that takes our arguments.
+	 * As a work-around, copy the AbstractLogger constructor down here.
+	 * There is no way to set the name of the logger, but I'm not sure
+	 * if this is even needed.
 	 *
 	 * @param threshold
 	 *            Logger threshold (debug, info, warn, error, fatal).
@@ -39,7 +57,15 @@ public abstract class AbstractFormattingLogger extends AbstractLogger {
 	 *            The logger name.
 	 */
 	public AbstractFormattingLogger(int threshold, String name) {
-		super(threshold, name);
+		super(System.out);
+		stream = System.out;
+
+		if (threshold < LEVEL_DEBUG || LEVEL_DISABLED < threshold) {
+            throw new IllegalArgumentException(
+            	"Threshold " + threshold + " is not valid");
+        }
+
+        setThreshold(threshold);
 	}
 
 	/**
@@ -48,14 +74,14 @@ public abstract class AbstractFormattingLogger extends AbstractLogger {
 	 * @return The prefix string for this level.
 	 */
 	protected abstract String getPrefix(int level);
-	
+
 	/**
 	 * Get the appropriate suffix for messages of level <code>level</code>.
 	 * @param level The logger level.
 	 * @return The suffix string for this level.
 	 */
 	protected abstract String getSuffix(int level);
-	
+
 	/**
 	 * Get the appropriate text for messages of level <code>level</code>.
 	 * Defaults to [LEVEL].
@@ -86,7 +112,7 @@ public abstract class AbstractFormattingLogger extends AbstractLogger {
 		}
 		return levelPrefix;
 	}
-	
+
 	/**
 	 * @param message    the message
 	 * @return           the message prepared for output
@@ -94,7 +120,7 @@ public abstract class AbstractFormattingLogger extends AbstractLogger {
 	protected String getMessage(String message) {
 		return message;
 	}
-	
+
 	/**
 	 * Output a message with the correct formatting for the level. Add a
 	 * stacktrace if present.
@@ -116,17 +142,18 @@ public abstract class AbstractFormattingLogger extends AbstractLogger {
 
 		// Checkstyle: Using System.out is ok here
 		// because we are implementing a logger!
-		System.out.println(prefix + text + msg + suffix);
+		stream.println(prefix + text + msg + suffix);
 
 		if (throwable != null) {
-			System.out.print(prefix);
-			System.out.print(getMessage(ExceptionUtils.getFullStackTrace(throwable)));
-			System.out.print(suffix);
+			stream.print(prefix);
+			stream.print(getMessage(ExceptionUtils.getFullStackTrace(throwable)));
+			stream.print(suffix);
+			stream.flush();
 		}
 	}
 
 	// Level handlers - just pass on the parameters to out()
-	// addingthe correct level.
+	// adding the correct level.
 	
 	/** {@inheritDoc} */
 	public void debug(String message, Throwable throwable) {
@@ -166,6 +193,20 @@ public abstract class AbstractFormattingLogger extends AbstractLogger {
 	/** {@inheritDoc} */
 	public Logger getChildLogger(String name) {
 		return this;
+	}
+
+	/**
+	 * Getter for the output stream.
+	 * @return The output stream.
+	 */
+	public PrintStream getStream() {
+		return stream;
+	}
+
+	@Override
+	public void setStream(PrintStream stream) {
+		super.setStream(stream);
+		this.stream = stream;
 	}
 
 }
