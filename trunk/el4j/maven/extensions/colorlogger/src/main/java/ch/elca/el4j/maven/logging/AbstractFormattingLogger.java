@@ -61,11 +61,11 @@ public abstract class AbstractFormattingLogger extends PrintStreamLogger {
 		stream = System.out;
 
 		if (threshold < LEVEL_DEBUG || LEVEL_DISABLED < threshold) {
-            throw new IllegalArgumentException(
-            	"Threshold " + threshold + " is not valid");
-        }
+			throw new IllegalArgumentException(
+				"Threshold " + threshold + " is not valid");
+		}
 
-        setThreshold(threshold);
+		setThreshold(threshold);
 	}
 
 	/**
