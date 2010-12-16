@@ -18,7 +18,6 @@ package ch.elca.el4j.maven.cli;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import org.apache.maven.cli.MavenCli;
@@ -32,18 +31,18 @@ import com.jcraft.jsch.Logger;
 
 /**
  * This is an absolutely horrible hack, and of course
- * very fragile. It is based on MavenCli from maven-core:3.0.
+ * very fragile. It is based on MavenCli from maven-embedder:3.0
  * If it suddenly stops working, look at the diff between
- * the current maven and version 3.0.
+ * the current maven and version 3.0.0.
  *
  * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Philipp Brüschweiler (PBW)
  */
-public final class ColorMavenCli {
+public final class ColorMavenCli300 {
 
 	/** Make checkstyle happy. */
-	private ColorMavenCli() { }
+	private ColorMavenCli300() { }
 
 	/**
 	 * Intercept the main method of MavenCli, possibly
@@ -85,13 +84,13 @@ public final class ColorMavenCli {
 		ClassWorld classWorld, PrintStreamLogger logger)
 		throws Exception {
 
+		MavenCli cli = new MavenCli();
+		
 		// What we basically want to do is this:
 		/*
-		 * Maven cli = new MavenCli();
 		 * cli.setLogger(logger);
 		 * cli.doMain(new CliRequest(args, classWorld));
 		 */
-		MavenCli cli = new MavenCli();
 		boolean fieldSet = false;
 		Field[] fields = cli.getClass().getDeclaredFields();
 		for (Field field : fields) {
