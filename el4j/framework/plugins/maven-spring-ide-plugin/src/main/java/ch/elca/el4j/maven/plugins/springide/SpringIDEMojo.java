@@ -277,7 +277,7 @@ public class SpringIDEMojo extends AbstractSlf4jEnabledMojo {
 			Writer configWriter = new FileWriter(out);
 			BufferedReader templateReader = new BufferedReader(new InputStreamReader(
 				SpringIDEMojo.class.getResourceAsStream("/" + template)));
-			Velocity.evaluate(context, configWriter, null, templateReader);
+			Velocity.evaluate(context, configWriter, template, templateReader);
 			configWriter.close();
 			getLog().info("Write SpringIDE configuration to: " + out.getAbsolutePath());
 		} catch (IOException ioe) {
