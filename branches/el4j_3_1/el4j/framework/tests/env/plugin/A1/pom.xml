@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<project>
+	<modelVersion>4.0.0</modelVersion>
+	
+	<parent>
+		<groupId>ch.elca.el4j.tests</groupId>
+		<artifactId>plugin-env-tests</artifactId>
+		<version>1.0</version>
+	</parent>
+
+	<groupId>ch.elca.el4j.tests</groupId>
+	<artifactId>A1</artifactId>
+	<packaging>jar</packaging>
+	<name>EL4J test env plugin - Reactor A1</name>
+	<version>1.0</version>
+	
+	<properties>
+		<valueA>A</valueA>
+		<valueB>B</valueB>
+	</properties>
+</project>

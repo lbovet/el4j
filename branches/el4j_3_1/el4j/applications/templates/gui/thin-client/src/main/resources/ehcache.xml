@@ -1,0 +1,27 @@
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="http://ehcache.org/ehcache.xsd"
+	updateCheck="false">
+
+	<defaultCache
+		maxElementsInMemory="10000"
+		eternal="true"
+		overflowToDisk="false"
+		statistics="true" />
+	<cache name="ClientCache"
+		maxElementsInMemory="10000"
+		eternal="true"
+		overflowToDisk="false"
+		statistics="true" />
+	
+	<!--
+		This is a hack so we can run the standalone application. Normally you would
+		declare the cache used by the server only in the jar (or war) itself and not
+		in the client.
+	-->
+	<cache name="ServerCache"
+		maxElementsInMemory="10000"
+		eternal="true"
+		overflowToDisk="false"
+		statistics="true" />
+
+</ehcache>
