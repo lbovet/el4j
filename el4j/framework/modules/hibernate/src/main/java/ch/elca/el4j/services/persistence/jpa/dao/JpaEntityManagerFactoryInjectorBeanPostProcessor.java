@@ -37,7 +37,7 @@ import ch.elca.el4j.util.codingsupport.Reject;
  *   by using the default name {@link ENTITY_MANAGER_FACTORY_BEAN_DEFAULT_NAME} or
  *   via its setter method.
  *
- * @svnLink $Revision: 3875 $;$Date: 2009-08-04 14:35:53 +0200 (Di, 04 Aug 2009) $;$Author: swismer $;$URL: https://el4j.svn.sourceforge.net/svnroot/el4j/trunk/el4j/framework/modules/hibernate/src/main/java/ch/elca/el4j/services/persistence/hibernate/dao/HibernateSessionFactoryInjectorBeanPostProcessor.java $
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Simon Stelling (SST)
  */

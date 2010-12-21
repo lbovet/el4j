@@ -1,7 +1,7 @@
--- Version: $Revision: 3920 $
--- URL: $URL: https://el4j.svn.sourceforge.net/svnroot/el4j/tags/el4j_1_7/el4j/applications/templates/common/keyword/src/main/resources/etc/sql/db2/create-keyword.sql $
--- Date: $Date: 2009-09-16 13:40:27 +0200 (Wed, 16 Sep 2009) $
--- Author: $Author: dajamesthomas $
+-- Version: $Revision$
+-- URL: $URL$
+-- Date: $Date$
+-- Author: $Author$
 
 CREATE TABLE aspects_tests (
   keyid                       INTEGER        NOT NULL 

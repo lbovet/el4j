@@ -49,7 +49,7 @@ import ch.elca.el4j.util.codingsupport.Reject;
  *            (they use the <em>Strong</em> suffixes)
  *   </ul>
  *
- * @svnLink $Revision: 4110 $;$Date: 2010-08-04 14:40:16 +0200 (Mi, 04 Aug 2010) $;$Author: swrelca $;$URL: https://el4j.svn.sourceforge.net/svnroot/el4j/trunk/el4j/framework/modules/hibernate/src/main/java/ch/elca/el4j/services/persistence/hibernate/dao/ConvenienceHibernateTemplate.java $
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Simon Stelling (SST)
  */

@@ -7,10 +7,10 @@
 		http://www.springframework.org/schema/context
 		http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
-	<!-- $Revision: 4124 $ -->
-	<!-- $URL: https://el4j.svn.sourceforge.net/svnroot/el4j/trunk/el4j/applications/templates/common/refdb/src/test/resources/optional/refdb-tests-core-config.xml $ -->
-	<!-- $Date: 2010-08-19 14:24:46 +0200 (Do, 19 Aug 2010) $ -->
-	<!-- $Author: swrelca $ -->
+	<!-- $Revision$ -->
+	<!-- $URL$ -->
+	<!-- $Date$ -->
+	<!-- $Author$ -->
 
 	<!-- To scan for Spring annotations like @Service or @Inject -->
 	<context:annotation-config />
