@@ -8,10 +8,10 @@
 		http://www.springframework.org/schema/context
 		http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
-	<!-- $Revision: 4166 $ -->
-	<!-- $URL: https://el4j.svn.sourceforge.net/svnroot/el4j/branches/el4j_1_7_1/el4j/framework/modules/core/src/main/resources/optional/interception/transactionJava5Annotations.xml $ -->
-	<!-- $Date: 2010-09-13 11:21:26 +0200 (Mo, 13 Sep 2010) $ -->
-	<!-- $Author: swisswheel $ -->
+	<!-- $Revision$ -->
+	<!-- $URL$ -->
+	<!-- $Date$ -->
+	<!-- $Author$ -->
 
 	<bean class="ch.elca.el4j.tests.aspects.spring.UseInstrumentedTransactionInterceptorBeanPostProcessor" />
 </beans>

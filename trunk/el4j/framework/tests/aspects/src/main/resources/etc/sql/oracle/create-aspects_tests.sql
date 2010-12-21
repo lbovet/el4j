@@ -1,7 +1,7 @@
--- Version: $Revision: 1694 $
--- URL: $URL: https://el4j.svn.sourceforge.net/svnroot/el4j/tags/el4j_1_7/el4j/applications/templates/common/keyword/src/main/resources/etc/sql/oracle/create-keyword.sql $
--- Date: $Date: 2007-01-16 17:44:26 +0100 (Tue, 16 Jan 2007) $
--- Author: $Author: enylaios $
+-- Version: $Revision$
+-- URL: $URL$
+-- Date: $Date$
+-- Author: $Author$
 
 CREATE TABLE aspects_tests (
   keyid                       NUMBER(10) NOT NULL PRIMARY KEY,

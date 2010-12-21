@@ -20,7 +20,7 @@ package ch.elca.el4j.services.persistence.jpa.criteria;
  * The interface for the query builder. The one implements the expression gives ability to append sub expression into
  * itself.
  * 
- * @svnLink $Revision: $;$Date: $;$Author: $;$URL: $
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  * @author Huy Hung Nguyen (HUN)
  */
 public interface Expression {

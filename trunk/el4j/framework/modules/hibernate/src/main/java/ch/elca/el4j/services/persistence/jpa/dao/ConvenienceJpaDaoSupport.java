@@ -26,7 +26,7 @@ import org.springframework.orm.jpa.support.JpaDaoSupport;
  * Convenience JPA dao support class to be able to return the convenience
  * JPA template without casting it.
  *
- * @svnLink $Revision: 3873 $;$Date: 2009-08-04 13:59:45 +0200 (Di, 04 Aug 2009) $;$Author: swismer $;$URL: https://el4j.svn.sourceforge.net/svnroot/el4j/trunk/el4j/framework/modules/hibernate/src/main/java/ch/elca/el4j/services/persistence/hibernate/dao/ConvenienceHibernateDaoSupport.java $
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @author Simon Stelling (SST)
  */

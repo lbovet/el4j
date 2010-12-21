@@ -37,7 +37,7 @@ import ch.elca.el4j.services.persistence.jpa.criteria.QueryBuilder;
  * This interface extends {@link ConvenienceGenericDao} with query methods using
  * {@link CriteriaQuery}s.
  *
- * @svnLink $Revision: 4028 $;$Date: 2009-12-11 09:38:50 +0100 (Fr, 11 Dez 2009) $;$Author: swisswheel $;$URL: https://el4j.svn.sourceforge.net/svnroot/el4j/trunk/el4j/framework/modules/hibernate/src/main/java/ch/elca/el4j/services/persistence/hibernate/dao/ConvenienceGenericHibernateDao.java $
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @param <T>     the domain object type
  * @param <ID>    the id of the domain object to find

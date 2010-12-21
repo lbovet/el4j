@@ -50,7 +50,7 @@ import ch.elca.el4j.util.codingsupport.Reject;
  * This class is a JPA-specific implementation of the
  * ConvenienceGenericDao interface.
  *
- * @svnLink $Revision: 4173 $;$Date: 2010-09-20 15:55:50 +0200 (Mo, 20 Sep 2010) $;$Author: sstelca $;$URL: https://el4j.svn.sourceforge.net/svnroot/el4j/trunk/el4j/framework/modules/hibernate/src/main/java/ch/elca/el4j/services/persistence/hibernate/dao/GenericHibernateDao.java $
+ * @svnLink $Revision$;$Date$;$Author$;$URL$
  *
  * @param <T>
  *            The domain class the DAO is responsible for
