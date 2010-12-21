@@ -16,12 +16,14 @@
  */
 package ch.elca.el4j.tests.core.context.junit4;
 
-import org.junit.runners.BlockJUnit4ClassRunner;
 import org.junit.runners.model.InitializationError;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.ContextLoader;
+import org.springframework.test.context.TestContext;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.support.AbstractTestExecutionListener;
 
+import ch.elca.el4j.core.context.ModuleApplicationContext;
 import ch.elca.el4j.tests.core.ModuleTestContextLoader;
 
 /**
@@ -59,8 +61,19 @@ public class EL4JJunit4ClassRunner extends SpringJUnit4ClassRunner {
 		}
 		
 		ModuleTestContextLoader.setTestedClass(testClass);
+		
+		/* Let Spring close the application context by marking it dirty.
+		 * 
+		 * There are two reasons why closing the context is wanted:
+		 * 1. Be friendly to the database: release all db connections from the connection pool
+		 * 2. There is an application context cache inside the TestContext that checks equality
+		 *    only using the include and not the exclude locations. 
+		 */
+		getTestContextManager().registerTestExecutionListeners(new AbstractTestExecutionListener() {
+			@Override
+			public void afterTestClass(TestContext testContext) throws Exception {
+				testContext.markApplicationContextDirty();
+			}
+		});
 	}
-	
-	
-
 }
