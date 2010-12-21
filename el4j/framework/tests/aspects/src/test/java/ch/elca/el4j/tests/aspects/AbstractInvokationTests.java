@@ -16,9 +16,9 @@
  */
 package ch.elca.el4j.tests.aspects;
 
-import static junit.framework.Assert.assertEquals;
-
 import javax.annotation.Resource;
+
+import static junit.framework.Assert.assertEquals;
 
 import org.aopalliance.aop.Advice;
 import org.junit.runner.RunWith;
@@ -28,12 +28,12 @@ import org.springframework.aop.Advisor;
 import org.springframework.aop.aspectj.AspectJAroundAdvice;
 import org.springframework.aop.framework.Advised;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import ch.elca.el4j.tests.aspects.interceptor.ServiceLoggerInterceptor;
 import ch.elca.el4j.tests.aspects.services.Service;
 import ch.elca.el4j.tests.aspects.util.InvocationMonitor;
 import ch.elca.el4j.tests.core.ModuleTestContextLoader;
+import ch.elca.el4j.tests.core.context.junit4.EL4JJunit4ClassRunner;
 
 /**
  * Abstract test case for aspects tests.
@@ -43,7 +43,7 @@ import ch.elca.el4j.tests.core.ModuleTestContextLoader;
  * @author Martin Zeltner (MZE)
  * @author Reynald Borer (RBR)
  */
-@RunWith(SpringJUnit4ClassRunner.class)
+@RunWith(EL4JJunit4ClassRunner.class)
 @ContextConfiguration(
 	locations = {
 		"classpath*:mandatory/*.xml",
