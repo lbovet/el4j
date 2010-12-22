@@ -14,8 +14,8 @@
      of spring-managed testcases via the system property test.transaction.behaviour
    = Incorporated a small EhCache demo into the GUI template.
    = New correlation-ID implementation in module-core. It includes an ImplicitContextPasser.
-     The feature is demonstrated in the internal jsf-demo. jira issue ELJ-169
-   = Added JMX ClassLoader inspection bean. It is demoed in the internal jsf-demo. jira issue ELJ-136
+     The feature is demonstrated in the internal jsf-demo (ELJ-169)
+   = Added JMX ClassLoader inspection bean. It is demoed in the internal jsf-demo (ELJ-136)
    = Combination of Spring AOP namespace support and Spring autoproxy creator for
      transaction support resulted in duplicated invocation of transaction interceptor.
      This issue is now solved (ELJ-132).
@@ -35,22 +35,23 @@
    = In the GenericJpaDao: Added a light query language from HUN (Thanks!) instead of the heavy
       JPA 2.0 criteria queries.
    = Allow DataExtent to fetch the data records in just one SELECT statement using JOINs 
-     instead of one SELECT statement for each getter. jira issue ELJ-135
+     instead of one SELECT statement for each getter (ELJ-135)
    
  * Maven
-   = Various fixes to the DB-plugin: jira issues ELJ-128, ELJ-147
-   = Make repohelper plugin working on unix systems (JIRA issue ELJ-176)
+   = Various fixes to the DB-plugin: ELJ-128, ELJ-147
+   = Make repohelper plugin working on unix systems (ELJ-176)
    = Update war plugin to 2.1 (final)
    = By default the eclipse plugin tries to resolve AspectJ deps with own deps. Most
      time, the result is, that the dependency is missing in Eclipse projects.
      This problem is now solved (ELJ-160).
 
  * Open issues 
-   = maven 3: nonProxyHosts are not considered while resolving some artifacts (we had an issue with slf4l-parent)
-   = abbot plugin: The abbot plugin does not work with maven 3 (classpath issues) You can use it with maven 2.
-   = webstart demo: demo does not work (maven 2 and 3) due to ClassNotFoundException: ModuleDispatcherServlet. Seems to be a classloader issue.
-   = sonar: sonar does not yet work with maven 3
-   = archetype: archetype plugin  does not work with maven 3
+   = Maven 3: nonProxyHosts are not considered while resolving some artifacts (we had an issue with slf4l-parent)
+   = Abbot plugin: The abbot plugin does not work with maven 3 (classpath issues) You can use it with maven 2.
+   = Webstart demo: demo does not work (maven 2 and 3) due to ClassNotFoundException: ModuleDispatcherServlet. 
+     Seems to be a classloader issue.
+   = Sonar: sonar does not yet work with maven 3
+   = Archetype: archetype plugin  does not work with maven 3
 
 --------------------------------------------------------------------------------
  Date :   04.08.10
