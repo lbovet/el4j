@@ -1,0 +1,24 @@
+#java.lang.System.out:println:Use logger instead of System.out.println()
+java.lang.Throwable:printStackTrace:Use logger instead of Throwable.printStackTrace()
+java.lang.Runtime:exec:Use Executor.safeExec() (ESAPI) instead of Runtime.exec()
+javax.servlet.http.HttpSession:getId:Use Randomizer.getRandomString (ESAPI) (better not to use at all) instead of Session.getId()
+javax.servlet.ServletRequest:getUserPrincipal:Use Authenticator.getCurrentUser() (ESAPI) instead of ServletRequest.getUserPrincipal()
+javax.servlet.ServletRequest:isUserInRole:Use AccessController.isAuthorized*() (ESAPI) instead of ServletRequest.isUserInRole()
+javax.servlet.http.HttpSession:invalidate:Use Authenticator.logout() (ESAPI) instead of Session.invalidate()
+java.lang.Math.Random.*:*:Use Randomizer.* (ESAPI) instead of Math.Random.*
+java.io.File:createTempFile:Use Randomizer:getRandomFilename:(ESAPI) instead of File.createTempFile()
+javax.servlet.ServletResponse:setContentType:Use HTTPUtilities.setContentType() (ESAPI) instead of ServletResponse.setContentType()
+javax.servlet.ServletResponse:sendRedirect:Use HTTPUtilities.safeSendRedirect() (ESAPI) instead of ServletResponse.sendRedirect()
+javax.servlet.RequestDispatcher:forward:Use HTTPUtilities.safeSendForward() (ESAPI) instead of RequestDispatcher.forward()
+javax.servlet.ServletResponse:addHeader:HTTPUtilities.safeSetHeader()/safeSetHeader() 	TBD
+javax.servlet.ServletResponse:addCookie:HTTPUtilities.safeAddCookie() 	TBD
+javax.servlet.ServletRequest:isSecure:HTTPUtilties.isSecureChannel() 	TBD
+java.util.Properties:*:EncryptedProperties.* 	TBD
+javax.servlet.ServletContext:log:Logger.* 	TBD
+java.security.*:*:Use Encryptor.* 	TBD
+javax.crypto.*:*:Use Encryptor.* 	TBD
+java.net.URLEncoder:*:
+java.net.Decoder:*:Encoder.encodeForURL()/decodeForURL() 	TBD
+java.sql.Statement:execute:PreparedStatement.execute 	TBD
+javax.servlet.ServletResponse:encodeURL:HTTPUtilities.safeEncodeURL() (better not to use at all) 	TBD
+javax.servlet.ServletResponse:encodeRedirectURL:HTTPUtilities.safeEncodeRedirectURL() (better not to use at all)
