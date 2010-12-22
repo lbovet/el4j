@@ -17,7 +17,7 @@
 	
 	<groupId>ch.elca.el4j.archetypes</groupId>
 	<artifactId>EL4JCore</artifactId>
-	<version>3.1-SNAPSHOT</version>
+	<version>3.1</version>
 	<packaging>jar</packaging>
 
 	<name>Hello World Module Archetype</name>
