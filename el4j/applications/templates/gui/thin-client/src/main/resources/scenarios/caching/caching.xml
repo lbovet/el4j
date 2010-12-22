@@ -36,6 +36,7 @@
 		<constructor-arg value="true" />
 		<constructor-arg value="true" />
 		<constructor-arg value="true" />
+		<constructor-arg value="true" />
 	</bean>
 	
 	<!-- make a cache of the not yet cached method -->
