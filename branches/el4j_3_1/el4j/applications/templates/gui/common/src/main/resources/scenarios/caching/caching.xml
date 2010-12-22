@@ -32,6 +32,7 @@
 		<constructor-arg value="true" />
 		<constructor-arg value="true" />
 		<constructor-arg value="true" />
+		<constructor-arg value="true" />
 	</bean>
 	
 	<ehcache:proxy id="remoteCachingService" refId="nonCachingService">
