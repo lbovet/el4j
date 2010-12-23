@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AWTTestScript>
+
+	<!-- General components. -->
+	<component class="javax.swing.JDesktopPane" id="JDesktopPane Instance" index="1" parent="JPanel Instance" window="mainFrame" />
+	<component class="javax.swing.JLayeredPane" id="JLayeredPane Instance" index="1" parent="JRootPane Instance" window="mainFrame" />
+	<component class="javax.swing.JMenuBar" id="JMenuBar Instance" index="2" parent="JLayeredPane Instance" window="mainFrame" />
+	<component class="javax.swing.JPanel" id="JPanel Instance" index="0" parent="JLayeredPane Instance" window="mainFrame" />
+	<component class="javax.swing.JPopupMenu" id="JPopupMenu Instance" index="0" invoker="demoMenu" />
+	<component class="javax.swing.JRootPane" id="JRootPane Instance" index="0" parent="mainFrame" />
+	<component class="javax.swing.JMenu" id="demoMenu" index="2" name="demoMenu" parent="JMenuBar Instance" text="Demos" window="mainFrame" />
+	<component class="javax.swing.JFrame" id="mainFrame" name="mainFrame" root="true" title="AppFramework + MDI Example" />
+
+	<!-- Specific Components -->
+	<component class="javax.swing.JInternalFrame" id="Cancelable Demo Form" index="0" name="Cancelable Demo Form" parent="JDesktopPane Instance" title="Cancelable Demo Form" window="mainFrame" />
+	<component class="javax.swing.JMenuItem" id="Cancelable Form Demo" index="1" parent="JPopupMenu Instance" text="Cancelable Form Demo" window="mainFrame" />
+	<component class="javax.swing.JTextField" id="firstName" index="1" parent="Cancelable Demo Form" />
+	<component class="javax.swing.JButton" id="accept" tag="Apply" parent="Cancelable Demo Form" />
+	<component class="javax.swing.JButton" id="reject" tag="Revert" parent="Cancelable Demo Form" />
+
+	<!-- Launcher -->
+	<launch args="[]" class="ch.elca.el4j.demos.gui.MainStandaloneMDI" method="main" />
+	<wait args="mainFrame" class="abbot.tester.ComponentTester" method="assertComponentShowing" />
+	<wait args="JMenuBar Instance" class="abbot.tester.ComponentTester" method="assertComponentShowing" />
+	
+	<action args="Cancelable Form Demo" method="actionSelectMenuItem" />
+	<wait args="Cancelable Demo Form" class="abbot.tester.ComponentTester" method="assertComponentShowing" />
+	<assert component="firstName" method="getText" value="Nobody" />
+	<action args="firstName,Somebody" class="javax.swing.JTextField" method="actionCommitText" />
+	<action args="accept" method="actionClick" />
+	<action args="firstName,Another" class="javax.swing.JTextField" method="actionCommitText" />
+	<action args="reject" method="actionClick" />
+	<assert component="firstName" method="getText" value="Somebody" />
+
+	<!--<annotation userDismiss="true">
+		<![CDATA[<html>Performed the Cancelable Demo test.
+		<ul>
+		<li>Setting text</li>
+		<li>Accepting new text</li>
+		<li>Changing and then restoring previously accepted text.</li>
+		</ul>
+		</html>]]>
+	</annotation>
+-->	
+	
+	<action args="Cancelable Demo Form" class="javax.swing.JInternalFrame" method="actionClose" />
+	<wait args="Cancelable Demo Form" class="abbot.tester.ComponentTester" invert="true" method="assertComponentShowing" />
+	
+	<!--
+	<action args="Master/Detail Demo" method="actionSelectMenuItem" />
+	<wait args="ch.elca.el4j.demos.gui.MasterDetailDemoForm" class="abbot.tester.ComponentTester" method="assertComponentShowing" />
+	<action args="ch.elca.el4j.demos.gui.MasterDetailDemoForm" class="javax.swing.JInternalFrame" method="actionClose" />
+	<wait args="ch.elca.el4j.demos.gui.MasterDetailDemoForm" class="abbot.tester.ComponentTester" invert="true" method="assertComponentShowing" />
+
+	<action args="Binding Demo" method="actionSelectMenuItem" />
+	<wait args="ch.elca.el4j.demos.gui.BindingDemoForm" class="abbot.tester.ComponentTester" method="assertComponentShowing" />
+	<action args="ch.elca.el4j.demos.gui.BindingDemoForm" class="javax.swing.JInternalFrame" method="actionClose" />
+	<wait args="ch.elca.el4j.demos.gui.BindingDemoForm" class="abbot.tester.ComponentTester" invert="true" method="assertComponentShowing" />
+
+	<action args="Search Form Demo" method="actionSelectMenuItem" />
+	<wait args="search" class="abbot.tester.ComponentTester" method="assertComponentShowing" />
+	<action args="search" class="javax.swing.JInternalFrame" method="actionClose" />
+	<wait args="search" class="abbot.tester.ComponentTester" invert="true" method="assertComponentShowing" />
+
+	<action args="EventBus Demo" method="actionSelectMenuItem" />
+	<wait args="ch.elca.el4j.demos.gui.EventBusDemoForm" class="abbot.tester.ComponentTester" method="assertComponentShowing" />
+
+	<action args="Send an ExampleEvent" method="actionSelectMenuItem" />
+	
+	<action args="ch.elca.el4j.demos.gui.EventBusDemoForm" class="javax.swing.JInternalFrame" method="actionClose" />
+	<wait args="ch.elca.el4j.demos.gui.EventBusDemoForm" class="abbot.tester.ComponentTester" invert="true" method="assertComponentShowing" />
+	 -->
+
+	<!-- <action args="10000" method="actionDelay" /> -->
+
+	<terminate />
+
+</AWTTestScript>
+
