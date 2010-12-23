@@ -8,7 +8,7 @@
 	<parameter name="ReportTitle" class="java.lang.String"/>
 	<field name="name" class="java.lang.String"/>
 	<field name="description" class="java.lang.String"/>
-	<field name="whenInserted" class="java.util.Date"/>
+	<field name="whenInserted" class="org.joda.time.DateTime"/>
 	
 	<group name="RefGroup" minHeightToStartNewPage="60">
 		<groupFooter>
@@ -100,7 +100,7 @@
 					<bottomPen lineWidth="0.5"/>
 				</box>
 				<textElement/>
-				<textFieldExpression class="java.util.Date"><![CDATA[$F{whenInserted}]]></textFieldExpression>
+				<textFieldExpression class="java.util.Date"><![CDATA[$F{whenInserted}.toDate()]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
