@@ -18,7 +18,8 @@
 	</description>
 	<url>http://el4j.sourceforge.net/</url>
 	<prerequisites>
-		<maven>${el4j.maven.version}</maven>
+		<!-- currently not using ${el4j.maven.version}, because maven libraries for 3.0.1 don't exist yet -->
+		<maven>3.0.1</maven>
 	</prerequisites>
 	<issueManagement>
 		<system>Sourceforge</system>
@@ -2846,7 +2847,8 @@
 
 		<!-- Used Maven (Wagon and Doxia) version -->
 		<!-- IMPORTANT: Update version in "maven/extensions/slf4j-maven/pom.xml" -->
-		<el4j.maven.version>2.2.1</el4j.maven.version>
+		<!-- IMPORTANT: Check whether project/prerequisites/maven can be updated as well -->
+		<el4j.maven.version>3.0.1</el4j.maven.version>
 		<!-- IMPORTANT: Update version in "maven/extensions/slf4j-maven/pom.xml" -->
 		<el4j.wagon.version>1.0-beta-6</el4j.wagon.version>
 		<el4j.doxia.version>1.1</el4j.doxia.version>
