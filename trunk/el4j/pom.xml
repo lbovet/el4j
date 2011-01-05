@@ -2797,7 +2797,7 @@
 		<version.spring>3.0.5.RELEASE</version.spring>
 		
 		<!-- Spring security -->
-		<version.springsecurity>3.0.4.RELEASE</version.springsecurity>
+		<version.springsecurity>3.0.5.RELEASE</version.springsecurity>
 		
 		<!-- AspectJ version -->
 		<version.aspectj>1.6.10</version.aspectj>
