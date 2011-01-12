@@ -174,13 +174,57 @@
 			</plugin>
 		</plugins>
 	</reporting>
+	
+	<!--
+		The following sections and config options are needed for the release
+		plugin to work. The current option contents were used when testing
+		this with a local svn server.
+	-->
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-release-plugin</artifactId>
+				<version>2.1</version>
+				<configuration>
+					<tagBase>http://localhost/svn/gui-template/tags</tagBase>
+					<!-- Perhaps not needed. -->
+					<username>admin</username>
+					<password>admin</password>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<scm>
+		<!-- This has to be the url containing this pom file. -->
+		<url>scm:svn:http://localhost/svn/gui-template/trunk</url>
+		<developerConnection>
+			scm:svn:http://localhost/svn/gui-template/trunk
+		</developerConnection>
+		<connection>
+			scm:svn:http://localhost/svn/gui-template/trunk
+		</connection>
+	</scm>
 
 	<distributionManagement>
+		<!--
+			If the 'site' section is available, release:perform additionally
+			executes deploy-site.
+		-->
 		<site>
 			<id>GuiTemplate</id>
 			<name>GuiTemplate</name>
 			<!-- must be an absolute path -->
-			<url>file://localhost/tmp/guitemplate</url>
+			<url>file://D:/guitemplate/site</url>
 		</site>
+		<repository>
+			<id>GuiTemplateRepo</id>
+			<name>GuiTemplateRepo</name>
+			<!-- must be an absolute path -->
+			<url>file://D:/guitemplate/repo</url>
+		</repository>
 	</distributionManagement>
+
 </project>
