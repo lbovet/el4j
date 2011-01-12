@@ -129,7 +129,7 @@
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>findbugs-maven-plugin</artifactId>
-				<version>1.2-el4j_20080716_1200</version>
+				<version>${version.findbugs-maven-plugin}</version>
 				<configuration>
 					<xmlOutput>true</xmlOutput>
 					<!-- Min, Default, Max -->
@@ -170,7 +170,7 @@
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>dashboard-maven-plugin</artifactId>
-				<version>1.0-el4j_20080408</version>
+				<version>${version.dashboard-maven-plugin}</version>
 			</plugin>
 		</plugins>
 	</reporting>
