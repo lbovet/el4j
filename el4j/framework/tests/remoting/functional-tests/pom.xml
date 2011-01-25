@@ -127,10 +127,10 @@
 								<phase>pre-integration-test</phase>
 								<id>Sleep</id>
 								<configuration>
-									<tasks>
+									<target>
 										<echo message="sleeping now"></echo>
 										<sleep seconds="10"></sleep>
-									</tasks>
+									</target>
 								</configuration>
 								<goals>
 									<goal>run</goal>
@@ -163,10 +163,10 @@
 								<id>Sleep</id>
 								<phase>pre-integration-test</phase>
 								<configuration>
-									<tasks>
+									<target>
 										<echo message="sleeping now"></echo>
 										<sleep seconds="10"></sleep>
-									</tasks>
+									</target>
 								</configuration>
 								<goals>
 									<goal>run</goal>
@@ -185,10 +185,10 @@
 								<id>Sleep</id>
 								<phase>integration-test</phase>
 								<configuration>
-									<tasks>
+									<target>
 										<echo message="sleeping now"></echo>
 										<sleep seconds="10"></sleep>
-									</tasks>
+									</target>
 								</configuration>
 								<goals>
 									<goal>run</goal>
@@ -249,14 +249,14 @@
 										<goal>run</goal>
 									</goals>
 									<configuration>
-										<tasks>
+										<target>
 											<copy overwrite="true"
 												todir="${tomcat6x.home}/conf">
 												<fileset
 													dir="${el4j.external}/etc/tomcat"
 													excludes="**/.svn" />
 											</copy>
-										</tasks>
+										</target>
 									</configuration>
 								</execution>
 							</executions>

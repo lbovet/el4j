@@ -63,7 +63,7 @@
 							<execution>
 								<phase>pre-integration-test</phase>
 								<configuration>
-									<tasks>
+									<target>
 										<java
 											classname="ch.elca.el4j.tests.services.remoting.loadbalancing.server.LbTestServerNoContextPassing"
 											fork="true" spawn="true">
@@ -97,7 +97,7 @@
 											Running RMI servers ...
 										</echo>
 										<sleep seconds="20"/>
-									</tasks>
+									</target>
 								</configuration>
 								<goals>
 									<goal>run</goal>
