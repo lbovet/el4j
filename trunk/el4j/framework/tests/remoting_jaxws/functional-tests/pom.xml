@@ -173,14 +173,14 @@
 								<id>configure-tomcat</id>
 								<phase>pre-integration-test</phase>
 								<configuration>
-									<tasks>
+									<target>
 										<copy overwrite="true"
 											todir="${tomcat6x.home}/conf">
 											<fileset
 												dir="${el4j.external}/etc/tomcat"
 												excludes="**/.svn" />
 										</copy>
-									</tasks>
+									</target>
 								</configuration>
 								<goals>
 									<goal>run</goal>
@@ -194,10 +194,10 @@
 								<id>sleep-after-deployment</id>
 								<phase>integration-test</phase>
 								<configuration>
-									<tasks>
+									<target>
 										<echo message="Sleeping now for 2 seconds after deployment but before executing the JAX-WS tests."/>
 										<sleep seconds="2"/>
-									</tasks>
+									</target>
 								</configuration>
 								<goals>
 									<goal>run</goal>
