@@ -35,36 +35,10 @@
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>exec-maven-plugin</artifactId>
 				<configuration>
-					<mainClass>ch.elca.el4j.xmlmerge.tool.XmlMergeTool</mainClass>
+					<mainClass>ch.elca.el4j.services.xmlmerge.tool.XmlMergeTool</mainClass>
 					<keepAlive>false</keepAlive>
 				</configuration>
 			</plugin>
 		</plugins>
 	</build>
-	
-	<!--
-		This profile was added only as example due to problem passing argument
-		by system property. See following JIRA issue for more information:
-		http://jira.codehaus.org/browse/MEXEC-5
-	-->
-	<profiles>
-		<profile>
-			<id>example</id>
-			<build>
-				<plugins>
-					<plugin>
-						<groupId>org.codehaus.mojo</groupId>
-						<artifactId>exec-maven-plugin</artifactId>
-						<configuration>
-							<arguments>
-								<argument>file1.xml</argument>
-								<argument>file2.xml</argument>
-								<argument>file3.xml</argument>
-							</arguments>
-						</configuration>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
-	</profiles>
 </project>
