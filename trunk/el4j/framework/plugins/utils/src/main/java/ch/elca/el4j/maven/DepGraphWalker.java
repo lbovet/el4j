@@ -30,6 +30,7 @@ import org.apache.maven.artifact.repository.ArtifactRepository;
 import org.apache.maven.artifact.resolver.AbstractArtifactResolutionException;
 import org.apache.maven.artifact.resolver.ArtifactCollector;
 import org.apache.maven.artifact.resolver.ArtifactResolver;
+import org.apache.maven.artifact.resolver.ResolutionListener;
 import org.apache.maven.artifact.resolver.filter.ScopeArtifactFilter;
 import org.apache.maven.project.MavenProject;
 import org.codehaus.plexus.util.dag.CycleDetectedException;
@@ -241,7 +242,7 @@ public class DepGraphWalker {
 			collector.collect(m_project.getDependencyArtifacts(), m_project
 				.getArtifact(), m_repo, m_project
 				.getRemoteArtifactRepositories(), metadataSource,
-				filter, Collections.singletonList(listener));
+				filter, Collections.<ResolutionListener>singletonList(listener));
 
 		} catch (AbstractArtifactResolutionException e) {
 			throw new DepGraphWalkerException(e);
