@@ -23,11 +23,10 @@ import java.lang.reflect.Method;
 import org.apache.maven.cli.MavenCli;
 import org.apache.maven.cli.PrintStreamLogger;
 import org.codehaus.plexus.classworlds.ClassWorld;
+import org.codehaus.plexus.logging.Logger;
 
 import ch.elca.el4j.maven.logging.console.ColorLogger;
 import ch.elca.el4j.maven.logging.html.HtmlLogger;
-
-import com.jcraft.jsch.Logger;
 
 /**
  * This is an absolutely horrible hack, and of course
@@ -62,10 +61,10 @@ public final class ColorMavenCli300 {
 			return MavenCli.main(args, classWorld);
 		} else if (type.equals("ansi")) {
 			return doMainWithLogger(args, classWorld,
-				new ColorLogger(Logger.INFO, "ignored"));
+				new ColorLogger(Logger.LEVEL_INFO, "ignored"));
 		} else if (type.equals("html")) {
 			return doMainWithLogger(args, classWorld,
-				new HtmlLogger(Logger.INFO, "ignored"));
+				new HtmlLogger(Logger.LEVEL_INFO, "ignored"));
 		} else {
 			return MavenCli.main(args, classWorld);
 		}

@@ -18,8 +18,7 @@
 	</description>
 	<url>http://el4j.sourceforge.net/</url>
 	<prerequisites>
-		<!-- currently not using ${el4j.maven.version}, because maven libraries for 3.0.1 don't exist yet -->
-		<maven>3.0.1</maven>
+		<maven>${el4j.maven.version}</maven>
 	</prerequisites>
 	<issueManagement>
 		<system>Sourceforge</system>
@@ -2391,28 +2390,13 @@
 			<!-- Maven and Codehaus dependecies, mostly used in our plugins -->
 			<dependency>
 				<groupId>org.apache.maven</groupId>
-				<artifactId>maven-plugin-descriptor</artifactId>
-				<version>${el4j.maven.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.apache.maven</groupId>
-				<artifactId>maven-error-diagnostics</artifactId>
-				<version>${el4j.maven.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.apache.maven</groupId>
 				<artifactId>maven-model</artifactId>
-				<version>${el4j.maven.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.apache.maven</groupId>
-				<artifactId>maven-project</artifactId>
 				<version>${el4j.maven.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.apache.maven.reporting</groupId>
 				<artifactId>maven-reporting-api</artifactId>
-				<version>${el4j.maven.version}</version>
+				<version>3.0-alpha-2</version>
 			</dependency>
 			<dependency>
 				<groupId>org.apache.maven</groupId>
@@ -2422,16 +2406,6 @@
 			<dependency>
 				<groupId>org.apache.maven</groupId>
 				<artifactId>maven-artifact</artifactId>
-				<version>${el4j.maven.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.apache.maven</groupId>
-				<artifactId>maven-artifact-manager</artifactId>
-				<version>${el4j.maven.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.apache.maven</groupId>
-				<artifactId>maven-artifact-test</artifactId>
 				<version>${el4j.maven.version}</version>
 			</dependency>
 			<dependency>
@@ -2451,33 +2425,13 @@
 			</dependency>
 			<dependency>
 				<groupId>org.apache.maven</groupId>
-				<artifactId>maven-plugin-parameter-documenter</artifactId>
-				<version>${el4j.maven.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.apache.maven</groupId>
-				<artifactId>maven-profile</artifactId>
-				<version>${el4j.maven.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.apache.maven</groupId>
-				<artifactId>maven-plugin-registry</artifactId>
-				<version>${el4j.maven.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.apache.maven</groupId>
 				<artifactId>maven-plugin-api</artifactId>
 				<version>${el4j.maven.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.apache.maven</groupId>
-				<artifactId>maven-monitor</artifactId>
-				<version>${el4j.maven.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.apache.maven</groupId>
 				<artifactId>maven-toolchain</artifactId>
-				<version>${el4j.maven.version}</version>
+				<version>3.0-alpha-2</version>
 			</dependency>
 			<!--end-->
 			<dependency>
@@ -2847,8 +2801,7 @@
 
 		<!-- Used Maven (Wagon and Doxia) version -->
 		<!-- IMPORTANT: Update version in "maven/extensions/slf4j-maven/pom.xml" -->
-		<!-- IMPORTANT: Check whether project/prerequisites/maven can be updated as well -->
-		<el4j.maven.version>2.2.1</el4j.maven.version>
+		<el4j.maven.version>3.0.1</el4j.maven.version>
 		<!-- IMPORTANT: Update version in "maven/extensions/slf4j-maven/pom.xml" -->
 		<el4j.wagon.version>1.0-beta-6</el4j.wagon.version>
 		<el4j.doxia.version>1.1</el4j.doxia.version>
