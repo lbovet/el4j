@@ -6,7 +6,7 @@
  * Core
    = Upgrade to Maven 3.0.1 (30% faster than Maven 2, much cleaner internally, more error output), 
      quite good backward compatibility
-     Some small changes to adapt to Maven 3.
+     Some small changes to adapt to Maven 3, as well as dropping the maven abbot and rec plugins.
    = Introduction of '@ExtendedContextConfiguration' annotation that allows using use Spring's 
      '@ContextConfiguration' for JUnit4 test cases while specifying all configuration properties 
 	 for the ModuleApplicationContext used.
@@ -44,12 +44,13 @@
    = By default the eclipse plugin tries to resolve AspectJ deps with own deps. Most
      time, the result is, that the dependency is missing in Eclipse projects.
      This problem is now solved (ELJ-160).
+   = Abbot plugin: The abbot plugin does not work with maven 3 (classpath issues). As a result it is no longer
+     offered in EL4J 3.1.
+   = Rec plugin: The rec plugin does not work with maven 3 (API changes). As a result it is no longer offered in
+     EL4J 3.1.
 
  * Open issues 
    = Maven 3: nonProxyHosts are not considered while resolving some artifacts (we had an issue with slf4l-parent)
-   = Abbot plugin: The abbot plugin does not work with maven 3 (classpath issues) You can use it with maven 2.
-   = Webstart demo: demo does not work (maven 2 and 3) due to ClassNotFoundException: ModuleDispatcherServlet. 
-     Seems to be a classloader issue.
    = Sonar: sonar does not yet work with maven 3
    = Archetype: archetype plugin  does not work with maven 3
 
