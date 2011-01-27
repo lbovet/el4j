@@ -67,6 +67,14 @@
 									<version>${version.el4j-framework.current}</version>
 									<includeInJnlp>false</includeInJnlp>
 								</jarResource>
+								<!-- workaround for a bug in the webstart plugin -->
+								<!-- possibly related to http://jira.codehaus.org/browse/MWEBSTART-148 or http://jira.codehaus.org/browse/MWEBSTART-160 -->
+								<!-- IMPORTANT: if you change the slf4j version in the root pom, change it here too -->
+								<jarResource>
+									<groupId>org.slf4j</groupId>
+									<artifactId>slf4j-api</artifactId>
+									<version>1.6.1</version>
+								</jarResource>
 							</jarResources>
 						</jnlpFile>
 					</jnlpFiles>
