@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+	Spring bean configuration file to configure the cache.
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:ehcache="http://www.springmodules.org/schema/ehcache"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springmodules.org/schema/ehcache http://www.springmodules.org/schema/cache/springmodules-ehcache.xsd">
+
+	<!-- $Revision$ -->
+	<!-- $URL$ -->
+	<!-- $Date$ -->
+	<!-- $Author$ -->
+	
+	<bean name="nonCachingService"
+		class="ch.elca.el4j.demos.gui.service.impl.CacheableServiceImpl" />
+	
+	<!-- this creates a bean named 'cacheManager' -->
+	<ehcache:config configLocation="classpath:ehcache.xml" />
+	
+	<!-- turn on jmx statistics -->
+	<bean id="mbeanServer" class="org.springframework.jmx.support.MBeanServerFactoryBean">
+		<property name="locateExistingServerIfPossible" value="true" />
+	</bean>
+
+	<bean class="net.sf.ehcache.management.ManagementService" init-method="init">
+		<constructor-arg ref="cacheManager" />
+		<constructor-arg ref="mbeanServer" />
+		<constructor-arg value="true" />
+		<constructor-arg value="true" />
+		<constructor-arg value="true" />
+		<constructor-arg value="true" />
+		<constructor-arg value="true" />
+	</bean>
+	
+	<ehcache:proxy id="remoteCachingService" refId="nonCachingService">
+		<ehcache:caching methodName="computeResultCached" cacheName="ServerCache" />
+		<ehcache:flushing methodName="deleteCaches" cacheNames="ServerCache" />
+	</ehcache:proxy>
+	
+</beans>
