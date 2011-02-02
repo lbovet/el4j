@@ -12,12 +12,12 @@
 	<parent>
 		<groupId>ch.elca.el4j</groupId>
 		<artifactId>el4j</artifactId>
-		<version>3.2-SNAPSHOT</version>
+		<version>3.1</version>
 	</parent>
 	
 	<groupId>ch.elca.el4j.archetypes</groupId>
 	<artifactId>EL4JProject</artifactId>
-	<version>3.2-SNAPSHOT</version>
+	<version>3.1</version>
 	<packaging>jar</packaging>
 
 	<name>EL4J based Project Archetype</name>

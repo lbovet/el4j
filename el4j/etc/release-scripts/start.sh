@@ -28,7 +28,7 @@ echo "Do you want to prepare a release for internal? (y/n)"
 read performInternal
 echo "What will be the next version of EL4J? That is the number of the new release or release candidate (without -rc). Example: 1.5.1 or 1.7"
 read nextVersion
-echo "You will prepare version $nextVersion with the following settings: performExternal=$performExternal, performInternal=$performInternal. OK?"
+echo "You will prepare version $nextversion with the following settings: performExternal=$performExternal, performInternal=$performInternal. OK?"
 read dummy
 
 echo $performInternal > .performInternal
@@ -59,7 +59,7 @@ else
 	
 	#echo "Checkout internal? (y/n)"
 	#read performInternal
-	auto=false
+	#auto=false
 fi
 
 mkdir $workingDir

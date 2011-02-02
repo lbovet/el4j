@@ -1,6 +1,6 @@
 # EL4J aliases (do not delete this marker comment)
-alias debugmaven='export MAVEN_OPTS="-ea -Xmx1024M -Xss128k -XX:MaxPermSize=512M -Duser.language=en -Duser.region=US -Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=8000 -Dcom.sun.management.jmxremote"'
-alias runmaven='export MAVEN_OPTS="-ea -Xmx1024M -Xss128k -XX:MaxPermSize=512M -Duser.language=en -Duser.region=US -Dcom.sun.management.jmxremote"'
+alias debugmaven='export MAVEN_OPTS="-ea -Xmx1024M -Xss128k -XX:MaxPermSize=256M -Duser.language=en -Duser.region=US -Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=8000 -Dcom.sun.management.jmxremote"'
+alias runmaven='export MAVEN_OPTS="-ea -Xmx1024M -Xss128k -XX:MaxPermSize=256M -Duser.language=en -Duser.region=US -Dcom.sun.management.jmxremote"'
 export CATALINA_OPTS="-Xmx1024M -Xss128k -XX:MaxPermSize=256M"
 runmaven
 
