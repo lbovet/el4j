@@ -28,10 +28,6 @@ Plugins
 *----------------------------+-------------------+  
 | {{{./maven-depgraph-plugin/index.html}dependency-graph}}               | Tool to visualize a project's depedency graph.
 *----------------------------+-------------------+  
-| {{{./maven-rec-plugin/index.html}mvn-rec}}               			   | Tool to run maven commands for a project and all its dependent projets.
-*----------------------------+-------------------+  
-| {{{./maven-abbot-plugin/index.html}abbot}}               			   | Integrates abbot GUI tests into the maven build lifecycle.
-*----------------------------+-------------------+  
 | {{{./maven-duplicatefinder-plugin/index.html}duplicatefinder}}         | Tool to find different versions of the same jar in the classpath.
 *----------------------------+-------------------+  
 | {{{./maven-spring-ide-plugin/index.html}spring-ide}}               	   | Collects all beans files that are used in a ModuleApplicationContext.
