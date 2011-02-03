@@ -58,17 +58,17 @@ Documentation
 
 * Links to external documenation (selection)
 
-    * {{{http://www.springframework.org/documentation} Spring documentation}}
+    * {{{http://www.springsource.org/documentation} Spring documentation}}
 
-    * {{{http://www.maestrodev.com/better-build-maven} Better Builds with Maven (Free book)}}
+    * {{{http://repo.exist.com/dist/maestro/1.7.0/BetterBuildsWithMaven.pdf} Better Builds with Maven (Free book)}}
 	
-    * {{{http://www.sonatype.com/books/maven-book/reference/} Maven: The Definitive Guide (Free book)}}
+    * {{{http://www.sonatype.com/books/mvnref-book/reference/public-book.html} Maven: The Complete Reference (Free book)}}
 
       
 * Release notes
 
   Release notes directly from the 
-  {{{http://el4j.svn.sourceforge.net/viewvc/*checkout*/el4j/trunk/el4j/etc/ReleaseNotes.txt}
+  {{{https://el4j.svn.sourceforge.net/svnroot/el4j/trunk/el4j/etc/ReleaseNotes.txt}
   sourceforge subversion repository}}.
 
 * Generated framework documentation
