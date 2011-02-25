@@ -24,9 +24,14 @@ import java.lang.reflect.Method;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
+import javax.inject.Inject;
+
+import org.junit.Assert;
 import org.junit.Test;
+import org.springframework.stereotype.Component;
 import org.springframework.util.ClassUtils;
 
+import ch.elca.el4j.tests.util.interfaceenrichment.InterfaceEnrichmentTest.MyArrayInterface;
 import ch.elca.el4j.util.interfaceenrichment.EnrichmentDecorator;
 import ch.elca.el4j.util.interfaceenrichment.InterfaceEnricher;
 import ch.elca.el4j.util.interfaceenrichment.MethodDescriptor;
@@ -44,10 +49,12 @@ public class InterfaceEnrichmentTest {
 	 *
 	 * @author Martin Zeltner (MZE)
 	 */
+	@Component  // test whether annotations are copied to wrapper interface
 	public interface MyArrayInterface {
 		/**
 		 * @return Returns the complex array.
 		 */
+		@Inject // test whether annotations are copied to wrapper interface
 		public MyValueObject[] getMyArray();
 		
 		/**
@@ -170,6 +177,7 @@ public class InterfaceEnrichmentTest {
 		}
 	}
 
+
 	/**
 	 * Tests if enrichment of an interface with array parameter and array return
 	 * type works correctly.
@@ -226,4 +234,37 @@ public class InterfaceEnrichmentTest {
 		assertEquals(parentInterface, newInterface.getInterfaces()[0]);
 		assertEquals(Remote.class, newInterface.getInterfaces()[1]);
 	}
+	
+	/**
+	 * Tests if enrichment of an interface copies annotations over
+	 *  (on methods and on the interface).
+	 */
+	@Test
+	public void testInterfaceEnrichmentWithAnnotations() {
+	
+		InterfaceEnricher ie = new InterfaceEnricher();
+		Class<MyArrayInterface> oldInterface = MyArrayInterface.class;
+		EnrichmentDecorator ed = new MyEnrichmentDecorator();
+		ClassLoader cl = Thread.currentThread().getContextClassLoader();
+		
+		Class<?> newInterface  = ie.createShadowInterfaceAndLoadItDirectly(
+			oldInterface, ed, cl);
+
+		assertNotNull(newInterface);
+		
+		assertNotNull(newInterface.getAnnotation(Component.class));
+		System.out.println(newInterface.getAnnotation(Component.class));
+		try {
+			Method annotatedMethod = newInterface.getMethod("getMyArray");
+			assertNotNull(annotatedMethod.getAnnotation(Inject.class));
+			System.out.println(annotatedMethod.getAnnotation(Inject.class));
+		} catch (SecurityException e) {
+			e.printStackTrace();
+			Assert.fail("sec exception " + e);
+		} catch (NoSuchMethodException e) {
+			e.printStackTrace();
+			Assert.fail("no such method exception " + e);
+		}
+	}
+	
 }
