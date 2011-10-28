@@ -64,6 +64,14 @@ public class ConvenienceJpaTemplate extends JpaTemplate {
 	}
 
 	/**
+	 * Constructor.
+	 * @param emf EntityManagerFactory used to create EntityManager
+	 */
+	public ConvenienceJpaTemplate(EntityManager em) {
+		super(em);
+	}
+	
+	/**
 	 * Merges the given persistent instance in a strong way: does the
 	 * same as the <code>saveOrUpdate(Object)</code> method, but throws a more
 	 * specific <code>OptimisticLockingFailureException</code> in the case of
