@@ -20,7 +20,6 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
 
-import org.hibernate.criterion.DetachedCriteria;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.DataRetrievalFailureException;
@@ -71,21 +70,6 @@ public interface GenericJpaRepository<T, ID extends Serializable> {
 	 * @return The refreshed entity
 	 */
 	T refresh(T entity) throws DataAccessException,
-		DataRetrievalFailureException;
-	
-	/**
-	 * Re-reads the state of the given domain object from the undermost
-	 * store (eg. the database).
-	 *
-	 * @param entity
-	 *            The domain object to re-load the state of
-	 * @throws DataAccessException
-	 *             If general data access problem occurred
-	 * @throws DataRetrievalFailureException
-	 *             If domain object could not be re-loaded
-	 * @return The reloaded entity
-	 */
-	T reload(T entity) throws DataAccessException,
 		DataRetrievalFailureException;
 
 	/**
@@ -363,21 +347,17 @@ public interface GenericJpaRepository<T, ID extends Serializable> {
 		DataRetrievalFailureException;
 	
 	/**
-	 * Re-reads the state of the given domain object from the undermost
-	 * store (eg. the database).
-	 * Loads at least the given extent.
+	 * Get all the references with the same name.
 	 *
-	 * @param entity
-	 *            The domain object to re-read the state of
-	 * @param extent
-	 *            the extent in which objects get loaded.
+	 * @param name
+	 *            Is the name of a domain object.
+	 * @return Returns the desired domain object.
 	 * @throws DataAccessException
-	 *             If general data access problem occurred
+	 *             If general data access problem occurred.
 	 * @throws DataRetrievalFailureException
-	 *             If domain object could not be re-read
-	 * @return The refreshed entity
+	 *             If the domain object could not be retrieved.
 	 */
-	T reload(T entity, DataExtent extent) throws DataAccessException,
-		DataRetrievalFailureException;
+	public List<T> getByName(String name)
+		throws DataAccessException, DataRetrievalFailureException;
 	
 }
