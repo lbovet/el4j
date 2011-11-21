@@ -246,7 +246,7 @@ public class GenericJpaDao<T, ID extends Serializable>
 	/** {@inheritDoc} */
 	@Transactional(propagation = Propagation.REQUIRED)
 	public void delete(T entity) throws DataAccessException {
-		T e = entity;
+		T e = getConvenienceJpaTemplate().merge(entity);
 		getConvenienceJpaTemplate().remove(e);
 	}
 	
