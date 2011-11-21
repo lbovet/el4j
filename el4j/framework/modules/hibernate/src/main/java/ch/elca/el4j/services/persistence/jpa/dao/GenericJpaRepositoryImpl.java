@@ -202,7 +202,7 @@ public class GenericJpaRepositoryImpl<T, ID extends Serializable> implements
 	/** {@inheritDoc} */
 	@Transactional(propagation = Propagation.REQUIRED)
 	public void delete(T entity) throws DataAccessException {
-		T e = entity;
+		T e = entityManager.merge(entity);
 		entityManager.remove(e);
 	}
 
