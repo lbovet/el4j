@@ -45,6 +45,7 @@ import ch.elca.el4j.services.persistence.hibernate.dao.extent.DataExtent;
 import ch.elca.el4j.services.persistence.hibernate.dao.extent.ExtentEntity;
 import ch.elca.el4j.services.persistence.jpa.criteria.QueryBuilder;
 import ch.elca.el4j.services.persistence.jpa.dao.extentstrategies.ExtentFetcher;
+import ch.elca.el4j.services.persistence.jpa.dao.extentstrategies.JpaHibernateExtentFetcher;
 import ch.elca.el4j.util.codingsupport.Reject;
 
 /**
@@ -53,6 +54,9 @@ import ch.elca.el4j.util.codingsupport.Reject;
  * 
  * Note: This class does not use the JpaTemplate. In order to remove supplementary layers, it was decided to not use 
  * ConvenienceJpaTemplate and JpaTemplate.
+ * 
+ * Note: At the moment, we use an ExtentFetcher that only works with Hibernate. 
+ * (Maybe we later allow the ExtentFetcher to be injected.)
  * 
  * @svnLink $Revision: 4253 $;$Date: 2010-12-21 11:08:04 +0100 (Di, 21 Dez 2010)
  *          $;$Author: swismer $;$URL:
@@ -89,10 +93,11 @@ public class GenericJpaRepositoryImpl<T, ID extends Serializable> implements
 	private Class<T> persistentClass;
 
 	/**
-	 * The ExtentFetcher used to fetch extents. Injected by
-	 * JpaExtentFetcherInjectorBeanPostprocessor.
+	 * The ExtentFetcher used to fetch extents. 
+	 * Currently it only works with Hibernate (It could be injected 
+	 * by JpaExtentFetcherInjectorBeanPostprocessor as well).
 	 */
-	private ExtentFetcher extentFetcher;
+	private ExtentFetcher extentFetcher = new JpaHibernateExtentFetcher();
 
 	/**
 	 * Set up the Generic Dao. Auto-derive the parametrized type.
@@ -193,7 +198,6 @@ public class GenericJpaRepositoryImpl<T, ID extends Serializable> implements
 	@Transactional(propagation = Propagation.REQUIRED)
 	public T persist(T entity) throws DataAccessException,
 			DataIntegrityViolationException, OptimisticLockingFailureException {
-
 		entityManager.persist(entity);
 		return entity;
 	}
