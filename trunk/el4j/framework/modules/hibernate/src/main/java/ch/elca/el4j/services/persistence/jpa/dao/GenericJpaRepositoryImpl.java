@@ -385,6 +385,7 @@ public class GenericJpaRepositoryImpl<T, ID extends Serializable> implements
 	}
 
 	/** {@inheritDoc} */
+	@Transactional
 	@Override
 	public T findById(ID id, DataExtent extent)
 		throws DataRetrievalFailureException, DataAccessException {
@@ -479,6 +480,7 @@ public class GenericJpaRepositoryImpl<T, ID extends Serializable> implements
 	 * @throws org.springframework.dao.DataRetrievalFailureException
 	 *             in case the persistent instance is null
 	 */
+	@Transactional
 	public <T> T findByIdStrong(Class<T> entityClass, Serializable id, final String objectName)
 		throws DataAccessException, DataRetrievalFailureException {
 
@@ -513,6 +515,7 @@ public class GenericJpaRepositoryImpl<T, ID extends Serializable> implements
 	 * @throws org.springframework.dao.DataRetrievalFailureException
 	 *             in case the persistent instance is null
 	 */
+	@Transactional
 	public <T> T findByIdStrongLazy(Class<T> entityClass, Serializable id, final String objectName)
 		throws DataAccessException, DataRetrievalFailureException {
 
@@ -545,6 +548,7 @@ public class GenericJpaRepositoryImpl<T, ID extends Serializable> implements
 	 *             in case optimistic locking fails
 	 * @return the merged entity
 	 */
+	@Transactional
 	public Object mergeStrong(Object entity, final String objectName)
 		throws DataAccessException, OptimisticLockingFailureException {
 		
