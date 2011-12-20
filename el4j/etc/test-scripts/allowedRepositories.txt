@@ -13,4 +13,3 @@ http://repository.jboss.org/nexus/content/groups/public
 http://maven.alfresco.com/nexus/content/repositories/activiti/
 http://maven.alfresco.com/nexus/content/repositories/public/
 http://repository.springsource.com/maven/bundles/release/
-http://repository.springsource.com/maven/bundles/external/
