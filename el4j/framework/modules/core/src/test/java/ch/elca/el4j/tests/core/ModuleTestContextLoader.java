@@ -19,6 +19,7 @@ package ch.elca.el4j.tests.core;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.apache.commons.lang.NotImplementedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
@@ -30,8 +31,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.MergedContextConfiguration;
 import org.springframework.test.context.support.AbstractContextLoader;
 import org.springframework.util.StringUtils;
-
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import ch.elca.el4j.core.context.ModuleApplicationContext;
 import ch.elca.el4j.core.context.ModuleApplicationContextConfiguration;
