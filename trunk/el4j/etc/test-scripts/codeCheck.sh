@@ -106,24 +106,24 @@ echo "Checking for commons-logging (use slf4j instead)..."
 	fi
 echo "done"
 
-# echo "Checking for unknown repositories..."
-# allowedRepoList=external/etc/test-scripts/allowedRepositories.txt
-# for i in $(cat pomXmlFiles.tmp) ; do
-	# xml2 < "$i" | grep "/project/repositories/repository/url" | cut -d= -f 2 > repos.tmp
-	# xml2 < "$i" | grep "/project/pluginRepositories/pluginRepository/url" | cut -d= -f 2 >> repos.tmp
-	# for repo in $(cat repos.tmp) ; do
-		# count=$(grep "^$repo" ../$allowedRepoList | wc -l)
-		# if [ $count == "0" ] ; then
-			# echo "Unknown repository found in $i: $repo"
-			# echo "Please add this file to nexus and register it in " $allowedRepoList
-			# echo ""
-			# result=1
-		# fi
-	# done
-# done
-# rm repos.tmp
-# rm pomXmlFiles.tmp
-# echo "done"
+echo "Checking for unknown repositories..."
+allowedRepoList=external/etc/test-scripts/allowedRepositories.txt
+for i in $(cat pomXmlFiles.tmp) ; do
+	xml2 < "$i" | grep "/project/repositories/repository/url" | cut -d= -f 2 > repos.tmp
+	xml2 < "$i" | grep "/project/pluginRepositories/pluginRepository/url" | cut -d= -f 2 >> repos.tmp
+	for repo in $(cat repos.tmp) ; do
+		count=$(grep "^$repo" ../$allowedRepoList | wc -l)
+		if [ $count == "0" ] ; then
+			echo "Unknown repository found in $i: $repo"
+			echo "Please add this file to nexus and register it in " $allowedRepoList
+			echo ""
+			result=1
+		fi
+	done
+done
+rm repos.tmp
+rm pomXmlFiles.tmp
+echo "done"
 
 rm current.tmp
 rm files.tmp
