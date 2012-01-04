@@ -150,6 +150,24 @@ public final class QueryBuilder implements Expression, SelectQuery, CountQuery {
 	 */
 	private Query query;
 
+	/**
+	 * The bean class the query object is for.
+	 */
+	private Class<?> m_beanClass;
+	
+	/**
+	 * Specifies the query object for a specific class.
+	 *
+	 * @param beanClass Is the bean class this query object is made for.
+	 */
+	public QueryBuilder(Class<?> beanClass) {
+		m_beanClass = beanClass;
+	}
+	
+	public Class<?> getBeanClass() {
+		return m_beanClass;
+	}
+	
 	/** hidden constructor. 
 	 * @param select select */
 	private QueryBuilder(String... select) {
