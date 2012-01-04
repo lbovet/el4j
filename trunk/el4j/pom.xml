@@ -2588,7 +2588,7 @@
 		
 		
 		<!-- Spring -->
-		<version.spring>3.1.0.RELEASE</version.spring>
+		<version.spring>3.0.7.RELEASE</version.spring>
 		
 		<!-- Spring security -->
 		<version.springsecurity>3.0.5.RELEASE</version.springsecurity>
