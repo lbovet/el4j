@@ -19,16 +19,13 @@ package ch.elca.el4j.tests.core;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.apache.commons.lang.NotImplementedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigUtils;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.MergedContextConfiguration;
 import org.springframework.test.context.support.AbstractContextLoader;
 import org.springframework.util.StringUtils;
 
@@ -229,13 +226,4 @@ public class ModuleTestContextLoader extends AbstractContextLoader
 	public static void setTestedClass(Class<?> testClass) {
 		s_testedClass.set(testClass);
 	}
-
-	@Override
-	public ApplicationContext loadContext(
-			MergedContextConfiguration mergedConfig) throws Exception {
-		
-		// new method of spring 3.1, our tests work without an implementation
-		throw new NotImplementedException();
-	}
-
 }
