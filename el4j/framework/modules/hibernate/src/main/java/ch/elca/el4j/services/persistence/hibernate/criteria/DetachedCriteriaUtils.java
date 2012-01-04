@@ -51,6 +51,8 @@ public final class DetachedCriteriaUtils {
 	}
 	
 	/**
+	 *  CAVEAT the javadoc is wrong: the orders parameter is ignored!
+	 *  
 	 * @param criteria    the criteria to manipulate
 	 * @param orders      the orders to remove. If no orders are provided, all orders will be removed
 	 * @return            the criteria
