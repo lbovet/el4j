@@ -2605,7 +2605,7 @@
 		<version.slf4j-maven>${version.slf4j}-el4j-3.2-SNAPSHOT</version.slf4j-maven>
 		
 		<!-- Dependency versions -->
-		<version.derby>10.7.1.1</version.derby>
+		<version.derby>10.8.2.2</version.derby>
 		
 		<!-- Maven plugin versions. Needed due to false dep mgt. -->
 		<version.maven-project-info-reports-plugin>2.3.1</version.maven-project-info-reports-plugin>
