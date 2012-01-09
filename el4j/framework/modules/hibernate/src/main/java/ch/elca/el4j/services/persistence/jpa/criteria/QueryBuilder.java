@@ -16,6 +16,7 @@
  */
 package ch.elca.el4j.services.persistence.jpa.criteria;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -27,6 +28,8 @@ import javax.persistence.Query;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.ArrayUtils;
+import org.apache.commons.lang.NotImplementedException;
+import org.apache.commons.lang.SerializationUtils;
 import org.apache.commons.lang.StringUtils;
 
 /**
@@ -71,7 +74,7 @@ import org.apache.commons.lang.StringUtils;
  * @author Simon Stelling (SST)
  * @author Huy Hung Nguyen (HUN)
  */
-public final class QueryBuilder implements Expression, SelectQuery, CountQuery {
+public final class QueryBuilder implements Expression, SelectQuery, CountQuery, Cloneable {
 
 	private static final String PARAM_KEY = "{p}";
 	private static final String PARAM = "param";
@@ -101,7 +104,7 @@ public final class QueryBuilder implements Expression, SelectQuery, CountQuery {
 	private static final String DB_FALSE_VALUE = "F";
 
 	/**
-	 * TODO: where is this used?
+	 * The SELECT statement of the query.
 	 */
 	private String selectQuery;
 	
@@ -121,12 +124,12 @@ public final class QueryBuilder implements Expression, SelectQuery, CountQuery {
 	private List<String> joins = new ArrayList<String>();
 	
 	/**
-	 * TODO: What's this?
+	 * Hierarchical subqueries. Refer to the example in the javadoc of the class.
 	 */
 	private List<QueryBuilder> subUnionQueryBuilders = new ArrayList<QueryBuilder>();
 	
 	/**
-	 * WHERE Predicate as String. 
+	 * WHERE predicate as String. 
 	 */
 	private String where;
 	
@@ -137,33 +140,41 @@ public final class QueryBuilder implements Expression, SelectQuery, CountQuery {
 
 	/**
 	 * Parameters of the SQL query, except those of the SELECT clause.
+	 * 
+	 * We require Serializable in order to be able to "clone" these parameters.
+	 *  (The basic types such as Number subtypes or String do not implement Cloneable, so we use
+	 *   serialization for cloning).
 	 */
-	private List<Object> bodyParameters = new ArrayList<Object>();
+	private List<Serializable> bodyParameters = new ArrayList<Serializable>();
 	
 	/**
 	 * Parameters of the SELECT clause. They are omitted if a count query is executed.
 	 */
-	private List<Object> selectParameters = new ArrayList<Object>();
+	private List<Serializable> selectParameters = new ArrayList<Serializable>();
 
 	/**
-	 * TODO: What's this?
+	 * A transitory JPA query object. Is created on the entityManager at each operation
+	 *  on the db. 
 	 */
 	private Query query;
 
 	/**
-	 * The bean class the query object is for.
+	 * The bean class the query object is specified for.
 	 */
 	private Class<?> m_beanClass;
 	
 	/**
 	 * Specifies the query object for a specific class.
-	 *
 	 * @param beanClass Is the bean class this query object is made for.
 	 */
 	public QueryBuilder(Class<?> beanClass) {
 		m_beanClass = beanClass;
 	}
 	
+	/**
+	 * get the bean class this query object is created for.
+	 * @return the bean class specified for the query.
+	 */
 	public Class<?> getBeanClass() {
 		return m_beanClass;
 	}
@@ -181,16 +192,164 @@ public final class QueryBuilder implements Expression, SelectQuery, CountQuery {
 	}
 
 	/**
-	 * get SelectParameters.
-	 * 
-	 * @return the selectParameters
+	 * Copy constructor (use it to "clone" the object)
+	 * @param original the {@link QueryBuilder} to be duplicated
 	 */
-	public List<Object> getSelectParameters() {
+	public QueryBuilder(QueryBuilder original) {
+		
+		completed = original.completed;
+		m_beanClass = original.m_beanClass;
+		selectQuery = original.selectQuery;
+		where = original.where;
+		
+		froms = new ArrayList<String>(original.froms); 
+		joins = new ArrayList<String>(original.joins);
+		orderBy = new ArrayList<String>(original.orderBy);
+		
+		for (Serializable el : original.bodyParameters) {
+			bodyParameters.add((Serializable) SerializationUtils.clone(el));
+		}
+
+		for (Serializable el : original.selectParameters) {
+			selectParameters.add((Serializable) SerializationUtils.clone(el));
+		}
+
+		for (QueryBuilder el : original.subUnionQueryBuilders) {
+			subUnionQueryBuilders.add(new QueryBuilder(el));
+		}		
+	}
+
+	/** {@inheritDoc}
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((bodyParameters == null) ? 0 : bodyParameters.hashCode());
+		result = prime * result + (completed ? 1231 : 1237);
+		result = prime * result + ((froms == null) ? 0 : froms.hashCode());
+		result = prime * result + ((joins == null) ? 0 : joins.hashCode());
+		result = prime * result
+				+ ((m_beanClass == null) ? 0 : m_beanClass.hashCode());
+		result = prime * result + ((orderBy == null) ? 0 : orderBy.hashCode());
+		result = prime
+				* result
+				+ ((selectParameters == null) ? 0 : selectParameters.hashCode());
+		result = prime * result
+				+ ((selectQuery == null) ? 0 : selectQuery.hashCode());
+		result = prime
+				* result
+				+ ((subUnionQueryBuilders == null) ? 0 : subUnionQueryBuilders
+						.hashCode());
+		result = prime * result + ((where == null) ? 0 : where.hashCode());
+		return result;
+	}
+
+	/** {@inheritDoc}
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		QueryBuilder other = (QueryBuilder) obj;
+		if (bodyParameters == null) {
+			if (other.bodyParameters != null) {
+				return false;
+			}
+		} else {
+			for (Object bodyObject : bodyParameters) {
+				if(bodyObject != null) {
+					// the default equals method considers arrays as Object.
+					if (bodyObject.getClass().isArray()) {
+						Arrays.equals((Object[]) bodyObject, (Object[]) other.bodyParameters.get(bodyParameters.indexOf(bodyObject)));
+					} else {
+						bodyObject.equals(other.bodyParameters.get(bodyParameters.indexOf(bodyObject)));
+					}
+				}
+			}
+		}
+		if (completed != other.completed) {
+			return false;
+		}
+		if (froms == null) {
+			if (other.froms != null) {
+				return false;
+			}
+		} else if (!froms.equals(other.froms)) {
+			return false;
+		}
+		if (joins == null) {
+			if (other.joins != null) {
+				return false;
+			}
+		} else if (!joins.equals(other.joins)) {
+			return false;
+		}
+		if (m_beanClass == null) {
+			if (other.m_beanClass != null) {
+				return false;
+			}
+		} else if (!m_beanClass.equals(other.m_beanClass)) {
+			return false;
+		}
+		if (orderBy == null) {
+			if (other.orderBy != null) {
+				return false;
+			}
+		} else if (!orderBy.equals(other.orderBy)) {
+			return false;
+		}
+		if (selectParameters == null) {
+			if (other.selectParameters != null) {
+				return false;
+			}
+		} else if (!selectParameters.equals(other.selectParameters)) {
+			return false;
+		}
+		if (selectQuery == null) {
+			if (other.selectQuery != null) {
+				return false;
+			}
+		} else if (!selectQuery.equals(other.selectQuery)) {
+			return false;
+		}
+		if (subUnionQueryBuilders == null) {
+			if (other.subUnionQueryBuilders != null) {
+				return false;
+			}
+		} else if (!subUnionQueryBuilders.equals(other.subUnionQueryBuilders)) {
+			return false;
+		}
+		if (where == null) {
+			if (other.where != null) {
+				return false;
+			}
+		} else if (!where.equals(other.where)) {
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * get the SELECT parameters.
+	 * @return the SELECT parameters
+	 */
+	public List<Serializable> getSelectParameters() {
 		return selectParameters;
 	}
 	
 	/**
-	 * Creates a new Query with the given SELECT clause.
+	 * Creates a new query with the given SELECT clause.
 	 * @param select select clause
 	 * @return a new query
 	 */
@@ -199,10 +358,12 @@ public final class QueryBuilder implements Expression, SelectQuery, CountQuery {
 	}
 
 	/**
-	 * TODO: what's this?
+	 * Adds one or more SELECT clauses to the query.
+	 * @param parameters the select parameters
+	 * @return the query with the added select parameters
 	 */
-	public QueryBuilder addSelectParameter(Object... parameters) {
-		for (Object parameter : parameters) {
+	public QueryBuilder addSelectParameter(Serializable... parameters) {
+		for (Serializable parameter : parameters) {
 			if (isParameterAccepted(parameter)) {
 				selectParameters.add(parameter);
 			} else {
@@ -251,9 +412,15 @@ public final class QueryBuilder implements Expression, SelectQuery, CountQuery {
 	}
 
 	/**
-	 * TODO: what's this?
+	 * Checks whether existent parameters are accepted (non-empty Collection or non-null String) and if so, 
+	 * adds a JOIN clause to the query.
+	 * @param join join
+	 * @param type type
+	 * @param on ON clause
+	 * @param params parameters
+	 * @return this
 	 */
-	private QueryBuilder join(String join, String type, String on, Object... params) {
+	private QueryBuilder join(String join, String type, String on, Serializable... params) {
 		if (ArrayUtils.isEmpty(params)) {
 			doJoin(join, type, on);
 		} else {
@@ -277,10 +444,10 @@ public final class QueryBuilder implements Expression, SelectQuery, CountQuery {
 	/**
 	 * Only used for native sql.
 	 * 
-	 * @param join
-	 * @param on
-	 * @param params
-	 * @return
+	 * @param join join
+	 * @param on ON clause
+	 * @param params parameters
+	 * @return this
 	 */
 	public QueryBuilder innerJoin(String join, String on, Object... params) {
 		return join(join, INNER_JOIN, on, params);
@@ -289,10 +456,10 @@ public final class QueryBuilder implements Expression, SelectQuery, CountQuery {
 	/**
 	 * Only used for native sql.
 	 * 
-	 * @param join
-	 * @param on
-	 * @param params
-	 * @return
+	 * @param join join
+	 * @param on ON clause
+	 * @param params parameters
+	 * @return this
 	 */
 	public QueryBuilder innerJoin(String join, String on) {
 		return innerJoin(join, on, new Object[] {});
@@ -301,19 +468,31 @@ public final class QueryBuilder implements Expression, SelectQuery, CountQuery {
 	/**
 	 * Only used for native sql.
 	 * 
-	 * @param join
-	 * @param on
-	 * @param params
-	 * @return
+	 * @param join join
+	 * @param on ON clause
+	 * @param params parameters
+	 * @return this
 	 */
 	public QueryBuilder leftJoin(String join, String on, Object... params) {
 		return join(join, LEFT_JOIN, on, params);
 	}
 
+	/**
+	 * Same as leftJoin except that a new object is created as parameter.
+	 * @param join join
+	 * @param on ON clause
+	 * @return this
+	 */
 	public QueryBuilder leftJoin(String join, String on) {
 		return leftJoin(join, on, new Object[] {});
 	}
 
+	
+	/**
+	 *  CAVEAT: currently there are no tests for this. Use with care.
+	 * @param builder another QueryBuilder
+	 * @return this
+	 */
 	public QueryBuilder union(QueryBuilder builder) {
 		if (builder != null) {
 			subUnionQueryBuilders.add(builder);
@@ -324,25 +503,30 @@ public final class QueryBuilder implements Expression, SelectQuery, CountQuery {
 	/**
 	 * Only used for native sql.
 	 * 
-	 * @param join
-	 * @param on
-	 * @param params
-	 * @return
+	 * @param join join
+	 * @param on ON clause
+	 * @param params parameters
+	 * @return this
 	 */
 	public QueryBuilder rightJoin(String join, String on, Object... params) {
 		return join(join, RIGHT_JOIN, on, params);
 	}
 
+	/**
+	 * Same as rightJoin except that a new object is created as parameter.
+	 * @param join join
+	 * @param on ON clause
+	 * @return this
+	 */
 	public QueryBuilder rightJoin(String join, String on) {
 		return rightJoin(join, on, null, new Object[] {});
 	}
 
 	/**
-	 * TODO: what are the parameters here?
 	 * adds "type join ON ( on )" to the joins field.
-	 * @param join what?
-	 * @param type what?
-	 * @param on what?
+	 * @param join join
+	 * @param type type 
+	 * @param on ON clause
 	 */
 	private void doJoin(String join, String type, String on) {
 		String joinStr = " " + type + " " + join;
@@ -371,9 +555,9 @@ public final class QueryBuilder implements Expression, SelectQuery, CountQuery {
 	/**
 	 * Dont need 'on', used for JPQL.
 	 * 
-	 * @param join
-	 * @param cond
-	 * @return
+	 * @param join join
+	 * @param cond predicate
+	 * @return this
 	 */
 	public QueryBuilder join(String join) {
 		doJoin(join, INNER_JOIN, null);
@@ -383,9 +567,9 @@ public final class QueryBuilder implements Expression, SelectQuery, CountQuery {
 	/**
 	 * Dont need 'on', used for JPQL.
 	 * 
-	 * @param join
+	 * @param join join
 	 * @param cond
-	 * @return
+	 * @return this
 	 */
 	public QueryBuilder joinIf(String join, boolean cond) {
 		if (cond) {
@@ -526,7 +710,7 @@ public final class QueryBuilder implements Expression, SelectQuery, CountQuery {
 			return this;
 		}
 
-		public ConditionList<T> ifNotNull(String condition, Object parameter) {
+		public ConditionList<T> ifNotNull(String condition, Serializable parameter) {
 			if (isParameterAccepted(parameter)) {
 				getBodyParameters().add(parameter);
 				conds.add(condition);
@@ -541,7 +725,7 @@ public final class QueryBuilder implements Expression, SelectQuery, CountQuery {
 		 * @param cond cond
 		 * @return this
 		 */
-		public ConditionList<T> ifNotNull(String queryPredicate, Object parameter, boolean cond) {
+		public ConditionList<T> ifNotNull(String queryPredicate, Serializable parameter, boolean cond) {
 			if (cond) {
 				return ifNotNull(queryPredicate, parameter);
 			}
@@ -592,7 +776,12 @@ public final class QueryBuilder implements Expression, SelectQuery, CountQuery {
 		 */
 		public T end() {
 			if (!conds.isEmpty()) {
-				parent.append(StringUtils.join(conds, operation));
+				if(parent instanceof QueryBuilder) {
+					((QueryBuilder) parent).appendWhere(StringUtils.join(conds, operation));
+				}
+				else {
+					parent.append(StringUtils.join(conds, operation));
+				}
 			}
 			return parent;
 		}
@@ -625,9 +814,9 @@ public final class QueryBuilder implements Expression, SelectQuery, CountQuery {
 	}
 
 	/**
-	 * TODO: what's this?
-	 * @param parameter
-	 * @return
+	 * Checks whether the parameter is a non-blank String or a non-empty Collection.
+	 * @param parameter the parameter to test
+	 * @return true if the parameter is legal, false otherwhise 
 	 */
 	@SuppressWarnings("unchecked")
 	private boolean isParameterAccepted(Object parameter) {
@@ -677,37 +866,6 @@ public final class QueryBuilder implements Expression, SelectQuery, CountQuery {
 		
 		return this;
 	}
-
-	// TODO: do we need these? 
-//	public QuerySelect applyNativeSelect(EntityManager entityManager) {
-//		createJpaQuery(getQuerySelectStr(), entityManager, true, null);
-//		return this;
-//	}
-//
-//	public QuerySelect applyNativeSelect(EntityManager entityManager, Class<?> resultClass) {
-//		createJpaQuery(getQuerySelectStr(), entityManager, true, resultClass);
-//		return this;
-//	}
-//
-//	public QueryCount applyNativeCount(EntityManager entityManager) {
-//		createJpaQuery(getQueryCountStr(), entityManager, true, null);
-//		return this;
-//	}
-
-//	public <T extends DefaultSearchCriteria, U extends AbstractEntity> SearchResult<T, U> getSearchResult(
-//		Class<U> resultClass, EntityManager entityManager, T criteria) {
-//
-//		SearchResult<T, U> searchResult = new SearchResult<T, U>(criteria);
-//		int total = applyCount(entityManager).getCount();
-//		searchResult.setTotal(total);
-//		if (total > 0) {
-//			List<U> items = applySelect(entityManager).getResultList(resultClass, criteria.getFirstRowIdx(),
-//				criteria.getNumberOfRows());
-//			searchResult.getItems().addAll(items);
-//		}
-//
-//		return searchResult;
-//	}
 
 	
 	private void createJpaQuery(String queryString, EntityManager entityManager, boolean nativeQuery,
@@ -785,7 +943,7 @@ public final class QueryBuilder implements Expression, SelectQuery, CountQuery {
 	 * @param parameters
 	 *            the parameters to set
 	 */
-	public void setParameters(List<Object> parameters) {
+	public void setParameters(List<Serializable> parameters) {
 		this.bodyParameters = parameters;
 	}
 
@@ -866,10 +1024,10 @@ public final class QueryBuilder implements Expression, SelectQuery, CountQuery {
 	}
 
 	/**
-	 * TODO: this seems wrong. what's this for?
+	 * appends a WHERE clause
+	 * @param query WHERE clause
 	 */
-	@Override
-	public void append(String query) {
+	public void appendWhere(String query) {
 		where = query;
 	}
 
@@ -938,7 +1096,8 @@ public final class QueryBuilder implements Expression, SelectQuery, CountQuery {
 	}
 
 	/**
-	 * TODO: what's this?
+	 * get the UNION clause as a String.
+	 * @return the UNION statement
 	 */
 	private String getUnionStr() {
 		StringBuilder result = new StringBuilder();
@@ -961,7 +1120,7 @@ public final class QueryBuilder implements Expression, SelectQuery, CountQuery {
 	 * 
 	 * @return the parameters
 	 */
-	public List<Object> getBodyParameters() {
+	public List<Serializable> getBodyParameters() {
 		return bodyParameters;
 	}
 
@@ -972,5 +1131,10 @@ public final class QueryBuilder implements Expression, SelectQuery, CountQuery {
 	public QueryBuilder clearOrderBy() {
 		this.orderBy.clear();
 		return this;
+	}
+
+	@Override
+	public void append(String query) {
+		throw new NotImplementedException();
 	}
 }
