@@ -25,9 +25,9 @@ package ch.elca.el4j.services.persistence.jpa.criteria;
 public enum SortOrder {
 
 	/** A-Z. */
-	ASC,
+	ASCENDING,
 
 	/** Z-A. */
-	DESC
+	DESCENDING
 
 }

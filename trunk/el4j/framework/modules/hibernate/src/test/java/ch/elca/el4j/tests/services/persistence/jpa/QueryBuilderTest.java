@@ -16,10 +16,12 @@
  */
 package ch.elca.el4j.tests.services.persistence.jpa;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.builder.EqualsBuilder;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -44,9 +46,9 @@ public class QueryBuilderTest {
 		builder.from("DEPARTMENT dep").innerJoin("EMPLOYEE emp", "dep.ID = emp.DEPARTMENT_ID").innerJoin(
 			"UNIVERSITY unv", "unv.ID = dep.UNV_ID").startOr().ifNotNull("emp.position = {p}", position).startAnd()
 			.ifNotNull("emp.SALARY > {p}", salMin).ifNotNull("emp.SALARY < {p}", salMax).end().exist(subQueryBuilder)
-			.ifNotNull("dep.ID in {p}", depIds).end()
+			.ifNotNull("dep.ID in {p}", (Serializable) depIds).end()
 
-			.orderBy(SortOrder.ASC, "dep.ID").endBuilder();
+			.orderBy(SortOrder.ASCENDING, "dep.ID").endBuilder();
 		String actualQuery = builder.toString();
 
 		String expectedSQLProcessed = StringUtils.deleteWhitespace(expectedSQL).toUpperCase().trim();
@@ -62,7 +64,7 @@ public class QueryBuilderTest {
 		String expectedSQL1 = "SELECT dep.NAME, emp.NAME" + " FROM DEPARTMENT dep"
 			+ " JOIN EMPLOYEE emp ON (dep.ID = emp.DEPARTMENT_ID)" + " JOIN UNIVERSITY unv ON (unv.ID = dep.UNV_ID)"
 			+ " WHERE emp.POSITION = {p}" + "    OR (emp.SALARY > {p} AND emp.SALARY < {p})"
-			+ "    OR EXISTS (SELECT 1 FROM DUAL WHERE 1 <> {p}) ORDER BY DEP.ID ASC";
+			+ "    OR EXISTS (SELECT 1 FROM DUAL WHERE 1 <> {p}) ORDER BY DEP.ID ASCENDING";
 
 		testCorrectSql(expectedSQL1, "pos", new Double(200), new Double(200), null);
 	}
@@ -71,7 +73,7 @@ public class QueryBuilderTest {
 	public void testCorrectSql2() {
 		String expectedSQL2 = "SELECT dep.NAME, emp.NAME" + " FROM DEPARTMENT dep"
 			+ " JOIN EMPLOYEE emp ON (dep.ID = emp.DEPARTMENT_ID)" + " JOIN UNIVERSITY unv ON (unv.ID = dep.UNV_ID)"
-			+ " WHERE EXISTS (SELECT 1 FROM DUAL WHERE 1 <> {p})" + " ORDER BY DEP.ID ASC";
+			+ " WHERE EXISTS (SELECT 1 FROM DUAL WHERE 1 <> {p})" + " ORDER BY DEP.ID ASCENDING";
 
 		testCorrectSql(expectedSQL2, "", null, null, new ArrayList<String>());
 	}
@@ -80,12 +82,43 @@ public class QueryBuilderTest {
 	public void testCorrectSql3() {
 		String expectedSQL3 = "SELECT dep.NAME, emp.NAME" + " FROM DEPARTMENT dep"
 			+ " JOIN EMPLOYEE emp ON (dep.ID = emp.DEPARTMENT_ID)" + " JOIN UNIVERSITY unv ON (unv.ID = dep.UNV_ID)"
-			+ " WHERE EXISTS (SELECT 1 FROM DUAL WHERE 1 <> {p}) OR dep.ID in {p}" + " ORDER BY DEP.ID ASC";
+			+ " WHERE EXISTS (SELECT 1 FROM DUAL WHERE 1 <> {p}) OR dep.ID in {p}" + " ORDER BY DEP.ID ASCENDING";
 
 		List<String> idList = new ArrayList<String>();
 		idList.add("1");
 
 		testCorrectSql(expectedSQL3, null, null, null, idList);
+	}
+	
+	public QueryBuilder createNewQueryBuilder() {
+		QueryBuilder builder = QueryBuilder.select("dep.NAME", "emp.name");
+		QueryBuilder subQueryBuilder = QueryBuilder.select("1");
+		subQueryBuilder.from("Dual ").startAnd().ifNotNull("1 <> {p}", 2).end().endBuilder();
+		
+		builder.from("DEPARTMENT dep").innerJoin("EMPLOYEE emp", "dep.ID = emp.DEPARTMENT_ID").innerJoin(
+				"UNIVERSITY unv", "unv.ID = dep.UNV_ID").startOr().ifNotNull("emp.position = {p}", "pos").startAnd()
+				.ifNotNull("emp.SALARY > {p}", 200).ifNotNull("emp.SALARY < {p}", 300).end().exist(subQueryBuilder)
+				.ifNotNull("dep.ID in {p}", (Serializable) null).end()
+				.orderBy(SortOrder.ASCENDING, "dep.ID").endBuilder();
+		
+		return builder;
+	}
+	
+	@Test
+	public void testDuplicateQueryBuilder() {
+		QueryBuilder builder = createNewQueryBuilder();
+		QueryBuilder builderCopy = new QueryBuilder(builder);
+		
+		Assert.assertTrue(builder.equals(builderCopy));
+	}
+	
+	@Test
+	public void testIndependencyDuplicatedQB() {
+		QueryBuilder builder = createNewQueryBuilder();
+		QueryBuilder builderCopy = new QueryBuilder(builder);
+		
+		builder = builder.clearOrderBy();
+		Assert.assertTrue(!builder.equals(builderCopy));
 	}
 
 }
