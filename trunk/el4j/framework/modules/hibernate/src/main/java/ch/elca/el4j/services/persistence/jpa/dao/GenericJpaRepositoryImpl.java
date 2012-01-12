@@ -422,9 +422,9 @@ public class GenericJpaRepositoryImpl<T, ID extends Serializable> implements
 		Reject.ifEmpty(name);
 		
 		QueryBuilder criteria = QueryBuilder.select("obj")
-				.from(getPersistentClass() + " obj")
+				.from(getPersistentClassName() + " obj")
 				.startAnd()
-				.ifNotNull("name LIKE {p}", name)
+				.ifNotNull("obj.name LIKE {p}", name)
 				.end()
 				.endBuilder();
 				
@@ -443,7 +443,7 @@ public class GenericJpaRepositoryImpl<T, ID extends Serializable> implements
 		QueryBuilder criteria = QueryBuilder.select("obj")
 				.from(getPersistentClassName() + " obj")
 				.startAnd()
-				.ifNotNull("name = {p}", name)
+				.ifNotNull("obj.name = {p}", name)
 				.end()
 				.endBuilder();
 		
