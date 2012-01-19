@@ -20,13 +20,17 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
 
-import org.springframework.dao.DataAccessException;
-import org.springframework.dao.DataIntegrityViolationException;
+import javax.persistence.OptimisticLockException;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.validation.ConstraintViolationException;
+
 import org.springframework.dao.DataRetrievalFailureException;
-import org.springframework.dao.OptimisticLockingFailureException;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import ch.elca.el4j.services.persistence.hibernate.dao.extent.DataExtent;
 import ch.elca.el4j.services.persistence.jpa.criteria.QueryBuilder;
+import ch.elca.el4j.util.codingsupport.Reject;
 
 /**
  * Generic Repository (former name DAO). Use as parent class for you own DAOs.
@@ -39,8 +43,6 @@ import ch.elca.el4j.services.persistence.jpa.criteria.QueryBuilder;
  * @author Simon Stelling (SST), Philipp Oser (POS)
  */
 public interface GenericJpaRepository<T, ID extends Serializable> {
-	
-	// begin GenericDao part
 	
 	/**
 	 *  Needed because the Java generics throw away this type
@@ -63,14 +65,11 @@ public interface GenericJpaRepository<T, ID extends Serializable> {
 	 *
 	 * @param entity
 	 *            The domain object to re-read the state of
-	 * @throws DataAccessException
-	 *             If general data access problem occurred
 	 * @throws DataRetrievalFailureException
 	 *             If domain object could not be re-read
 	 * @return The refreshed entity
 	 */
-	T refresh(T entity) throws DataAccessException,
-		DataRetrievalFailureException;
+	T refresh(T entity) throws DataRetrievalFailureException;
 
 	/**
 	 * Deletes the given domain objects. This method executed in a single
@@ -78,13 +77,11 @@ public interface GenericJpaRepository<T, ID extends Serializable> {
 	 *
 	 * @param entities
 	 *             The domain objects to delete.
-	 * @throws DataAccessException
-	 *             If general data access problem occurred
 	 * @throws OptimisticLockingFailureException
 	 *             If domain object has been modified/deleted in the meantime
 	 */
 	void delete(Collection<T> entities)
-		throws OptimisticLockingFailureException, DataAccessException;
+		throws OptimisticLockException;
 	
 	// end GenericDao
 	// begin ConvenienceGenericDao part
@@ -100,10 +97,8 @@ public interface GenericJpaRepository<T, ID extends Serializable> {
 	 * @return Returns the found domain object.
 	 * @throws DataRetrievalFailureException
 	 *             If no domain object could be found with given id.
-	 * @throws DataAccessException
-	 *             If general data access problem occurred
 	 */
-	T findById(ID id) throws DataRetrievalFailureException, DataAccessException;
+	T findById(ID id) throws DataRetrievalFailureException;
 	
 	/**
 	 * Deletes the domain object with the given id, disregarding any
@@ -113,21 +108,17 @@ public interface GenericJpaRepository<T, ID extends Serializable> {
 	 *             The id of the domain object to delete
 	 * @throws OptimisticLockingFailureException
 	 *             If domain object has been deleted in the meantime
-	 * @throws DataAccessException
-	 *             If general data access problem occurred
 	 */
 	void deleteById(ID id)
-		throws OptimisticLockingFailureException, DataAccessException;
+		throws OptimisticLockException;
 	
 	/**
 	 * Retrieves all the domain objects of type T.
 	 *
 	 * @return The list containing all the domain objects of type T; if no such
 	 *         domain objects exist, an empty list will be returned
-	 * @throws DataAccessException
-	 *             If general data access problem occurred
 	 */
-	List<T> getAll() throws DataAccessException;
+	List<T> getAll();
 	
 	/**
 	 * Deletes the given domain object.
@@ -136,22 +127,16 @@ public interface GenericJpaRepository<T, ID extends Serializable> {
 	 *             The domain object to delete
 	 * @throws OptimisticLockingFailureException
 	 *             If domain object has been modified/deleted in the meantime
-	 * @throws DataAccessException
-	 *             If general data access problem occurred
 	 */
-	void delete(T entity)
-		throws OptimisticLockingFailureException, DataAccessException;
+	void delete(T entity) throws OptimisticLockException;
 	
 	/**
 	 * Deletes all available <code>T</code>.
 	 *
 	 * @throws OptimisticLockingFailureException
 	 *             If domain object has been modified/deleted in the meantime
-	 * @throws DataAccessException
-	 *             If general data access problem occurred
 	 */
-	public void deleteAll()
-		throws OptimisticLockingFailureException, DataAccessException;
+	public void deleteAll() throws OptimisticLockException;
 	
 	/**
 	 * Sometimes, the way Hibernate handles all the actions in a session is
@@ -177,66 +162,29 @@ public interface GenericJpaRepository<T, ID extends Serializable> {
 	 * merge the given entity.
 	 * @param entity the entity to merge.
 	 * @return the merged entity
-	 * @throws DataAccessException
 	 * @throws DataIntegrityViolationException
 	 * @throws OptimisticLockingFailureException
 	 */
-	public T merge(T entity) throws DataAccessException,
-		DataIntegrityViolationException, OptimisticLockingFailureException;
+	public T merge(T entity) throws ConstraintViolationException, OptimisticLockException;
 	
 	/**
 	 * persist the given entity.
 	 * @param entity the entity to persist.
 	 * @return the persisted entity
-	 * @throws DataAccessException
 	 * @throws DataIntegrityViolationException
 	 * @throws OptimisticLockingFailureException
 	 */
-	public T persist(T entity) throws DataAccessException,
-		DataIntegrityViolationException, OptimisticLockingFailureException;
+	public T persist(T entity) throws ConstraintViolationException, OptimisticLockException;
 	
-	/** 
-	 * Deletes all available <code>T</code> using a JPQL query.
-	 * 
-	 * This has the benefit of a significant performance improvement
-	 * in comparison to {@link deleteAll}. The tradeoff is that this
-	 * method does no cascade deletion. 
-	 *
-	 * @throws OptimisticLockingFailureException
-	 *             If domain object has been modified/deleted in the meantime
-	 * @throws DataAccessException
-	 *             If general data access problem occurred
-	 * */
-//	public void deleteAllNoCascade()
-//		throws OptimisticLockingFailureException, DataAccessException;
-	
-	/**
-	 * Deletes the given domain objects using a JPQL query. 
-	 * 
-	 * This has the benefit of a significant performance improvement
-	 * in comparison to {@link delete}. The tradeoff is that this
-	 * method does no cascade deletion. 
-	 * 
-	 * @param entities The domain objects to delete.
-	 * @throws OptimisticLockingFailureException
-	 *             If domain object has been modified/deleted in the meantime
-	 * @throws DataAccessException
-	 *             If general data access problem occurred
-	 */
-//	public void deleteNoCascade(Collection<T> entities) throws DataAccessException,
-//		DataIntegrityViolationException, OptimisticLockingFailureException;
-
 	/**
 	 * Retrieves all the domain objects matching the JPA criteria.
 	 * 
 	 * @param criteria             the criteria that the result has to fulfill
 	 * @return                     all object that fulfill the criteria
-	 * @throws DataAccessException
 	 *
 	 * @see ConvenienceJpaTemplate#findByCriteria(DetachedCriteria)
 	 */
-	public List<T> findByQuery(QueryBuilder criteria)
-		throws DataAccessException;
+	public List<T> findByQuery(QueryBuilder criteria);
 	
 	/**
 	 * Retrieves all the domain objects matching the JPA criteria.
@@ -245,12 +193,11 @@ public interface GenericJpaRepository<T, ID extends Serializable> {
 	 * @param criteria             the criteria that the result has to fulfill
 	 * @param extent               the extent in which objects get loaded.
 	 * @return                     all object that fulfill the criteria
-	 * @throws DataAccessException
 	 *
 	 * @see ConvenienceJpaTemplate#findByCriteria(DetachedCriteria)
 	 */
 	public List<T> findByQuery(QueryBuilder criteria,
-		DataExtent extent) throws DataAccessException;
+		DataExtent extent);
 	
 	/**
 	 * Retrieves a range of domain objects matching the JPA criteria.
@@ -260,12 +207,11 @@ public interface GenericJpaRepository<T, ID extends Serializable> {
 	 * @param maxResults           the maximum number of results to return
 	 * @return                     the specified subset of object that fulfill
 	 *                             the criteria
-	 * @throws DataAccessException
 	 *
 	 * @see ConvenienceJpaTemplate#findByCriteria(DetachedCriteria, int, int)
 	 */
 	public List<T> findByQuery(QueryBuilder criteria,
-		int firstResult, int maxResults) throws DataAccessException;
+		int firstResult, int maxResults);
 	
 	/**
 	 * Retrieves a range of domain objects matching the JPA criteria.
@@ -277,12 +223,11 @@ public interface GenericJpaRepository<T, ID extends Serializable> {
 	 * @param extent               the extent in which objects get loaded.
 	 * @return                     the specified subset of object that fulfill
 	 *                             the criteria
-	 * @throws DataAccessException
 	 *
 	 * @see ConvenienceJpaTemplate#findByCriteria(DetachedCriteria, int, int)
 	 */
 	public List<T> findByQuery(QueryBuilder criteria, int firstResult,
-		int maxResults, DataExtent extent) throws DataAccessException;
+		int maxResults, DataExtent extent);
 	
 	/**
 	 * Retrieves the number of domain objects matching the JPA criteria.
@@ -290,12 +235,10 @@ public interface GenericJpaRepository<T, ID extends Serializable> {
 	 * @param criteria             the criteria that the result has to fulfill
 	 * @return                     the number of objects that fulfill
 	 *                             the criteria
-	 * @throws DataAccessException
 	 *
 	 * @see ConvenienceJpaTemplate#findCountByCriteria(DetachedCriteria)
 	 */
-	public int findCountByQuery(QueryBuilder criteria)
-		throws DataAccessException;
+	public int findCountByQuery(QueryBuilder criteria);
 	
 	/**
 	 * Retrieves a domain object by identifier. This method gets the object from
@@ -309,11 +252,20 @@ public interface GenericJpaRepository<T, ID extends Serializable> {
 	 * @return Returns the found domain object.
 	 * @throws DataRetrievalFailureException
 	 *             If no domain object could be found with given id.
-	 * @throws DataAccessException
-	 *             If general data access problem occurred
 	 */
 	public T findById(ID id, DataExtent extent) 
-		throws DataRetrievalFailureException, DataAccessException;
+		throws DataRetrievalFailureException;
+	
+	/**
+	 *  Lazily retrieves a domain object by identifier.
+	 *  
+	 * @param id        The id of the domain object to find
+	 * @return Returns the found domain object.
+	 * @throws DataRetrievalFailureException
+	 *             If no domain object could be found with given id.
+	 */
+
+	public T findByIdLazy(ID id) throws DataRetrievalFailureException;
 	
 	/**
 	 * Retrieves all the domain objects of type T.
@@ -323,10 +275,8 @@ public interface GenericJpaRepository<T, ID extends Serializable> {
 	 * 
 	 * @return The list containing all the domain objects of type T; if no such
 	 *         domain objects exist, an empty list will be returned
-	 * @throws DataAccessException
-	 *             If general data access problem occurred
 	 */
-	List<T> getAll(DataExtent extent) throws DataAccessException;
+	List<T> getAll(DataExtent extent);
 
 	/**
 	 * Re-reads the state of the given domain object from the underlying
@@ -337,27 +287,17 @@ public interface GenericJpaRepository<T, ID extends Serializable> {
 	 *            The domain object to re-read the state of
 	 * @param extent
 	 *            the extent in which objects get loaded.
-	 * @throws DataAccessException
-	 *             If general data access problem occurred
 	 * @throws DataRetrievalFailureException
 	 *             If domain object could not be re-read
 	 * @return The refreshed entity
 	 */
-	T refresh(T entity, DataExtent extent) throws DataAccessException,
-		DataRetrievalFailureException;
+	T refresh(T entity, DataExtent extent) throws DataRetrievalFailureException;
 	
 	/**
-	 * Get all the references with the same name.
-	 *
-	 * @param name
-	 *            Is the name of a domain object.
-	 * @return Returns the desired domain object.
-	 * @throws DataAccessException
-	 *             If general data access problem occurred.
-	 * @throws DataRetrievalFailureException
-	 *             If the domain object could not be retrieved.
+	 * Finds entities matching the given criteria query.
+	 * @param <T> the entity type
+	 * @param criteria the criteria query to run against the database
+	 * @return the list of found objects, which may be empty.
 	 */
-	public List<T> getByName(String name)
-		throws DataAccessException, DataRetrievalFailureException;
-	
+	public <T> List<T> findByCriteria(final CriteriaQuery<T> criteria);
 }
