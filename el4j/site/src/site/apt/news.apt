@@ -2,10 +2,15 @@
  News
  -----
  -----
-22 Dec 2010	
+18 Jul 2012	
  -----
 
 News
+
+  * <18/07/2012> - <<EL4J moved to private project.>>  
+  ELCA, the sponsor of EL4J, has decided to stop the further development of the public EL4J framework. 
+  The project EL4J will continue internally within ELCA – after all it was used in more than 30 projects!
+  In case you are interested in EL4J or payed support, please get in touch with ELCA via http://www.elca.ch/contact_us.
 
   * <22/12/2010> - <<EL4J 3.1 is out.>>  
   Upgrade to Maven 3.0, better test support (e.g. @ExtendedContextConfiguration to lauch Spring in a test), a new GenericJpaDao,
